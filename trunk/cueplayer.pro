@@ -1,0 +1,10 @@
+TEMPLATE = app
+TARGET =
+DEPENDPATH += . ui
+HEADERS += cueplayer.h cueparser.h
+FORMS += ui/cueplayer.ui
+SOURCES += cueplayer.cpp main.cpp cueparser.cpp
+RESOURCES += ressources.qrc
+LIBS += -lphonon
+INCLUDEPATH += /usr/local/kde4/include
+CONFIG += release
