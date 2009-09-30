@@ -5,9 +5,9 @@
 
 GstState state;
 bool cueFlag;
+bool multiCueFlag;
 
-//Q_EXPORT_PLUGIN2(cue_player, CuePlayer)
-		CuePlayer *cueplayer = 0;
+CuePlayer *cueplayer = 0;
 
 static gboolean
 bus_callback (GstBus     *bus,
@@ -22,12 +22,13 @@ bus_callback (GstBus     *bus,
 
 	  case GST_MESSAGE_EOS: {
 		g_print ("Конец потока\n");
-		cueplayer->stopAll();
+		if (!multiCueFlag) cueplayer->stopAll();
 		break;
 	}
-	case GST_MESSAGE_STATE_CHANGED:
+	case GST_MESSAGE_STATE_CHANGED: {
 		gst_element_get_state( GST_ELEMENT(playbin), &state, NULL, GST_CLOCK_TIME_NONE);
-	  break;
+		break;
+	}
 	case GST_MESSAGE_TAG: {
 		GstTagList *taglist=gst_tag_list_new();
 		gst_message_parse_tag(msg, &taglist);
@@ -163,6 +164,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	apetoflacAction->setEnabled(false);
 	fileList->setChecked(false);
 	cueFlag = false;
+	multiCueFlag = false;
+	memset(multiFiles,0,100);
 	mp3trackName = trUtf8("неизвестно");
 	numTrack = 1;
 	if (refparser)
@@ -197,6 +200,13 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		gst_object_unref (GST_OBJECT (play));
 		play = NULL;
 		g_print("Останов конвеера\n");
+	}
+
+	if (cueFlag && refparser->getTrackNumber() > 1 && refparser->getTrackFile(1) != refparser->getTrackFile(2))
+	{
+		multiCueFlag = true;
+		multiCueInit();
+		return;
 	}
 
 	play = gst_element_factory_make ("playbin2", "play");
@@ -324,15 +334,20 @@ void CuePlayer::seekAndLCD(int num)
 	if (refparser)
 	{
 		label->setText(stringNumTrack + ". " + refparser->getTrackTitle(num));
-		seekGst(refparser->getTrackIndex(num));
-		totalTime = refparser->getTrackIndex(num);
-		totalTime /= 1000;
-		if (num < refparser->getTrackNumber())
-			totalTimeNext = refparser->getTrackIndex(num+1);
+		if (!multiCueFlag)
+		{
+			seekGst(refparser->getTrackIndex(num));
+			totalTime = refparser->getTrackIndex(num);
+			totalTime /= 1000;
+			if (num < refparser->getTrackNumber())
+				totalTimeNext = refparser->getTrackIndex(num+1);
+			else
+				totalTimeNext = totalTimeAlbum;
+			totalTimeNext /= 1000;
+			totalTimeNext -= totalTime;
+		}
 		else
-			totalTimeNext = totalTimeAlbum;
-		totalTimeNext /= 1000;
-		totalTimeNext -= totalTime;
+			totalTimeNext = multiFiles[num]/1000;
 		timeLineSlider->setMaximum(totalTimeNext);
 		treeWidget->setCurrentItem(treeWidget->topLevelItem(num - 1));
 	}
@@ -379,7 +394,7 @@ void CuePlayer::initAlbum(int totalTimeAlbum)
 		QString numTrackList;
 		numTrackList.setNum(i);
 		playlistItem[i-1] = new QTreeWidgetItem;
-		playlistItem[i-1]->setText(0, numTrackList + ". " + refparser->getTrackTitle(i));
+		playlistItem[i-1]->setText(0, numTrackList + ". " + refparser->getTrackTitle(i) + " :: " + refparser->getTrackFile(i));
 		playlistItem[i-1]->setText(1, QString::number(min, 10) + ":" + strSec);
 		playlistItem[i-1]->setTextAlignment(1, Qt::AlignRight);
 		treeWidget->insertTopLevelItem(i-1, playlistItem[i-1]);
@@ -521,6 +536,13 @@ void CuePlayer::enableButtons(bool a)
 
 void CuePlayer::checkState()
 {
+	if (multiCueFlag)
+	{
+			gst_element_set_state (play, GST_STATE_NULL);
+			g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(numTrack)).toUtf8().data(), NULL);
+			gst_element_set_state (play, GST_STATE_READY);
+			gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_CLOCK_TIME_NONE);
+	}
 	if (state == GST_STATE_READY)
 		playTrack();
 	gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_CLOCK_TIME_NONE);
@@ -566,4 +588,53 @@ void CuePlayer::apeFound(bool ape)
 	if (ape) apetoflacAction->setEnabled(true);
 	if (ape) apetoflac->setFileNames(filename, refparser->getSoundFile());
 	if (!ape) apetoflac->close();
+}
+
+void CuePlayer::multiCueInit()
+{
+	GstState st;
+	GstElement *fakesink;
+	int duration = 0;
+	QString strSec;
+
+	treeWidget->setHeaderLabels(QStringList() << trUtf8("Композиция") << trUtf8("Время"));
+	treeWidget->setColumnWidth(0, 380);
+	treeWidget->setColumnWidth(1, 30);
+
+	for (int i = 1; i <= refparser->getTrackNumber(); i++)
+	{
+		play = gst_element_factory_make ("playbin2", "play");
+		fakesink = gst_element_factory_make ("fakesink", "fake");
+		g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(i)).toUtf8().data(), NULL);
+		g_object_set(play, "audio-sink", fakesink, NULL);
+		gst_element_set_state (play, GST_STATE_PAUSED);
+		gst_element_get_state( GST_ELEMENT(play), &st, NULL, GST_CLOCK_TIME_NONE);
+		if (st == GST_STATE_PAUSED)
+		{
+			duration = getDuration();
+			g_print ("Продолжительность трека %d: %d\n", i, duration);
+			gst_element_set_state (play, GST_STATE_NULL);
+			gst_object_unref (GST_OBJECT (play));
+			play = NULL;
+		}
+		int sec = duration / 1000;
+		int min = sec / 60;
+		sec %= 60;
+		if (sec < 10)
+			strSec = "0" + QString::number(sec,10);
+		else
+			strSec = QString::number(sec,10);
+		QString numTrackList;
+		numTrackList.setNum(i);
+		playlistItem[i-1] = new QTreeWidgetItem;
+		playlistItem[i-1]->setText(0, numTrackList + ". " + refparser->getTrackTitle(i));
+		playlistItem[i-1]->setText(1, QString::number(min, 10) + ":" + strSec);
+		playlistItem[i-1]->setTextAlignment(1, Qt::AlignRight);
+		treeWidget->insertTopLevelItem(i-1, playlistItem[i-1]);
+		multiFiles[i] = duration;
+	}
+	treeWidget->setCurrentItem(treeWidget->topLevelItem(0));
+	fileList->setEnabled(true);
+	play = gst_element_factory_make ("playbin2", "play");
+	seekAndLCD(1);
 }
