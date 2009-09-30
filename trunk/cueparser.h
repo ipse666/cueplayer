@@ -12,6 +12,7 @@ public:
 	QString getTitle();
 	QString getTrackTitle(int);
 	qint64 getTrackIndex(int);
+	QString getTrackFile(int);
 	QString getSoundFile();
 	QString getPerformer();
 	QString getAlbum();
@@ -25,6 +26,7 @@ private:
 	struct Tracks {
 		QString title;
 		QString index;
+		QString file;
 	};
 	Tracks tracks[100];
 	ParsedFile parsedFile;

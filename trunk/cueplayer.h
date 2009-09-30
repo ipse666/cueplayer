@@ -23,10 +23,10 @@ public:
 	void apeFound(bool);
 private:
 	void seekAndLCD(int);
-	int getDuration();
 	void createTrayIconMenu();
 	void enableButtons(bool);
 	void checkState();
+	int getDuration();
 	QFileDialog *filedialog;
 	QTreeWidgetItem *playlistItem[100];
 	QSystemTrayIcon *trayIcon;
@@ -48,6 +48,7 @@ private:
 	GMainLoop *loop;
 	GstElement *play;
 	GstBus *bus;
+	int multiFiles[100];
 private slots:
 	void setNumLCDs(int);
 	void cueFileSelected(QStringList);
@@ -67,6 +68,7 @@ private slots:
 	void timerUpdate();
 	void seekGst(int);
 	void preInit(QString);
+	void multiCueInit();
 signals:
 	void gstError();
 };
