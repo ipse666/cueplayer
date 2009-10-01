@@ -279,7 +279,13 @@ void CuePlayer::stopTrack()
 {
 	if (state == GST_STATE_PLAYING)
 	{
-		if (cueFlag)
+		if (multiCueFlag)
+		{
+			gst_element_set_state (play, GST_STATE_READY);
+			timer->stop();
+			timeLineSlider->setSliderPosition(0);
+		}
+		else if (cueFlag)
 			gst_element_set_state (play, GST_STATE_PAUSED);
 		else
 			stopAll();
@@ -288,6 +294,12 @@ void CuePlayer::stopTrack()
 	else
 	{
 		stopAll();
+		if(multiCueFlag)
+		{
+			gst_element_set_state (play, GST_STATE_NULL);
+			g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(numTrack)).toUtf8().data(), NULL);
+			gst_element_set_state (play, GST_STATE_READY);
+		}
 	}
 }
 
@@ -610,12 +622,12 @@ void CuePlayer::multiCueInit()
 		fakesink = gst_element_factory_make ("fakesink", "fake");
 		g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(i)).toUtf8().data(), NULL);
 		g_object_set(play, "audio-sink", fakesink, NULL);
-		gst_element_set_state (play, GST_STATE_PAUSED);
+		gst_element_set_state (play, GST_STATE_PLAYING);
 		gst_element_get_state( GST_ELEMENT(play), &st, NULL, GST_CLOCK_TIME_NONE);
-		if (st == GST_STATE_PAUSED)
+		if (st == GST_STATE_PLAYING)
 		{
 			duration = getDuration();
-			g_print ("Продолжительность трека %d: %d\n", i, duration);
+			//g_print ("Продолжительность трека %d: %d\n", i, duration);
 			gst_element_set_state (play, GST_STATE_NULL);
 			gst_object_unref (GST_OBJECT (play));
 			play = NULL;
@@ -640,6 +652,9 @@ void CuePlayer::multiCueInit()
 	numTrack = 1;
 	play = gst_element_factory_make ("playbin2", "play");
 	g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(numTrack)).toUtf8().data(), NULL);
+	bus = gst_pipeline_get_bus (GST_PIPELINE (play));
+	gst_bus_add_watch (bus, bus_callback, play);
+	gst_object_unref (bus);
 	gst_element_set_state (play, GST_STATE_PAUSED);
 	seekAndLCD(numTrack);
 	playButton->setEnabled(true);
