@@ -347,7 +347,10 @@ void CuePlayer::seekAndLCD(int num)
 			totalTimeNext -= totalTime;
 		}
 		else
+		{
 			totalTimeNext = multiFiles[num]/1000;
+			totalTime = 0;
+		}
 		timeLineSlider->setMaximum(totalTimeNext);
 		treeWidget->setCurrentItem(treeWidget->topLevelItem(num - 1));
 	}
@@ -394,7 +397,7 @@ void CuePlayer::initAlbum(int totalTimeAlbum)
 		QString numTrackList;
 		numTrackList.setNum(i);
 		playlistItem[i-1] = new QTreeWidgetItem;
-		playlistItem[i-1]->setText(0, numTrackList + ". " + refparser->getTrackTitle(i) + " :: " + refparser->getTrackFile(i));
+		playlistItem[i-1]->setText(0, numTrackList + ". " + refparser->getTrackTitle(i));
 		playlistItem[i-1]->setText(1, QString::number(min, 10) + ":" + strSec);
 		playlistItem[i-1]->setTextAlignment(1, Qt::AlignRight);
 		treeWidget->insertTopLevelItem(i-1, playlistItem[i-1]);
@@ -634,7 +637,15 @@ void CuePlayer::multiCueInit()
 		multiFiles[i] = duration;
 	}
 	treeWidget->setCurrentItem(treeWidget->topLevelItem(0));
-	fileList->setEnabled(true);
+	numTrack = 1;
 	play = gst_element_factory_make ("playbin2", "play");
-	seekAndLCD(1);
+	g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(numTrack)).toUtf8().data(), NULL);
+	gst_element_set_state (play, GST_STATE_PAUSED);
+	seekAndLCD(numTrack);
+	playButton->setEnabled(true);
+	pauseButton->setEnabled(true);
+	stopButton->setEnabled(true);
+	prewButton->setEnabled(true);
+	nextButton->setEnabled(true);
+	fileList->setEnabled(true);
 }
