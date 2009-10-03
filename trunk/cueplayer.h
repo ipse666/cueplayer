@@ -3,11 +3,20 @@
 #include <QWidget>
 #include <QFileDialog>
 #include <QSystemTrayIcon>
+#include <QThread>
 #include "ui_cueplayer.h"
 #include "cueparser.h"
 #include "transcoder.h"
 #include "apetoflac.h"
 
+class GstThread : public QThread
+{
+	Q_OBJECT
+	
+public:
+	GstThread(QObject * parent = 0);
+	void run();
+};
 
 class CuePlayer : public QWidget, public Ui::CuePlayer
 {
@@ -21,7 +30,9 @@ public:
 	void stopAll();
 	void setMp3Title(GValue *, GValue *, GValue *);
 	void apeFound(bool);
+	void paramFile(QStringList);
 private:
+	GstThread *trd;
 	void seekAndLCD(int);
 	void createTrayIconMenu();
 	void enableButtons(bool);
