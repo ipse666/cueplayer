@@ -2,6 +2,7 @@
 #include "cueplayer.h"
 
 #define TIME 200
+#define TIMEOUT 3
 
 GstState state;
 bool cueFlag;
@@ -85,8 +86,9 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	setupUi(this);
 	cueplayer = this;
 	timer = new QTimer(this);
-	filters << trUtf8("CUE образы и mp3 (*.cue *.mp3)")
-		 << trUtf8("CUE образы (*.cue)");
+	filters << trUtf8("CUE образы (*.cue)")
+			<< trUtf8("CUE образы и медиафайлы (*.cue *.mp3 *.flac *.ogg *.ogm *.avi *.mkv)")
+			<< trUtf8("Все файлы (*.*)");
 
 	//расположение главного окна по центру экрана
 	desktop = QApplication::desktop();
@@ -106,7 +108,13 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	secNumLCD->display("00");
 	enableButtons(false);
 	apetoflacAction->setEnabled(false);
+	openButton->setShortcut(trUtf8("Ctrl+o"));
+	playButton->setShortcut(trUtf8("Ctrl+p"));
 	pauseButton->setShortcut(trUtf8(" "));
+	stopButton->setShortcut(trUtf8("Ctrl+s"));
+	prewButton->setShortcut(trUtf8("Ctrl+r"));
+	nextButton->setShortcut(trUtf8("Ctrl+n"));
+	fileList->setShortcut(trUtf8("Ctrl+l"));
 
 	connect(timeLineSlider, SIGNAL(valueChanged(int)),
 	 this, SLOT(setNumLCDs(int)));
@@ -155,7 +163,7 @@ void CuePlayer::setNumLCDs(int sec)
 // инициализация аудиофайла
 void CuePlayer::cueFileSelected(QStringList filenames)
 {
-	QRegExp rxFilename(".*\\.(.{3})");
+	QRegExp rxFilename(".*\\.(.{3,4})");
 	QRegExp rxFilename2(".*/([^/]*)$");
 
 	treeWidget->clear();
@@ -173,6 +181,15 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	    delete refparser;
 		refparser = NULL;
 	}
+	if(play)
+	{
+		timer->stop();
+		gst_element_set_state (play, GST_STATE_NULL);
+		gst_object_unref (GST_OBJECT (play));
+		play = NULL;
+		g_print("Останов конвеера\n");
+	}
+	timeLineSlider->setSliderPosition(0);
 	filename = filenames.join("");
 	if (rxFilename.indexIn(filename) != -1)
 	{
@@ -183,32 +200,38 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			label->setText("1. " + refparser->getTrackTitle(numTrack));
 			cueFlag = true;
 		}
-		else if (rxFilename.cap(1) == "mp3")
+		else if (rxFilename.cap(1) == "mp3" ||
+				 rxFilename.cap(1) == "flac" ||
+				 rxFilename.cap(1) == "ogg" ||
+				 rxFilename.cap(1) == "ogm" ||
+				 rxFilename.cap(1) == "avi" ||
+				 rxFilename.cap(1) == "mkv")
 		{
 			if (rxFilename2.indexIn(filename) != -1)
 				mp3trackName = rxFilename2.cap(1);
 			setWindowTitle(mp3trackName);
 			label->setText(mp3trackName);
 		}
-	}
-	timeLineSlider->setSliderPosition(0);
-
-	if(play)
-	{
-		timer->stop();
-		gst_element_set_state (play, GST_STATE_NULL);
-		gst_object_unref (GST_OBJECT (play));
-		play = NULL;
-		g_print("Останов конвеера\n");
+		else
+		{
+			setWindowTitle(trUtf8("Формат не поддерживается"));
+			label->setText(trUtf8("откройте файл"));
+			return;
+		}
 	}
 
 	if (cueFlag && refparser->getTrackNumber() > 1 && refparser->getTrackFile(1) != refparser->getTrackFile(2))
 	{
 		multiCueFlag = true;
-		multiCueInit();
+		cueplayer->multiCueInit();
 		return;
 	}
 
+	if (cueFlag)
+		preInit(refparser->getSoundFile());
+	else
+		preInit(filename);
+	
 	play = gst_element_factory_make ("playbin2", "play");
 	if (cueFlag)
 		g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getSoundFile()).toUtf8().data(), NULL);
@@ -220,13 +243,17 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	gst_bus_add_watch (bus, bus_callback, play);
 	gst_object_unref (bus);
 
-	if (cueFlag)
-		preInit(refparser->getSoundFile());
-	else
-		preInit(filename);
 	g_object_set(play, "mute", true, NULL);
 	gst_element_set_state (play, GST_STATE_PLAYING);
-	gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_CLOCK_TIME_NONE);
+	if (gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT) != GST_STATE_CHANGE_SUCCESS)
+	{
+		timer->stop();
+		gst_element_set_state (play, GST_STATE_NULL);
+		gst_object_unref (GST_OBJECT (play));
+		play = NULL;
+		g_print("Останов конвеера\n");
+	}
+
 	if (state == GST_STATE_PLAYING)
 	{
 		int duration = getDuration();
@@ -514,7 +541,6 @@ void CuePlayer::timerUpdate()
 	GstFormat fmt = GST_FORMAT_TIME;
 	gst_element_query_position(play, &fmt, &p);
 	tick((qint64) p / 1000000);
-	//emit position((double)(p - Gstart) / Glength);
 }
 
 int CuePlayer::getDuration()
@@ -663,4 +689,20 @@ void CuePlayer::multiCueInit()
 	prewButton->setEnabled(true);
 	nextButton->setEnabled(true);
 	fileList->setEnabled(true);
+}
+
+void CuePlayer::paramFile(QStringList list)
+{
+	cueFileSelected(list);
+	playTrack();
+}
+
+GstThread::GstThread(QObject *parent) : QThread(parent)
+{
+
+}
+
+void GstThread::run()
+{
+
 }

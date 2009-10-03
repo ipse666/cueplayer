@@ -8,7 +8,7 @@ HEADERS += cueplayer.h \
     apetoflac.h
 FORMS += ui/cueplayer.ui \
     ui/transcoder.ui \
-	ui/apetoflacdialog.ui
+    ui/apetoflacdialog.ui
 SOURCES += cueplayer.cpp \
     main.cpp \
     cueparser.cpp \
@@ -19,4 +19,5 @@ CONFIG += release \
     link_pkgconfig
 PKGCONFIG += gstreamer-0.10
 OTHER_FILES += INSTALL \
-    INSTALL
+    INSTALL \
+    README
