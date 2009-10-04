@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSettings>
 #include <gst/gst.h>
 #include "ui_transcoder.h"
 #include "cueparser.h"
@@ -31,6 +32,7 @@ private:
 	GMainLoop *loop;
 	qint64 saveTotalTime;
 	QFileDialog *dirdialog;
+	QSettings settings;
 	void setTrack();
 	void setTrackTime(qint64,qint64);
 	void pipeRun(int);
@@ -45,6 +47,8 @@ private slots:
 	void formatError(int);
 	void setDefaultIndex();
 	void stopAll();
+	void updateSettings();
+	void restoreSettings();
 };
 
 #endif // TRANSCODER_H

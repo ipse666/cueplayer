@@ -39,6 +39,29 @@ CueParser::CueParser(QString s)
 		else if (rxTrackNumber.indexIn(line) != -1)
 			trackNumber = rxTrackNumber.cap(1).toInt(0,10);
 	} while (!line.isNull());
+
+	if (!in)
+	{
+		cuetext.seek(0);
+		if(!cuetext.pos())
+		{
+			do {
+				line = cuetext.readLine();
+				if (rxSoundfile.indexIn(line) != -1)
+					parsedFile.soundfile = rxSoundfile.cap(1);
+				else if (rxTrackNumber.indexIn(line) != -1)
+					++in;
+				else if (rxIndex.indexIn(line) != -1)
+				{
+					tracks[in].index = rxIndex.cap(1);
+					tracks[in].title = parsedFile.soundfile;
+					tracks[in].file = parsedFile.soundfile;
+				}
+			} while (!line.isNull());
+		}
+		/*else
+			QMessageBox::critical(this, trUtf8("Ошибка"), trUtf8("Ошибка чтения CUE файла."));*/
+	}
 	cuefile.close();
 
 	if (rxFileWav.indexIn(parsedFile.soundfile) != -1)

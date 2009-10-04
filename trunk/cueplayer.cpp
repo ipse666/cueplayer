@@ -86,6 +86,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	setupUi(this);
 	cueplayer = this;
 	timer = new QTimer(this);
+
 	filters << trUtf8("CUE образы (*.cue)")
 			<< trUtf8("CUE образы и медиафайлы (*.cue *.mp3 *.flac *.ogg *.ogm *.avi *.mkv)")
 			<< trUtf8("Все файлы (*.*)");
@@ -107,6 +108,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	filedialog->setNameFilters(filters);
 	secNumLCD->display("00");
 	enableButtons(false);
+	restoreSettings();
 	apetoflacAction->setEnabled(false);
 	openButton->setShortcut(trUtf8("Ctrl+o"));
 	playButton->setShortcut(trUtf8("Ctrl+p"));
@@ -193,7 +195,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	filename = filenames.join("");
 	if (rxFilename.indexIn(filename) != -1)
 	{
-		if (rxFilename.cap(1) == "cue")
+		if (rxFilename.cap(1) == "cue" ||
+			rxFilename.cap(1) == "CUE")
 		{
 			refparser = new CueParser(filename);
 			setWindowTitle(refparser->getTitle());
@@ -219,6 +222,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			return;
 		}
 	}
+
+	settings.setValue("player/recentfile", filename);
 
 	if (cueFlag && refparser->getTrackNumber() > 1 && refparser->getTrackFile(1) != refparser->getTrackFile(2))
 	{
@@ -361,6 +366,7 @@ void CuePlayer::volumeValue(int volume)
 {
 	g_object_set(play, "volume", (double)volume / 100, NULL);
 	volumeDial->setToolTip(QString::number(volume) + "%");
+	settings.setValue("player/volume", volume);
 }
 
 // переключение между треками и индикация
@@ -560,8 +566,6 @@ void CuePlayer::seekGst(int time)
 			GST_SEEK_TYPE_SET, nach,
 			GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE))
 		qDebug() << QString(trUtf8("Ошибка поиска"));
-	else
-		g_print("Перемещение на позицию %d\n", time);
 }
 
 void CuePlayer::enableButtons(bool a)
@@ -695,6 +699,15 @@ void CuePlayer::paramFile(QStringList list)
 {
 	cueFileSelected(list);
 	playTrack();
+}
+
+void CuePlayer::restoreSettings()
+{
+	bool ok;
+	if (settings.value("player/recentfile").toBool())
+		cueFileSelected(settings.value("player/recentfile").toStringList());
+	if (settings.value("player/volume").toBool())
+		volumeDial->setValue(settings.value("player/volume").toInt(&ok));
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)
