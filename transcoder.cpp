@@ -4,7 +4,7 @@
 
 #define TIME 200
 #define APPNAME "CuePlayer"
-#define VERSION "0.12"
+#define VERSION "0.13"
 
 Q_EXPORT_PLUGIN2(trans_coder, TransCoder)
 		TransCoder *transcoder = 0;
@@ -116,14 +116,18 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 
 	timer = new QTimer(this);
 
+	restoreSettings();
+
 	connect(selectDirButton, SIGNAL(clicked()), dirdialog, SLOT(exec()));
 	connect(dirdialog, SIGNAL(directoryEntered(QString)), lineEdit, SLOT(setText(QString)));
+	connect(dirdialog, SIGNAL(directoryEntered(QString)), this, SLOT(updateSettings()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
 	connect(selectAllAction, SIGNAL(triggered()), this, SLOT(selectAllTrigger()));
 	connect(startButton, SIGNAL(clicked()), this, SLOT(startTranscode()));
 	connect(stopButton, SIGNAL(clicked()), this, SLOT(stopAll()));
 	connect(containerBox, SIGNAL(currentIndexChanged(int)), this, SLOT(formatError(int)));
 	connect(codecBox, SIGNAL(currentIndexChanged(int)), this, SLOT(formatError(int)));
+	connect(bitrateBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSettings()));
 }
 
 // Заполнение списка композиций
@@ -411,3 +415,17 @@ void TransCoder::stopAllPub()
 	stopAll();
 }
 
+void TransCoder::updateSettings()
+{
+	settings.setValue("transcoder/outdir", lineEdit->text());
+	settings.setValue("transcoder/bitrate", bitrateBox->currentIndex());
+}
+
+void TransCoder::restoreSettings()
+{
+	bool ok;
+	if (settings.value("transcoder/bitrate").toBool())
+		bitrateBox->setCurrentIndex(settings.value("transcoder/bitrate").toInt(&ok));
+	if (settings.value("transcoder/outdir").toBool())
+		lineEdit->setText(settings.value("transcoder/outdir").toString());
+}

@@ -51,6 +51,7 @@ private:
 	QTimer *timer;
 	QStringList filters;
 	QString mp3trackName;
+	QSettings settings;
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	int numTrack;
@@ -80,6 +81,7 @@ private slots:
 	void seekGst(int);
 	void preInit(QString);
 	void multiCueInit();
+	void restoreSettings();
 signals:
 	void gstError();
 };
