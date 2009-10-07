@@ -4,19 +4,14 @@
 #include <QFileDialog>
 #include <QSystemTrayIcon>
 #include <QThread>
+#include <gst/interfaces/xoverlay.h>
 #include "ui_cueplayer.h"
 #include "cueparser.h"
 #include "transcoder.h"
 #include "apetoflac.h"
+#include "videowindow.h"
 
-class GstThread : public QThread
-{
-	Q_OBJECT
-	
-public:
-	GstThread(QObject * parent = 0);
-	void run();
-};
+class GstThread;
 
 class CuePlayer : public QWidget, public Ui::CuePlayer
 {
@@ -24,7 +19,6 @@ class CuePlayer : public QWidget, public Ui::CuePlayer
 
 protected:
 	void closeEvent(QCloseEvent *event);
-
 public:
 	CuePlayer(QWidget *parent = 0);
 	void stopAll();
@@ -54,11 +48,13 @@ private:
 	QSettings settings;
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
+	VideoWindow *videowindow;
 	int numTrack;
 	int totalTime;
 	CueParser *refparser;
 	GMainLoop *loop;
 	GstElement *play;
+	GstElement *videosink;
 	GstBus *bus;
 	int multiFiles[100];
 private slots:
@@ -84,6 +80,16 @@ private slots:
 	void restoreSettings();
 signals:
 	void gstError();
+};
+
+class GstThread : public QThread
+{
+	Q_OBJECT
+
+public:
+	GstThread(QObject * parent = 0);
+protected:
+	void run();
 };
 
 #endif // __CUEPLAYER_H__

@@ -5,19 +5,23 @@ DEPENDPATH += . \
 HEADERS += cueplayer.h \
     cueparser.h \
     transcoder.h \
-    apetoflac.h
+    apetoflac.h \
+    videowindow.h
 FORMS += ui/cueplayer.ui \
     ui/transcoder.ui \
-    ui/apetoflacdialog.ui
+    ui/apetoflacdialog.ui \
+    ui/videowindow.ui
 SOURCES += cueplayer.cpp \
     main.cpp \
     cueparser.cpp \
     transcoder.cpp \
-    apetoflac.cpp
+    apetoflac.cpp \
+    videowindow.cpp
 RESOURCES += ressources.qrc
 CONFIG += release \
     link_pkgconfig
-PKGCONFIG += gstreamer-0.10
+PKGCONFIG += gstreamer-0.10 \
+    gstreamer-interfaces-0.10
 OTHER_FILES += INSTALL \
     INSTALL \
     README

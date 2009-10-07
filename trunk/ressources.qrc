@@ -13,5 +13,6 @@
         <file>images/convertor.png</file>
         <file>images/hint.png</file>
         <file>images/format-indent-more.png</file>
+        <file>images/tool-animator.png</file>
     </qresource>
 </RCC>
