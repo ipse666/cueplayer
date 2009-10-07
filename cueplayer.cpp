@@ -1,5 +1,7 @@
 #include <QtGui>
 #include "cueplayer.h"
+#include <X11/X.h>
+#include <X11/Xlib.h>
 
 #define TIME 200
 #define TIMEOUT 3
@@ -7,6 +9,10 @@
 GstState state;
 bool cueFlag;
 bool multiCueFlag;
+bool videoFlag;
+
+Window win;
+static Display *display;
 
 CuePlayer *cueplayer = 0;
 
@@ -38,6 +44,14 @@ bus_callback (GstBus     *bus,
 		valtitle = (GValue*)gst_tag_list_get_value_index(taglist, GST_TAG_TITLE, 0);
 		if (!cueFlag)
 			cueplayer->setMp3Title(valtitle, valalbum, valartist);
+		break;
+	}
+	case GST_MESSAGE_ELEMENT: {
+		if (gst_structure_has_name (msg->structure, "prepare-xwindow-id") && !win)
+		{
+			gst_x_overlay_set_xwindow_id (GST_X_OVERLAY(GST_MESSAGE_SRC(msg)), win);
+			return GST_BUS_DROP;
+		}
 		break;
 	}
 	case GST_MESSAGE_ERROR: {
@@ -78,6 +92,8 @@ cb_typefound (GstElement *typefind,
 		cueplayer->apeFound(true);
 	else
 		cueplayer->apeFound(false);
+	if (!strcmp(type ,"video/x-matroska"))
+		videoFlag = true;
 	g_free (type);
 }
 
@@ -87,6 +103,10 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	cueplayer = this;
 	timer = new QTimer(this);
 
+	// Иксы
+	display = XOpenDisplay(NULL);
+
+	// Фильтр диалога
 	filters << trUtf8("CUE образы (*.cue)")
 			<< trUtf8("CUE образы и медиафайлы (*.cue *.mp3 *.flac *.ogg *.ogm *.avi *.mkv)")
 			<< trUtf8("Все файлы (*.*)");
@@ -106,6 +126,8 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	refparser = NULL;
 	filedialog = new QFileDialog(this, trUtf8("Открыть файл"));
 	filedialog->setNameFilters(filters);
+	videowindow = new VideoWindow(this);
+	win = videowindow->winId();
 	secNumLCD->display("00");
 	enableButtons(false);
 	restoreSettings();
@@ -175,6 +197,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	fileList->setChecked(false);
 	cueFlag = false;
 	multiCueFlag = false;
+	videoFlag = false;
+	videowindow->hide();
 	memset(multiFiles,0,100);
 	mp3trackName = trUtf8("неизвестно");
 	numTrack = 1;
@@ -243,6 +267,15 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	else
 		g_object_set (G_OBJECT (play), "uri", ("file://" + filename).toUtf8().data(), NULL);
 
+	if (videoFlag)
+	{
+		bool ok;
+		videosink = gst_element_factory_make ("xvimagesink", "xvideoout");
+		g_object_set(G_OBJECT (videosink), "display", display, NULL);
+		g_object_get(G_OBJECT (videosink), "handle-events", &ok, NULL);
+		g_object_set (G_OBJECT (play), "video-sink", videosink, NULL);
+		if(ok) g_print ("События обрабатываются\n");
+	}
 
 	bus = gst_pipeline_get_bus (GST_PIPELINE (play));
 	gst_bus_add_watch (bus, bus_callback, play);
@@ -302,6 +335,9 @@ void CuePlayer::playPrewTrack()
 // воспроизведение трека
 void CuePlayer::playTrack()
 {
+	if (videoFlag) gst_x_overlay_set_xwindow_id (GST_X_OVERLAY (videosink), win);
+	if (videoFlag) gst_x_overlay_expose (GST_X_OVERLAY (videosink));
+	if (videoFlag) videowindow->show();
 	gst_element_set_state (play, GST_STATE_PLAYING);
 	timer->start(TIME);
 }
@@ -537,6 +573,7 @@ void CuePlayer::stopAll()
 	numTrack = 1;
 	gst_element_set_state (play, GST_STATE_READY);
 	timer->stop();
+	if (videoFlag) videowindow->hide();
 	timeLineSlider->setSliderPosition(0);
 	seekAndLCD(numTrack);
 }
