@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QSystemTrayIcon>
 #include <QThread>
+#include <QX11Info>
 #include <gst/interfaces/xoverlay.h>
 #include "ui_cueplayer.h"
 #include "cueparser.h"
@@ -46,6 +47,7 @@ private:
 	QStringList filters;
 	QString mp3trackName;
 	QSettings settings;
+	QX11Info *xinfo;
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;
@@ -78,6 +80,13 @@ private slots:
 	void preInit(QString);
 	void multiCueInit();
 	void restoreSettings();
+	int getPosition();
+	void nminSeek();
+	void nmidSeek();
+	void nmaxSeek();
+	void pminSeek();
+	void pmidSeek();
+	void pmaxSeek();
 signals:
 	void gstError();
 };
