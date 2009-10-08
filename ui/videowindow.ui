@@ -17,6 +17,9 @@
    <iconset resource="../ressources.qrc">
     <normaloff>:/images/tool-animator.png</normaloff>:/images/tool-animator.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string>background-color: rgb(0, 0, 0);</string>
+  </property>
   <property name="locale">
    <locale language="Russian" country="RussianFederation"/>
   </property>

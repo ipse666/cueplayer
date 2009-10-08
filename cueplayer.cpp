@@ -1,7 +1,5 @@
 #include <QtGui>
 #include "cueplayer.h"
-#include <X11/X.h>
-#include <X11/Xlib.h>
 
 #define TIME 200
 #define TIMEOUT 3
@@ -11,7 +9,7 @@ bool cueFlag;
 bool multiCueFlag;
 bool videoFlag;
 
-Window win;
+WId win;
 static Display *display;
 
 CuePlayer *cueplayer = 0;
@@ -104,7 +102,8 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	timer = new QTimer(this);
 
 	// Иксы
-	display = XOpenDisplay(NULL);
+	xinfo = new QX11Info();
+	display = xinfo->display();
 
 	// Фильтр диалога
 	filters << trUtf8("CUE образы (*.cue)")
@@ -167,6 +166,16 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
 	 this, SLOT(trayClicked(QSystemTrayIcon::ActivationReason)));
 	connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
+
+	// Видео окно
+	connect(videowindow, SIGNAL(pauseEvent()), this, SLOT(pauseTrack()));
+	connect(videowindow, SIGNAL(stopEvent()), this, SLOT(stopTrack()));
+	connect(videowindow, SIGNAL(pressKeyRight()), this, SLOT(nminSeek()));
+	connect(videowindow, SIGNAL(pressKeyUp()), this, SLOT(nmidSeek()));
+	connect(videowindow, SIGNAL(pressKeyPgUp()), this, SLOT(nmaxSeek()));
+	connect(videowindow, SIGNAL(pressKeyLeft()), this, SLOT(pminSeek()));
+	connect(videowindow, SIGNAL(pressKeyDown()), this, SLOT(pmidSeek()));
+	connect(videowindow, SIGNAL(pressKeyPgDown()), this, SLOT(pmaxSeek()));
 }
 
 void CuePlayer::setNumLCDs(int sec)
@@ -272,6 +281,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		bool ok;
 		videosink = gst_element_factory_make ("xvimagesink", "xvideoout");
 		g_object_set(G_OBJECT (videosink), "display", display, NULL);
+		g_object_set(G_OBJECT (videosink), "force-aspect-ratio", true, NULL);
 		g_object_get(G_OBJECT (videosink), "handle-events", &ok, NULL);
 		g_object_set (G_OBJECT (play), "video-sink", videosink, NULL);
 		if(ok) g_print ("События обрабатываются\n");
@@ -594,6 +604,14 @@ int CuePlayer::getDuration()
 	return basetime / 1000000;
 }
 
+int CuePlayer::getPosition()
+{
+	gint64 p;
+	GstFormat fmt = GST_FORMAT_TIME;
+	gst_element_query_position(play, &fmt, &p);
+	return p / 1000000;
+}
+
 void CuePlayer::seekGst(int time)
 {
 	GstClockTime nach   = (GstClockTime)(time * GST_MSECOND);
@@ -745,6 +763,36 @@ void CuePlayer::restoreSettings()
 		cueFileSelected(settings.value("player/recentfile").toStringList());
 	if (settings.value("player/volume").toBool())
 		volumeDial->setValue(settings.value("player/volume").toInt(&ok));
+}
+
+void CuePlayer::nminSeek()
+{
+	seekGst(getPosition() + 10000);
+}
+
+void CuePlayer::nmidSeek()
+{
+	seekGst(getPosition() + 60000);
+}
+
+void CuePlayer::nmaxSeek()
+{
+	seekGst(getPosition() + 600000);
+}
+
+void CuePlayer::pminSeek()
+{
+	seekGst(getPosition() - 10000);
+}
+
+void CuePlayer::pmidSeek()
+{
+	seekGst(getPosition() - 60000);
+}
+
+void CuePlayer::pmaxSeek()
+{
+	seekGst(getPosition() - 600000);
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)
