@@ -220,9 +220,7 @@ void TransCoder::stopTranscode()
 	if (transcode)
 	{
 		progressBar->setValue(100);
-		g_print ("Returned, stopping playback\n");
 		gst_element_set_state (pipeline, GST_STATE_NULL);
-		g_print ("Deleting objects\n");
 		timer->stop();
 		gst_object_unref (GST_OBJECT (pipeline));
 		g_main_loop_quit (loop);
@@ -236,9 +234,7 @@ void TransCoder::stopAll()
 	errorColor = Qt::red;
 	if (transcode)
 	{
-		g_print ("Returned, stopping playback\n");
 		gst_element_set_state (pipeline, GST_STATE_NULL);
-		g_print ("Deleting objects\n");
 		timer->stop();
 		gst_object_unref (GST_OBJECT (pipeline));
 		g_main_loop_quit (loop);
@@ -265,7 +261,6 @@ void TransCoder::setTrackTime(qint64 start, qint64 stop)
 {
 		GstClockTime nach   = (GstClockTime)(start * GST_MSECOND);
 		GstClockTime kon   = (GstClockTime)(stop * GST_MSECOND);
-		g_print("setTrackTime: %" GST_TIME_FORMAT "\n", GST_TIME_ARGS(kon - nach));
 		if (!gst_element_seek(pipeline, 1.0,
 				GST_FORMAT_TIME,
 				(GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE),
@@ -349,7 +344,7 @@ void TransCoder::pipeRun(int ind)
 
 	gst_element_set_state (pipeline, GST_STATE_PLAYING);
 	if (gst_element_get_state (pipeline, NULL, NULL, -1) == GST_STATE_CHANGE_FAILURE) {
-		g_print ("Failed to go into PLAYING state\n");
+		g_print ("Ошибка перехода в PLAYING\n");
 		transcode = false;
 		stopAllPub();
 	}
@@ -357,12 +352,10 @@ void TransCoder::pipeRun(int ind)
 	gst_element_get_state( GST_ELEMENT(pipeline), &state, NULL, GST_CLOCK_TIME_NONE);
 	if (state == GST_STATE_PLAYING)
 	{
-		g_print ("Plaing сработал...\n");
 		if (ind == refparser->getTrackNumber())
 			setTrackTime(refparser->getTrackIndex(ind),saveTotalTime);
 		else
 			setTrackTime(refparser->getTrackIndex(ind),refparser->getTrackIndex(ind+1));
-		g_print ("Seek сработал...\n");
 		g_print ("Запущено...\n");
 		g_main_loop_run (loop);
 	}
