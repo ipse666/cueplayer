@@ -31,7 +31,7 @@ bus_callback (GstBus     *bus,
 		break;
 	}
 	case GST_MESSAGE_STATE_CHANGED: {
-		gst_element_get_state( GST_ELEMENT(playbin), &state, NULL, GST_CLOCK_TIME_NONE);
+		gst_element_get_state( GST_ELEMENT(playbin), &state, NULL, GST_SECOND * TIMEOUT);
 		break;
 	}
 	case GST_MESSAGE_TAG: {
