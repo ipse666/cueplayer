@@ -89,6 +89,7 @@ private slots:
 	void pmaxSeek();
 	void setAid(int);
 	void setTid(int);
+	void sliderVideoRelease();
 signals:
 	void gstError();
 };

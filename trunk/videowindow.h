@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QShortcut>
 #include "ui_videowindow.h"
+#include "videoslider.h"
 
 class VideoWindow : public QWidget, public Ui::VideoWin
 {
@@ -17,7 +18,13 @@ public:
 	VideoWindow(QWidget *parent = 0);
 	void createAudioMenu(int, int);
 	void createTitleMenu(int, int);
+	void setSliderMaximum(int);
+	void newTrack();
+	void setSliderPos(int);
+	int getSliderPos();
+	void setVolumePos(int);
 private:
+	VideoSlider *slider;
 	QShortcut *shortcutpause;
 	QShortcut *shortcutstop;
 	QShortcut *shortcutfs;
@@ -40,6 +47,7 @@ private:
 	QMenu *audioMenu;
 	QMenu *subtitleMenu;
 	QTimer *timer;
+	QWidget *desktop;
 private slots:
 	void fullScreen();
 	void normCursor();
@@ -59,6 +67,8 @@ signals:
 	void aboutSig();
 	void sendAid(int);
 	void sendTid(int);
+	void sliderRelease();
+	void volumeChan(int);
 };
 
 #endif // VIDEOWINDOW_H
