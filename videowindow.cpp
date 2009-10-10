@@ -1,11 +1,14 @@
 #include <QtGui>
 #include "videowindow.h"
 
+#define TIMEOUT 3000
+
 VideoWindow::VideoWindow(QWidget *parent)
 {
 	setupUi(this);
 	streamGroup = new QActionGroup(this);
 	titleGroup = new QActionGroup(this);
+	timer = new QTimer(this);
 
 	shortcutpause = new QShortcut(this);
 	shortcutpause->setKey(trUtf8(" "));
@@ -31,6 +34,7 @@ VideoWindow::VideoWindow(QWidget *parent)
 	shortcutpmax = new QShortcut(this);
 	shortcutpmax->setKey(Qt::Key_PageDown);
 
+	setMouseTracking(true);
 	createMenu();
 
 	connect(shortcutpause, SIGNAL(activated()), this, SIGNAL(pauseEvent()));
@@ -48,6 +52,7 @@ VideoWindow::VideoWindow(QWidget *parent)
 	connect(shortcutpmax, SIGNAL(activated()), this, SIGNAL(pressKeyPgDown()));
 	connect(streamGroup, SIGNAL(triggered(QAction*)), this, SLOT(changeAid(QAction*)));
 	connect(titleGroup, SIGNAL(triggered(QAction*)), this, SLOT(changeTid(QAction*)));
+	connect(timer, SIGNAL(timeout()), this, SLOT(hideMouseTO()));
 
 	(void) *parent;
 }
@@ -55,6 +60,16 @@ VideoWindow::VideoWindow(QWidget *parent)
 void VideoWindow::mouseDoubleClickEvent(QMouseEvent *event)
 {
 	fullScreen();
+	(void) *event;
+}
+
+void VideoWindow::mouseMoveEvent(QMouseEvent *event)
+{
+	if (isFullScreen())
+	{
+		setCursor(Qt::ArrowCursor);
+		timer->start(TIMEOUT);
+	}
 	(void) *event;
 }
 
@@ -155,4 +170,13 @@ void VideoWindow::changeTid(QAction* a)
 		emit sendTid(20);
 	else
 		emit sendTid(a->text().toInt());
+}
+
+void VideoWindow::hideMouseTO()
+{
+	if (isFullScreen())
+	{
+		setCursor(Qt::BlankCursor);
+		timer->stop();
+	}
 }

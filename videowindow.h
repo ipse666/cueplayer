@@ -11,6 +11,7 @@ class VideoWindow : public QWidget, public Ui::VideoWin
 
 protected:
 	void mouseDoubleClickEvent(QMouseEvent * event);
+	void mouseMoveEvent(QMouseEvent * event);
 	void closeEvent(QCloseEvent *event);
 public:
 	VideoWindow(QWidget *parent = 0);
@@ -38,12 +39,14 @@ private:
 	QAction *ntitleAction;
 	QMenu *audioMenu;
 	QMenu *subtitleMenu;
+	QTimer *timer;
 private slots:
 	void fullScreen();
 	void normCursor();
 	void createMenu();
 	void changeAid(QAction*);
 	void changeTid(QAction*);
+	void hideMouseTO();
 signals:
 	void pauseEvent();
 	void stopEvent();
