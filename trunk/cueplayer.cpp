@@ -31,7 +31,11 @@ bus_callback (GstBus     *bus,
 		break;
 	}
 	case GST_MESSAGE_STATE_CHANGED: {
-		gst_element_get_state( GST_ELEMENT(playbin), &state, NULL, GST_SECOND * TIMEOUT);
+		if (gst_element_get_state( GST_ELEMENT(playbin), &state, NULL, GST_SECOND * TIMEOUT) != GST_STATE_CHANGE_SUCCESS)
+		{
+			g_print ("Аварийный останов.\n");
+			cueplayer->stopAll();
+		}
 		break;
 	}
 	case GST_MESSAGE_TAG: {
@@ -377,7 +381,11 @@ void CuePlayer::playTrack()
 	timer->start(TIME);
 	if (videoFlag)
 	{
-		gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_CLOCK_TIME_NONE);
+		if (gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT) != GST_STATE_CHANGE_SUCCESS)
+		{
+			g_print ("Аварийный останов.\n");
+			cueplayer->stopAll();
+		}
 		if (state == GST_STATE_PLAYING)
 		{
 			int naudio, currentaudio;
