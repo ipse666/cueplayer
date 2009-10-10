@@ -87,6 +87,8 @@ private slots:
 	void pminSeek();
 	void pmidSeek();
 	void pmaxSeek();
+	void setAid(int);
+	void setTid(int);
 signals:
 	void gstError();
 };
