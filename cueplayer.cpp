@@ -191,6 +191,9 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(videowindow, SIGNAL(aboutSig()), this, SLOT(about()));
 	connect(videowindow, SIGNAL(sendAid(int)), this, SLOT(setAid(int)));
 	connect(videowindow, SIGNAL(sendTid(int)), this, SLOT(setTid(int)));
+	connect(videowindow, SIGNAL(sliderRelease()), this, SLOT(sliderVideoRelease()));
+	connect(videowindow, SIGNAL(volumeChan(int)), this, SLOT(volumeValue(int)));
+	connect(videowindow, SIGNAL(volumeChan(int)), volumeDial, SLOT(setValue(int)));
 }
 
 void CuePlayer::setNumLCDs(int sec)
@@ -448,7 +451,10 @@ void CuePlayer::tick(qint64 time)
 {
 	time /= 1000;
 	if (!timeLineSlider->isSliderDown())
+	{
 		timeLineSlider->setSliderPosition(time - totalTime);
+		if (videoFlag) videowindow->setSliderPos(time - totalTime);
+	}
 	if (timeLineSlider->value() == timeLineSlider->maximum())
 		CuePlayer::playNextTrack();
 }
@@ -460,12 +466,20 @@ void CuePlayer::sliderRelease()
 		seekGst(time);
 }
 
+// ручное перемещение слайдера видеоокна
+void CuePlayer::sliderVideoRelease()
+{
+	int time = videowindow->getSliderPos() * 1000;
+	seekGst(time);
+}
+
 // регулировка громкости
 void CuePlayer::volumeValue(int volume)
 {
 	g_object_set(play, "volume", (double)volume / 100, NULL);
 	volumeDial->setToolTip(QString::number(volume) + "%");
 	settings.setValue("player/volume", volume);
+	if (videoFlag) videowindow->setVolumePos(volume);
 }
 
 // переключение между треками и индикация
@@ -502,6 +516,7 @@ void CuePlayer::seekAndLCD(int num)
 	{
 		totalTime = 0;
 		timeLineSlider->setMaximum(totalTimeAlbum/1000);
+		videowindow->setSliderMaximum(totalTimeAlbum);
 	}
 }
 
@@ -636,7 +651,11 @@ void CuePlayer::stopAll()
 	numTrack = 1;
 	gst_element_set_state (play, GST_STATE_READY);
 	timer->stop();
-	if (videoFlag) videowindow->hide();
+	if (videoFlag)
+	{
+		videowindow->hide();
+		videowindow->newTrack();
+	}
 	timeLineSlider->setSliderPosition(0);
 	seekAndLCD(numTrack);
 }
@@ -815,7 +834,10 @@ void CuePlayer::restoreSettings()
 	if (settings.value("player/recentfile").toBool())
 		cueFileSelected(settings.value("player/recentfile").toStringList());
 	if (settings.value("player/volume").toBool())
+	{
 		volumeDial->setValue(settings.value("player/volume").toInt(&ok));
+		if (videoFlag) videowindow->setVolumePos(settings.value("player/volume").toInt(&ok));
+	}
 }
 
 void CuePlayer::nminSeek()

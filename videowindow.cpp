@@ -9,6 +9,13 @@ VideoWindow::VideoWindow(QWidget *parent)
 	streamGroup = new QActionGroup(this);
 	titleGroup = new QActionGroup(this);
 	timer = new QTimer(this);
+	slider = new VideoSlider(this);
+	slider->hide();
+	desktop = QApplication::desktop();
+	slider->resize(desktop->width(), slider->height());
+	QPoint p(0, desktop->height() - slider->height());
+	slider->move(p);
+	slider->setWindowFlags(Qt::Popup);
 
 	shortcutpause = new QShortcut(this);
 	shortcutpause->setKey(trUtf8(" "));
@@ -38,21 +45,35 @@ VideoWindow::VideoWindow(QWidget *parent)
 	createMenu();
 
 	connect(shortcutpause, SIGNAL(activated()), this, SIGNAL(pauseEvent()));
+	connect(slider, SIGNAL(pauseEvent()), this, SIGNAL(pauseEvent()));
 	connect(shortcutstop, SIGNAL(activated()), this, SIGNAL(stopEvent()));
+	connect(slider, SIGNAL(stopEvent()), this, SIGNAL(stopEvent()));
 	connect(shortcutfs, SIGNAL(activated()), this, SLOT(fullScreen()));
+	connect(slider, SIGNAL(fullScreen()), this, SLOT(fullScreen()));
 	connect(shortcutesc, SIGNAL(activated()), this, SLOT(showNormal()));
+	connect(slider, SIGNAL(showNormal()), this, SLOT(showNormal()));
 	connect(shortcutesc, SIGNAL(activated()), this, SLOT(normCursor()));
+	connect(slider, SIGNAL(normCursor()), this, SLOT(normCursor()));
 	connect(shortcutquit, SIGNAL(activated()), qApp, SLOT(quit()));
 
 	connect(shortcutnmin, SIGNAL(activated()), this, SIGNAL(pressKeyRight()));
+	connect(slider, SIGNAL(pressKeyRight()), this, SIGNAL(pressKeyRight()));
 	connect(shortcutnmid, SIGNAL(activated()), this, SIGNAL(pressKeyUp()));
+	connect(slider, SIGNAL(pressKeyUp()), this, SIGNAL(pressKeyUp()));
 	connect(shortcutnmax, SIGNAL(activated()), this, SIGNAL(pressKeyPgUp()));
+	connect(slider, SIGNAL(pressKeyPgUp()), this, SIGNAL(pressKeyPgUp()));
 	connect(shortcutpmin, SIGNAL(activated()), this, SIGNAL(pressKeyLeft()));
+	connect(slider, SIGNAL(pressKeyLeft()), this, SIGNAL(pressKeyLeft()));
 	connect(shortcutpmid, SIGNAL(activated()), this, SIGNAL(pressKeyDown()));
+	connect(slider, SIGNAL(pressKeyDown()), this, SIGNAL(pressKeyDown()));
 	connect(shortcutpmax, SIGNAL(activated()), this, SIGNAL(pressKeyPgDown()));
+	connect(slider, SIGNAL(pressKeyPgDown()), this, SIGNAL(pressKeyPgDown()));
 	connect(streamGroup, SIGNAL(triggered(QAction*)), this, SLOT(changeAid(QAction*)));
 	connect(titleGroup, SIGNAL(triggered(QAction*)), this, SLOT(changeTid(QAction*)));
 	connect(timer, SIGNAL(timeout()), this, SLOT(hideMouseTO()));
+	connect(slider, SIGNAL(doubleClick()), this, SLOT(fullScreen()));
+	connect(slider, SIGNAL(sliderRelease()), this, SIGNAL(sliderRelease()));
+	connect(slider, SIGNAL(volumeChan(int)), this, SIGNAL(volumeChan(int)));
 
 	(void) *parent;
 }
@@ -68,9 +89,10 @@ void VideoWindow::mouseMoveEvent(QMouseEvent *event)
 	if (isFullScreen())
 	{
 		setCursor(Qt::ArrowCursor);
+		if (event->y() > desktop->height() - slider->height())
+			slider->show();
 		timer->start(TIMEOUT);
 	}
-	(void) *event;
 }
 
 void VideoWindow::closeEvent(QCloseEvent *event)
@@ -84,6 +106,7 @@ void VideoWindow::fullScreen()
 	{
 		setCursor(Qt::ArrowCursor);
 		showNormal();
+		slider->hide();
 	}
 	else
 	{
@@ -157,6 +180,7 @@ void VideoWindow::createTitleMenu(int count, int current)
 	ntitleAction->setText(trUtf8("откл."));
 	titleGroup->addAction(ntitleAction);
 	subtitleMenu->addAction(ntitleAction);
+	if (current < 0) ntitleAction->setChecked(true);
 }
 
 void VideoWindow::changeAid(QAction* a)
@@ -177,6 +201,33 @@ void VideoWindow::hideMouseTO()
 	if (isFullScreen())
 	{
 		setCursor(Qt::BlankCursor);
+		//slider->hide();
 		timer->stop();
 	}
+}
+
+void VideoWindow::setSliderMaximum(int time)
+{
+	slider->setSliderMax(time);
+}
+
+void VideoWindow::newTrack()
+{
+	slider->setSliderPos(0);
+	slider->hide();
+}
+
+void VideoWindow::setSliderPos(int pos)
+{
+	slider->setSliderPos(pos);
+}
+
+int VideoWindow::getSliderPos()
+{
+	return slider->getSliderPos();
+}
+
+void VideoWindow::setVolumePos(int pos)
+{
+	slider->setVolumePos(pos);
 }
