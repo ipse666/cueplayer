@@ -90,7 +90,10 @@ cb_typefound (GstElement *typefind,
 		cueplayer->apeFound(true);
 	else
 		cueplayer->apeFound(false);
-	if (!strcmp(type ,"video/x-matroska"))
+	if (!strcmp(type ,"video/x-matroska") ||
+		!strcmp(type ,"video/x-msvideo") ||
+		!strncmp(type ,"video/mpegts", 12) ||
+		!strcmp(type ,"video/quicktime"))
 		videoFlag = true;
 	g_free (type);
 }
@@ -107,7 +110,8 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 
 	// Фильтр диалога
 	filters << trUtf8("CUE образы (*.cue)")
-			<< trUtf8("CUE образы и медиафайлы (*.cue *.mp3 *.flac *.ogg *.ogm *.avi *.mkv)")
+			<< trUtf8("Видеофайлы (*.ogg *.ogv *.avi *.mkv *.mp4)")
+			<< trUtf8("Аудиофайлы (*.mp3 *.flac *.ogg *.ogm)")
 			<< trUtf8("Все файлы (*.*)");
 
 	//расположение главного окна по центру экрана
@@ -126,6 +130,10 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	filedialog = new QFileDialog(this, trUtf8("Открыть файл"));
 	filedialog->setNameFilters(filters);
 	videowindow = new VideoWindow(this);
+	int vidWidth = videowindow->width();
+	int vidHeight = videowindow->height();
+	int vidWidthPos = desktop->width()/2 - vidWidth/2;
+	videowindow->move(vidWidthPos, appHeightPos - vidHeight);
 	win = videowindow->winId();
 	secNumLCD->display("00");
 	enableButtons(false);
@@ -176,6 +184,9 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(videowindow, SIGNAL(pressKeyLeft()), this, SLOT(pminSeek()));
 	connect(videowindow, SIGNAL(pressKeyDown()), this, SLOT(pmidSeek()));
 	connect(videowindow, SIGNAL(pressKeyPgDown()), this, SLOT(pmaxSeek()));
+	connect(videowindow, SIGNAL(aboutSig()), this, SLOT(about()));
+	connect(videowindow, SIGNAL(sendAid(int)), this, SLOT(setAid(int)));
+	connect(videowindow, SIGNAL(sendTid(int)), this, SLOT(setTid(int)));
 }
 
 void CuePlayer::setNumLCDs(int sec)
@@ -196,7 +207,7 @@ void CuePlayer::setNumLCDs(int sec)
 // инициализация аудиофайла
 void CuePlayer::cueFileSelected(QStringList filenames)
 {
-	QRegExp rxFilename(".*\\.(.{3,4})");
+	QRegExp rxFilename(".*\\.(.{2,4})");
 	QRegExp rxFilename2(".*/([^/]*)$");
 
 	treeWidget->clear();
@@ -240,7 +251,10 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 				 rxFilename.cap(1) == "flac" ||
 				 rxFilename.cap(1) == "ogg" ||
 				 rxFilename.cap(1) == "ogm" ||
+				 rxFilename.cap(1) == "ogv" ||
+				 rxFilename.cap(1) == "mp4" ||
 				 rxFilename.cap(1) == "avi" ||
+				 rxFilename.cap(1) == "ts" ||
 				 rxFilename.cap(1) == "mkv")
 		{
 			if (rxFilename2.indexIn(filename) != -1)
@@ -278,13 +292,15 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 
 	if (videoFlag)
 	{
-		bool ok;
+		//GstElement *fakesink;
+
+		//fakesink = gst_element_factory_make ("fakesink", "fake");
 		videosink = gst_element_factory_make ("xvimagesink", "xvideoout");
 		g_object_set(G_OBJECT (videosink), "display", display, NULL);
 		g_object_set(G_OBJECT (videosink), "force-aspect-ratio", true, NULL);
-		g_object_get(G_OBJECT (videosink), "handle-events", &ok, NULL);
 		g_object_set (G_OBJECT (play), "video-sink", videosink, NULL);
-		if(ok) g_print ("События обрабатываются\n");
+		//g_object_set (G_OBJECT (play), "text-sink", fakesink, NULL);
+		gst_x_overlay_set_xwindow_id (GST_X_OVERLAY(videosink), win);
 	}
 
 	bus = gst_pipeline_get_bus (GST_PIPELINE (play));
@@ -309,6 +325,12 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			initAlbum(duration);
 		else
 			initFile();
+
+		if (videoFlag)
+		{
+
+		}
+
 		stopAll();
 		g_object_set(play, "mute", false, NULL);
 	}
@@ -345,11 +367,34 @@ void CuePlayer::playPrewTrack()
 // воспроизведение трека
 void CuePlayer::playTrack()
 {
-	if (videoFlag) gst_x_overlay_set_xwindow_id (GST_X_OVERLAY (videosink), win);
-	if (videoFlag) gst_x_overlay_expose (GST_X_OVERLAY (videosink));
-	if (videoFlag) videowindow->show();
+	if (videoFlag)
+	{
+		gst_x_overlay_set_xwindow_id (GST_X_OVERLAY (videosink), win);
+		gst_x_overlay_expose (GST_X_OVERLAY (videosink));
+		videowindow->show();
+	}
 	gst_element_set_state (play, GST_STATE_PLAYING);
 	timer->start(TIME);
+	if (videoFlag)
+	{
+		gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_CLOCK_TIME_NONE);
+		if (state == GST_STATE_PLAYING)
+		{
+			int naudio, currentaudio;
+			// Количество аудио дорожек
+			g_object_get (G_OBJECT (play), "n-audio", &naudio, NULL);
+			// Текущая дорожка
+			g_object_get (G_OBJECT (play), "current-audio", &currentaudio, NULL);
+			videowindow->createAudioMenu(naudio - 1, currentaudio);
+
+			int ntext, currenttext;
+			// Количество cубтитров
+			g_object_get (G_OBJECT (play), "n-text", &ntext, NULL);
+			// Текущие субтитры
+			g_object_get (G_OBJECT (play), "current-text", &currenttext, NULL);
+			videowindow->createTitleMenu(ntext - 1, currenttext);
+		}
+	}
 }
 
 // остановка воспроизведения трека/альбома
@@ -793,6 +838,19 @@ void CuePlayer::pmidSeek()
 void CuePlayer::pmaxSeek()
 {
 	seekGst(getPosition() - 600000);
+}
+
+void CuePlayer::setAid(int n)
+{
+	g_object_set(G_OBJECT (play), "current-audio", n, NULL);
+}
+
+void CuePlayer::setTid(int n)
+{
+	if (n == 20)
+		g_object_set (G_OBJECT (play), "flags", 0x00000013, NULL);
+	else
+		g_object_set(G_OBJECT (play), "current-text", n, "flags", 0x00000017, NULL);
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)

@@ -14,5 +14,7 @@
         <file>images/hint.png</file>
         <file>images/format-indent-more.png</file>
         <file>images/tool-animator.png</file>
+        <file>images/speaker.png</file>
+        <file>images/text-field.png</file>
     </qresource>
 </RCC>
