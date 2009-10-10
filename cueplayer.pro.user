@@ -344,6 +344,7 @@
     <value type="QString" >KDE_SESSION_VERSION=4</value>
     <value type="QString" >LADSPA_PATH=/usr/lib64/ladspa</value>
     <value type="QString" >LANG=ru_RU.UTF-8</value>
+    <value type="QString" >LANGUAGE=</value>
     <value type="QString" >LC_ALL=</value>
     <value type="QString" >LD_LIBRARY_PATH=/opt/intel/Compiler/11.1/046/lib/intel64:/opt/intel/Compiler/11.1/046/tbb/em64t/cc4.1.0_libc2.4_kernel2.6.16.21/lib</value>
     <value type="QString" >LESS=-R -M --shift 5</value>
@@ -377,15 +378,15 @@
     <value type="QString" >_=/usr/bin/kdeinit4</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >
-    <value type="QString" >/home/ipse/devel/QT4/other/cueplayer/cueplayer.pro</value>
+    <value type="QString" >/mnt/win/spool/svn/cueplayer/cueplayer.pro</value>
     <value type="QString" >-spec</value>
     <value type="QString" >/usr/share/qt4/mkspecs/linux-g++</value>
     <value type="QString" >-r</value>
     <value type="QString" >CONFIG+=debug_and_release</value>
    </valuelist>
    <value key="abstractProcess.command" type="QString" >/usr/bin/qmake</value>
-   <value key="abstractProcess.enabled" type="bool" >false</value>
-   <value key="abstractProcess.workingDirectory" type="QString" >/home/ipse/devel/QT4/other/cueplayer</value>
+   <value key="abstractProcess.enabled" type="bool" >true</value>
+   <value key="abstractProcess.workingDirectory" type="QString" >/mnt/win/spool/svn/cueplayer</value>
    <value key="buildConfiguration" type="int" >8</value>
   </valuemap>
  </data>
@@ -427,6 +428,7 @@
     <value type="QString" >KDE_SESSION_VERSION=4</value>
     <value type="QString" >LADSPA_PATH=/usr/lib64/ladspa</value>
     <value type="QString" >LANG=ru_RU.UTF-8</value>
+    <value type="QString" >LANGUAGE=</value>
     <value type="QString" >LC_ALL=</value>
     <value type="QString" >LD_LIBRARY_PATH=/opt/intel/Compiler/11.1/046/lib/intel64:/opt/intel/Compiler/11.1/046/tbb/em64t/cc4.1.0_libc2.4_kernel2.6.16.21/lib</value>
     <value type="QString" >LESS=-R -M --shift 5</value>
@@ -465,7 +467,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString" >/usr/bin/make</value>
    <value key="abstractProcess.enabled" type="bool" >true</value>
-   <value key="abstractProcess.workingDirectory" type="QString" >/home/ipse/devel/QT4/other/cueplayer</value>
+   <value key="abstractProcess.workingDirectory" type="QString" >/mnt/win/spool/svn/cueplayer</value>
    <valuelist key="makeargs" type="QVariantList" >
     <value type="QString" >release</value>
    </valuelist>
