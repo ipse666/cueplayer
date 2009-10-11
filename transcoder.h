@@ -49,6 +49,7 @@ private slots:
 	void stopAll();
 	void updateSettings();
 	void restoreSettings();
+	void toolItem(QTreeWidgetItem*,int);
 };
 
 #endif // TRANSCODER_H
