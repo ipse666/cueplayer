@@ -244,25 +244,27 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	}
 	timeLineSlider->setSliderPosition(0);
 	filename = filenames.join("");
+	QFileInfo fi(filename);
 	if (rxFilename.indexIn(filename) != -1)
 	{
-		if (rxFilename.cap(1) == "cue" ||
-			rxFilename.cap(1) == "CUE")
+		if (fi.suffix() == "cue" ||
+			fi.suffix() == "CUE")
 		{
 			refparser = new CueParser(filename);
 			setWindowTitle(refparser->getTitle());
 			label->setText("1. " + refparser->getTrackTitle(numTrack));
 			cueFlag = true;
 		}
-		else if (rxFilename.cap(1) == "mp3" ||
-				 rxFilename.cap(1) == "flac" ||
-				 rxFilename.cap(1) == "ogg" ||
-				 rxFilename.cap(1) == "ogm" ||
-				 rxFilename.cap(1) == "ogv" ||
-				 rxFilename.cap(1) == "mp4" ||
-				 rxFilename.cap(1) == "avi" ||
-				 rxFilename.cap(1) == "ts" ||
-				 rxFilename.cap(1) == "mkv")
+		else if (fi.suffix() == "mp3" ||
+				 fi.suffix() == "flac" ||
+				 fi.suffix() == "ogg" ||
+				 fi.suffix() == "ogm" ||
+				 fi.suffix() == "ogv" ||
+				 fi.suffix() == "mp4" ||
+				 fi.suffix() == "avi" ||
+				 fi.suffix() == "ts" ||
+				 fi.suffix() == "wv" ||
+				 fi.suffix() == "mkv")
 		{
 			if (rxFilename2.indexIn(filename) != -1)
 				mp3trackName = rxFilename2.cap(1);
