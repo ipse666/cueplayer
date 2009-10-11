@@ -4,7 +4,7 @@
 
 #define TIME 200
 #define APPNAME "CuePlayer"
-#define VERSION "0.13"
+#define VERSION "0.14"
 
 Q_EXPORT_PLUGIN2(trans_coder, TransCoder)
 		TransCoder *transcoder = 0;
@@ -128,6 +128,8 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 	connect(containerBox, SIGNAL(currentIndexChanged(int)), this, SLOT(formatError(int)));
 	connect(codecBox, SIGNAL(currentIndexChanged(int)), this, SLOT(formatError(int)));
 	connect(bitrateBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSettings()));
+	connect(treeWidget, SIGNAL(itemEntered(QTreeWidgetItem*,int)), this, SLOT(toolItem(QTreeWidgetItem*,int)));
+	connect(treeWidget, SIGNAL(itemPressed(QTreeWidgetItem*,int)), this, SLOT(toolItem(QTreeWidgetItem*,int)));
 }
 
 // Заполнение списка композиций
@@ -175,6 +177,7 @@ void TransCoder::selectAllTrigger()
 	else
 	{
 		treeWidget->selectAll();
+		toolItem(treeWidget->topLevelItem(0), 0);
 		selectAllAction->setText(trUtf8("Снять выделение"));
 	}
 	selected = selected ? false : true;
@@ -183,6 +186,7 @@ void TransCoder::selectAllTrigger()
 // Старт кодировщика
 void TransCoder::startTranscode()
 {
+	bool selected = false;
 	startButton->setDisabled(true);
 	progressColor = Qt::yellow;
 	finishedColor = Qt::green;
@@ -207,11 +211,15 @@ void TransCoder::startTranscode()
 				treeWidget->topLevelItem(i)->setBackgroundColor(0, finishedColor);
 				treeWidget->topLevelItem(i)->setBackgroundColor(1, finishedColor);
 			}
+			selected = true;
 		}
 	}
 	startButton->setDisabled(false);
 	selectAllAction->setDisabled(false);
-	statusLabel->setText(trUtf8("Все задания завершены."));
+	if (selected)
+		statusLabel->setText(trUtf8("Все задания завершены."));
+	else
+		statusLabel->setText(trUtf8("Выделите треки для кодирования."));
 }
 
 // Остановка кодирования трека
@@ -332,7 +340,7 @@ void TransCoder::pipeRun(int ind)
 							GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
 							GST_TAG_ENCODER, APPNAME,
 							GST_TAG_ENCODER_VERSION, VERSION,
-							GST_TAG_COMMENT, " ",
+							GST_TAG_COMMENT, APPNAME " " VERSION,
 							GST_TAG_CODEC, "lame",
 							NULL);
 
@@ -421,4 +429,9 @@ void TransCoder::restoreSettings()
 		bitrateBox->setCurrentIndex(settings.value("transcoder/bitrate").toInt(&ok));
 	if (settings.value("transcoder/outdir").toBool())
 		lineEdit->setText(settings.value("transcoder/outdir").toString());
+}
+
+void TransCoder::toolItem(QTreeWidgetItem*,int)
+{
+	statusLabel->setText(trUtf8("Нажмите \"Начать\" для кодирования."));
 }
