@@ -201,7 +201,6 @@ void VideoWindow::hideMouseTO()
 	if (isFullScreen())
 	{
 		setCursor(Qt::BlankCursor);
-		//slider->hide();
 		timer->stop();
 	}
 }
