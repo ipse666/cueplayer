@@ -1,11 +1,15 @@
 #include "videoslider.h"
 #include "ui_videoslider.h"
 
+#define TIMEOUT 3000
+
 VideoSlider::VideoSlider(QWidget *parent) :
     QWidget(parent),
     m_ui(new Ui::VideoSlider)
 {
     m_ui->setupUi(this);
+
+	setMouseTracking(true);
 
 	shortcutpause = new QShortcut(this);
 	shortcutpause->setKey(trUtf8(" "));
@@ -74,6 +78,12 @@ void VideoSlider::mouseDoubleClickEvent(QMouseEvent *event)
 {
 	emit doubleClick();
 	(void) *event;
+}
+
+void VideoSlider::mouseMoveEvent(QMouseEvent *event)
+{
+	if (event->y() < 0)
+		hide();
 }
 
 void VideoSlider::leaveEvent(QEvent *event)

@@ -3,6 +3,7 @@
 
 #include <QtGui/QWidget>
 #include <QShortcut>
+#include <QMouseEvent>
 
 namespace Ui {
     class VideoSlider;
@@ -22,6 +23,7 @@ public:
 protected:
     void changeEvent(QEvent *e);
 	void mouseDoubleClickEvent(QMouseEvent * event);
+	void mouseMoveEvent(QMouseEvent * event);
 	void leaveEvent(QEvent *event);
 
 private:
