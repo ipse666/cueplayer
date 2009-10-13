@@ -7,7 +7,8 @@ HEADERS += cueplayer.h \
     transcoder.h \
     apetoflac.h \
     videowindow.h \
-    videoslider.h
+    videoslider.h \
+    callbacks.h
 FORMS += ui/cueplayer.ui \
     ui/transcoder.ui \
     ui/apetoflacdialog.ui \
