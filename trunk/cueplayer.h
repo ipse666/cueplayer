@@ -33,7 +33,7 @@ private:
 	void enableButtons(bool);
 	void checkState();
 	int getDuration();
-	void playProbe();
+	bool playProbe();
 	void createDvdPipe();
 	QFileDialog *filedialog;
 	QTreeWidgetItem *playlistItem[100];
@@ -55,6 +55,7 @@ private:
 	VideoWindow *videowindow;
 	int numTrack;
 	int totalTime;
+	int d_title;
 	CueParser *refparser;
 	GMainLoop *loop;
 	GstElement *play;

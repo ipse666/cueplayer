@@ -121,6 +121,8 @@ void CuePlayer::setNumLCDs(int sec)
 void CuePlayer::cueFileSelected(QStringList filenames)
 {
 	QRegExp rxFilename2(".*/([^/]*)$");
+	QString nextTool = nextButton->toolTip();
+	QString prewTool = prewButton->toolTip();
 
 	treeWidget->clear();
 	treeWidget->hide();
@@ -168,6 +170,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		preInit(refparser->getSoundFile());
 		play = gst_element_factory_make ("playbin2", "play");
 		g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getSoundFile()).toUtf8().data(), NULL);
+		nextButton->setToolTip(nextTool);
+		prewButton->setToolTip(prewTool);
 	}
 	else if (fi.suffix() == "mp3" ||
 			 fi.suffix() == "flac" ||
@@ -190,9 +194,12 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	}
 	else if (fi.isDir())
 	{
+		d_title = 1;
 		createDvdPipe();
-		setWindowTitle(trUtf8("DVD видео"));
-		label->setText(trUtf8("DVD видео"));
+		nextButton->setEnabled(true);
+		nextButton->setToolTip(trUtf8("Следующая дорожка"));
+		prewButton->setEnabled(true);
+		prewButton->setToolTip(trUtf8("Предыдущая дорожка"));
 	}
 	else
 	{
@@ -201,7 +208,6 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		return;
 	}
 
-	qDebug() << fi.fileName();
 	settings.setValue("player/recentfile", filename);
 
 	if (videoFlag)
@@ -229,6 +235,16 @@ void CuePlayer::playNextTrack()
 			++numTrack;
 			checkState();
 		}
+	if (dvdFlag && d_title < 10)
+		{
+			g_object_set (G_OBJECT (dvdsrc), "title", ++d_title, NULL);
+			label->setText(trUtf8("DVD видео : ") + QString::number(d_title));
+			stopTrack();
+			if(playProbe())
+				return;
+			else
+				createDvdPipe();
+		}
 }
 
 // переключение на предыдущий трек
@@ -239,6 +255,16 @@ void CuePlayer::playPrewTrack()
 		{
 			--numTrack;
 			checkState();
+		}
+	if (dvdFlag && d_title > 1)
+		{
+			g_object_set (G_OBJECT (dvdsrc), "title", --d_title, NULL);
+			label->setText(trUtf8("DVD видео : ") + QString::number(d_title));
+			stopTrack();
+			if(playProbe())
+				return;
+			else
+				createDvdPipe();
 		}
 }
 
@@ -772,7 +798,7 @@ void CuePlayer::fileDialogFilter(QString filter)
 		filedialog->setFileMode(QFileDialog::AnyFile);
 }
 
-void CuePlayer::playProbe()
+bool CuePlayer::playProbe()
 {
 	if (!dvdFlag) g_object_set(play, "mute", true, NULL);
 	gst_element_set_state (play, GST_STATE_PLAYING);
@@ -795,23 +821,27 @@ void CuePlayer::playProbe()
 
 		stopAll();
 		if (!dvdFlag) g_object_set(play, "mute", false, NULL);
+		return true;
 	}
 	else
 	{
 		label->setText(trUtf8("ошибка инициализации файла"));
 		emit gstError();
 		play = NULL;
+		return false;
 	}
 }
 
 void CuePlayer::createDvdPipe()
 {
-	GstElement *dvdsrc, *typefind, *demuxer, *audiosink, *vdecoder, *adecoder, *ffmpegcolorspace;
+	GstElement *typefind, *demuxer, *audiosink, *vdecoder, *adecoder, *ffmpegcolorspace;
 	GstElement *audioconvert, *audioresample;
 	GstElement *aqueue, *vqueue;
 	GstPad *audiopad, *videopad;
 
 	dvdFlag = true;
+	setWindowTitle(trUtf8("DVD видео"));
+	label->setText(trUtf8("DVD видео : 1"));
 
 	aqueue = make_queue ();
 	vqueue = make_queue ();
