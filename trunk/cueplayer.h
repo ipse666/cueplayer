@@ -33,6 +33,8 @@ private:
 	void enableButtons(bool);
 	void checkState();
 	int getDuration();
+	void playProbe();
+	void createDvdPipe();
 	QFileDialog *filedialog;
 	QTreeWidgetItem *playlistItem[100];
 	QSystemTrayIcon *trayIcon;
@@ -90,6 +92,7 @@ private slots:
 	void setAid(int);
 	void setTid(int);
 	void sliderVideoRelease();
+	void fileDialogFilter(QString);
 signals:
 	void gstError();
 };
