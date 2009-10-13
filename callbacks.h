@@ -4,7 +4,7 @@
 #define TIMEOUT 3
 
 GstState state;
-GstElement *d_audio, *d_video, *d_volume;
+GstElement *dvdsrc, *d_audio, *d_video, *d_volume;
 bool cueFlag;
 bool multiCueFlag;
 bool videoFlag;
