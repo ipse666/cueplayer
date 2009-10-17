@@ -160,6 +160,12 @@ void VideoWindow::createAudioMenu(int count, int current)
 		if (count == current)
 			nstreamAction->setChecked(true);
 	}
+	nstreamAction = new QAction(this);
+	nstreamAction->setCheckable(true);
+	nstreamAction->setText(trUtf8("файл"));
+	streamGroup->addAction(nstreamAction);
+	audioMenu->addAction(nstreamAction);
+	nstreamAction->setEnabled(false); // до фикса
 }
 
 void VideoWindow::createTitleMenu(int count, int current)
@@ -185,7 +191,10 @@ void VideoWindow::createTitleMenu(int count, int current)
 
 void VideoWindow::changeAid(QAction* a)
 {
-	emit sendAid(a->text().toInt());
+	if(a->text() == trUtf8("файл"))
+		emit sendAid(20);
+	else
+		emit sendAid(a->text().toInt());
 }
 
 void VideoWindow::changeTid(QAction* a)

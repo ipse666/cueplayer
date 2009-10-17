@@ -97,6 +97,7 @@ cb_typefound (GstElement *typefind,
 		cueplayer->apeFound(false);
 	if (!strcmp(type ,"video/x-matroska") ||
 		!strcmp(type ,"video/x-msvideo") ||
+		!strcmp(type ,"application/x-3gp") ||
 		!strncmp(type ,"video/mpegts", 12) ||
 		!strcmp(type ,"video/quicktime"))
 		videoFlag = true;

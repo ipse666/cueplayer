@@ -182,6 +182,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			 fi.suffix() == "avi" ||
 			 fi.suffix() == "ts" ||
 			 fi.suffix() == "wv" ||
+			 fi.suffix() == "3gp" ||
 			 fi.suffix() == "mkv")
 	{
 		if (rxFilename2.indexIn(filename) != -1)
@@ -212,10 +213,12 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 
 	if (videoFlag)
 	{
+		//GstElement *audiosink = gst_element_factory_make ("osssink", "audioout");
 		videosink = gst_element_factory_make ("xvimagesink", "xvideoout");
 		g_object_set(G_OBJECT (videosink), "display", display, NULL);
 		g_object_set(G_OBJECT (videosink), "force-aspect-ratio", true, NULL);
 		g_object_set (G_OBJECT (play), "video-sink", videosink, NULL);
+		//g_object_set (G_OBJECT (play), "audio-sink", audiosink, NULL);
 		gst_x_overlay_set_xwindow_id (GST_X_OVERLAY(videosink), win);
 	}
 
@@ -224,6 +227,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	gst_object_unref (bus);
 
 	playProbe();
+	//g_signal_connect (play, "deep-notify",
+	//	G_CALLBACK (gst_object_default_deep_notify), NULL);
 }
 
 // переключение на следующий трек
@@ -775,15 +780,34 @@ void CuePlayer::pmaxSeek()
 
 void CuePlayer::setAid(int n)
 {
-	g_object_set(G_OBJECT (play), "current-audio", n, NULL);
+	gint flags;
+	g_object_get (G_OBJECT (play), "flags", &flags, NULL);
+	if (n == 20)
+	{
+		flags &= ~0x00000002;
+		g_object_set (G_OBJECT (play), "flags", flags, "current-audio", -1, NULL);
+	}
+	else
+	{
+		flags |= 0x00000002;
+		g_object_set(G_OBJECT (play), "flags", flags, "current-audio", n, NULL);
+	}
 }
 
 void CuePlayer::setTid(int n)
 {
+	gint flags;
+	g_object_get (G_OBJECT (play), "flags", &flags, NULL);
 	if (n == 20)
-		g_object_set (G_OBJECT (play), "flags", 0x00000013, NULL);
+	{
+		flags &= ~0x00000004;
+		g_object_set (G_OBJECT (play), "flags", flags, NULL);
+	}
 	else
-		g_object_set(G_OBJECT (play), "current-text", n, "flags", 0x00000017, NULL);
+	{
+		flags |= 0x00000004;
+		g_object_set(G_OBJECT (play), "flags", flags, "current-text", n, NULL);
+	}
 }
 
 void CuePlayer::fileDialogFilter(QString filter)
@@ -889,6 +913,13 @@ void CuePlayer::createDvdPipe()
 	gst_element_add_pad (d_video, gst_ghost_pad_new ("sink", videopad));
 	gst_object_unref (videopad);
 	gst_bin_add (GST_BIN (play), d_video);
+}
+
+void CuePlayer::dtsPlayer()
+{
+	GstElement* playbin;
+	playbin = gst_element_factory_make ("playbin2", "dtsplay");
+
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)
