@@ -94,6 +94,7 @@ private slots:
 	void setTid(int);
 	void sliderVideoRelease();
 	void fileDialogFilter(QString);
+	void dtsPlayer();
 signals:
 	void gstError();
 };

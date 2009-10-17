@@ -25,21 +25,17 @@ bus_call (GstBus     *bus,
 	  g_print ("Конец потока\n");
 	  g_main_loop_quit (loop);
 	  break;
-	case GST_MESSAGE_STATE_CHANGED:
-	  //g_print ("Статус конвеера изменен.\n");
-	  break;
 
 	case GST_MESSAGE_ERROR: {
-	  gchar  *debug;
-	  GError *error;
+		gchar  *debug;
+		GError *error;
 
-	  gst_message_parse_error (msg, &error, &debug);
-	  g_free (debug);
+		gst_message_parse_error (msg, &error, &debug);
+		g_free (debug);
 
-	  g_printerr ("Ошибка: %s\n", error->message);
-	  g_error_free (error);
-
-	  g_main_loop_quit (loop);
+		g_printerr ("Ошибка: %s\n", error->message);
+		g_error_free (error);
+		transcoder->stopAllPub();
 	  break;
 	}
 	default:
@@ -80,6 +76,13 @@ cb_newpad (GstElement *decodebin,
   gst_pad_link (pad, audiopad);
 }
 
+enum {
+	CODEC_VORBIS,
+	CODEC_LAME,
+	CODEC_FLAC,
+	CODEC_NO
+};
+
 // Конструктор TransCoder
 TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 {
@@ -94,8 +97,8 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 	treeWidget->setColumnWidth(1, 75);
 	treeWidget->header()->setResizeMode(0,QHeaderView::Stretch);
 
-	containerBox->addItems(QStringList() << "ogg" << "mp3");
-	codecBox->addItems(QStringList() << "vorbis" << "lame");
+	containerBox->addItems(QStringList() << "ogg" << "mp3" << "flac");
+	codecBox->addItems(QStringList() << "vorbis" << "lame" << "flac");
 	bitrateBox->addItems(QStringList() << "8"  << "16" << "24" << "32" << "40" <<
 						 "48" << "56" << "64" << "80" << "96" << "112" << "128" << "160" << "192" << "224" << "256" << "320");
 
@@ -126,7 +129,9 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 	connect(startButton, SIGNAL(clicked()), this, SLOT(startTranscode()));
 	connect(stopButton, SIGNAL(clicked()), this, SLOT(stopAll()));
 	connect(containerBox, SIGNAL(currentIndexChanged(int)), this, SLOT(formatError(int)));
+	connect(containerBox, SIGNAL(activated(int)), codecBox, SLOT(setCurrentIndex(int)));
 	connect(codecBox, SIGNAL(currentIndexChanged(int)), this, SLOT(formatError(int)));
+	connect(codecBox, SIGNAL(activated(int)), containerBox, SLOT(setCurrentIndex(int)));
 	connect(bitrateBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSettings()));
 	connect(treeWidget, SIGNAL(itemEntered(QTreeWidgetItem*,int)), this, SLOT(toolItem(QTreeWidgetItem*,int)));
 	connect(treeWidget, SIGNAL(itemPressed(QTreeWidgetItem*,int)), this, SLOT(toolItem(QTreeWidgetItem*,int)));
@@ -252,12 +257,9 @@ void TransCoder::stopAll()
 	{
 		treeWidget->topLevelItem(i)->setSelected(false);
 	}
-	if (progressBar->value() != 100)
-	{
-		treeWidget->topLevelItem(numTrack - 1)->setBackgroundColor(0, errorColor);
-		treeWidget->topLevelItem(numTrack - 1)->setBackgroundColor(1, errorColor);
-		treeWidget->topLevelItem(numTrack - 1)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsTristate);
-	}
+	treeWidget->topLevelItem(numTrack - 1)->setBackgroundColor(0, errorColor);
+	treeWidget->topLevelItem(numTrack - 1)->setBackgroundColor(1, errorColor);
+	treeWidget->topLevelItem(numTrack - 1)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsTristate);
 }
 
 void TransCoder::setTrack()
@@ -281,7 +283,7 @@ void TransCoder::setTrackTime(qint64 start, qint64 stop)
 
 void TransCoder::pipeRun(int ind)
 {
-	GstElement *source, *dec, *conv, *encoder, *muxer, *fileout;
+	GstElement *source, *dec, *conv, *encoder, *muxer, *fileout, *tagger;
 	GstBus *bus;
 	GstState state;
 	GstPad *audiopad;
@@ -304,17 +306,78 @@ void TransCoder::pipeRun(int ind)
 	audio = gst_bin_new ("audiobin");
 	conv = gst_element_factory_make ("audioconvert", "aconv");
 	audiopad = gst_element_get_static_pad (conv, "sink");
-	encoder = gst_element_factory_make ("lame", "audio-encoder");
-	muxer = gst_element_factory_make ("id3v2mux", "audio-muxer");
 	fileout = gst_element_factory_make ("filesink", "file-out");
-	gst_bin_add_many (GST_BIN (audio), conv, encoder, muxer, fileout, NULL);
-	gst_element_link_many (conv, encoder, muxer, fileout, NULL);
+
+	switch (codecBox->currentIndex())
+	{
+		case CODEC_VORBIS:
+			encoder = gst_element_factory_make ("vorbisenc", "audio-encoder");
+			tagger = gst_element_factory_make ("vorbistag", "tagger");
+			muxer = gst_element_factory_make ("oggmux", "audio-muxer");
+			gst_bin_add_many (GST_BIN (audio), conv, encoder, tagger, muxer, fileout, NULL);
+			gst_element_link_many (conv, encoder, tagger, muxer, fileout, NULL);
+			gst_tag_setter_add_tags (GST_TAG_SETTER (tagger),
+								GST_TAG_MERGE_REPLACE_ALL,
+								GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
+								GST_TAG_ARTIST, refparser->getPerformer().toUtf8().data(),
+								GST_TAG_TRACK_NUMBER, ind,
+								GST_TAG_TRACK_COUNT, refparser->getTrackNumber(),
+								GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
+								GST_TAG_ENCODER, APPNAME,
+								GST_TAG_ENCODER_VERSION, VERSION,
+								GST_TAG_COMMENT, APPNAME " " VERSION,
+								GST_TAG_CODEC, "vorbis",
+								NULL);
+			containerBox->setCurrentIndex(CODEC_VORBIS);
+			break;
+		case CODEC_LAME:
+			bool ok;
+			encoder = gst_element_factory_make ("lame", "audio-encoder");
+			muxer = gst_element_factory_make ("id3v2mux", "audio-muxer");
+			gst_bin_add_many (GST_BIN (audio), conv, encoder, muxer, fileout, NULL);
+			gst_element_link_many (conv, encoder, muxer, fileout, NULL);
+			g_object_set (encoder, "bitrate", bitrateBox->currentText().toInt(&ok, 10), NULL);
+			gst_tag_setter_add_tags (GST_TAG_SETTER (muxer),
+								GST_TAG_MERGE_REPLACE_ALL,
+								GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
+								GST_TAG_ARTIST, refparser->getPerformer().toUtf8().data(),
+								GST_TAG_TRACK_NUMBER, ind,
+								GST_TAG_TRACK_COUNT, refparser->getTrackNumber(),
+								GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
+								GST_TAG_ENCODER, APPNAME,
+								GST_TAG_ENCODER_VERSION, VERSION,
+								GST_TAG_COMMENT, APPNAME " " VERSION,
+								GST_TAG_CODEC, "lame",
+								NULL);
+			containerBox->setCurrentIndex(CODEC_LAME);
+			break;
+		case CODEC_FLAC:
+			encoder = gst_element_factory_make ("flacenc", "audio-encoder");
+			tagger = gst_element_factory_make ("flactag", "tagger");
+			gst_bin_add_many (GST_BIN (audio), conv, encoder, tagger, fileout, NULL);
+			gst_element_link_many (conv, encoder, tagger, fileout, NULL);
+			gst_tag_setter_add_tags (GST_TAG_SETTER (tagger),
+								GST_TAG_MERGE_REPLACE_ALL,
+								GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
+								GST_TAG_ARTIST, refparser->getPerformer().toUtf8().data(),
+								GST_TAG_TRACK_NUMBER, ind,
+								GST_TAG_TRACK_COUNT, refparser->getTrackNumber(),
+								GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
+								GST_TAG_ENCODER, APPNAME,
+								GST_TAG_ENCODER_VERSION, VERSION,
+								GST_TAG_COMMENT, APPNAME " " VERSION,
+								GST_TAG_CODEC, "flac",
+								NULL);
+			containerBox->setCurrentIndex(CODEC_FLAC);
+			break;
+		case CODEC_NO:
+		default:
+			break;
+	}
+
 	gst_element_add_pad (audio, gst_ghost_pad_new ("sink", audiopad));
 	gst_object_unref (audiopad);
 	gst_bin_add (GST_BIN (pipeline), audio);
-
-	bool ok;
-	g_object_set (encoder, "bitrate", bitrateBox->currentText().toInt(&ok, 10), NULL);
 
 	// Выходной файл
 	QRegExp rxFileSlash("/");
@@ -326,46 +389,36 @@ void TransCoder::pipeRun(int ind)
 	if (!dir.exists())
 		dir.mkdir(dirname);
 	if (ind < 10)
-		filename = dirname + "/" + "0" + QString::number(ind,10) + " - " + trackName + ".mp3";
+		filename = dirname + "/" + "0" + QString::number(ind,10) + " - " + trackName + "." + containerBox->currentText();
 	else
-		filename = dirname + "/" + QString::number(ind,10) + " - " + trackName + ".mp3";
+		filename = dirname + "/" + QString::number(ind,10) + " - " + trackName + "." + containerBox->currentText();
 	g_object_set (fileout, "location", filename.toUtf8().data(), NULL);
-
-	gst_tag_setter_add_tags (GST_TAG_SETTER (muxer),
-							GST_TAG_MERGE_REPLACE_ALL,
-							GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
-							GST_TAG_ARTIST, refparser->getPerformer().toUtf8().data(),
-							GST_TAG_TRACK_NUMBER, ind,
-							GST_TAG_TRACK_COUNT, refparser->getTrackNumber(),
-							GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
-							GST_TAG_ENCODER, APPNAME,
-							GST_TAG_ENCODER_VERSION, VERSION,
-							GST_TAG_COMMENT, APPNAME " " VERSION,
-							GST_TAG_CODEC, "lame",
-							NULL);
 
 	bus = gst_pipeline_get_bus (GST_PIPELINE (pipeline));
 	gst_bus_add_watch (bus, bus_call, loop);
 	gst_object_unref (bus);
 
+	//g_signal_connect (pipeline, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг!
 	g_print ("Кодируется: %s\n", refparser->getSoundFile().toUtf8().data());
 
 	gst_element_set_state (pipeline, GST_STATE_PLAYING);
-	if (gst_element_get_state (pipeline, NULL, NULL, -1) == GST_STATE_CHANGE_FAILURE) {
-		g_print ("Ошибка перехода в PLAYING\n");
-		transcode = false;
-		stopAllPub();
-	}
-	timer->start(TIME);
-	gst_element_get_state( GST_ELEMENT(pipeline), &state, NULL, GST_CLOCK_TIME_NONE);
+
+	gst_element_get_state( GST_ELEMENT(pipeline), &state, NULL, GST_MSECOND * 300);
 	if (state == GST_STATE_PLAYING)
 	{
+		timer->start(TIME);
 		if (ind == refparser->getTrackNumber())
 			setTrackTime(refparser->getTrackIndex(ind),saveTotalTime);
 		else
 			setTrackTime(refparser->getTrackIndex(ind),refparser->getTrackIndex(ind+1));
 		g_print ("Запущено...\n");
 		g_main_loop_run (loop);
+	}
+	else
+	{
+		g_print ("Ошибка перехода в PLAYING\n");
+		transcode = false;
+		stopAll();
 	}
 }
 void TransCoder::timerUpdate()
@@ -382,17 +435,19 @@ void TransCoder::timerUpdate()
 			endpos = refparser->getTrackIndex(numTrack+1);
 		startpos = refparser->getTrackIndex(numTrack);
 		percent = ((endpos - startpos) / 100) * GST_MSECOND;
-		pos = pos - (startpos * GST_MSECOND);
+		if (codecBox->currentIndex() <= 1)
+			pos = pos - (startpos * GST_MSECOND);
 		curpercent = pos/percent;
 	}
 	else
 		g_print ("ОШИБКА!!!\n");
+	//qDebug() << QString(trUtf8("Позиция ")) << pos;
 	progressBar->setValue(curpercent);
 }
 
 void TransCoder::formatError(int index)
 {
-	if (index != 1)
+	if (!index)
 	{
 		QMessageBox *codecwarn = new QMessageBox(this);
 		codecwarn->setIcon(QMessageBox::Warning);
@@ -407,8 +462,8 @@ void TransCoder::formatError(int index)
 
 void TransCoder::setDefaultIndex()
 {
-	containerBox->setCurrentIndex(defaultContainer);
 	codecBox->setCurrentIndex(defaultCodec);
+	containerBox->setCurrentIndex(defaultContainer);
 }
 
 void TransCoder::stopAllPub()
