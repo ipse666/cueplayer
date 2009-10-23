@@ -76,6 +76,25 @@ cb_newpad (GstElement *decodebin,
   gst_pad_link (pad, audiopad);
 }
 
+/*gboolean
+cb_encoderpad (GstPad *pad,
+			   GstBuffer *buffer,
+			   gpointer u_data)
+{
+	g_print("БУФЕРОК %d\n", GST_BUFFER_SIZE(buffer));
+	g_print("Данные %s\n", GST_BUFFER_DATA(buffer));
+	if (GST_BUFFER_SIZE(buffer))
+	{
+		//gst_buffer_set_data(buffer, GST_BUFFER_DATA(buffer), 0);
+	}
+	//guint16 *data = (guint16 *) GST_BUFFER_DATA (buffer), t;
+	//data = 0;
+	//gst_buffer_unref (buffer);
+	(void) pad;
+	(void) u_data;
+	return true;
+}*/
+
 enum {
 	CODEC_VORBIS,
 	CODEC_LAME,
@@ -260,6 +279,8 @@ void TransCoder::stopAll()
 	treeWidget->topLevelItem(numTrack - 1)->setBackgroundColor(0, errorColor);
 	treeWidget->topLevelItem(numTrack - 1)->setBackgroundColor(1, errorColor);
 	treeWidget->topLevelItem(numTrack - 1)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsTristate);
+	if (progressBar->value() == 100)
+		progressBar->setValue(0);
 }
 
 void TransCoder::setTrack()
@@ -286,7 +307,7 @@ void TransCoder::pipeRun(int ind)
 	GstElement *source, *dec, *conv, *encoder, *muxer, *fileout, *tagger;
 	GstBus *bus;
 	GstState state;
-	GstPad *audiopad;
+	GstPad *audiopad, *encoderpad;
 
 	numTrack = ind;
 
@@ -368,6 +389,10 @@ void TransCoder::pipeRun(int ind)
 								GST_TAG_COMMENT, APPNAME " " VERSION,
 								GST_TAG_CODEC, "flac",
 								NULL);
+			/*encoderpad = gst_element_get_static_pad (encoder, "src");
+			gst_pad_add_buffer_probe (encoderpad, G_CALLBACK (cb_encoderpad), NULL);
+			gst_object_unref (encoderpad);*/
+
 			containerBox->setCurrentIndex(CODEC_FLAC);
 			break;
 		case CODEC_NO:
