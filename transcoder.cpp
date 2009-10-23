@@ -307,7 +307,7 @@ void TransCoder::pipeRun(int ind)
 	GstElement *source, *dec, *conv, *encoder, *muxer, *fileout, *tagger;
 	GstBus *bus;
 	GstState state;
-	GstPad *audiopad, *encoderpad;
+	GstPad *audiopad;//, *encoderpad;
 
 	numTrack = ind;
 
