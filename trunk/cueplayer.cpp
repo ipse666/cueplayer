@@ -811,9 +811,14 @@ void CuePlayer::setAid(int n)
 	}
 	else if (dvdFlag)
 	{
-		if (gst_pad_unlink(gst_element_get_static_pad (demuxer, getDvdAudio(dvdAudioCurrentPad)), gst_element_get_static_pad (d_audio, "sink")))
-			gst_pad_link (gst_element_get_static_pad (demuxer, getDvdAudio(n)), gst_element_get_static_pad (d_audio, "sink"));
+		gchar *curpad, *nextpad;
+		curpad = getDvdAudio(dvdAudioCurrentPad);
+		nextpad = getDvdAudio(n);
+		if (gst_pad_unlink(gst_element_get_static_pad (demuxer, curpad), gst_element_get_static_pad (d_audio, "sink")))
+			gst_pad_link (gst_element_get_static_pad (demuxer, nextpad), gst_element_get_static_pad (d_audio, "sink"));
 		dvdAudioCurrentPad = n;
+		g_free(curpad);
+		g_free(nextpad);
 	}
 }
 
