@@ -26,6 +26,8 @@ public:
 	void setMp3Title(GValue *, GValue *, GValue *);
 	void apeFound(bool);
 	void paramFile(QStringList);
+	void setDvdAudio(gchar*, int);
+	gchar* getDvdAudio(int);
 private:
 	GstThread *trd;
 	void seekAndLCD(int);
@@ -50,6 +52,7 @@ private:
 	QString mp3trackName;
 	QSettings settings;
 	QX11Info *xinfo;
+	QString dvdAu[20];
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;
@@ -60,6 +63,7 @@ private:
 	GMainLoop *loop;
 	GstElement *play;
 	GstElement *videosink;
+	GstElement *demuxer;
 	GstBus *bus;
 	int multiFiles[100];
 private slots:

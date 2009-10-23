@@ -9,6 +9,9 @@ bool cueFlag;
 bool multiCueFlag;
 bool videoFlag;
 bool dvdFlag;
+bool preInitFlag;
+int dvdAudioPads;
+int dvdAudioCurrentPad;
 
 WId win;
 static Display *display;
@@ -110,6 +113,8 @@ static void on_pad_added (GstElement *element,
 {
 	GstCaps *caps;
 	const gchar *mime = "NULL";
+	//gchar *name;
+	//int pres;
 	(void) element;
 	(void) data;
 	guint i;
@@ -125,11 +130,18 @@ static void on_pad_added (GstElement *element,
 	if (g_strrstr (mime, "audio/x-ac3")) {
 		audiopad = gst_element_get_static_pad (d_audio, "sink");
 		g_assert(audiopad);
+		if (preInitFlag)
+		{
+			cueplayer->setDvdAudio(gst_pad_get_name(pad), dvdAudioPads);
+			dvdAudioPads++;
+		}
+		//g_print("ПАД ДЕТЕКТ %s\n", gst_pad_get_name(pad)); // Дебаг!
 		if (GST_PAD_IS_LINKED (audiopad)) {
 			g_object_unref (audiopad);
 			return;
 		}
-		gst_pad_link (pad, audiopad);
+		if (!strcmp(gst_pad_get_name(pad), cueplayer->getDvdAudio(dvdAudioCurrentPad)))
+			gst_pad_link (pad, audiopad);
 		gst_object_unref (audiopad);
 	}
 
