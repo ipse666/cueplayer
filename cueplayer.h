@@ -53,6 +53,7 @@ private:
 	QSettings settings;
 	QX11Info *xinfo;
 	QString dvdAu[20];
+	QFileInfoList saveFileList;
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;
@@ -86,6 +87,7 @@ private slots:
 	void seekGst(int);
 	void preInit(QString);
 	void multiCueInit();
+	void multiFileInit(QFileInfoList);
 	void restoreSettings();
 	int getPosition();
 	void nminSeek();
