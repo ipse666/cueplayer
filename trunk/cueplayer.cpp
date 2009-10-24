@@ -20,7 +20,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 			<< trUtf8("Видеофайлы (*.ogg *.ogv *.avi *.mkv *.mp4)")
 			<< trUtf8("Аудиофайлы (*.mp3 *.flac *.ogg *.ogm)")
 			<< trUtf8("Все файлы (*.*)")
-			<< trUtf8("DVD каталог");
+			<< trUtf8("Каталог с файлами или DVD каталог");
 
 	//расположение главного окна по центру экрана
 	desktop = QApplication::desktop();
@@ -131,6 +131,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	fileList->setChecked(false);
 	cueFlag = false;
 	multiCueFlag = false;
+	multiFileFlag = false;
 	videoFlag = false;
 	dvdFlag = false;
 	preInitFlag = false;
@@ -197,12 +198,62 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	}
 	else if (fi.isDir())
 	{
-		d_title = 1;
-		createDvdPipe();
-		nextButton->setEnabled(true);
-		nextButton->setToolTip(trUtf8("Следующая дорожка"));
-		prewButton->setEnabled(true);
-		prewButton->setToolTip(trUtf8("Предыдущая дорожка"));
+		bool isDvd = false;
+		int counterVOB = 0;
+		int counterFiles = 0;
+		QDir dir = fi.filePath();
+		QFileInfoList fileInfoList = dir.entryInfoList();
+		QFileInfoList filesList;
+		while (fileInfoList.size())
+		{
+			QFileInfo filetu = fileInfoList.last();
+			fileInfoList.pop_back();
+			if (filetu.suffix() == "VOB")
+				counterVOB++;
+			else if (filetu.suffix() == "mp3" ||
+					 filetu.suffix() == "flac" ||
+					 filetu.suffix() == "ogg" ||
+					 filetu.suffix() == "ogm" ||
+					 filetu.suffix() == "ogv" ||
+					 filetu.suffix() == "mp4" ||
+					 filetu.suffix() == "avi" ||
+					 filetu.suffix() == "ts" ||
+					 filetu.suffix() == "wv" ||
+					 filetu.suffix() == "3gp" ||
+					 filetu.suffix() == "m2ts" ||
+					 filetu.suffix() == "mkv")
+			{
+				filesList.prepend(filetu);
+				counterFiles++;
+			}
+			if (counterVOB == 3)
+			{
+				isDvd = true;
+				break;
+			}
+		}
+		if (isDvd)
+		{
+			d_title = 1;
+			createDvdPipe();
+			nextButton->setEnabled(true);
+			nextButton->setToolTip(trUtf8("Следующая дорожка"));
+			prewButton->setEnabled(true);
+			prewButton->setToolTip(trUtf8("Предыдущая дорожка"));
+		}
+		else if (counterFiles)
+		{
+			multiFileFlag = true;
+			multiFileInit(filesList);
+			settings.setValue("player/recentfile", filename);
+			return;
+		}
+		else
+		{
+			setWindowTitle(trUtf8("Медиафайлы не обнаружены"));
+			label->setText(trUtf8("откройте файл"));
+			return;
+		}
 	}
 	else
 	{
@@ -252,6 +303,14 @@ void CuePlayer::playNextTrack()
 			else
 				createDvdPipe();
 		}
+	if (multiFileFlag)
+	{
+		if (numTrack < saveFileList.size())
+		{
+			++numTrack;
+			checkState();
+		}
+	}
 }
 
 // переключение на предыдущий трек
@@ -273,6 +332,14 @@ void CuePlayer::playPrewTrack()
 			else
 				createDvdPipe();
 		}
+	if (multiFileFlag)
+	{
+		if (numTrack > 1)
+		{
+			--numTrack;
+			checkState();
+		}
+	}
 }
 
 // воспроизведение трека
@@ -329,7 +396,7 @@ void CuePlayer::stopTrack()
 {
 	if (state == GST_STATE_PLAYING)
 	{
-		if (multiCueFlag)
+		if (multiCueFlag || multiFileFlag)
 		{
 			gst_element_set_state (play, GST_STATE_READY);
 			timer->stop();
@@ -428,6 +495,13 @@ void CuePlayer::seekAndLCD(int num)
 			totalTimeNext = multiFiles[num]/1000;
 			totalTime = 0;
 		}
+		timeLineSlider->setMaximum(totalTimeNext);
+		treeWidget->setCurrentItem(treeWidget->topLevelItem(num - 1));
+	}
+	else if (multiFileFlag)
+	{
+		totalTimeNext = multiFiles[num]/1000;
+		totalTime = 0;
 		timeLineSlider->setMaximum(totalTimeNext);
 		treeWidget->setCurrentItem(treeWidget->topLevelItem(num - 1));
 	}
@@ -579,6 +653,27 @@ void CuePlayer::stopAll()
 		videowindow->newTrack();
 	}
 	timeLineSlider->setSliderPosition(0);
+	if (multiFileFlag)
+	{
+		QFileInfo filetu = saveFileList.at(numTrack-1);
+		gst_element_set_state (play, GST_STATE_NULL);
+		g_object_set(play, "mute", true, NULL);
+		g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
+		gst_element_set_state (play, GST_STATE_PLAYING);
+		if (gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT) != GST_STATE_CHANGE_SUCCESS)
+		{
+			timer->stop();
+			gst_element_set_state (play, GST_STATE_NULL);
+			gst_object_unref (GST_OBJECT (play));
+			play = NULL;
+			g_print("Останов конвеера\n");
+		}
+		if (state == GST_STATE_PLAYING)
+		{
+			gst_element_set_state (play, GST_STATE_READY);
+			g_object_set(play, "mute", false, NULL);
+		}
+	}
 	seekAndLCD(numTrack);
 }
 
@@ -632,14 +727,22 @@ void CuePlayer::checkState()
 {
 	if (multiCueFlag)
 	{
-			gst_element_set_state (play, GST_STATE_NULL);
-			g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(numTrack)).toUtf8().data(), NULL);
-			gst_element_set_state (play, GST_STATE_READY);
-			gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_CLOCK_TIME_NONE);
+		gst_element_set_state (play, GST_STATE_NULL);
+		g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(numTrack)).toUtf8().data(), NULL);
+		gst_element_set_state (play, GST_STATE_READY);
+		gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT);
+	}
+	else if (multiFileFlag)
+	{
+		QFileInfo filetu = saveFileList.at(numTrack-1);
+		gst_element_set_state (play, GST_STATE_NULL);
+		g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
+		gst_element_set_state (play, GST_STATE_READY);
+		gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT);
 	}
 	if (state == GST_STATE_READY)
 		playTrack();
-	gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_CLOCK_TIME_NONE);
+	gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT);
 	if (state == GST_STATE_PLAYING)
 		seekAndLCD(numTrack);
 	else if (state == GST_STATE_PAUSED)
@@ -657,6 +760,7 @@ void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
 		setWindowTitle(trUtf8(g_value_get_string(vartist)) + " - " + trUtf8(g_value_get_string(valbum)));
 }
 
+// Обнаружение типа файла
 void CuePlayer::preInit(QString filename)
 {
 	GstElement *pipeline, *filesrc, *typefind, *fakesink;
@@ -702,7 +806,7 @@ void CuePlayer::multiCueInit()
 		g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(i)).toUtf8().data(), NULL);
 		g_object_set(play, "audio-sink", fakesink, NULL);
 		gst_element_set_state (play, GST_STATE_PLAYING);
-		gst_element_get_state( GST_ELEMENT(play), &st, NULL, GST_CLOCK_TIME_NONE);
+		gst_element_get_state( GST_ELEMENT(play), &st, NULL, GST_SECOND * TIMEOUT);
 		if (st == GST_STATE_PLAYING)
 		{
 			duration = getDuration();
@@ -731,6 +835,69 @@ void CuePlayer::multiCueInit()
 	numTrack = 1;
 	play = gst_element_factory_make ("playbin2", "play");
 	g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(numTrack)).toUtf8().data(), NULL);
+	bus = gst_pipeline_get_bus (GST_PIPELINE (play));
+	gst_bus_add_watch (bus, bus_callback, play);
+	gst_object_unref (bus);
+	gst_element_set_state (play, GST_STATE_PAUSED);
+	seekAndLCD(numTrack);
+	playButton->setEnabled(true);
+	pauseButton->setEnabled(true);
+	stopButton->setEnabled(true);
+	prewButton->setEnabled(true);
+	nextButton->setEnabled(true);
+	fileList->setEnabled(true);
+}
+
+void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
+{
+	GstState st;
+	GstElement *fakesink;
+	int duration = 0;
+	QString strSec;
+	saveFileList = fileInfoList;
+
+	treeWidget->setHeaderLabels(QStringList() << trUtf8("Композиция") << trUtf8("Время"));
+	treeWidget->setColumnWidth(0, 380);
+	treeWidget->setColumnWidth(1, 30);
+
+	for (int i = 1; i <= fileInfoList.size(); i++)
+	{
+		QFileInfo filetu = fileInfoList.at(i-1);
+		play = gst_element_factory_make ("playbin2", "play");
+		fakesink = gst_element_factory_make ("fakesink", "fake");
+		g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
+		g_object_set(play, "audio-sink", fakesink, NULL);
+		gst_element_set_state (play, GST_STATE_PLAYING);
+		gst_element_get_state( GST_ELEMENT(play), &st, NULL, GST_SECOND * TIMEOUT);
+		if (st == GST_STATE_PLAYING)
+		{
+			duration = getDuration();
+			//g_print ("Продолжительность трека %d: %d\n", i, duration);
+			gst_element_set_state (play, GST_STATE_NULL);
+			gst_object_unref (GST_OBJECT (play));
+			play = NULL;
+		}
+		int sec = duration / 1000;
+		int min = sec / 60;
+		sec %= 60;
+		if (sec < 10)
+			strSec = "0" + QString::number(sec,10);
+		else
+			strSec = QString::number(sec,10);
+		QString numTrackList;
+		numTrackList.setNum(i);
+		playlistItem[i-1] = new QTreeWidgetItem;
+		playlistItem[i-1]->setText(0, numTrackList + ". " + filetu.fileName());
+		playlistItem[i-1]->setText(1, QString::number(min, 10) + ":" + strSec);
+		playlistItem[i-1]->setTextAlignment(1, Qt::AlignRight);
+		treeWidget->insertTopLevelItem(i-1, playlistItem[i-1]);
+		multiFiles[i] = duration;
+	}
+	treeWidget->setCurrentItem(treeWidget->topLevelItem(0));
+	numTrack = 1;
+	play = gst_element_factory_make ("playbin2", "play");
+	QFileInfo filetu = fileInfoList.at(numTrack - 1);
+	g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
 	bus = gst_pipeline_get_bus (GST_PIPELINE (play));
 	gst_bus_add_watch (bus, bus_callback, play);
 	gst_object_unref (bus);
@@ -792,8 +959,10 @@ void CuePlayer::pmaxSeek()
 	seekGst(getPosition() - 600000);
 }
 
+// Выбор аудиодорожки видеофайла
 void CuePlayer::setAid(int n)
 {
+	// Выбор аудио playbin
 	if (videoFlag)
 	{
 		gint flags;
@@ -809,6 +978,7 @@ void CuePlayer::setAid(int n)
 			g_object_set(G_OBJECT (play), "flags", flags, "current-audio", n, NULL);
 		}
 	}
+	// Выбор аудио DVD
 	else if (dvdFlag)
 	{
 		gchar *curpad, *nextpad;
@@ -822,6 +992,7 @@ void CuePlayer::setAid(int n)
 	}
 }
 
+// Выбор субтитров видеофайла
 void CuePlayer::setTid(int n)
 {
 	gint flags;
@@ -840,20 +1011,23 @@ void CuePlayer::setTid(int n)
 
 void CuePlayer::fileDialogFilter(QString filter)
 {
-	if (filter == trUtf8("DVD каталог"))
+	if (filter == trUtf8("Каталог с файлами или DVD каталог"))
 	{
 		filedialog->setFileMode(QFileDialog::Directory);
 		filedialog->setNameFilters(filters);
-		filedialog->selectFilter(trUtf8("DVD каталог"));
+		filedialog->selectFilter(trUtf8("Каталог с файлами или DVD каталог"));
 	}
 	else
 		filedialog->setFileMode(QFileDialog::AnyFile);
 }
 
+// Пробный запуск конвеера, инициализация
 bool CuePlayer::playProbe()
 {
 	if (!dvdFlag) g_object_set(play, "mute", true, NULL);
 	preInitFlag = true;
+	dvdAudioPads = 0;
+	dvdAudioCurrentPad = 0;
 	gst_element_set_state (play, GST_STATE_PLAYING);
 	if (gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT) != GST_STATE_CHANGE_SUCCESS)
 	{
@@ -895,8 +1069,6 @@ void CuePlayer::createDvdPipe()
 
 
 	dvdFlag = true;
-	dvdAudioPads = 0;
-	dvdAudioCurrentPad = 0;
 	setWindowTitle(trUtf8("DVD видео"));
 	label->setText(trUtf8("DVD видео : 1"));
 

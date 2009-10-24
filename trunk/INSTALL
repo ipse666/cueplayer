@@ -1,4 +1,3 @@
 qmake
-make clean
 make
 ./cueplayer

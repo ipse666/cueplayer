@@ -7,6 +7,7 @@ GstState state;
 GstElement *dvdsrc, *d_audio, *d_video, *d_volume;
 bool cueFlag;
 bool multiCueFlag;
+bool multiFileFlag;
 bool videoFlag;
 bool dvdFlag;
 bool preInitFlag;
