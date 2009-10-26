@@ -280,8 +280,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	gst_object_unref (bus);
 
 	playProbe();
-	//g_signal_connect (play, "deep-notify",
-	//	G_CALLBACK (gst_object_default_deep_notify), NULL);
+	//g_signal_connect (play, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг
 }
 
 // переключение на следующий трек
@@ -423,6 +422,7 @@ void CuePlayer::stopTrack()
 // триггер паузы
 void CuePlayer::pauseTrack()
 {
+	gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT);
 	if (state == GST_STATE_PAUSED)
 		gst_element_set_state (play, GST_STATE_PLAYING);
 	else
