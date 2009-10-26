@@ -1107,7 +1107,7 @@ void CuePlayer::createDvdPipe()
 	aqueue = make_queue ();
 	vqueue = make_queue ();
 
-	g_print("Выбран каталог, формат DVD\n");
+	g_print("Выбран формат DVD\n");
 	play = gst_pipeline_new ("pipe");
 	dvdsrc = gst_element_factory_make ("dvdreadsrc", "dvdsrc");
 	if(!discFlag)
