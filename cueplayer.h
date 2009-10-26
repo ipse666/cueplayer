@@ -37,12 +37,14 @@ private:
 	int getDuration();
 	bool playProbe();
 	void createDvdPipe();
+	void initPlayer();
 	QFileDialog *filedialog;
 	QTreeWidgetItem *playlistItem[100];
 	QSystemTrayIcon *trayIcon;
 	QMenu *trayIconMenu;
 	QAction *quitAction;
 	QAction *aboutAction;
+	QAction *extbutAction;
 	QAction *transcodeAction;
 	QAction *apetoflacAction;
 	QWidget *desktop;
@@ -70,6 +72,7 @@ private:
 private slots:
 	void setNumLCDs(int);
 	void cueFileSelected(QStringList);
+	void discSet();
 	void playNextTrack();
 	void playPrewTrack();
 	void playTrack();
@@ -101,6 +104,7 @@ private slots:
 	void sliderVideoRelease();
 	void fileDialogFilter(QString);
 	void dtsPlayer();
+	void extButtons(bool);
 signals:
 	void gstError();
 };
