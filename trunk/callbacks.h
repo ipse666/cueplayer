@@ -11,6 +11,7 @@ bool multiFileFlag;
 bool videoFlag;
 bool dvdFlag;
 bool preInitFlag;
+bool discFlag;
 int dvdAudioPads;
 int dvdAudioCurrentPad;
 

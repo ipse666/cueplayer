@@ -339,7 +339,7 @@
     <value type="QString">CONFIG_PROTECT=/usr/share/X11/xkb /var/lib/hsqldb /usr/share/config /usr/kde/3.5/share/config /usr/kde/3.5/env /usr/kde/3.5/shutdown</value>
     <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5/ext-active/ /etc/php/cgi-php5/ext-active/ /etc/php/apache2-php5/ext-active/ /etc/udev/rules.d /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/ca-certificates.conf /etc/revdep-rebuild</value>
     <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-YFGQHhJ2aO,guid=165b7eaf84a7df9097bcb8ba4ae0b0af</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-VRYxeOENvl,guid=14ee10140952ce59482ece204ae46049</value>
     <value type="QString">DESKTOP_SESSION=KDE-4</value>
     <value type="QString">DISPLAY=:0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
@@ -363,12 +363,12 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">KONSOLE_DBUS_SERVICE=:1.31</value>
-    <value type="QString">KONSOLE_DBUS_SESSION=/Sessions/4</value>
+    <value type="QString">KONSOLE_DBUS_SESSION=/Sessions/3</value>
     <value type="QString">LADSPA_PATH=/usr/lib64/ladspa</value>
     <value type="QString">LANG=ru_RU.UTF-8</value>
     <value type="QString">LANGUAGE=</value>
     <value type="QString">LC_ALL=ru_RU.UTF-8</value>
-    <value type="QString">LD_LIBRARY_PATH=/home/ipse/devel/tmp/1.3.0-beta.uncompressed/qt-creator-qt-creator/build/lib/qtcreator:</value>
+    <value type="QString">LD_LIBRARY_PATH=/home/ipse/devel/tmp/1.3.0-beta.uncompressed/qt-creator-qt-creator/lib/qtcreator:</value>
     <value type="QString">LESS=-R -M --shift 5</value>
     <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
     <value type="QString">LIBRARY_PATH=/opt/intel/Compiler/11.1/056/lib/intel64</value>
@@ -381,13 +381,13 @@
     <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/x86_64-pc-linux-gnu/gcc-bin/4.3.4:/opt/intel/Compiler/11.1/056/bin/intel64:/opt/blackdown-jdk-1.4.2.03/bin:/opt/blackdown-jdk-1.4.2.03/jre/bin:/usr/kde/3.5/bin:/usr/qt/3/bin:/usr/games/bin:/opt/vmware/workstation/bin:/home/ipse/bin:/home/ipse/cuda/cuda/bin:/home/ipse/komodo/bin</value>
     <value type="QString">PRELINK_PATH_MASK=/opt</value>
     <value type="QString">PROFILEHOME=</value>
-    <value type="QString">PWD=/home/ipse/devel/tmp/1.3.0-beta.uncompressed/qt-creator-qt-creator/build/bin</value>
+    <value type="QString">PWD=/home/ipse/devel/tmp/1.3.0-beta.uncompressed/qt-creator-qt-creator</value>
     <value type="QString">QMAKESPEC=linux-g++</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">QT_PLUGIN_PATH=/home/ipse/.kde4/lib64/kde4/plugins/:/usr/lib64/kde4/plugins/</value>
     <value type="QString">RUBYOPT=-rauto_gem</value>
     <value type="QString">SANE_CONFIG_DIR=/etc/sane.d</value>
-    <value type="QString">SESSION_MANAGER=local/localhost:@/tmp/.ICE-unix/3157,unix/localhost:/tmp/.ICE-unix/3157</value>
+    <value type="QString">SESSION_MANAGER=local/localhost:@/tmp/.ICE-unix/3197,unix/localhost:/tmp/.ICE-unix/3197</value>
     <value type="QString">SGML_CATALOG_FILES=/etc/sgml/sgml-docbook.cat:/etc/sgml/openjade-1.3.2.cat:/etc/sgml/sgml-docbook-3.1.cat:/etc/sgml/sgml-docbook-3.0.cat:/etc/sgml/xml-docbook-4.4.cat:/etc/sgml/sgml-ent.cat:/etc/sgml/xml-docbook-4.3.cat:/etc/sgml/xml-docbook-4.1.2.cat:/etc/sgml/sgml-lite.cat:/etc/sgml/xml-docbook-4.2.cat:/etc/sgml/dsssl-docbook-stylesheets.cat</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=2</value>
@@ -425,7 +425,7 @@
     <value type="QString">CONFIG_PROTECT=/usr/share/X11/xkb /var/lib/hsqldb /usr/share/config /usr/kde/3.5/share/config /usr/kde/3.5/env /usr/kde/3.5/shutdown</value>
     <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5/ext-active/ /etc/php/cgi-php5/ext-active/ /etc/php/apache2-php5/ext-active/ /etc/udev/rules.d /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/ca-certificates.conf /etc/revdep-rebuild</value>
     <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-YFGQHhJ2aO,guid=165b7eaf84a7df9097bcb8ba4ae0b0af</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-VRYxeOENvl,guid=14ee10140952ce59482ece204ae46049</value>
     <value type="QString">DESKTOP_SESSION=KDE-4</value>
     <value type="QString">DISPLAY=:0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
@@ -449,12 +449,12 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">KONSOLE_DBUS_SERVICE=:1.31</value>
-    <value type="QString">KONSOLE_DBUS_SESSION=/Sessions/4</value>
+    <value type="QString">KONSOLE_DBUS_SESSION=/Sessions/3</value>
     <value type="QString">LADSPA_PATH=/usr/lib64/ladspa</value>
     <value type="QString">LANG=ru_RU.UTF-8</value>
     <value type="QString">LANGUAGE=</value>
     <value type="QString">LC_ALL=ru_RU.UTF-8</value>
-    <value type="QString">LD_LIBRARY_PATH=/home/ipse/devel/tmp/1.3.0-beta.uncompressed/qt-creator-qt-creator/build/lib/qtcreator:</value>
+    <value type="QString">LD_LIBRARY_PATH=/home/ipse/devel/tmp/1.3.0-beta.uncompressed/qt-creator-qt-creator/lib/qtcreator:</value>
     <value type="QString">LESS=-R -M --shift 5</value>
     <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
     <value type="QString">LIBRARY_PATH=/opt/intel/Compiler/11.1/056/lib/intel64</value>
@@ -467,13 +467,13 @@
     <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/x86_64-pc-linux-gnu/gcc-bin/4.3.4:/opt/intel/Compiler/11.1/056/bin/intel64:/opt/blackdown-jdk-1.4.2.03/bin:/opt/blackdown-jdk-1.4.2.03/jre/bin:/usr/kde/3.5/bin:/usr/qt/3/bin:/usr/games/bin:/opt/vmware/workstation/bin:/home/ipse/bin:/home/ipse/cuda/cuda/bin:/home/ipse/komodo/bin</value>
     <value type="QString">PRELINK_PATH_MASK=/opt</value>
     <value type="QString">PROFILEHOME=</value>
-    <value type="QString">PWD=/home/ipse/devel/tmp/1.3.0-beta.uncompressed/qt-creator-qt-creator/build/bin</value>
+    <value type="QString">PWD=/home/ipse/devel/tmp/1.3.0-beta.uncompressed/qt-creator-qt-creator</value>
     <value type="QString">QMAKESPEC=linux-g++</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">QT_PLUGIN_PATH=/home/ipse/.kde4/lib64/kde4/plugins/:/usr/lib64/kde4/plugins/</value>
     <value type="QString">RUBYOPT=-rauto_gem</value>
     <value type="QString">SANE_CONFIG_DIR=/etc/sane.d</value>
-    <value type="QString">SESSION_MANAGER=local/localhost:@/tmp/.ICE-unix/3157,unix/localhost:/tmp/.ICE-unix/3157</value>
+    <value type="QString">SESSION_MANAGER=local/localhost:@/tmp/.ICE-unix/3197,unix/localhost:/tmp/.ICE-unix/3197</value>
     <value type="QString">SGML_CATALOG_FILES=/etc/sgml/sgml-docbook.cat:/etc/sgml/openjade-1.3.2.cat:/etc/sgml/sgml-docbook-3.1.cat:/etc/sgml/sgml-docbook-3.0.cat:/etc/sgml/xml-docbook-4.4.cat:/etc/sgml/sgml-ent.cat:/etc/sgml/xml-docbook-4.3.cat:/etc/sgml/xml-docbook-4.1.2.cat:/etc/sgml/sgml-lite.cat:/etc/sgml/xml-docbook-4.2.cat:/etc/sgml/dsssl-docbook-stylesheets.cat</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=2</value>

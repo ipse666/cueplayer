@@ -32,6 +32,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 
 	label->setText(trUtf8("откройте файл"));
 	treeWidget->hide();
+	dvdButton->hide();
 	createTrayIconMenu();
 	layout()->setSizeConstraint(QLayout::SetFixedSize);
 	refparser = NULL;
@@ -57,6 +58,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 
 	connect(timeLineSlider, SIGNAL(valueChanged(int)),
 	 this, SLOT(setNumLCDs(int)));
+	connect(dvdButton, SIGNAL(clicked()), this, SLOT(discSet()));
 	connect(openButton, SIGNAL(clicked()),
 	 filedialog, SLOT(exec()));
 	connect(filedialog, SIGNAL(filesSelected(QStringList)),
@@ -124,35 +126,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	QString nextTool = nextButton->toolTip();
 	QString prewTool = prewButton->toolTip();
 
-	treeWidget->clear();
-	treeWidget->hide();
-	enableButtons(false);
-	apetoflacAction->setEnabled(false);
-	fileList->setChecked(false);
-	cueFlag = false;
-	multiCueFlag = false;
-	multiFileFlag = false;
-	videoFlag = false;
-	dvdFlag = false;
-	preInitFlag = false;
-	videowindow->hide();
-	memset(multiFiles,0,100);
-	mp3trackName = trUtf8("неизвестно");
-	numTrack = 1;
-	if (refparser)
-	{
-	    delete refparser;
-		refparser = NULL;
-	}
-	if(play)
-	{
-		timer->stop();
-		gst_element_set_state (play, GST_STATE_NULL);
-		gst_object_unref (GST_OBJECT (play));
-		play = NULL;
-		g_print("Останов конвеера\n");
-	}
-	timeLineSlider->setSliderPosition(0);
+	initPlayer();
 	filename = filenames.join("");
 	QFileInfo fi(filename);
 
@@ -281,6 +255,58 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 
 	playProbe();
 	//g_signal_connect (play, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг
+}
+
+// Инициализация диска
+void CuePlayer::discSet()
+{
+	initPlayer();
+	d_title = 1;
+	discFlag = true;
+	createDvdPipe();
+	nextButton->setEnabled(true);
+	nextButton->setToolTip(trUtf8("Следующая дорожка"));
+	prewButton->setEnabled(true);
+	prewButton->setToolTip(trUtf8("Предыдущая дорожка"));
+	bus = gst_pipeline_get_bus (GST_PIPELINE (play));
+	gst_bus_add_watch (bus, bus_callback, play);
+	gst_object_unref (bus);
+
+	playProbe();
+}
+
+void CuePlayer::initPlayer()
+{
+	treeWidget->clear();
+	treeWidget->hide();
+	enableButtons(false);
+	apetoflacAction->setEnabled(false);
+	fileList->setChecked(false);
+	cueFlag = false;
+	multiCueFlag = false;
+	multiFileFlag = false;
+	videoFlag = false;
+	dvdFlag = false;
+	preInitFlag = false;
+	discFlag = false;
+	videowindow->hide();
+	memset(multiFiles,0,100);
+	mp3trackName = trUtf8("неизвестно");
+	numTrack = 1;
+	if (refparser)
+	{
+		delete refparser;
+		refparser = NULL;
+	}
+	if(play)
+	{
+		timer->stop();
+		gst_element_set_state (play, GST_STATE_NULL);
+		gst_object_unref (GST_OBJECT (play));
+		play = NULL;
+		g_print("Останов конвеера\n");
+	}
+	timeLineSlider->setSliderPosition(0);
 }
 
 // переключение на следующий трек
@@ -586,6 +612,10 @@ void CuePlayer::createTrayIconMenu()
 	aboutAction->setIcon(QIcon(":/images/help-about.png"));
 	connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
 
+	extbutAction = new QAction(trUtf8("&Расширенный"), this);
+	extbutAction->setCheckable(true);
+	connect(extbutAction, SIGNAL(triggered(bool)), this, SLOT(extButtons(bool)));
+
 	transcoder = new TransCoder(this);
 	transcodeAction = new QAction(trUtf8("Конвертор"), this);
 	transcodeAction->setIcon(QIcon(":/images/convertor.png"));
@@ -598,6 +628,7 @@ void CuePlayer::createTrayIconMenu()
 
 	trayIcon = new QSystemTrayIcon(this);
 	trayIconMenu = new QMenu(this);
+	trayIconMenu->addAction(extbutAction);
 	trayIconMenu->addAction(apetoflacAction);
 	trayIconMenu->addAction(transcodeAction);
 	trayIconMenu->addAction(aboutAction);
@@ -607,6 +638,7 @@ void CuePlayer::createTrayIconMenu()
 	trayIcon->setIcon(QIcon(":/images/knotify.png"));
 	trayIcon->show();
 
+	addAction(extbutAction);
 	addAction(apetoflacAction);
 	addAction(transcodeAction);
 	addAction(aboutAction);
@@ -637,8 +669,8 @@ void CuePlayer::trayClicked(QSystemTrayIcon::ActivationReason reason)
 void CuePlayer::about()
 {
 	QMessageBox::information(this, trUtf8("О программе"),
-							 trUtf8("<h2>CUE проигрыватель</h2>"
-									"<p>Проигрыватель музыкальных медиаобразов."
+							 trUtf8("<h2>CuePlayer</h2>"
+									"<p>Мультимедиа проигрыватель."
 									"<p><p>Разработчик: <a href=xmpp:ipse@ipse.zapto.org name=jid type=application/xmpp+xml>ipse</a>"));
 }
 
@@ -1078,7 +1110,8 @@ void CuePlayer::createDvdPipe()
 	g_print("Выбран каталог, формат DVD\n");
 	play = gst_pipeline_new ("pipe");
 	dvdsrc = gst_element_factory_make ("dvdreadsrc", "dvdsrc");
-	g_object_set (G_OBJECT (dvdsrc), "device", filename.toUtf8().data(), NULL);
+	if(!discFlag)
+		g_object_set (G_OBJECT (dvdsrc), "device", filename.toUtf8().data(), NULL);
 	typefind = gst_element_factory_make ("typefind", "typefinder");
 	g_signal_connect (typefind, "have-type", G_CALLBACK (cb_typefound), NULL);
 	demuxer = gst_element_factory_make ("dvddemux", "demux");
@@ -1131,6 +1164,14 @@ void CuePlayer::setDvdAudio(gchar* auname, int ind)
 gchar* CuePlayer::getDvdAudio(int ind)
 {
 	return strdup(dvdAu[ind].toAscii().data());
+}
+
+void CuePlayer::extButtons(bool b)
+{
+	if(b)
+		dvdButton->show();
+	else
+		dvdButton->hide();
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)
