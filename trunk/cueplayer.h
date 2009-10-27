@@ -5,6 +5,7 @@
 #include <QSystemTrayIcon>
 #include <QThread>
 #include <QX11Info>
+#include <QProcess>
 #include <gst/interfaces/xoverlay.h>
 #include "ui_cueplayer.h"
 #include "cueparser.h"
@@ -56,6 +57,7 @@ private:
 	QX11Info *xinfo;
 	QString dvdAu[20];
 	QFileInfoList saveFileList;
+	QProcess *videoProcess;
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;
@@ -105,6 +107,7 @@ private slots:
 	void fileDialogFilter(QString);
 	void dtsPlayer();
 	void extButtons(bool);
+	void endBlock();
 signals:
 	void gstError();
 };
