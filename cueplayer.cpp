@@ -14,6 +14,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	// Иксы
 	xinfo = new QX11Info();
 	display = xinfo->display();
+	videoProcess = new QProcess(this);
 
 	// Фильтр диалога
 	filters << trUtf8("CUE образы (*.cue)")
@@ -375,6 +376,9 @@ void CuePlayer::playTrack()
 		gst_x_overlay_set_xwindow_id (GST_X_OVERLAY (videosink), win);
 		gst_x_overlay_expose (GST_X_OVERLAY (videosink));
 		videowindow->show();
+		QStringList arguments;
+		arguments << "-dpms";
+		videoProcess->start("xset", arguments);
 	}
 	gst_element_set_state (play, GST_STATE_PLAYING);
 	timer->start(TIME);
@@ -606,7 +610,7 @@ void CuePlayer::createTrayIconMenu()
 {
 	quitAction = new QAction(trUtf8("&Выход"), this);
 	quitAction->setIcon(QIcon(":/images/application-exit.png"));
-	connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+	connect(quitAction, SIGNAL(triggered()), this, SLOT(endBlock()));
 
 	aboutAction = new QAction(trUtf8("&О программе"), this);
 	aboutAction->setIcon(QIcon(":/images/help-about.png"));
@@ -683,6 +687,9 @@ void CuePlayer::stopAll()
 	{
 		videowindow->hide();
 		videowindow->newTrack();
+		QStringList arguments;
+		arguments << "+dpms";
+		videoProcess->start("xset", arguments);
 	}
 	timeLineSlider->setSliderPosition(0);
 	if (multiFileFlag)
@@ -1172,6 +1179,14 @@ void CuePlayer::extButtons(bool b)
 		dvdButton->show();
 	else
 		dvdButton->hide();
+}
+
+void CuePlayer::endBlock()
+{
+	QStringList arguments;
+	arguments << "+dpms";
+	videoProcess->start("xset", arguments);
+	qApp->quit();
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)

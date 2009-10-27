@@ -1,5 +1,4 @@
 #include <QApplication>
-#include <QMessageBox>
 #include "cueplayer.h"
 
 int main(int argc, char *argv[])
