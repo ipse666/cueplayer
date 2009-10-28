@@ -108,6 +108,7 @@ private slots:
 	void dtsPlayer();
 	void extButtons(bool);
 	void endBlock();
+	void dpmsTrigger(bool);
 signals:
 	void gstError();
 };
