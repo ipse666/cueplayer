@@ -241,12 +241,10 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 
 	if (videoFlag)
 	{
-		//GstElement *audiosink = gst_element_factory_make ("osssink", "audioout");
 		videosink = gst_element_factory_make ("xvimagesink", "xvideoout");
 		g_object_set(G_OBJECT (videosink), "display", display, NULL);
 		g_object_set(G_OBJECT (videosink), "force-aspect-ratio", true, NULL);
 		g_object_set (G_OBJECT (play), "video-sink", videosink, NULL);
-		//g_object_set (G_OBJECT (play), "audio-sink", audiosink, NULL);
 		gst_x_overlay_set_xwindow_id (GST_X_OVERLAY(videosink), win);
 	}
 
@@ -376,9 +374,7 @@ void CuePlayer::playTrack()
 		gst_x_overlay_set_xwindow_id (GST_X_OVERLAY (videosink), win);
 		gst_x_overlay_expose (GST_X_OVERLAY (videosink));
 		videowindow->show();
-		QStringList arguments;
-		arguments << "-dpms";
-		videoProcess->start("xset", arguments);
+		dpmsTrigger(false);
 	}
 	gst_element_set_state (play, GST_STATE_PLAYING);
 	timer->start(TIME);
@@ -687,9 +683,7 @@ void CuePlayer::stopAll()
 	{
 		videowindow->hide();
 		videowindow->newTrack();
-		QStringList arguments;
-		arguments << "+dpms";
-		videoProcess->start("xset", arguments);
+		dpmsTrigger(true);
 	}
 	timeLineSlider->setSliderPosition(0);
 	if (multiFileFlag)
@@ -849,7 +843,6 @@ void CuePlayer::multiCueInit()
 		if (st == GST_STATE_PLAYING)
 		{
 			duration = getDuration();
-			//g_print ("Продолжительность трека %d: %d\n", i, duration);
 			gst_element_set_state (play, GST_STATE_NULL);
 			gst_object_unref (GST_OBJECT (play));
 			play = NULL;
@@ -911,7 +904,6 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 		if (st == GST_STATE_PLAYING)
 		{
 			duration = getDuration();
-			//g_print ("Продолжительность трека %d: %d\n", i, duration);
 			gst_element_set_state (play, GST_STATE_NULL);
 			gst_object_unref (GST_OBJECT (play));
 			play = NULL;
@@ -1023,9 +1015,17 @@ void CuePlayer::setAid(int n)
 		gchar *curpad, *nextpad;
 		curpad = getDvdAudio(dvdAudioCurrentPad);
 		nextpad = getDvdAudio(n);
+		//g_print("текущий пад %s, запрашиваемый пад %s\n", curpad, nextpad); // Дебаг!
 		if (gst_pad_unlink(gst_element_get_static_pad (demuxer, curpad), gst_element_get_static_pad (d_audio, "sink")))
-			gst_pad_link (gst_element_get_static_pad (demuxer, nextpad), gst_element_get_static_pad (d_audio, "sink"));
-		dvdAudioCurrentPad = n;
+		{
+			if (!gst_pad_link (gst_element_get_static_pad (demuxer, nextpad), gst_element_get_static_pad (d_audio, "sink")))
+				dvdAudioCurrentPad = n;
+			else
+			{
+				videowindow->createAudioMenu(dvdAudioPads - 1, dvdAudioCurrentPad);
+				gst_pad_link (gst_element_get_static_pad (demuxer, curpad), gst_element_get_static_pad (d_audio, "sink"));
+			}
+		}
 		g_free(curpad);
 		g_free(nextpad);
 	}
@@ -1183,10 +1183,21 @@ void CuePlayer::extButtons(bool b)
 
 void CuePlayer::endBlock()
 {
-	QStringList arguments;
-	arguments << "+dpms";
-	videoProcess->start("xset", arguments);
+	stopTrack();
 	qApp->quit();
+}
+
+void CuePlayer::dpmsTrigger(bool dpms)
+{
+	QStringList arguments;
+	if (dpms)
+		arguments << "+dpms";
+	else
+		arguments << "-dpms";
+	if (videoProcess->state())
+		videoProcess->kill();
+	videoProcess->start("xset", arguments);
+	//qDebug() << arguments;
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)

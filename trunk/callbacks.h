@@ -137,7 +137,7 @@ static void on_pad_added (GstElement *element,
 			cueplayer->setDvdAudio(gst_pad_get_name(pad), dvdAudioPads);
 			dvdAudioPads++;
 		}
-		//g_print("ПАД ДЕТЕКТ %s\n", gst_pad_get_name(pad)); // Дебаг!
+		//g_print("ПАД ДЕТЕКТ %s, текущий индекс %d\n", gst_pad_get_name(pad), dvdAudioCurrentPad); // Дебаг!
 		if (GST_PAD_IS_LINKED (audiopad)) {
 			g_object_unref (audiopad);
 			return;
