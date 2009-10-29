@@ -1206,16 +1206,14 @@ void CuePlayer::dpmsTrigger(bool dpms)
 		videoProcess->kill();
 	videoProcess->start("xset", arguments);
 	videoProcess->waitForFinished(1000);
-	//qDebug() << arguments;
+	qDebug() << arguments;
 }
 
 QString CuePlayer::checkDPMS()
 {
-	QStringList arguments;
-	arguments << "q";
 	if (videoProcess->state())
 		videoProcess->kill();
-	videoProcess->start("xset", arguments);
+	videoProcess->start("xset", QStringList() << "q");
 	if (!videoProcess->waitForFinished(1000))
 			 return "+dpms";
 	QByteArray result = videoProcess->readAll();
