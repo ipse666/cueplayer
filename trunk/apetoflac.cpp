@@ -216,15 +216,25 @@ void ApeToFlac::stopCode()
 
 int ApeToFlac::getDuration()
 {
-	static gint64 basetime;
+	gint64 basetime;
 	GstFormat fmt = GST_FORMAT_TIME;
-	gst_element_query_duration(atfpipe, &fmt, &basetime);
-	return basetime / 1000000;
+	if (gst_element_query_duration(atfpipe, &fmt, &basetime))
+		return basetime / 1000000;
+	else
+		return -1;
 }
 
 void ApeToFlac::decoding()
 {
 	saveTotalTime = getDuration();
+	if (saveTotalTime == -1)
+	{
+		g_print("Ошибка при запросе продолжительности\n");
+		gst_element_set_state (atfpipe, GST_STATE_NULL);
+		gst_object_unref (GST_OBJECT (atfpipe));
+		close();
+		return;
+	}
 	g_print("Продолжительность %d\n", saveTotalTime);
 	timer->start(TIME);
 }
