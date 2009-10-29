@@ -58,6 +58,7 @@ private:
 	QString dvdAu[20];
 	QFileInfoList saveFileList;
 	QProcess *videoProcess;
+	QString primaryDPMS;
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;
@@ -109,6 +110,7 @@ private slots:
 	void extButtons(bool);
 	void endBlock();
 	void dpmsTrigger(bool);
+	QString checkDPMS();
 signals:
 	void gstError();
 };
