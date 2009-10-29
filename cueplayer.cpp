@@ -15,6 +15,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	xinfo = new QX11Info();
 	display = xinfo->display();
 	videoProcess = new QProcess(this);
+	primaryDPMS = checkDPMS();
 
 	// Фильтр диалога
 	filters << trUtf8("CUE образы (*.cue)")
@@ -1184,6 +1185,13 @@ void CuePlayer::extButtons(bool b)
 void CuePlayer::endBlock()
 {
 	stopTrack();
+	if (primaryDPMS != checkDPMS())
+	{
+		if (primaryDPMS == "-dpms")
+			dpmsTrigger(false);
+		else
+			dpmsTrigger(true);
+	}
 	qApp->quit();
 }
 
@@ -1197,7 +1205,32 @@ void CuePlayer::dpmsTrigger(bool dpms)
 	if (videoProcess->state())
 		videoProcess->kill();
 	videoProcess->start("xset", arguments);
+	videoProcess->waitForFinished(1000);
 	//qDebug() << arguments;
+}
+
+QString CuePlayer::checkDPMS()
+{
+	QStringList arguments;
+	arguments << "q";
+	if (videoProcess->state())
+		videoProcess->kill();
+	videoProcess->start("xset", arguments);
+	if (!videoProcess->waitForFinished(1000))
+			 return "+dpms";
+	QByteArray result = videoProcess->readAll();
+	videoProcess->close();
+	QList<QByteArray> out = result.split('\n');
+	while (out.size())
+	{
+		QByteArray bastr = out.last();
+		out.pop_back();
+		if (!strcmp (bastr, "  DPMS is Disabled"))
+			return "-dpms";
+		else if (!strcmp (bastr, "  DPMS is Enabled"))
+			return "+dpms";
+	}
+	return "+dpms";
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)
