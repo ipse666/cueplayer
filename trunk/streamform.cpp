@@ -32,6 +32,7 @@ void StreamForm::readUrl()
 {
 	QStringList url;
 	url << ui->lineEdit->text();
+	ui->lineEdit->clear();
 	emit streamOk(url);
 	close();
 }
