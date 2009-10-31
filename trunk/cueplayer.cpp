@@ -35,6 +35,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	label->setText(trUtf8("откройте файл"));
 	treeWidget->hide();
 	dvdButton->hide();
+	streamButton->hide();
 	createTrayIconMenu();
 	layout()->setSizeConstraint(QLayout::SetFixedSize);
 	refparser = NULL;
@@ -46,6 +47,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	int vidWidthPos = desktop->width()/2 - vidWidth/2;
 	videowindow->move(vidWidthPos, appHeightPos - vidHeight);
 	win = videowindow->winId();
+	streamform = new StreamForm(this);
 	secNumLCD->display("00");
 	enableButtons(false);
 	restoreSettings();
@@ -61,11 +63,15 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(timeLineSlider, SIGNAL(valueChanged(int)),
 	 this, SLOT(setNumLCDs(int)));
 	connect(dvdButton, SIGNAL(clicked()), this, SLOT(discSet()));
+	connect(streamButton, SIGNAL(clicked()),
+	 streamform, SLOT(show()));
 	connect(openButton, SIGNAL(clicked()),
 	 filedialog, SLOT(exec()));
 	connect(filedialog, SIGNAL(filesSelected(QStringList)),
 	 this, SLOT(cueFileSelected(QStringList)));
 	connect(apetoflac, SIGNAL(endHint(QStringList)),
+	 this, SLOT(cueFileSelected(QStringList)));
+	connect(streamform, SIGNAL(streamOk(QStringList)),
 	 this, SLOT(cueFileSelected(QStringList)));
 	connect(nextButton, SIGNAL(clicked()), 
 	 this, SLOT(playNextTrack()));
@@ -124,6 +130,7 @@ void CuePlayer::setNumLCDs(int sec)
 // инициализация аудиофайла
 void CuePlayer::cueFileSelected(QStringList filenames)
 {
+	QRegExp rxFilename("^/.*");
 	QRegExp rxFilename2(".*/([^/]*)$");
 	QString nextTool = nextButton->toolTip();
 	QString prewTool = prewButton->toolTip();
@@ -170,7 +177,10 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		label->setText(mp3trackName);
 		preInit(filename);
 		play = gst_element_factory_make ("playbin2", "play");
-		g_object_set (G_OBJECT (play), "uri", ("file://" + filename).toUtf8().data(), NULL);
+		if (rxFilename.indexIn(filename) != -1)
+			g_object_set (G_OBJECT (play), "uri", ("file://" + filename).toUtf8().data(), NULL);
+		else
+			g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
 	}
 	else if (fi.isDir())
 	{
@@ -1177,9 +1187,15 @@ gchar* CuePlayer::getDvdAudio(int ind)
 void CuePlayer::extButtons(bool b)
 {
 	if(b)
+	{
 		dvdButton->show();
+		streamButton->show();
+	}
 	else
+	{
 		dvdButton->hide();
+		streamButton->hide();
+	}
 }
 
 void CuePlayer::endBlock()

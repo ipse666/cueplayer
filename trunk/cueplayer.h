@@ -12,6 +12,7 @@
 #include "transcoder.h"
 #include "apetoflac.h"
 #include "videowindow.h"
+#include "streamform.h"
 
 class GstThread;
 
@@ -62,6 +63,7 @@ private:
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;
+	StreamForm *streamform;
 	int numTrack;
 	int totalTime;
 	int d_title;
