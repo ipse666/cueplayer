@@ -17,5 +17,6 @@
         <file>images/speaker.png</file>
         <file>images/text-field.png</file>
         <file>images/media-optical.png</file>
+        <file>images/net-stream.png</file>
     </qresource>
 </RCC>

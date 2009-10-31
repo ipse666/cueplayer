@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>532</width>
+    <width>579</width>
     <height>313</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
    <string>CUE Проигрыватель</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../ressources.qrc">
     <normaloff>:/images/knotify.png</normaloff>:/images/knotify.png</iconset>
   </property>
   <property name="toolTip">
@@ -145,6 +145,38 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
+          <widget class="QPushButton" name="streamButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>45</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Интернет адрес</string>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../ressources.qrc">
+             <normaloff>:/images/net-stream.png</normaloff>:/images/net-stream.png</iconset>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="dvdButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -168,7 +200,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../ressources.qrc">
              <normaloff>:/images/media-optical.png</normaloff>:/images/media-optical.png</iconset>
            </property>
            <property name="autoDefault">
@@ -200,7 +232,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../ressources.qrc">
              <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
            </property>
            <property name="autoDefault">
@@ -229,7 +261,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../ressources.qrc">
              <normaloff>:/images/play.png</normaloff>:/images/play.png</iconset>
            </property>
            <property name="autoDefault">
@@ -261,7 +293,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../ressources.qrc">
              <normaloff>:/images/pause.png</normaloff>:/images/pause.png</iconset>
            </property>
           </widget>
@@ -287,7 +319,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../ressources.qrc">
              <normaloff>:/images/stop.png</normaloff>:/images/stop.png</iconset>
            </property>
           </widget>
@@ -313,7 +345,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../ressources.qrc">
              <normaloff>:/images/prev.png</normaloff>:/images/prev.png</iconset>
            </property>
           </widget>
@@ -339,7 +371,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../ressources.qrc">
              <normaloff>:/images/next.png</normaloff>:/images/next.png</iconset>
            </property>
           </widget>
@@ -365,7 +397,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../ressources.qrc">
              <normaloff>:/images/format-list-unordered.png</normaloff>:/images/format-list-unordered.png</iconset>
            </property>
            <property name="checkable">
@@ -463,7 +495,9 @@
   <tabstop>timeLineSlider</tabstop>
   <tabstop>volumeDial</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>fileList</sender>
