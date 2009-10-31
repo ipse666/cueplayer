@@ -116,8 +116,6 @@ static void on_pad_added (GstElement *element,
 {
 	GstCaps *caps;
 	const gchar *mime = "NULL";
-	//gchar *name;
-	//int pres;
 	(void) element;
 	(void) data;
 	guint i;

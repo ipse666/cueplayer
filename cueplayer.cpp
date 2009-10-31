@@ -54,6 +54,8 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	enableButtons(false);
 	restoreSettings();
 	apetoflacAction->setEnabled(false);
+	streamButton->setShortcut(trUtf8("Ctrl+u"));
+	dvdButton->setShortcut(trUtf8("Ctrl+d"));
 	openButton->setShortcut(trUtf8("Ctrl+o"));
 	playButton->setShortcut(trUtf8("Ctrl+p"));
 	pauseButton->setShortcut(trUtf8(" "));
@@ -633,24 +635,29 @@ void CuePlayer::createTrayIconMenu()
 {
 	quitAction = new QAction(trUtf8("&Выход"), this);
 	quitAction->setIcon(QIcon(":/images/application-exit.png"));
+	quitAction->setShortcut(trUtf8("Ctrl+q"));
 	connect(quitAction, SIGNAL(triggered()), this, SLOT(endBlock()));
 
 	aboutAction = new QAction(trUtf8("&О программе"), this);
 	aboutAction->setIcon(QIcon(":/images/help-about.png"));
+	aboutAction->setShortcut(trUtf8("Ctrl+a"));
 	connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
 
 	extbutAction = new QAction(trUtf8("&Расширенный"), this);
 	extbutAction->setCheckable(true);
+	extbutAction->setShortcut(trUtf8("Ctrl+e"));
 	connect(extbutAction, SIGNAL(triggered(bool)), this, SLOT(extButtons(bool)));
 
 	transcoder = new TransCoder(this);
 	transcodeAction = new QAction(trUtf8("Конвертор"), this);
 	transcodeAction->setIcon(QIcon(":/images/convertor.png"));
+	transcodeAction->setShortcut(trUtf8("Ctrl+c"));
 	connect(transcodeAction, SIGNAL(triggered()), transcoder, SLOT(show()));
 
 	apetoflac = new ApeToFlac(this);
 	apetoflacAction = new QAction(trUtf8("Ape->Flac"), this);
 	apetoflacAction->setIcon(QIcon(":/images/hint.png"));
+	apetoflacAction->setShortcut(trUtf8("Ctrl+h"));
 	connect(apetoflacAction, SIGNAL(triggered()), apetoflac, SLOT(show()));
 
 	trayIcon = new QSystemTrayIcon(this);

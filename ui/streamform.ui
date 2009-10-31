@@ -14,7 +14,7 @@
    <string>Поток</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../ressources.qrc">
     <normaloff>:/images/net-stream.png</normaloff>:/images/net-stream.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -35,12 +35,20 @@
        <property name="text">
         <string>&amp;Ок</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>

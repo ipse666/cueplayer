@@ -9,6 +9,7 @@ StreamForm::StreamForm(QWidget *parent) :
 	this->setWindowFlags(Qt::Dialog);
 
 	connect(ui->okButton, SIGNAL(clicked()), this, SLOT(readUrl()));
+	connect(ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(readUrl()));
 }
 
 StreamForm::~StreamForm()
