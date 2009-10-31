@@ -32,6 +32,8 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	int appHeightPos = desktop->height()/2 - appHeight/2;
 	move(appWidthPos, appHeightPos);
 
+	manager = new QNetworkAccessManager(this);
+
 	label->setText(trUtf8("откройте файл"));
 	treeWidget->hide();
 	dvdButton->hide();
@@ -94,6 +96,8 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
 	connect(filedialog, SIGNAL(filterSelected(QString)),
 	 this, SLOT(fileDialogFilter(QString)));
+	connect(manager, SIGNAL(finished(QNetworkReply*)),
+	 this, SLOT(readNmReply(QNetworkReply*)));
 
 	// Видео окно
 	connect(videowindow, SIGNAL(pauseEvent()), this, SLOT(pauseTrack()));
@@ -181,6 +185,17 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			g_object_set (G_OBJECT (play), "uri", ("file://" + filename).toUtf8().data(), NULL);
 		else
 			g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+	}
+	else if (fi.suffix() == "m3u")
+	{
+		QFileInfoList filelist = m3uParse(filename);
+		multiFileFlag = true;
+		if (!filelist.isEmpty())
+		{
+			multiFileInit(filelist);
+			settings.setValue("player/recentfile", filename);
+		}
+		return;
 	}
 	else if (fi.isDir())
 	{
@@ -299,6 +314,7 @@ void CuePlayer::initPlayer()
 	dvdFlag = false;
 	preInitFlag = false;
 	discFlag = false;
+	streamFlag = false;
 	videowindow->hide();
 	memset(multiFiles,0,100);
 	mp3trackName = trUtf8("неизвестно");
@@ -475,7 +491,7 @@ void CuePlayer::tick(qint64 time)
 		timeLineSlider->setSliderPosition(time - totalTime);
 		if (videoFlag || dvdFlag) videowindow->setSliderPos(time - totalTime);
 	}
-	if (timeLineSlider->value() == timeLineSlider->maximum())
+	if (timeLineSlider->value() == timeLineSlider->maximum() && !streamFlag)
 		CuePlayer::playNextTrack();
 }
 
@@ -699,10 +715,14 @@ void CuePlayer::stopAll()
 	timeLineSlider->setSliderPosition(0);
 	if (multiFileFlag)
 	{
+		QRegExp rxFilename("^\\w{3,5}://.*");
 		QFileInfo filetu = saveFileList.at(numTrack-1);
 		gst_element_set_state (play, GST_STATE_NULL);
 		g_object_set(play, "mute", true, NULL);
-		g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
+		if (rxFilename.indexIn(filetu.filePath()) != -1)
+			g_object_set (G_OBJECT (play), "uri", filetu.filePath().toUtf8().data(), NULL);
+		else
+			g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
 		gst_element_set_state (play, GST_STATE_PLAYING);
 		if (gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT) != GST_STATE_CHANGE_SUCCESS)
 		{
@@ -778,9 +798,13 @@ void CuePlayer::checkState()
 	}
 	else if (multiFileFlag)
 	{
+		QRegExp rxFilename("^\\w{3,5}://.*");
 		QFileInfo filetu = saveFileList.at(numTrack-1);
 		gst_element_set_state (play, GST_STATE_NULL);
-		g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
+		if (rxFilename.indexIn(filetu.filePath()) != -1)
+			g_object_set (G_OBJECT (play), "uri", filetu.filePath().toUtf8().data(), NULL);
+		else
+			g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
 		gst_element_set_state (play, GST_STATE_READY);
 		gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT);
 	}
@@ -893,6 +917,7 @@ void CuePlayer::multiCueInit()
 
 void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 {
+	QRegExp rxFilename("^\\w{3,5}://.*");
 	GstState st;
 	GstElement *fakesink;
 	int duration = 0;
@@ -908,7 +933,14 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 		QFileInfo filetu = fileInfoList.at(i-1);
 		play = gst_element_factory_make ("playbin2", "play");
 		fakesink = gst_element_factory_make ("fakesink", "fake");
-		g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
+
+		if (rxFilename.indexIn(filetu.filePath()) != -1)
+		{
+			qDebug() << trUtf8("Инициализация канала") << filetu.filePath();
+			g_object_set (G_OBJECT (play), "uri", filetu.filePath().toUtf8().data(), NULL);
+		}
+		else
+			g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
 		g_object_set(play, "audio-sink", fakesink, NULL);
 		gst_element_set_state (play, GST_STATE_PLAYING);
 		gst_element_get_state( GST_ELEMENT(play), &st, NULL, GST_SECOND * TIMEOUT);
@@ -939,7 +971,10 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 	numTrack = 1;
 	play = gst_element_factory_make ("playbin2", "play");
 	QFileInfo filetu = fileInfoList.at(numTrack - 1);
-	g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
+	if (rxFilename.indexIn(filetu.filePath()) != -1)
+		g_object_set (G_OBJECT (play), "uri", filetu.filePath().toUtf8().data(), NULL);
+	else
+		g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
 	bus = gst_pipeline_get_bus (GST_PIPELINE (play));
 	gst_bus_add_watch (bus, bus_callback, play);
 	gst_object_unref (bus);
@@ -1222,7 +1257,7 @@ void CuePlayer::dpmsTrigger(bool dpms)
 		videoProcess->kill();
 	videoProcess->start("xset", arguments);
 	videoProcess->waitForFinished(1000);
-	qDebug() << arguments;
+	//qDebug() << arguments;
 }
 
 QString CuePlayer::checkDPMS()
@@ -1245,6 +1280,58 @@ QString CuePlayer::checkDPMS()
 			return "+dpms";
 	}
 	return "+dpms";
+}
+
+QFileInfoList CuePlayer::m3uParse(QString url)
+{
+	QFileInfo finfo(url);
+	QUrl urlpoint = QUrl::fromUserInput(url);
+	QFileInfoList filelist;
+	if (finfo.isFile())
+	{
+		QString path;
+		QString filename;
+		QFile m3ufile(url);
+		path = finfo.canonicalPath() + "/";
+		if (!m3ufile.open(QIODevice::ReadOnly | QIODevice::Text))
+			return filelist;
+		QTextStream m3utext(&m3ufile);
+		do {
+			filename = m3utext.readLine();
+			if (!filename.isEmpty())
+				filelist << path + filename;
+		} while (!filename.isEmpty());
+	}
+	else if (urlpoint.isValid())
+	{
+		manager->get(QNetworkRequest(urlpoint));
+	}
+	return filelist;
+}
+
+void CuePlayer::readNmReply(QNetworkReply * reply)
+{
+	QFileInfoList filelist;
+	QString str;
+	QByteArray result = reply->readAll();
+	reply->close();
+	QList<QByteArray> out = result.split('\n');
+	while (out.size())
+	{
+		str = "";
+		QByteArray bastr = out.last();
+		out.pop_back();
+		str.append(bastr);
+		if (!str.isEmpty())
+			filelist << str;
+	}
+	if (!filelist.isEmpty())
+	{
+		multiFileFlag = true;
+		streamFlag = true;
+		multiFileInit(filelist);
+		settings.setValue("player/recentfile", filename);
+	}
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)

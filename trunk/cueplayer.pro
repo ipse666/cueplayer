@@ -1,4 +1,5 @@
 TEMPLATE = app
+QT += network
 TARGET = 
 DEPENDPATH += . \
     ui

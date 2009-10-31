@@ -12,6 +12,7 @@ bool videoFlag;
 bool dvdFlag;
 bool preInitFlag;
 bool discFlag;
+bool streamFlag;
 int dvdAudioPads;
 int dvdAudioCurrentPad;
 
