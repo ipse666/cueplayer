@@ -276,9 +276,12 @@ void TransCoder::stopAll()
 	{
 		treeWidget->topLevelItem(i)->setSelected(false);
 	}
-	treeWidget->topLevelItem(numTrack - 1)->setBackgroundColor(0, errorColor);
-	treeWidget->topLevelItem(numTrack - 1)->setBackgroundColor(1, errorColor);
-	treeWidget->topLevelItem(numTrack - 1)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsTristate);
+	if (numTrack && treeWidget->topLevelItem(numTrack - 1)->backgroundColor(0) == progressColor)
+	{
+		treeWidget->topLevelItem(numTrack - 1)->setBackgroundColor(0, errorColor);
+		treeWidget->topLevelItem(numTrack - 1)->setBackgroundColor(1, errorColor);
+		treeWidget->topLevelItem(numTrack - 1)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsTristate);
+	}
 	if (progressBar->value() == 100)
 		progressBar->setValue(0);
 }
