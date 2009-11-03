@@ -188,6 +188,15 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		else
 			g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
 	}
+	else if (fi.suffix() == "flv")
+	{
+		videoFlag = true;
+		play = gst_element_factory_make ("playbin2", "play");
+		if (rxFilename.indexIn(filename) != -1)
+			g_object_set (G_OBJECT (play), "uri", ("file://" + filename).toUtf8().data(), NULL);
+		else
+			g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+	}
 	else if (fi.suffix() == "m3u")
 	{
 		QFileInfoList filelist = m3uParse(filename);
@@ -703,7 +712,8 @@ void CuePlayer::trayClicked(QSystemTrayIcon::ActivationReason reason)
 void CuePlayer::about()
 {
 	QMessageBox::information(this, trUtf8("О программе"),
-							 trUtf8("<h2>CuePlayer</h2>"
+							 trUtf8("<h2>CuePlayer 0.17</h2>"
+									"<p>Дата релиза: 3 ноября 2009."
 									"<p>Мультимедиа проигрыватель."
 									"<p><p>Разработчик: <a href=xmpp:ipse@ipse.zapto.org name=jid type=application/xmpp+xml>ipse</a>"));
 }
@@ -1207,6 +1217,7 @@ void CuePlayer::createDvdPipe()
 	gst_element_add_pad (d_video, gst_ghost_pad_new ("sink", videopad));
 	gst_object_unref (videopad);
 	gst_bin_add (GST_BIN (play), d_video);
+	//g_signal_connect (play, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг
 }
 
 void CuePlayer::dtsPlayer()
