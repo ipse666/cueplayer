@@ -784,6 +784,7 @@ int CuePlayer::getPosition()
 
 void CuePlayer::seekGst(int time)
 {
+
 	GstClockTime nach   = (GstClockTime)(time * GST_MSECOND);
 	if (!gst_element_seek(play, 1.0,
 			GST_FORMAT_TIME,
@@ -1303,7 +1304,8 @@ QString CuePlayer::checkDPMS()
 QFileInfoList CuePlayer::m3uParse(QString url)
 {
 	QFileInfo finfo(url);
-	QUrl urlpoint = QUrl::fromUserInput(url);
+	//QUrl urlpoint = QUrl::fromUserInput(url); На будущее
+	QUrl urlpoint = QUrl(url);
 	QFileInfoList filelist;
 	if (finfo.isFile())
 	{
@@ -1341,13 +1343,14 @@ void CuePlayer::readNmReply(QNetworkReply * reply)
 		out.pop_back();
 		str.append(bastr);
 		if (!str.isEmpty())
-			filelist << str;
+			filelist << str.trimmed();
 	}
 	if (!filelist.isEmpty())
 	{
 		multiFileFlag = true;
 		streamFlag = true;
 		multiFileInit(filelist);
+		label->setText(trUtf8("Радио"));
 		settings.setValue("player/recentfile", filename);
 	}
 }
