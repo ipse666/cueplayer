@@ -138,6 +138,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 {
 	QRegExp rxFilename("^/.*");
 	QRegExp rxFilename2(".*/([^/]*)$");
+	QRegExp rxFilename3("^(mms://|http://).*");
 	QString nextTool = nextButton->toolTip();
 	QString prewTool = prewButton->toolTip();
 
@@ -266,6 +267,24 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			label->setText(trUtf8("откройте файл"));
 			return;
 		}
+	}
+	else if (rxFilename3.indexIn(filename) != -1)
+	{
+		setWindowTitle(trUtf8("Радио"));
+		label->setText(trUtf8("Радио"));
+		play = gst_element_factory_make ("playbin2", "play");
+		g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+
+		settings.setValue("player/recentfile", filename);
+
+		bus = gst_pipeline_get_bus (GST_PIPELINE (play));
+		gst_bus_add_watch (bus, bus_callback, play);
+		gst_object_unref (bus);
+
+		gst_element_set_state (play, GST_STATE_PAUSED);
+
+		initFile();
+		return;
 	}
 	else
 	{
@@ -711,10 +730,14 @@ void CuePlayer::trayClicked(QSystemTrayIcon::ActivationReason reason)
 
 void CuePlayer::about()
 {
+	QDate curdate = QDate::currentDate();
 	QMessageBox::information(this, trUtf8("О программе"),
-							 trUtf8("<h2>CuePlayer 0.17</h2>"
-									"<p>Дата релиза: 3 ноября 2009."
-									"<p>Мультимедиа проигрыватель."
+							 trUtf8("<h2>CuePlayer</h2>"
+									"<p>Дата ревизии: ")
+									+ QString::number(6) +  " "
+									+ QString(curdate.longMonthName(11)) +  " "
+									+ QString::number(2009) +
+									trUtf8("<p>Мультимедиа проигрыватель."
 									"<p><p>Разработчик: <a href=xmpp:ipse@ipse.zapto.org name=jid type=application/xmpp+xml>ipse</a>"));
 }
 
@@ -841,7 +864,10 @@ void CuePlayer::checkState()
 void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
 {
 	if (vtitle)
+	{
 		label->setText(trUtf8(g_value_get_string(vtitle)));
+		qDebug() << trUtf8("Играет: ") + trUtf8(g_value_get_string(vtitle));
+	}
 	if (valbum && vartist)
 		setWindowTitle(trUtf8(g_value_get_string(vartist)) + " - " + trUtf8(g_value_get_string(valbum)));
 }
@@ -954,7 +980,7 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 
 		if (rxFilename.indexIn(filetu.filePath()) != -1)
 		{
-			qDebug() << trUtf8("Инициализация канала") << filetu.filePath();
+			qDebug() << trUtf8("Инициализация канала: ") + filetu.filePath();
 			g_object_set (G_OBJECT (play), "uri", filetu.filePath().toUtf8().data(), NULL);
 		}
 		else
@@ -1350,6 +1376,7 @@ void CuePlayer::readNmReply(QNetworkReply * reply)
 		multiFileFlag = true;
 		streamFlag = true;
 		multiFileInit(filelist);
+		setWindowTitle(trUtf8("Радио"));
 		label->setText(trUtf8("Радио"));
 		settings.setValue("player/recentfile", filename);
 	}

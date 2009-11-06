@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>579</width>
+    <width>578</width>
     <height>313</height>
    </rect>
   </property>
@@ -15,6 +15,12 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="focusPolicy">
    <enum>Qt::NoFocus</enum>
@@ -27,7 +33,7 @@
     <normaloff>:/images/knotify.png</normaloff>:/images/knotify.png</iconset>
   </property>
   <property name="toolTip">
-   <string>Проигрыватель CUE образов</string>
+   <string>Мультимедиа проигрыватель.</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -40,11 +46,29 @@
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
             <widget class="QLabel" name="label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>20</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
              <property name="text">
               <string/>
              </property>
+             <property name="scaledContents">
+              <bool>false</bool>
+             </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="textInteractionFlags">
+              <set>Qt::LinksAccessibleByMouse</set>
              </property>
             </widget>
            </item>
@@ -453,15 +477,6 @@
      <property name="columnCount">
       <number>2</number>
      </property>
-     <attribute name="headerCascadingSectionResizes">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="headerHighlightSections">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="headerStretchLastSection">
-      <bool>true</bool>
-     </attribute>
      <attribute name="headerCascadingSectionResizes">
       <bool>false</bool>
      </attribute>
