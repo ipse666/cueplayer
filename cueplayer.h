@@ -25,6 +25,8 @@ protected:
 	void closeEvent(QCloseEvent *event);
 public:
 	CuePlayer(QWidget *parent = 0);
+	GstThread *trd;
+	QTimer *trdtimer;
 	void stopAll();
 	void setMp3Title(GValue *, GValue *, GValue *);
 	void apeFound(bool);
@@ -32,7 +34,6 @@ public:
 	void setDvdAudio(gchar*, int);
 	gchar* getDvdAudio(int);
 private:
-	GstThread *trd;
 	void seekAndLCD(int);
 	void createTrayIconMenu();
 	void enableButtons(bool);
@@ -62,6 +63,7 @@ private:
 	QProcess *videoProcess;
 	QString primaryDPMS;
 	QNetworkAccessManager *manager;
+	QString prewlabel;
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;
@@ -76,6 +78,7 @@ private:
 	GstElement *demuxer;
 	GstBus *bus;
 	int multiFiles[100];
+	int loadpoints;
 private slots:
 	void setNumLCDs(int);
 	void cueFileSelected(QStringList);
@@ -117,6 +120,9 @@ private slots:
 	QString checkDPMS();
 	QFileInfoList m3uParse(QString);
 	void readNmReply(QNetworkReply*);
+	void threadRunInd();
+	void threadRunProgress();
+	void threadStop();
 signals:
 	void gstError();
 };
@@ -127,8 +133,11 @@ class GstThread : public QThread
 
 public:
 	GstThread(QObject * parent = 0);
+	void setPlayBin(GstElement *);
 protected:
 	void run();
+private:
+	GstElement *thplay;
 };
 
 #endif // __CUEPLAYER_H__

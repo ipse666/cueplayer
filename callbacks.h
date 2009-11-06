@@ -2,6 +2,7 @@
 #define CALLBACKS_H
 
 #define TIMEOUT 3
+#define TRDTIME 500
 
 GstState state;
 GstElement *dvdsrc, *d_audio, *d_video, *d_volume;
@@ -38,11 +39,9 @@ bus_callback (GstBus     *bus,
 		break;
 	}
 	case GST_MESSAGE_STATE_CHANGED: {
-		if (gst_element_get_state( GST_ELEMENT(playbin), &state, NULL, GST_SECOND * TIMEOUT) != GST_STATE_CHANGE_SUCCESS)
-		{
-			g_print ("Аварийный останов.\n");
-			cueplayer->stopAll();
-		}
+		cueplayer->trd->setPlayBin(playbin);
+		cueplayer->trd->start();
+		cueplayer->trdtimer->start(TRDTIME);
 		break;
 	}
 	case GST_MESSAGE_TAG: {
