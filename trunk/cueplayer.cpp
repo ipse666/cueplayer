@@ -10,6 +10,8 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	setupUi(this);
 	cueplayer = this;
 	timer = new QTimer(this);
+	trdtimer = new QTimer(this);
+	trd = new GstThread(this);
 
 	// Иксы
 	xinfo = new QX11Info();
@@ -100,6 +102,10 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	 this, SLOT(fileDialogFilter(QString)));
 	connect(manager, SIGNAL(finished(QNetworkReply*)),
 	 this, SLOT(readNmReply(QNetworkReply*)));
+	connect(trd, SIGNAL(started()), this, SLOT(threadRunInd()));
+	connect(trdtimer, SIGNAL(timeout()), this, SLOT(threadRunProgress()));
+	connect(trd, SIGNAL(terminated()), this, SLOT(threadStop()));
+	connect(trd, SIGNAL(finished()), this, SLOT(threadStop()));
 
 	// Видео окно
 	connect(videowindow, SIGNAL(pauseEvent()), this, SLOT(pauseTrack()));
@@ -284,6 +290,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		gst_element_set_state (play, GST_STATE_PAUSED);
 
 		initFile();
+
 		return;
 	}
 	else
@@ -362,6 +369,8 @@ void CuePlayer::initPlayer()
 		play = NULL;
 		g_print("Останов конвеера\n");
 	}
+	if (trd->isRunning())
+		trd->terminate();
 	timeLineSlider->setSliderPosition(0);
 }
 
@@ -867,6 +876,7 @@ void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
 	{
 		label->setText(trUtf8(g_value_get_string(vtitle)));
 		qDebug() << trUtf8("Играет: ") + trUtf8(g_value_get_string(vtitle));
+		prewlabel = trUtf8(g_value_get_string(vtitle));
 	}
 	if (valbum && vartist)
 		setWindowTitle(trUtf8(g_value_get_string(vartist)) + " - " + trUtf8(g_value_get_string(valbum)));
@@ -1284,9 +1294,14 @@ void CuePlayer::endBlock()
 	if (primaryDPMS != checkDPMS())
 	{
 		if (primaryDPMS == "-dpms")
+		{
 			dpmsTrigger(false);
+			qDebug() << trUtf8("Внимание! Энергосбережение выключено.");
+		}
 		else
+		{
 			dpmsTrigger(true);
+		}
 	}
 	qApp->quit();
 }
@@ -1315,10 +1330,8 @@ QString CuePlayer::checkDPMS()
 	QByteArray result = videoProcess->readAll();
 	videoProcess->close();
 	QList<QByteArray> out = result.split('\n');
-	while (out.size())
+	foreach (QByteArray bastr, out)
 	{
-		QByteArray bastr = out.last();
-		out.pop_back();
 		if (!strcmp (bastr, "  DPMS is Disabled"))
 			return "-dpms";
 		else if (!strcmp (bastr, "  DPMS is Enabled"))
@@ -1382,12 +1395,53 @@ void CuePlayer::readNmReply(QNetworkReply * reply)
 	}
 }
 
+void CuePlayer::threadRunInd()
+{
+	prewlabel = label->text();
+	label->setText(trUtf8("Инициализация"));
+	loadpoints = 0;
+}
+
+void CuePlayer::threadRunProgress()
+{
+	loadpoints++;
+	switch (loadpoints)
+	{
+		case 1:
+			label->setText(trUtf8(" Инициализация."));
+			break;
+		case 2:
+			label->setText(trUtf8("  Инициализация.."));
+			break;
+		case 3:
+			label->setText(trUtf8("   Инициализация..."));
+			loadpoints = 0;
+		break;
+	}
+}
+
+void CuePlayer::threadStop()
+{
+	label->setText(prewlabel);
+	trdtimer->stop();
+	loadpoints = 0;
+}
+
 GstThread::GstThread(QObject *parent) : QThread(parent)
 {
-
+	thplay = NULL;
 }
 
 void GstThread::run()
 {
+	if (gst_element_get_state( GST_ELEMENT(thplay), &state, NULL, GST_SECOND * 10) != GST_STATE_CHANGE_SUCCESS)
+	{
+		g_print ("Аварийный останов в треде.\n");
+		cueplayer->stopAll();
+	}
+}
 
+void GstThread::setPlayBin(GstElement *playbin)
+{
+	thplay = playbin;
 }
