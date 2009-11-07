@@ -32,8 +32,11 @@ void StreamForm::changeEvent(QEvent *e)
 void StreamForm::readUrl()
 {
 	QStringList url;
-	url << ui->lineEdit->text();
-	ui->lineEdit->clear();
-	emit streamOk(url);
+	if (!ui->lineEdit->text().isEmpty())
+	{
+		url << ui->lineEdit->text();
+		ui->lineEdit->clear();
+		emit streamOk(url);
+	}
 	close();
 }

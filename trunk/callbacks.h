@@ -104,8 +104,10 @@ cb_typefound (GstElement *typefind,
 		!strcmp(type ,"video/x-msvideo") ||
 		!strcmp(type ,"application/x-3gp") ||
 		!strncmp(type ,"video/mpegts", 12) ||
+		!strncmp(type ,"video/mpeg", 10) ||
 		!strcmp(type ,"video/quicktime"))
-		videoFlag = true;
+		if (!dvdFlag)
+			videoFlag = true;
 	g_free (type);
 }
 
