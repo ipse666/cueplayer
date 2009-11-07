@@ -182,6 +182,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			 fi.suffix() == "wv" ||
 			 fi.suffix() == "3gp" ||
 			 fi.suffix() == "m2ts" ||
+			 fi.suffix() == "VOB" ||
 			 fi.suffix() == "mkv")
 	{
 		if (rxFilename2.indexIn(filename) != -1)
@@ -198,6 +199,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	else if (fi.suffix() == "flv")
 	{
 		videoFlag = true;
+		setWindowTitle(trUtf8("FLV-видео"));
+		label->setText(fi.fileName());
 		play = gst_element_factory_make ("playbin2", "play");
 		if (rxFilename.indexIn(filename) != -1)
 			g_object_set (G_OBJECT (play), "uri", ("file://" + filename).toUtf8().data(), NULL);
@@ -743,7 +746,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(6) +  " "
+									+ QString::number(7) +  " "
 									+ QString(curdate.longMonthName(11)) +  " "
 									+ QString::number(2009) +
 									trUtf8("<p>Мультимедиа проигрыватель."
