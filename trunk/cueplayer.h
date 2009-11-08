@@ -139,6 +139,7 @@ public:
 protected:
 	void run();
 private:
+	void setState();
 	GstElement *thplay;
 	int numfunc;
 };
