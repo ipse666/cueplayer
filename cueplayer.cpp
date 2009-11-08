@@ -5,6 +5,17 @@
 #define TIME 200
 #define TIMEOUT 3
 
+enum Func {
+	NULL_FUNC,
+	POST_PLAY
+};
+
+enum EndOp {
+	NULL_RET,
+	ERR_STATE,
+	FUNC_NUM
+};
+
 CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 {
 	setupUi(this);
@@ -374,7 +385,10 @@ void CuePlayer::initPlayer()
 		g_print("Останов конвеера\n");
 	}
 	if (trd->isRunning())
+	{
 		trd->terminate();
+		threadStop();
+	}
 	timeLineSlider->setSliderPosition(0);
 }
 
@@ -420,6 +434,7 @@ void CuePlayer::playPrewTrack()
 		{
 			g_object_set (G_OBJECT (dvdsrc), "title", --d_title, NULL);
 			label->setText(trUtf8("DVD видео : ") + QString::number(d_title));
+			prewlabel = label->text();
 			stopTrack();
 			if(playProbe())
 				return;
@@ -448,42 +463,10 @@ void CuePlayer::playTrack()
 	}
 	gst_element_set_state (play, GST_STATE_PLAYING);
 	timer->start(TIME);
-	if (videoFlag)
-	{
-		if (gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT) != GST_STATE_CHANGE_SUCCESS)
-		{
-			g_print ("Аварийный останов.\n");
-			cueplayer->stopAll();
-		}
-		if (state == GST_STATE_PLAYING)
-		{
-			int naudio, currentaudio;
-			// Количество аудио дорожек
-			g_object_get (G_OBJECT (play), "n-audio", &naudio, NULL);
-			// Текущая дорожка
-			g_object_get (G_OBJECT (play), "current-audio", &currentaudio, NULL);
-			videowindow->createAudioMenu(naudio - 1, currentaudio);
-
-			int ntext, currenttext;
-			// Количество cубтитров
-			g_object_get (G_OBJECT (play), "n-text", &ntext, NULL);
-			// Текущие субтитры
-			g_object_get (G_OBJECT (play), "current-text", &currenttext, NULL);
-			videowindow->createTitleMenu(ntext - 1, currenttext);
-		}
-	}
-	else if (dvdFlag)
-	{
-		if (gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT) != GST_STATE_CHANGE_SUCCESS)
-		{
-			g_print ("Аварийный останов.\n");
-			cueplayer->stopAll();
-		}
-		if (state == GST_STATE_PLAYING)
-		{
-			videowindow->createAudioMenu(dvdAudioPads - 1, 0);
-		}
-	}
+	trd->setPlayBin(play);
+	trd->setFunc(POST_PLAY);
+	trd->start();
+	trdtimer->start(TRDTIME);
 }
 
 // остановка воспроизведения трека/альбома
@@ -1429,11 +1412,53 @@ void CuePlayer::threadStop()
 	label->setText(prewlabel);
 	trdtimer->stop();
 	loadpoints = 0;
+	switch (threadRet)
+	{
+		case ERR_STATE:
+			cueplayer->stopAll();
+			break;
+		case FUNC_NUM:
+			cueplayer->postPlay();
+			break;
+		default:
+			break;
+	}
+}
+
+void CuePlayer::postPlay()
+{
+	if (videoFlag)
+	{
+		if (state == GST_STATE_PLAYING)
+		{
+			int naudio, currentaudio;
+			// Количество аудио дорожек
+			g_object_get (G_OBJECT (play), "n-audio", &naudio, NULL);
+			// Текущая дорожка
+			g_object_get (G_OBJECT (play), "current-audio", &currentaudio, NULL);
+			videowindow->createAudioMenu(naudio - 1, currentaudio);
+
+			int ntext, currenttext;
+			// Количество cубтитров
+			g_object_get (G_OBJECT (play), "n-text", &ntext, NULL);
+			// Текущие субтитры
+			g_object_get (G_OBJECT (play), "current-text", &currenttext, NULL);
+			videowindow->createTitleMenu(ntext - 1, currenttext);
+		}
+	}
+	else if (dvdFlag)
+	{
+		if (state == GST_STATE_PLAYING)
+		{
+			videowindow->createAudioMenu(dvdAudioPads - 1, 0);
+		}
+	}
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)
 {
 	thplay = NULL;
+	numfunc = 0;
 }
 
 void GstThread::run()
@@ -1441,11 +1466,25 @@ void GstThread::run()
 	if (gst_element_get_state( GST_ELEMENT(thplay), &state, NULL, GST_SECOND * 10) != GST_STATE_CHANGE_SUCCESS)
 	{
 		g_print ("Аварийный останов в треде.\n");
-		cueplayer->stopAll();
+		threadRet = 1;
 	}
+	switch (numfunc)
+	{
+		case POST_PLAY:
+			threadRet = 2;
+			break;
+		default:
+			break;
+	}
+	numfunc = 0;
 }
 
 void GstThread::setPlayBin(GstElement *playbin)
 {
 	thplay = playbin;
+}
+
+void GstThread::setFunc(int func)
+{
+	numfunc = func;
 }

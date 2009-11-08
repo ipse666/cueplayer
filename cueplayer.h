@@ -33,6 +33,7 @@ public:
 	void paramFile(QStringList);
 	void setDvdAudio(gchar*, int);
 	gchar* getDvdAudio(int);
+	void postPlay();
 private:
 	void seekAndLCD(int);
 	void createTrayIconMenu();
@@ -134,10 +135,12 @@ class GstThread : public QThread
 public:
 	GstThread(QObject * parent = 0);
 	void setPlayBin(GstElement *);
+	void setFunc(int);
 protected:
 	void run();
 private:
 	GstElement *thplay;
+	int numfunc;
 };
 
 #endif // __CUEPLAYER_H__
