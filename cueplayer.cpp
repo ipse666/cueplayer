@@ -461,8 +461,6 @@ void CuePlayer::playTrack()
 		videowindow->show();
 		dpmsTrigger(false);
 	}
-	gst_element_set_state (play, GST_STATE_PLAYING);
-	timer->start(TIME);
 	trd->setPlayBin(play);
 	trd->setFunc(POST_PLAY);
 	trd->start();
@@ -730,7 +728,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(8) +  " "
+									+ QString::number(9) +  " "
 									+ QString(curdate.longMonthName(11)) +  " "
 									+ QString::number(2009) +
 									trUtf8("<p>Мультимедиа проигрыватель."
@@ -1385,7 +1383,7 @@ void CuePlayer::readNmReply(QNetworkReply * reply)
 void CuePlayer::threadRunInd()
 {
 	prewlabel = label->text();
-	label->setText(trUtf8("Инициализация"));
+	label->setText(trUtf8("Подождите"));
 	loadpoints = 0;
 }
 
@@ -1395,13 +1393,13 @@ void CuePlayer::threadRunProgress()
 	switch (loadpoints)
 	{
 		case 1:
-			label->setText(trUtf8(" Инициализация."));
+			label->setText(trUtf8(" Подождите."));
 			break;
 		case 2:
-			label->setText(trUtf8("  Инициализация.."));
+			label->setText(trUtf8("  Подождите.."));
 			break;
 		case 3:
-			label->setText(trUtf8("   Инициализация..."));
+			label->setText(trUtf8("   Подождите..."));
 			loadpoints = 0;
 		break;
 	}
@@ -1418,6 +1416,7 @@ void CuePlayer::threadStop()
 			cueplayer->stopAll();
 			break;
 		case FUNC_NUM:
+			timer->start(TIME);
 			cueplayer->postPlay();
 			break;
 		default:
@@ -1463,18 +1462,20 @@ GstThread::GstThread(QObject *parent) : QThread(parent)
 
 void GstThread::run()
 {
-	if (gst_element_get_state( GST_ELEMENT(thplay), &state, NULL, GST_SECOND * 10) != GST_STATE_CHANGE_SUCCESS)
-	{
-		g_print ("Аварийный останов в треде.\n");
-		threadRet = 1;
-	}
+	threadRet = 0;
 	switch (numfunc)
 	{
 		case POST_PLAY:
+			setState();
 			threadRet = 2;
 			break;
 		default:
 			break;
+	}
+	if (gst_element_get_state( GST_ELEMENT(thplay), &state, NULL, GST_SECOND * 10) != GST_STATE_CHANGE_SUCCESS)
+	{
+		g_print ("Аварийный останов в треде.\n");
+		threadRet = 1;
 	}
 	numfunc = 0;
 }
@@ -1487,4 +1488,9 @@ void GstThread::setPlayBin(GstElement *playbin)
 void GstThread::setFunc(int func)
 {
 	numfunc = func;
+}
+
+void GstThread::setState()
+{
+	gst_element_set_state (thplay, GST_STATE_PLAYING);
 }
