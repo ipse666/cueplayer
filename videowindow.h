@@ -69,6 +69,7 @@ signals:
 	void sendTid(int);
 	void sliderRelease();
 	void volumeChan(int);
+	void videoExit();
 };
 
 #endif // VIDEOWINDOW_H

@@ -54,7 +54,7 @@ VideoWindow::VideoWindow(QWidget *parent)
 	connect(slider, SIGNAL(showNormal()), this, SLOT(showNormal()));
 	connect(shortcutesc, SIGNAL(activated()), this, SLOT(normCursor()));
 	connect(slider, SIGNAL(normCursor()), this, SLOT(normCursor()));
-	connect(shortcutquit, SIGNAL(activated()), qApp, SLOT(quit()));
+	connect(shortcutquit, SIGNAL(activated()), this, SIGNAL(videoExit()));
 
 	connect(shortcutnmin, SIGNAL(activated()), this, SIGNAL(pressKeyRight()));
 	connect(slider, SIGNAL(pressKeyRight()), this, SIGNAL(pressKeyRight()));
@@ -124,7 +124,7 @@ void VideoWindow::createMenu()
 {
 	quitAction = new QAction(trUtf8("&Выход"), this);
 	quitAction->setIcon(QIcon(":/images/application-exit.png"));
-	connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+	connect(quitAction, SIGNAL(triggered()), this, SIGNAL(videoExit()));
 
 	aboutAction = new QAction(trUtf8("&О программе"), this);
 	aboutAction->setIcon(QIcon(":/images/help-about.png"));

@@ -122,6 +122,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(videowindow, SIGNAL(sliderRelease()), this, SLOT(sliderVideoRelease()));
 	connect(videowindow, SIGNAL(volumeChan(int)), this, SLOT(volumeValue(int)));
 	connect(videowindow, SIGNAL(volumeChan(int)), volumeDial, SLOT(setValue(int)));
+	connect(videowindow, SIGNAL(videoExit()), this, SLOT(endBlock()));
 }
 
 void CuePlayer::setNumLCDs(int sec)
@@ -746,7 +747,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(7) +  " "
+									+ QString::number(8) +  " "
 									+ QString(curdate.longMonthName(11)) +  " "
 									+ QString::number(2009) +
 									trUtf8("<p>Мультимедиа проигрыватель."
