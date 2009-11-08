@@ -16,6 +16,7 @@ bool discFlag;
 bool streamFlag;
 int dvdAudioPads;
 int dvdAudioCurrentPad;
+int threadRet;
 
 WId win;
 static Display *display;
@@ -39,9 +40,9 @@ bus_callback (GstBus     *bus,
 		break;
 	}
 	case GST_MESSAGE_STATE_CHANGED: {
-		cueplayer->trd->setPlayBin(playbin);
-		cueplayer->trd->start();
-		cueplayer->trdtimer->start(TRDTIME);
+			cueplayer->trd->setPlayBin(playbin);
+			cueplayer->trd->start();
+			cueplayer->trdtimer->start(TRDTIME);
 		break;
 	}
 	case GST_MESSAGE_TAG: {
