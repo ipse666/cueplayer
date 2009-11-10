@@ -42,7 +42,6 @@ bus_callback (GstBus     *bus,
 	case GST_MESSAGE_STATE_CHANGED: {
 			cueplayer->trd->setPlayBin(playbin);
 			cueplayer->trd->start();
-			cueplayer->trdtimer->start(TRDTIME);
 		break;
 	}
 	case GST_MESSAGE_TAG: {

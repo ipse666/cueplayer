@@ -7,13 +7,15 @@
 
 enum Func {
 	NULL_FUNC,
-	POST_PLAY
+	POST_PLAY,
+	POST_CHECK
 };
 
 enum EndOp {
 	NULL_RET,
 	ERR_STATE,
-	FUNC_NUM
+	FUNC_PLAY,
+	FUNC_CHECK
 };
 
 CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
@@ -175,6 +177,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		{
 			multiCueFlag = true;
 			cueplayer->multiCueInit();
+			settings.setValue("player/recentfile", filename);
 			return;
 		}
 		preInit(refparser->getSoundFile());
@@ -438,7 +441,6 @@ void CuePlayer::playPrewTrack()
 		{
 			g_object_set (G_OBJECT (dvdsrc), "title", --d_title, NULL);
 			label->setText(trUtf8("DVD видео : ") + QString::number(d_title));
-			prewlabel = label->text();
 			stopTrack();
 			if(playProbe())
 			{
@@ -472,7 +474,6 @@ void CuePlayer::playTrack()
 	trd->setPlayBin(play);
 	trd->setFunc(POST_PLAY);
 	trd->start();
-	trdtimer->start(TRDTIME);
 }
 
 // остановка воспроизведения трека/альбома
@@ -851,16 +852,9 @@ void CuePlayer::checkState()
 		gst_element_set_state (play, GST_STATE_READY);
 		gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT);
 	}
-	if (state == GST_STATE_READY)
-		playTrack();
-	gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT);
-	if (state == GST_STATE_PLAYING)
-		seekAndLCD(numTrack);
-	else if (state == GST_STATE_PAUSED)
-	{
-		seekAndLCD(numTrack);
-		playTrack();
-	}
+	trd->setPlayBin(play);
+	trd->setFunc(POST_CHECK);
+	trd->start();
 }
 
 void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
@@ -869,7 +863,6 @@ void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
 	{
 		label->setText(trUtf8(g_value_get_string(vtitle)));
 		qDebug() << trUtf8("Играет: ") + trUtf8(g_value_get_string(vtitle));
-		prewlabel = trUtf8(g_value_get_string(vtitle));
 	}
 	if (valbum && vartist)
 		setWindowTitle(trUtf8(g_value_get_string(vartist)) + " - " + trUtf8(g_value_get_string(valbum)));
@@ -1391,8 +1384,8 @@ void CuePlayer::readNmReply(QNetworkReply * reply)
 void CuePlayer::threadRunInd()
 {
 	prewlabel = label->text();
-	label->setText(trUtf8("Подождите"));
 	loadpoints = 0;
+	trdtimer->start(TRDTIME);
 }
 
 void CuePlayer::threadRunProgress()
@@ -1415,17 +1408,19 @@ void CuePlayer::threadRunProgress()
 
 void CuePlayer::threadStop()
 {
-	label->setText(prewlabel);
 	trdtimer->stop();
+	label->setText(prewlabel);
 	loadpoints = 0;
 	switch (threadRet)
 	{
 		case ERR_STATE:
 			cueplayer->stopAll();
 			break;
-		case FUNC_NUM:
+		case FUNC_PLAY:
 			timer->start(TIME);
-			cueplayer->postPlay();
+			postPlay();
+		case FUNC_CHECK:
+			postCheck();
 			break;
 		default:
 			break;
@@ -1462,6 +1457,20 @@ void CuePlayer::postPlay()
 	}
 }
 
+void CuePlayer::postCheck()
+{
+	if (state == GST_STATE_READY)
+		playTrack();
+	gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT);
+	if (state == GST_STATE_PLAYING)
+		seekAndLCD(numTrack);
+	else if (state == GST_STATE_PAUSED)
+	{
+		seekAndLCD(numTrack);
+		playTrack();
+	}
+}
+
 GstThread::GstThread(QObject *parent) : QThread(parent)
 {
 	thplay = NULL;
@@ -1476,6 +1485,9 @@ void GstThread::run()
 		case POST_PLAY:
 			setState();
 			threadRet = 2;
+			break;
+		case POST_CHECK:
+			threadRet = FUNC_CHECK;
 			break;
 		default:
 			break;
