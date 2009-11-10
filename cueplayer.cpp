@@ -863,6 +863,7 @@ void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
 	{
 		label->setText(trUtf8(g_value_get_string(vtitle)));
 		qDebug() << trUtf8("Играет: ") + trUtf8(g_value_get_string(vtitle));
+		prewlabel = label->text(); // Необходимо сохранить асинхронную метку
 	}
 	if (valbum && vartist)
 		setWindowTitle(trUtf8(g_value_get_string(vartist)) + " - " + trUtf8(g_value_get_string(valbum)));

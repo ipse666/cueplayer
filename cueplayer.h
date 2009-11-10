@@ -65,6 +65,7 @@ private:
 	QString primaryDPMS;
 	QNetworkAccessManager *manager;
 	QString prewlabel;
+	QMutex mutex;
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;
