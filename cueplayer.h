@@ -124,6 +124,7 @@ private slots:
 	void threadRunInd();
 	void threadRunProgress();
 	void threadStop();
+	void postCheck();
 signals:
 	void gstError();
 };
