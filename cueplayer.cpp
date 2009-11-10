@@ -302,8 +302,6 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		gst_bus_add_watch (bus, bus_callback, play);
 		gst_object_unref (bus);
 
-		gst_element_set_state (play, GST_STATE_PAUSED);
-
 		initFile();
 
 		return;
@@ -401,15 +399,21 @@ void CuePlayer::playNextTrack()
 			++numTrack;
 			checkState();
 		}
-	if (dvdFlag && d_title < 10)
+	if (dvdFlag && d_title < 99)
 		{
 			g_object_set (G_OBJECT (dvdsrc), "title", ++d_title, NULL);
 			label->setText(trUtf8("DVD видео : ") + QString::number(d_title));
 			stopTrack();
 			if(playProbe())
+			{
+				if (!nextButton->isEnabled())
+					nextButton->setEnabled(true);
 				return;
+			}
 			else
 				createDvdPipe();
+			playPrewTrack();
+			nextButton->setEnabled(false);
 		}
 	if (multiFileFlag)
 	{
@@ -437,7 +441,11 @@ void CuePlayer::playPrewTrack()
 			prewlabel = label->text();
 			stopTrack();
 			if(playProbe())
+			{
+				if (!nextButton->isEnabled())
+					nextButton->setEnabled(true);
 				return;
+			}
 			else
 				createDvdPipe();
 		}
@@ -728,7 +736,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(9) +  " "
+									+ QString::number(10) +  " "
 									+ QString(curdate.longMonthName(11)) +  " "
 									+ QString::number(2009) +
 									trUtf8("<p>Мультимедиа проигрыватель."
