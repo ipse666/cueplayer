@@ -5,6 +5,7 @@ int main(int argc, char *argv[])
 {
 	QDir currentdir;
 	QRegExp rxPath("^/.*");
+	QRegExp rxFilename3("^(mms://|http://).*");
 	QString arg = QObject::trUtf8(argv[1]);
 	QApplication app(argc, argv);
 	if (!QSystemTrayIcon::isSystemTrayAvailable()) {
@@ -25,7 +26,8 @@ int main(int argc, char *argv[])
 	if(argc == 2)
 	{
 		QStringList file;
-		if (rxPath.indexIn(arg) != -1)
+		if (rxPath.indexIn(arg) != -1 ||
+			rxFilename3.indexIn(arg) != -1)
 			file << arg;
 		else
 			file << currentdir.currentPath() << "/" << arg;

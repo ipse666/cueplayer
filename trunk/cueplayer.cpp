@@ -737,7 +737,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(10) +  " "
+									+ QString::number(12) +  " "
 									+ QString(curdate.longMonthName(11)) +  " "
 									+ QString::number(2009) +
 									trUtf8("<p>Мультимедиа проигрыватель."
@@ -964,6 +964,7 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 	int duration = 0;
 	QString strSec;
 	saveFileList = fileInfoList;
+	treeWidget->clear();
 
 	treeWidget->setHeaderLabels(QStringList() << trUtf8("Композиция") << trUtf8("Время"));
 	treeWidget->setColumnWidth(0, 380);
@@ -1032,7 +1033,8 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 void CuePlayer::paramFile(QStringList list)
 {
 	cueFileSelected(list);
-	playTrack();
+	if (!multiFileFlag) // Временный костыль
+		playTrack();
 }
 
 void CuePlayer::restoreSettings()
@@ -1375,6 +1377,13 @@ void CuePlayer::readNmReply(QNetworkReply * reply)
 	{
 		multiFileFlag = true;
 		streamFlag = true;
+		if (filelist.size() == 1)
+		{
+			qDebug() << trUtf8("Список из одного канала, прямой адрес ")
+							   + filelist.at(0).filePath();
+			cueFileSelected(QStringList() << filelist.at(0).filePath());
+			return;
+		}
 		multiFileInit(filelist);
 		setWindowTitle(trUtf8("Радио"));
 		label->setText(trUtf8("Радио"));
@@ -1480,12 +1489,12 @@ GstThread::GstThread(QObject *parent) : QThread(parent)
 
 void GstThread::run()
 {
-	threadRet = 0;
+	threadRet = NULL_RET;
 	switch (numfunc)
 	{
 		case POST_PLAY:
 			setState();
-			threadRet = 2;
+			threadRet = FUNC_PLAY;
 			break;
 		case POST_CHECK:
 			threadRet = FUNC_CHECK;
@@ -1496,7 +1505,7 @@ void GstThread::run()
 	if (gst_element_get_state( GST_ELEMENT(thplay), &state, NULL, GST_SECOND * 10) != GST_STATE_CHANGE_SUCCESS)
 	{
 		g_print ("Аварийный останов в треде.\n");
-		threadRet = 1;
+		threadRet = ERR_STATE;
 	}
 	numfunc = 0;
 }
