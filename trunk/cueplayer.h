@@ -65,6 +65,7 @@ private:
 	QString primaryDPMS;
 	QNetworkAccessManager *manager;
 	QString prewlabel;
+	QTimer *paramtimer;
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;
@@ -125,6 +126,7 @@ private slots:
 	void threadRunProgress();
 	void threadStop();
 	void postCheck();
+	void checkReady();
 signals:
 	void gstError();
 };
