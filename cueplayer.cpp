@@ -24,6 +24,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	cueplayer = this;
 	timer = new QTimer(this);
 	trdtimer = new QTimer(this);
+	paramtimer = new QTimer(this);
 	trd = new GstThread(this);
 
 	// Иксы
@@ -119,6 +120,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(trdtimer, SIGNAL(timeout()), this, SLOT(threadRunProgress()));
 	connect(trd, SIGNAL(terminated()), this, SLOT(threadStop()));
 	connect(trd, SIGNAL(finished()), this, SLOT(threadStop()));
+	connect(paramtimer, SIGNAL(timeout()), this, SLOT(checkReady()));
 
 	// Видео окно
 	connect(videowindow, SIGNAL(pauseEvent()), this, SLOT(pauseTrack()));
@@ -737,7 +739,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(12) +  " "
+									+ QString::number(13) +  " "
 									+ QString(curdate.longMonthName(11)) +  " "
 									+ QString::number(2009) +
 									trUtf8("<p>Мультимедиа проигрыватель."
@@ -1035,6 +1037,8 @@ void CuePlayer::paramFile(QStringList list)
 	cueFileSelected(list);
 	if (!multiFileFlag) // Временный костыль
 		playTrack();
+	else
+		paramtimer->start(1000);
 }
 
 void CuePlayer::restoreSettings()
@@ -1477,6 +1481,15 @@ void CuePlayer::postCheck()
 	else if (state == GST_STATE_PAUSED)
 	{
 		seekAndLCD(numTrack);
+		playTrack();
+	}
+}
+
+void CuePlayer::checkReady()
+{
+	if (playButton->isEnabled())
+	{
+		paramtimer->stop();
 		playTrack();
 	}
 }

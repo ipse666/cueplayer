@@ -10,7 +10,8 @@ HEADERS += cueplayer.h \
     videowindow.h \
     videoslider.h \
     callbacks.h \
-    streamform.h
+    streamform.h \
+    plparser.h
 FORMS += ui/cueplayer.ui \
     ui/transcoder.ui \
     ui/apetoflacdialog.ui \
@@ -24,7 +25,8 @@ SOURCES += cueplayer.cpp \
     apetoflac.cpp \
     videowindow.cpp \
     videoslider.cpp \
-    streamform.cpp
+    streamform.cpp \
+    plparser.cpp
 RESOURCES += ressources.qrc
 CONFIG += release \
     link_pkgconfig
