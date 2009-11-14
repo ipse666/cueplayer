@@ -48,8 +48,6 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	int appHeightPos = desktop->height()/2 - appHeight/2;
 	move(appWidthPos, appHeightPos);
 
-	manager = new QNetworkAccessManager(this);
-
 	label->setText(trUtf8("откройте файл"));
 	treeWidget->hide();
 	dvdButton->hide();
@@ -115,8 +113,6 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
 	connect(filedialog, SIGNAL(filterSelected(QString)),
 	 this, SLOT(fileDialogFilter(QString)));
-	connect(manager, SIGNAL(finished(QNetworkReply*)),
-	 this, SLOT(readNmReply(QNetworkReply*)));
 	connect(trd, SIGNAL(started()), this, SLOT(threadRunInd()));
 	connect(trdtimer, SIGNAL(timeout()), this, SLOT(threadRunProgress()));
 	connect(trd, SIGNAL(terminated()), this, SLOT(threadStop()));
@@ -229,20 +225,12 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		else
 			g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
 	}
-	else if (fi.suffix() == "m3u")
-	{
-		QFileInfoList filelist = m3uParse(filename);
-		multiFileFlag = true;
-		if (!filelist.isEmpty())
-		{
-			multiFileInit(filelist);
-			settings.setValue("player/recentfile", filename);
-		}
-		return;
-	}
 	else if (fi.suffix() == "pls" ||
-			 fi.suffix() == "wvx")
+			 fi.suffix() == "wvx" ||
+			 fi.suffix() == "m3u")
 	{
+		setWindowTitle(trUtf8("Список воспроизведения"));
+		label->setText(trUtf8("Подождите. Инициализация списка."));
 		plparser->setPlUri(filename);
 		return;
 	}
@@ -702,7 +690,7 @@ void CuePlayer::createTrayIconMenu()
 	apetoflacAction = new QAction(trUtf8("Ape->Flac"), this);
 	apetoflacAction->setIcon(QIcon(":/images/hint.png"));
 	apetoflacAction->setShortcut(trUtf8("Ctrl+h"));
-	connect(apetoflacAction, SIGNAL(triggered()), apetoflac, SLOT(show()));
+	connect(apetoflacAction, SIGNAL(triggered()), this, SLOT(ape2flacShow()));
 
 	trayIcon = new QSystemTrayIcon(this);
 	trayIconMenu = new QMenu(this);
@@ -906,8 +894,13 @@ void CuePlayer::preInit(QString filename)
 void CuePlayer::apeFound(bool ape)
 {
 	if (ape) apetoflacAction->setEnabled(true);
-	if (ape) apetoflac->setFileNames(filename, refparser->getSoundFile());
 	if (!ape) apetoflac->close();
+}
+
+void CuePlayer::ape2flacShow()
+{
+	apetoflac->setFileNames(filename, refparser->getSoundFile());
+	apetoflac->show();
 }
 
 void CuePlayer::multiCueInit()
@@ -1342,68 +1335,6 @@ QString CuePlayer::checkDPMS()
 			return "+dpms";
 	}
 	return "+dpms";
-}
-
-QFileInfoList CuePlayer::m3uParse(QString url)
-{
-	QFileInfo finfo(url);
-	//QUrl urlpoint = QUrl::fromUserInput(url); На будущее
-	QUrl urlpoint = QUrl(url);
-	QFileInfoList filelist;
-	if (finfo.isFile())
-	{
-		QString path;
-		QString filename;
-		QFile m3ufile(url);
-		path = finfo.canonicalPath() + "/";
-		if (!m3ufile.open(QIODevice::ReadOnly | QIODevice::Text))
-			return filelist;
-		QTextStream m3utext(&m3ufile);
-		do {
-			filename = m3utext.readLine();
-			if (!filename.isEmpty())
-				filelist << path + filename;
-		} while (!filename.isEmpty());
-	}
-	else if (urlpoint.isValid())
-	{
-		manager->get(QNetworkRequest(urlpoint));
-	}
-	return filelist;
-}
-
-void CuePlayer::readNmReply(QNetworkReply * reply)
-{
-	QFileInfoList filelist;
-	QString str;
-	QByteArray result = reply->readAll();
-	reply->close();
-	QList<QByteArray> out = result.split('\n');
-	while (out.size())
-	{
-		str = "";
-		QByteArray bastr = out.last();
-		out.pop_back();
-		str.append(bastr);
-		if (!str.isEmpty())
-			filelist << str.trimmed();
-	}
-	if (!filelist.isEmpty())
-	{
-		streamFlag = true;
-		if (filelist.size() == 1)
-		{
-			qDebug() << trUtf8("Список из одного канала, прямой адрес ")
-							   + filelist.at(0).filePath();
-			cueFileSelected(QStringList() << filelist.at(0).filePath());
-			return;
-		}
-		multiFileFlag = true;
-		multiFileInit(filelist);
-		setWindowTitle(trUtf8("Радио"));
-		label->setText(trUtf8("Радио"));
-		settings.setValue("player/recentfile", filename);
-	}
 }
 
 void CuePlayer::threadRunInd()

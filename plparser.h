@@ -23,6 +23,7 @@ private:
 	ParsedPls playlist[100];
 	void parsePls(QStringList);
 	void parseWvx(QStringList);
+	void parseM3u(QStringList);
 private slots:
 	void readNmReply(QNetworkReply*);
 signals:
