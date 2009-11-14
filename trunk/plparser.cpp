@@ -8,10 +8,13 @@ PlParser::PlParser(QObject *parent) : QObject(parent)
 	 this, SLOT(readNmReply(QNetworkReply*)));
 }
 
-void PlParser::setPlsUri(QString uri)
+void PlParser::setPlUri(QString uri)
 {
 	QRegExp rxUrl("^\\w{3,5}://.*");
 	QRegExp rxFilePath("^/.*");
+
+	QFileInfo fi(uri);
+	entries = 0;
 
 	if (rxUrl.indexIn(uri) != -1)
 	{
@@ -37,9 +40,14 @@ void PlParser::setPlsUri(QString uri)
 			line = textstream.readLine();
 			linelist << line;
 		} while (!line.isNull());
-		parsePls(linelist);
-
 		plfile.close();
+
+		if (fi.suffix() == "pls")
+			parsePls(linelist);
+		else if(fi.suffix() == "wvx")
+			parseWvx(linelist);
+		else
+			emit plperror();
 	}
 	else
 	{
@@ -47,12 +55,12 @@ void PlParser::setPlsUri(QString uri)
 	}
 }
 
-unsigned short PlParser::getPlsEntries()
+unsigned short PlParser::getPlEntries()
 {
 	return entries;
 }
 
-QStringList PlParser::getPlsStruct(unsigned short ind)
+QStringList PlParser::getPlStruct(unsigned short ind)
 {
 	return QStringList() << playlist[ind].uri << playlist[ind].title;
 }
@@ -60,19 +68,26 @@ QStringList PlParser::getPlsStruct(unsigned short ind)
 void PlParser::readNmReply(QNetworkReply *reply)
 {
 	QStringList stringlist;
+	QUrl url = reply->url();
+	QFileInfo fi(url.toString());
 	QString str;
 	QByteArray result = reply->readAll();
 	reply->close();
 	QList<QByteArray> out = result.split('\n');
-	while (out.size())
+	foreach (QByteArray bastr, out)
 	{
 		str = "";
-		QByteArray bastr = out.last();
-		out.pop_back();
 		str.append(bastr);
 		if (!str.isEmpty())
 			stringlist << str.trimmed();
 	}
+
+	if (fi.suffix() == "pls")
+		parsePls(stringlist);
+	else if(fi.suffix() == "wvx")
+		parseWvx(stringlist);
+	else
+		emit plperror();
 }
 
 void PlParser::parsePls(QStringList list)
@@ -88,10 +103,59 @@ void PlParser::parsePls(QStringList list)
 		if (rxEntry.indexIn(str) != -1)
 			entries = rxEntry.cap(1).toShort(0,10);
 		if (rxUri.indexIn(str) != -1)
-			playlist[++ind].uri = rxUri.cap(1);
+			playlist[ind].uri = rxUri.cap(1);
 		if (rxTitle.indexIn(str) != -1)
-			playlist[ind].title = rxTitle.cap(1);
+			playlist[ind++].title = rxTitle.cap(1);
 	}
+
+	if (ind)
+		emit ready();
+	else
+		emit plperror();
+}
+
+void PlParser::parseWvx(QStringList list)
+{
+	int ind = 0;
+	bool title = false;
+	bool entry = false;
+
+	QString fulldoc = list.join("\n");
+	QXmlStreamReader xml(fulldoc);
+	while (!xml.atEnd())
+	{
+		QString characters, attributes;
+		QXmlStreamReader::TokenType tokentype = xml.readNext();
+		switch (tokentype)
+		{
+			case QXmlStreamReader::StartElement:
+				if (xml.name() == "ref")
+					attributes = xml.attributes().value("href").toString();
+				else if (xml.name() == "Title")
+					title = true;
+				else if (xml.name() == "entry")
+					entry = true;
+				break;
+			case QXmlStreamReader::EndElement:
+				if (xml.name() == "entry")
+				{
+					ind++;
+					entry = false;
+				}
+				else if (xml.name() == "Title")
+					title = false;
+				break;
+			case QXmlStreamReader::Characters:
+				if (title && entry) characters = xml.text().toString();
+				break;
+			default:
+				break;
+		}
+		if (!attributes.isNull()) playlist[ind].uri = attributes;
+		if (!characters.isNull()) playlist[ind].title = characters;
+	}
+
+	entries = ind;
 
 	if (ind)
 		emit ready();

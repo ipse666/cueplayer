@@ -10,9 +10,9 @@ class PlParser : public QObject
 
 public:
 	PlParser(QObject *parent = 0);
-	void setPlsUri(QString);
-	unsigned short getPlsEntries();
-	QStringList getPlsStruct(unsigned short);
+	void setPlUri(QString);
+	unsigned short getPlEntries();
+	QStringList getPlStruct(unsigned short);
 private:
 	QNetworkAccessManager *manager;
 	unsigned short entries;
@@ -22,6 +22,7 @@ private:
 	};
 	ParsedPls playlist[100];
 	void parsePls(QStringList);
+	void parseWvx(QStringList);
 private slots:
 	void readNmReply(QNetworkReply*);
 signals:

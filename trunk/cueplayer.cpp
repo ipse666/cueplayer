@@ -66,6 +66,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	videowindow->move(vidWidthPos, appHeightPos - vidHeight);
 	win = videowindow->winId();
 	streamform = new StreamForm(this);
+	plparser = new PlParser(this);
 	secNumLCD->display("00");
 	enableButtons(false);
 	restoreSettings();
@@ -138,6 +139,10 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(videowindow, SIGNAL(volumeChan(int)), this, SLOT(volumeValue(int)));
 	connect(videowindow, SIGNAL(volumeChan(int)), volumeDial, SLOT(setValue(int)));
 	connect(videowindow, SIGNAL(videoExit()), this, SLOT(endBlock()));
+
+	// Плейлист парсер
+	connect(plparser, SIGNAL(ready()), this, SLOT(plInit()));
+	connect(plparser, SIGNAL(plperror()), this, SLOT(plError()));
 }
 
 void CuePlayer::setNumLCDs(int sec)
@@ -233,6 +238,12 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			multiFileInit(filelist);
 			settings.setValue("player/recentfile", filename);
 		}
+		return;
+	}
+	else if (fi.suffix() == "pls" ||
+			 fi.suffix() == "wvx")
+	{
+		plparser->setPlUri(filename);
 		return;
 	}
 	else if (fi.isDir())
@@ -739,7 +750,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(13) +  " "
+									+ QString::number(14) +  " "
 									+ QString(curdate.longMonthName(11)) +  " "
 									+ QString::number(2009) +
 									trUtf8("<p>Мультимедиа проигрыватель."
@@ -1379,7 +1390,6 @@ void CuePlayer::readNmReply(QNetworkReply * reply)
 	}
 	if (!filelist.isEmpty())
 	{
-		multiFileFlag = true;
 		streamFlag = true;
 		if (filelist.size() == 1)
 		{
@@ -1388,6 +1398,7 @@ void CuePlayer::readNmReply(QNetworkReply * reply)
 			cueFileSelected(QStringList() << filelist.at(0).filePath());
 			return;
 		}
+		multiFileFlag = true;
 		multiFileInit(filelist);
 		setWindowTitle(trUtf8("Радио"));
 		label->setText(trUtf8("Радио"));
@@ -1492,6 +1503,28 @@ void CuePlayer::checkReady()
 		paramtimer->stop();
 		playTrack();
 	}
+}
+
+void CuePlayer::plInit()
+{
+	QFileInfoList filelist;
+	multiFileFlag = true;
+	streamFlag = true;
+
+	for (int i = 0; i < plparser->getPlEntries(); i++)
+		filelist << plparser->getPlStruct(i).at(0);
+	multiFileInit(filelist);
+	if(!playlistItem)
+		return;
+	for (int i = 0; i < plparser->getPlEntries(); i++)
+		playlistItem[i]->setText(0, plparser->getPlStruct(i).at(1));
+	label->setText(plparser->getPlStruct(0).at(1));
+	settings.setValue("player/recentfile", filename);
+}
+
+void CuePlayer::plError()
+{
+	label->setText("Ошибка чтения списка воспроизведения");
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)
