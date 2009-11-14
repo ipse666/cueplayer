@@ -86,6 +86,8 @@ void PlParser::readNmReply(QNetworkReply *reply)
 		parsePls(stringlist);
 	else if(fi.suffix() == "wvx")
 		parseWvx(stringlist);
+	else if(fi.suffix() == "m3u")
+		parseM3u(stringlist);
 	else
 		emit plperror();
 }
@@ -155,6 +157,24 @@ void PlParser::parseWvx(QStringList list)
 		if (!characters.isNull()) playlist[ind].title = characters;
 	}
 
+	entries = ind;
+
+	if (ind)
+		emit ready();
+	else
+		emit plperror();
+}
+
+void PlParser::parseM3u(QStringList list)
+{
+	int ind = 0;
+
+	foreach (QString line, list)
+	{
+		playlist[ind].uri = line;
+		playlist[ind].title = line;
+		ind++;
+	}
 	entries = ind;
 
 	if (ind)

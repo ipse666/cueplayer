@@ -6,7 +6,6 @@
 #include <QThread>
 #include <QX11Info>
 #include <QProcess>
-#include <QtNetwork>
 #include <gst/interfaces/xoverlay.h>
 #include "ui_cueplayer.h"
 #include "cueparser.h"
@@ -64,7 +63,6 @@ private:
 	QFileInfoList saveFileList;
 	QProcess *videoProcess;
 	QString primaryDPMS;
-	QNetworkAccessManager *manager;
 	QString prewlabel;
 	QTimer *paramtimer;
 	TransCoder *transcoder;
@@ -122,8 +120,6 @@ private slots:
 	void endBlock();
 	void dpmsTrigger(bool);
 	QString checkDPMS();
-	QFileInfoList m3uParse(QString);
-	void readNmReply(QNetworkReply*);
 	void threadRunInd();
 	void threadRunProgress();
 	void threadStop();
@@ -131,6 +127,7 @@ private slots:
 	void checkReady();
 	void plInit();
 	void plError();
+	void ape2flacShow();
 signals:
 	void gstError();
 };
