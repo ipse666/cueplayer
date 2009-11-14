@@ -22,7 +22,7 @@ void PlParser::setPlUri(QString uri)
 		if (urlpoint.isValid())
 			manager->get(QNetworkRequest(urlpoint));
 		else
-			emit plperror();
+			emit plperror(trUtf8("Неверный url:\n") + urlpoint.toString());
 	}
 	else if (rxFilePath.indexIn(uri) != -1)
 	{
@@ -32,7 +32,7 @@ void PlParser::setPlUri(QString uri)
 
 		if (!plfile.open(QIODevice::ReadOnly | QIODevice::Text))
 		{
-			emit plperror();
+			emit plperror(trUtf8("Ошибка открытия файла:\n") + uri);
 			return;
 		}
 		QTextStream textstream(&plfile);
@@ -46,12 +46,14 @@ void PlParser::setPlUri(QString uri)
 			parsePls(linelist);
 		else if(fi.suffix() == "wvx")
 			parseWvx(linelist);
+		else if(fi.suffix() == "m3u")
+			parseM3u(linelist);
 		else
-			emit plperror();
+			emit plperror(trUtf8("Неизвестный формат файла:\n") + uri);
 	}
 	else
 	{
-		emit plperror();
+		emit plperror(trUtf8("Тип uri неизвестен:\n") + uri);
 	}
 }
 
@@ -89,7 +91,7 @@ void PlParser::readNmReply(QNetworkReply *reply)
 	else if(fi.suffix() == "m3u")
 		parseM3u(stringlist);
 	else
-		emit plperror();
+		emit plperror(trUtf8("Неизвестный формат файла:\n") + url.toString());
 }
 
 void PlParser::parsePls(QStringList list)
@@ -113,7 +115,7 @@ void PlParser::parsePls(QStringList list)
 	if (ind)
 		emit ready();
 	else
-		emit plperror();
+		emit plperror(trUtf8("Ноль записей"));
 }
 
 void PlParser::parseWvx(QStringList list)
@@ -162,15 +164,18 @@ void PlParser::parseWvx(QStringList list)
 	if (ind)
 		emit ready();
 	else
-		emit plperror();
+		emit plperror(trUtf8("Ноль записей"));
 }
 
 void PlParser::parseM3u(QStringList list)
 {
+	QRegExp rxComment("^#.*");
 	int ind = 0;
 
 	foreach (QString line, list)
 	{
+		if (rxComment.indexIn(line) != -1)
+			continue;
 		playlist[ind].uri = line;
 		playlist[ind].title = line;
 		ind++;
@@ -180,5 +185,5 @@ void PlParser::parseM3u(QStringList list)
 	if (ind)
 		emit ready();
 	else
-		emit plperror();
+		emit plperror(trUtf8("Ноль записей"));
 }

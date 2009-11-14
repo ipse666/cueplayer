@@ -138,7 +138,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 
 	// Плейлист парсер
 	connect(plparser, SIGNAL(ready()), this, SLOT(plInit()));
-	connect(plparser, SIGNAL(plperror()), this, SLOT(plError()));
+	connect(plparser, SIGNAL(plperror(QString)), this, SLOT(plError(QString)));
 }
 
 void CuePlayer::setNumLCDs(int sec)
@@ -167,6 +167,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 
 	initPlayer();
 	filename = filenames.join("");
+
 	QFileInfo fi(filename);
 
 	if (fi.suffix() == "cue" ||
@@ -738,7 +739,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(14) +  " "
+									+ QString::number(15) +  " "
 									+ QString(curdate.longMonthName(11)) +  " "
 									+ QString::number(2009) +
 									trUtf8("<p>Мультимедиа проигрыватель."
@@ -1453,9 +1454,9 @@ void CuePlayer::plInit()
 	settings.setValue("player/recentfile", filename);
 }
 
-void CuePlayer::plError()
+void CuePlayer::plError(QString msg)
 {
-	label->setText("Ошибка чтения списка воспроизведения");
+	label->setText(trUtf8("Ошибка чтения списка воспроизведения\n") + msg);
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)

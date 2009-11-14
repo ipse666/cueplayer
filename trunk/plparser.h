@@ -27,7 +27,7 @@ private:
 private slots:
 	void readNmReply(QNetworkReply*);
 signals:
-	void plperror();
+	void plperror(QString);
 	void ready();
 };
 
