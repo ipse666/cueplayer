@@ -126,7 +126,7 @@ private slots:
 	void postCheck();
 	void checkReady();
 	void plInit();
-	void plError();
+	void plError(QString);
 	void ape2flacShow();
 signals:
 	void gstError();
