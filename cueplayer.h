@@ -14,6 +14,7 @@
 #include "apetoflac.h"
 #include "videowindow.h"
 #include "streamform.h"
+#include "plparser.h"
 
 class GstThread;
 
@@ -70,6 +71,7 @@ private:
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;
 	StreamForm *streamform;
+	PlParser *plparser;
 	int numTrack;
 	int totalTime;
 	int d_title;
@@ -127,6 +129,8 @@ private slots:
 	void threadStop();
 	void postCheck();
 	void checkReady();
+	void plInit();
+	void plError();
 signals:
 	void gstError();
 };
