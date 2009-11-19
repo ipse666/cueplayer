@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
 {
 	QDir currentdir;
 	QRegExp rxPath("^/.*");
-	QRegExp rxFilename3("^(mms://|http://).*");
+	QRegExp rxFilename3("^(mms://|http://|ftp://).*");
 	QString arg = QObject::trUtf8(argv[1]);
 	QApplication app(argc, argv);
 	if (!QSystemTrayIcon::isSystemTrayAvailable()) {

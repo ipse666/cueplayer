@@ -14,6 +14,7 @@ bool dvdFlag;
 bool preInitFlag;
 bool discFlag;
 bool streamFlag;
+bool ftpFlag;
 int dvdAudioPads;
 int dvdAudioCurrentPad;
 int threadRet;
@@ -160,6 +161,27 @@ static void on_pad_added (GstElement *element,
 
 
 	gst_caps_unref (caps);
+}
+
+static void audio_pad_added (GstElement *element,
+	GstPad *pad,
+	gpointer data)
+{
+	(void) element;
+	(void) data;
+
+	GstPad *audiopad;
+
+
+	audiopad = gst_element_get_static_pad (d_audio, "sink");
+	g_assert(audiopad);
+
+	if (GST_PAD_IS_LINKED (audiopad)) {
+		g_object_unref (audiopad);
+		return;
+	}
+	gst_pad_link (pad, audiopad);
+	gst_object_unref (audiopad);
 }
 
 GstElement *
