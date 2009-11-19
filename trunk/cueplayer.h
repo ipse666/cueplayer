@@ -42,6 +42,7 @@ private:
 	int getDuration();
 	bool playProbe();
 	void createDvdPipe();
+	void createFtpPipe();
 	void initPlayer();
 	QFileDialog *filedialog;
 	QTreeWidgetItem *playlistItem[100];

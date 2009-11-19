@@ -162,6 +162,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	QRegExp rxFilename("^/.*");
 	QRegExp rxFilename2(".*/([^/]*)$");
 	QRegExp rxFilename3("^(mms://|http://).*");
+	QRegExp rxFilename4("^ftp://.*");
 	QString nextTool = nextButton->toolTip();
 	QString prewTool = prewButton->toolTip();
 
@@ -206,6 +207,15 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	{
 		if (rxFilename2.indexIn(filename) != -1)
 			mp3trackName = rxFilename2.cap(1);
+		if (rxFilename4.indexIn(filename) != -1)
+		{
+			ftpFlag = true;
+			mp3trackName = rxFilename4.cap(1);
+			createFtpPipe();
+			settings.setValue("player/recentfile", filename);
+			initFile();
+			return;
+		}
 		setWindowTitle(mp3trackName);
 		label->setText(mp3trackName);
 		preInit(filename);
@@ -370,6 +380,7 @@ void CuePlayer::initPlayer()
 	preInitFlag = false;
 	discFlag = false;
 	streamFlag = false;
+	ftpFlag = false;
 	videowindow->hide();
 	memset(multiFiles,0,100);
 	mp3trackName = trUtf8("неизвестно");
@@ -547,7 +558,7 @@ void CuePlayer::sliderVideoRelease()
 // регулировка громкости
 void CuePlayer::volumeValue(int volume)
 {
-	if (dvdFlag)
+	if (dvdFlag || ftpFlag)
 		g_object_set(d_volume, "volume", (double)volume / 100, NULL);
 	else
 		g_object_set(play, "volume", (double)volume / 100, NULL);
@@ -657,7 +668,7 @@ void CuePlayer::initFile()
 	playButton->setEnabled(true);
 	pauseButton->setEnabled(true);
 	stopButton->setEnabled(true);
-	if(dvdFlag)
+	if(dvdFlag || ftpFlag)
 		g_object_set(d_volume, "volume", (double)volumeDial->value() / 100, NULL);
 	else
 		g_object_set(play, "volume", (double)volumeDial->value() / 100, NULL);
@@ -739,7 +750,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(15) +  " "
+									+ QString::number(19) +  " "
 									+ QString(curdate.longMonthName(11)) +  " "
 									+ QString::number(2009) +
 									trUtf8("<p>Мультимедиа проигрыватель."
@@ -1252,6 +1263,43 @@ void CuePlayer::createDvdPipe()
 	gst_element_add_pad (d_video, gst_ghost_pad_new ("sink", videopad));
 	gst_object_unref (videopad);
 	gst_bin_add (GST_BIN (play), d_video);
+	//g_signal_connect (play, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг
+}
+
+void CuePlayer::createFtpPipe()
+{
+	GstElement *gnomevfs, *fqueue, *fdecoder, *faout;
+	GstPad *audiopad;
+
+	label->setText(trUtf8("Открыт ftp файл"));
+
+	play = gst_pipeline_new ("pipe");
+	gnomevfs = gst_element_factory_make ("gnomevfssrc", "gvfs");
+	g_object_set (gnomevfs, "location", filename.toUtf8().data(), NULL);
+
+	fqueue = make_queue ();
+	fdecoder = gst_element_factory_make ("decodebin", "fdecode");
+	d_volume = gst_element_factory_make ("volume", "volume");
+	faout = gst_element_factory_make ("autoaudiosink", "fasink");
+
+	gst_bin_add_many (GST_BIN (play), gnomevfs, fqueue, fdecoder, NULL);
+	gst_element_link_many(gnomevfs, fqueue, fdecoder, NULL);
+
+	g_signal_connect (fdecoder, "pad-added", G_CALLBACK (audio_pad_added), NULL);
+
+	d_audio = gst_bin_new ("audiobin");
+	gst_bin_add_many (GST_BIN (d_audio), d_volume, faout, NULL);
+	gst_element_link_many(d_volume, faout, NULL);
+
+	audiopad = gst_element_get_static_pad (d_volume, "sink");
+	gst_element_add_pad (d_audio, gst_ghost_pad_new ("sink", audiopad));
+	gst_object_unref (audiopad);
+	gst_bin_add (GST_BIN (play), d_audio);
+
+
+	bus = gst_pipeline_get_bus (GST_PIPELINE (play));
+	gst_bus_add_watch (bus, bus_callback, play);
+	gst_object_unref (bus);
 	//g_signal_connect (play, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг
 }
 
