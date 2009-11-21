@@ -750,7 +750,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(19) +  " "
+									+ QString::number(21) +  " "
 									+ QString(curdate.longMonthName(11)) +  " "
 									+ QString::number(2009) +
 									trUtf8("<p>Мультимедиа проигрыватель."
@@ -851,7 +851,6 @@ void CuePlayer::checkState()
 		gst_element_set_state (play, GST_STATE_NULL);
 		g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(numTrack)).toUtf8().data(), NULL);
 		gst_element_set_state (play, GST_STATE_READY);
-		gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT);
 	}
 	else if (multiFileFlag)
 	{
@@ -863,7 +862,6 @@ void CuePlayer::checkState()
 		else
 			g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
 		gst_element_set_state (play, GST_STATE_READY);
-		gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT);
 	}
 	trd->setPlayBin(play);
 	trd->setFunc(POST_CHECK);
