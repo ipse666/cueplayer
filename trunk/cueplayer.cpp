@@ -438,6 +438,8 @@ void CuePlayer::playNextTrack()
 			++numTrack;
 			checkState();
 		}
+		else
+			stopAll();
 	}
 }
 
@@ -537,7 +539,9 @@ void CuePlayer::tick(qint64 time)
 		timeLineSlider->setSliderPosition(time - totalTime);
 		if (videoFlag || dvdFlag) videowindow->setSliderPos(time - totalTime);
 	}
-	if (timeLineSlider->value() == timeLineSlider->maximum() && !streamFlag)
+	if (timeLineSlider->value() == timeLineSlider->maximum() &&
+		!streamFlag &&
+		!multiFileFlag)
 		CuePlayer::playNextTrack();
 }
 
@@ -750,7 +754,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(21) +  " "
+									+ QString::number(22) +  " "
 									+ QString(curdate.longMonthName(11)) +  " "
 									+ QString::number(2009) +
 									trUtf8("<p>Мультимедиа проигрыватель."
@@ -855,6 +859,7 @@ void CuePlayer::checkState()
 	else if (multiFileFlag)
 	{
 		QRegExp rxFilename("^\\w{3,5}://.*");
+		qDebug() << numTrack;
 		QFileInfo filetu = saveFileList.at(numTrack-1);
 		gst_element_set_state (play, GST_STATE_NULL);
 		if (rxFilename.indexIn(filetu.filePath()) != -1)

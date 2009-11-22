@@ -82,11 +82,12 @@ private:
 	GstBus *bus;
 	int multiFiles[100];
 	int loadpoints;
+public slots:
+	void playNextTrack();
 private slots:
 	void setNumLCDs(int);
 	void cueFileSelected(QStringList);
 	void discSet();
-	void playNextTrack();
 	void playPrewTrack();
 	void playTrack();
 	void stopTrack();

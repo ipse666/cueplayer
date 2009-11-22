@@ -29,7 +29,8 @@ SOURCES += cueplayer.cpp \
     plparser.cpp
 RESOURCES += ressources.qrc
 CONFIG += release \
-    link_pkgconfig
+	link_pkgconfig \
+	warn_on
 PKGCONFIG += gstreamer-0.10 \
     gstreamer-interfaces-0.10
 OTHER_FILES += INSTALL \
