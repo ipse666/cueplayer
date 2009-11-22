@@ -37,7 +37,11 @@ bus_callback (GstBus     *bus,
 
 	  case GST_MESSAGE_EOS: {
 		g_print ("Конец потока\n");
-		if (!multiCueFlag) cueplayer->stopAll();
+		if (!multiCueFlag && !multiFileFlag) cueplayer->stopAll();
+		if (multiFileFlag)
+		{
+			cueplayer->playNextTrack();
+		}
 		break;
 	}
 	case GST_MESSAGE_STATE_CHANGED: {
