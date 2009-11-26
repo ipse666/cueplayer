@@ -5,4 +5,4 @@ make
 Опции qmake:
 DEFINES += FTPPLAY включает проигрывание с ftp
 пример конфигурации:
-qmake DEFINES += FTPPLAY
+qmake "DEFINES += FTPPLAY"
