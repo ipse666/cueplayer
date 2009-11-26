@@ -167,6 +167,7 @@ static void on_pad_added (GstElement *element,
 	gst_caps_unref (caps);
 }
 
+#ifdef FTPPLAY
 static void audio_pad_added (GstElement *element,
 	GstPad *pad,
 	gpointer data)
@@ -187,6 +188,7 @@ static void audio_pad_added (GstElement *element,
 	gst_pad_link (pad, audiopad);
 	gst_object_unref (audiopad);
 }
+#endif
 
 GstElement *
 make_queue ()

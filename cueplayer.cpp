@@ -162,7 +162,9 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	QRegExp rxFilename("^/.*");
 	QRegExp rxFilename2(".*/([^/]*)$");
 	QRegExp rxFilename3("^(mms://|http://).*");
+#ifdef FTPPLAY
 	QRegExp rxFilename4("^ftp://.*");
+#endif
 	QString nextTool = nextButton->toolTip();
 	QString prewTool = prewButton->toolTip();
 
@@ -207,6 +209,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	{
 		if (rxFilename2.indexIn(filename) != -1)
 			mp3trackName = rxFilename2.cap(1);
+#ifdef FTPPLAY
 		if (rxFilename4.indexIn(filename) != -1)
 		{
 			ftpFlag = true;
@@ -216,6 +219,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			initFile();
 			return;
 		}
+#endif
 		setWindowTitle(mp3trackName);
 		label->setText(mp3trackName);
 		preInit(filename);
@@ -1269,6 +1273,7 @@ void CuePlayer::createDvdPipe()
 	//g_signal_connect (play, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг
 }
 
+#ifdef FTPPLAY
 void CuePlayer::createFtpPipe()
 {
 	GstElement *gnomevfs, *fqueue, *fdecoder, *faout;
@@ -1305,6 +1310,7 @@ void CuePlayer::createFtpPipe()
 	gst_object_unref (bus);
 	//g_signal_connect (play, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг
 }
+#endif
 
 void CuePlayer::dtsPlayer()
 {
