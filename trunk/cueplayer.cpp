@@ -165,6 +165,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 #ifdef FTPPLAY
 	QRegExp rxFilename4("^ftp://.*");
 #endif
+	QRegExp rxFilename5("^http://www.youtube.com/watch\\?v=.*");
+	QRegExp rxFilename6("^http://youtube.com/get_video\\?video_id=.*");
 	QString nextTool = nextButton->toolTip();
 	QString prewTool = prewButton->toolTip();
 
@@ -205,6 +207,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			 fi.suffix() == "3gp" ||
 			 fi.suffix() == "m2ts" ||
 			 fi.suffix() == "VOB" ||
+			 fi.suffix() == "vob" ||
+			 fi.suffix() == "wmv" ||
 			 fi.suffix() == "mkv")
 	{
 		if (rxFilename2.indexIn(filename) != -1)
@@ -232,6 +236,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	else if (fi.suffix() == "flv")
 	{
 		videoFlag = true;
+		streamFlag = true;
 		setWindowTitle(trUtf8("FLV-видео"));
 		label->setText(fi.fileName());
 		play = gst_element_factory_make ("playbin2", "play");
@@ -274,6 +279,9 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 					 filetu.suffix() == "wv" ||
 					 filetu.suffix() == "3gp" ||
 					 filetu.suffix() == "m2ts" ||
+					 filetu.suffix() == "VOB" ||
+					 filetu.suffix() == "vob" ||
+					 filetu.suffix() == "wmv" ||
 					 filetu.suffix() == "mkv")
 			{
 				filesList.prepend(filetu);
@@ -308,11 +316,29 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			return;
 		}
 	}
+	else if (rxFilename5.indexIn(filename) != -1)
+	{
+		videoFlag = true;
+		setWindowTitle(trUtf8("Ютуб"));
+		label->setText(trUtf8("Ютуб"));
+		youtuber = new YouTubeDL(filename);
+		connect(youtuber, SIGNAL(putUrl(QStringList)), this, SLOT(cueFileSelected(QStringList)));
+		return;
+	}
+	else if (rxFilename6.indexIn(filename) != -1)
+	{
+		videoFlag = true;
+		setWindowTitle(trUtf8("Ютуб"));
+		label->setText(trUtf8("Ютуб"));
+		play = gst_element_factory_make ("playbin2", "play");
+		g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+	}
 	else if (rxFilename3.indexIn(filename) != -1)
 	{
 		setWindowTitle(trUtf8("Радио"));
 		label->setText(trUtf8("Радио"));
 		play = gst_element_factory_make ("playbin2", "play");
+
 		g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
 
 		settings.setValue("player/recentfile", filename);
@@ -347,7 +373,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	gst_bus_add_watch (bus, bus_callback, play);
 	gst_object_unref (bus);
 
-	playProbe();
+	if (!streamFlag)
+		playProbe();
 	//g_signal_connect (play, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг
 }
 

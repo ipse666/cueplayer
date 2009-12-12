@@ -108,6 +108,7 @@ cb_typefound (GstElement *typefind,
 	if (!strcmp(type ,"video/x-matroska") ||
 		!strcmp(type ,"video/x-msvideo") ||
 		!strcmp(type ,"application/x-3gp") ||
+		!strcmp(type ,"video/x-ms-asf") ||
 		!strncmp(type ,"video/mpegts", 12) ||
 		!strncmp(type ,"video/mpeg", 10) ||
 		!strcmp(type ,"video/quicktime"))

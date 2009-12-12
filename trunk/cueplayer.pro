@@ -11,7 +11,8 @@ HEADERS += cueplayer.h \
     videoslider.h \
     callbacks.h \
     streamform.h \
-    plparser.h
+    plparser.h \
+    youtubedl.h
 FORMS += ui/cueplayer.ui \
     ui/transcoder.ui \
     ui/apetoflacdialog.ui \
@@ -26,11 +27,12 @@ SOURCES += cueplayer.cpp \
     videowindow.cpp \
     videoslider.cpp \
     streamform.cpp \
-    plparser.cpp
+    plparser.cpp \
+    youtubedl.cpp
 RESOURCES += ressources.qrc
 CONFIG += release \
-	link_pkgconfig \
-	warn_on
+    link_pkgconfig \
+    warn_on
 PKGCONFIG += gstreamer-0.10 \
     gstreamer-interfaces-0.10
 OTHER_FILES += INSTALL \
