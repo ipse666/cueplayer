@@ -17,6 +17,9 @@ VideoWindow::VideoWindow(QWidget *parent)
 	slider->move(p);
 	slider->setWindowFlags(Qt::Popup);
 
+	// Drag and Drop
+	setAcceptDrops(true);
+
 	shortcutpause = new QShortcut(this);
 	shortcutpause->setKey(trUtf8(" "));
 	shortcutstop = new QShortcut(this);
@@ -238,4 +241,22 @@ int VideoWindow::getSliderPos()
 void VideoWindow::setVolumePos(int pos)
 {
 	slider->setVolumePos(pos);
+}
+
+void VideoWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+	if (event->mimeData()->hasFormat("text/uri-list"))
+			event->acceptProposedAction();
+}
+
+void VideoWindow::dropEvent(QDropEvent *event)
+{
+	QRegExp rxFilename("^file://.*");
+	QList<QUrl> urls = event->mimeData()->urls();
+	if (urls.isEmpty())
+		return;
+	if (rxFilename.indexIn(urls.first().toString()) != -1)
+		emit draganddrop(QStringList() << urls.first().toLocalFile());
+	else
+		emit draganddrop(QStringList() << urls.first().toString());
 }
