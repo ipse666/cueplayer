@@ -14,6 +14,7 @@
 #include "videowindow.h"
 #include "streamform.h"
 #include "plparser.h"
+#include "youtubedl.h"
 
 class GstThread;
 
@@ -71,6 +72,7 @@ private:
 	VideoWindow *videowindow;
 	StreamForm *streamform;
 	PlParser *plparser;
+	YouTubeDL *youtuber;
 	int numTrack;
 	int totalTime;
 	int d_title;
