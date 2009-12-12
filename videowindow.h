@@ -14,6 +14,8 @@ protected:
 	void mouseDoubleClickEvent(QMouseEvent * event);
 	void mouseMoveEvent(QMouseEvent * event);
 	void closeEvent(QCloseEvent *event);
+	void dragEnterEvent(QDragEnterEvent *event);
+	void dropEvent(QDropEvent *event);
 public:
 	VideoWindow(QWidget *parent = 0);
 	void createAudioMenu(int, int);
@@ -70,6 +72,7 @@ signals:
 	void sliderRelease();
 	void volumeChan(int);
 	void videoExit();
+	void draganddrop(QStringList);
 };
 
 #endif // VIDEOWINDOW_H
