@@ -48,6 +48,9 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	int appHeightPos = desktop->height()/2 - appHeight/2;
 	move(appWidthPos, appHeightPos);
 
+	// Drag and Drop
+	setAcceptDrops(true);
+
 	label->setText(trUtf8("откройте файл"));
 	treeWidget->hide();
 	dvdButton->hide();
@@ -1541,6 +1544,24 @@ void CuePlayer::plInit()
 void CuePlayer::plError(QString msg)
 {
 	label->setText(trUtf8("Ошибка чтения списка воспроизведения\n") + msg);
+}
+
+void CuePlayer::dragEnterEvent(QDragEnterEvent *event)
+{
+	if (event->mimeData()->hasFormat("text/uri-list"))
+			event->acceptProposedAction();
+}
+
+void CuePlayer::dropEvent(QDropEvent *event)
+{
+	QRegExp rxFilename("^file://.*");
+	QList<QUrl> urls = event->mimeData()->urls();
+	if (urls.isEmpty())
+		return;
+	if (rxFilename.indexIn(urls.first().toString()) != -1)
+		cueFileSelected(QStringList() << urls.first().toLocalFile());
+	else
+		cueFileSelected(QStringList() << urls.first().toString());
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)

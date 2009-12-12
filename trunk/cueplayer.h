@@ -24,6 +24,8 @@ class CuePlayer : public QWidget, public Ui::CuePlayer
 
 protected:
 	void closeEvent(QCloseEvent *event);
+	void dragEnterEvent(QDragEnterEvent *event);
+	void dropEvent(QDropEvent *event);
 public:
 	CuePlayer(QWidget *parent = 0);
 	GstThread *trd;
