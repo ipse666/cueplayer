@@ -7,7 +7,7 @@ CueParser::CueParser(QString s)
 	QRegExp rxAlbum("^TITLE \"(.*)\"");
 	QRegExp rxSoundfile("^FILE \"(.*)\"");
 	QRegExp rxTitle("    TITLE \"(.*)\"");
-	QRegExp rxIndex("    INDEX \\d\\d (.*)");
+	QRegExp rxIndex("    INDEX \\d+ (.*)");
 	QRegExp rxTrackNumber("  TRACK (\\d\\d) .*");
 	QRegExp rxAudioPath("(.*/).*");
 	QRegExp rxFileWav("(.*)(\\.wav)");

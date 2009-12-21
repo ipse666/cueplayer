@@ -790,8 +790,8 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(22) +  " "
-									+ QString(curdate.longMonthName(11)) +  " "
+									+ QString::number(18) +  " "
+									+ QString(curdate.longMonthName(12)) +  " "
 									+ QString::number(2009) +
 									trUtf8("<p>Мультимедиа проигрыватель."
 									"<p><p>Разработчик: <a href=xmpp:ipse@ipse.zapto.org name=jid type=application/xmpp+xml>ipse</a>"));
@@ -863,7 +863,6 @@ int CuePlayer::getPosition()
 
 void CuePlayer::seekGst(int time)
 {
-
 	GstClockTime nach   = (GstClockTime)(time * GST_MSECOND);
 	if (!gst_element_seek(play, 1.0,
 			GST_FORMAT_TIME,

@@ -97,6 +97,7 @@ void PlParser::readNmReply(QNetworkReply *reply)
 void PlParser::parsePls(QStringList list)
 {
 	QRegExp rxEntry("numberofentries=(\\d+)");
+	rxEntry.setCaseSensitivity(Qt::CaseInsensitive);
 	QRegExp rxUri("File\\d+=(.*)");
 	QRegExp rxTitle("Title\\d+=(.*)");
 
@@ -112,7 +113,7 @@ void PlParser::parsePls(QStringList list)
 			playlist[ind++].title = rxTitle.cap(1);
 	}
 
-	if (ind)
+	if (ind || entries)
 		emit ready();
 	else
 		emit plperror(trUtf8("Ноль записей"));
