@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QFile>
 #include <QtNetwork>
-#include <QDateTime>
 
 class VideoInfos
 {
