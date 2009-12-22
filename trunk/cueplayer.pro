@@ -37,4 +37,5 @@ PKGCONFIG += gstreamer-0.10 \
     gstreamer-interfaces-0.10
 OTHER_FILES += INSTALL \
     INSTALL \
-    README
+	README	\
+	CHANGELOG
