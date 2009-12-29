@@ -83,6 +83,7 @@ private:
 	GstElement *play;
 	GstElement *videosink;
 	GstElement *demuxer;
+	GstElement *tsfile;
 	GstBus *bus;
 	int multiFiles[100];
 	int loadpoints;

@@ -231,12 +231,66 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 #endif
 		setWindowTitle(mp3trackName);
 		label->setText(mp3trackName);
-		preInit(filename);
-		play = gst_element_factory_make ("playbin2", "play");
-		if (rxFilename.indexIn(filename) != -1)
-			g_object_set (G_OBJECT (play), "uri", ("file://" + filename).toUtf8().data(), NULL);
+		if (fi.suffix() == "ts")
+		{
+			GstElement *typefind, *audiosink, *ffmpegcolorspace;
+			GstElement *audioconvert, *audioresample;
+			GstElement *aqueue, *vqueue;
+			GstPad *audiopad, *videopad;
+
+			tsFlag = true;
+
+			aqueue = gst_element_factory_make ("queue", NULL);
+			vqueue = gst_element_factory_make ("queue", NULL);
+			demuxer = gst_element_factory_make ("decodebin2", "bindecoder");
+
+			play = gst_pipeline_new ("ts-player");
+			tsfile = gst_element_factory_make ("filesrc", "file-source");
+			g_object_set (tsfile, "location", filename.toUtf8().data(), NULL);
+
+			typefind = gst_element_factory_make ("typefind", "typefinder");
+			g_signal_connect (typefind, "have-type", G_CALLBACK (cb_typefound), NULL);
+
+			audiosink = gst_element_factory_make ("autoaudiosink", "asink");
+			audioconvert = gst_element_factory_make ("audioconvert", "aconv");
+			audioresample = gst_element_factory_make ("audioresample", "asampl");
+			d_volume = gst_element_factory_make ("volume", "volume");
+			ffmpegcolorspace = gst_element_factory_make ("ffmpegcolorspace", "ffmpegcol");
+			videosink = gst_element_factory_make ("xvimagesink", "xvideoout");
+			g_object_set (G_OBJECT (videosink), "force-aspect-ratio", true, NULL);
+			gst_x_overlay_set_xwindow_id (GST_X_OVERLAY(videosink), win);
+
+			gst_bin_add_many (GST_BIN (play), tsfile, typefind, demuxer, NULL);
+			gst_element_link_many (tsfile, typefind,  demuxer, NULL);
+			g_signal_connect (demuxer, "new-decoded-pad", G_CALLBACK (new_pad_added), NULL);
+
+			d_audio = gst_bin_new ("audiobin");
+			gst_bin_add_many (GST_BIN (d_audio), aqueue, audioconvert, audioresample, d_volume, audiosink, NULL);
+			gst_element_link_many(aqueue, audioconvert, audioresample, d_volume, audiosink, NULL);
+
+			audiopad = gst_element_get_static_pad (aqueue, "sink");
+			gst_element_add_pad (d_audio, gst_ghost_pad_new ("sink", audiopad));
+			gst_object_unref (audiopad);
+			gst_bin_add (GST_BIN (play), d_audio);
+
+			d_video = gst_bin_new ("videobin");
+			gst_bin_add_many (GST_BIN (d_video), vqueue, ffmpegcolorspace, videosink, NULL);
+			gst_element_link_many (vqueue, ffmpegcolorspace, videosink, NULL);
+
+			videopad = gst_element_get_static_pad (vqueue, "sink");
+			gst_element_add_pad (d_video, gst_ghost_pad_new ("sink", videopad));
+			gst_object_unref (videopad);
+			gst_bin_add (GST_BIN (play), d_video);
+		}
 		else
-			g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+		{
+			preInit(filename);
+			play = gst_element_factory_make ("playbin2", "play");
+			if (rxFilename.indexIn(filename) != -1)
+				g_object_set (G_OBJECT (play), "uri", ("file://" + filename).toUtf8().data(), NULL);
+			else
+				g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+		}
 	}
 	else if (fi.suffix() == "flv")
 	{
@@ -417,6 +471,7 @@ void CuePlayer::initPlayer()
 	discFlag = false;
 	streamFlag = false;
 	ftpFlag = false;
+	tsFlag = false;
 	videowindow->hide();
 	memset(multiFiles,0,100);
 	mp3trackName = trUtf8("неизвестно");
@@ -598,7 +653,7 @@ void CuePlayer::sliderVideoRelease()
 // регулировка громкости
 void CuePlayer::volumeValue(int volume)
 {
-	if (dvdFlag || ftpFlag)
+	if (dvdFlag || ftpFlag || tsFlag)
 		g_object_set(d_volume, "volume", (double)volume / 100, NULL);
 	else
 		g_object_set(play, "volume", (double)volume / 100, NULL);
@@ -708,7 +763,7 @@ void CuePlayer::initFile()
 	playButton->setEnabled(true);
 	pauseButton->setEnabled(true);
 	stopButton->setEnabled(true);
-	if(dvdFlag || ftpFlag)
+	if(dvdFlag || ftpFlag || tsFlag)
 		g_object_set(d_volume, "volume", (double)volumeDial->value() / 100, NULL);
 	else
 		g_object_set(play, "volume", (double)volumeDial->value() / 100, NULL);
@@ -790,7 +845,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(22) +  " "
+									+ QString::number(29) +  " "
 									+ QString(curdate.longMonthName(12)) +  " "
 									+ QString::number(2009) +
 									trUtf8("<p>Мультимедиа проигрыватель."
@@ -863,13 +918,38 @@ int CuePlayer::getPosition()
 
 void CuePlayer::seekGst(int time)
 {
-	GstClockTime nach   = (GstClockTime)(time * GST_MSECOND);
-	if (!gst_element_seek(play, 1.0,
-			GST_FORMAT_TIME,
-			(GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE),
-			GST_SEEK_TYPE_SET, nach,
-			GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE))
-		qDebug() << QString(trUtf8("Ошибка поиска"));
+	if (!tsFlag)
+	{
+		GstClockTime nach   = (GstClockTime)(time * GST_MSECOND);
+		if (!gst_element_seek(play, 1.0,
+				GST_FORMAT_TIME,
+				(GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE),
+				GST_SEEK_TYPE_SET, nach,
+				GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE))
+			qDebug() << QString(trUtf8("Ошибка поиска"));
+	}
+	else
+	{
+		gint64 pos, dur;
+		gst_element_set_state (play, GST_STATE_READY);
+		GstFormat fmt = GST_FORMAT_BYTES;
+		gst_element_query_position (tsfile,
+									&fmt,
+									&pos);
+		gst_element_query_duration (tsfile,
+									&fmt,
+									&dur);
+		pos = (pos/188)*188;
+		int shift = pos+time*1880;
+		if (!gst_element_seek_simple(tsfile,
+					GST_FORMAT_BYTES,
+					(GstSeekFlags)(GST_SEEK_FLAG_SKIP),
+					shift))
+			qDebug() << QString(trUtf8("Ошибка поиска"));
+		gst_element_set_state (play, GST_STATE_PLAYING);
+		gst_bin_recalculate_latency ((GstBin*)d_video);
+		g_print("Позиция: %ld, смещение %d, размер %ld. Время: %d\n", pos, shift, dur, time);
+	}
 }
 
 void CuePlayer::enableButtons(bool a)
@@ -1141,7 +1221,7 @@ void CuePlayer::pmaxSeek()
 void CuePlayer::setAid(int n)
 {
 	// Выбор аудио playbin
-	if (videoFlag)
+	if (videoFlag && !tsFlag)
 	{
 		gint flags;
 		g_object_get (G_OBJECT (play), "flags", &flags, NULL);
@@ -1157,7 +1237,7 @@ void CuePlayer::setAid(int n)
 		}
 	}
 	// Выбор аудио DVD
-	else if (dvdFlag)
+	else if (dvdFlag || tsFlag)
 	{
 		gchar *curpad, *nextpad;
 		curpad = getDvdAudio(dvdAudioCurrentPad);
@@ -1210,7 +1290,7 @@ void CuePlayer::fileDialogFilter(QString filter)
 // Пробный запуск конвеера, инициализация
 bool CuePlayer::playProbe()
 {
-	if (!dvdFlag) g_object_set(play, "mute", true, NULL);
+	if (!dvdFlag && !tsFlag) g_object_set(play, "mute", true, NULL);
 	preInitFlag = true;
 	dvdAudioPads = 0;
 	dvdAudioCurrentPad = 0;
@@ -1234,7 +1314,7 @@ bool CuePlayer::playProbe()
 
 		stopAll();
 		preInitFlag = false;
-		if (!dvdFlag) g_object_set(play, "mute", false, NULL);
+		if (!dvdFlag && !tsFlag) g_object_set(play, "mute", false, NULL);
 		return true;
 	}
 	else
@@ -1474,7 +1554,7 @@ void CuePlayer::threadStop()
 
 void CuePlayer::postPlay()
 {
-	if (videoFlag)
+	if (videoFlag && !tsFlag)
 	{
 		if (state == GST_STATE_PLAYING)
 		{
@@ -1493,7 +1573,7 @@ void CuePlayer::postPlay()
 			videowindow->createTitleMenu(ntext - 1, currenttext);
 		}
 	}
-	else if (dvdFlag)
+	else if (dvdFlag || tsFlag)
 	{
 		if (state == GST_STATE_PLAYING)
 		{
