@@ -15,6 +15,7 @@ bool preInitFlag;
 bool discFlag;
 bool streamFlag;
 bool ftpFlag;
+bool tsFlag;
 int dvdAudioPads;
 int dvdAudioCurrentPad;
 int threadRet;
@@ -115,6 +116,59 @@ cb_typefound (GstElement *typefind,
 		if (!dvdFlag)
 			videoFlag = true;
 	g_free (type);
+	if (tsFlag)
+		dvdAudioPads = 0;
+}
+
+static void new_pad_added (GstElement* element,
+						   GstPad* pad,
+						   gboolean arg1,
+						   gpointer data)
+{
+	GstCaps *caps;
+	const gchar *mime = "NULL";
+	(void) element;
+	(void) arg1;
+	(void) data;
+	guint i;
+
+	GstPad *audiopad, *videopad;
+
+	caps = gst_pad_get_caps (pad);
+	g_assert (caps != NULL);
+	for (i = 0; i < gst_caps_get_size (caps); ++i) {
+		mime = gst_structure_get_name (gst_caps_get_structure (caps, i));
+	}
+
+	if (g_strrstr (mime, "audio")) {
+		audiopad = gst_element_get_static_pad (d_audio, "sink");
+		g_assert(audiopad);
+		cueplayer->setDvdAudio(gst_pad_get_name(pad), dvdAudioPads);
+		dvdAudioPads++;
+
+		//g_print("ПАД ДЕТЕКТ %s, текущий индекс %d\n", gst_pad_get_name(pad), dvdAudioCurrentPad); // Дебаг!
+		if (GST_PAD_IS_LINKED (audiopad)) {
+			g_object_unref (audiopad);
+			return;
+		}
+		if (!strcmp(gst_pad_get_name(pad), cueplayer->getDvdAudio(dvdAudioCurrentPad)))
+			gst_pad_link (pad, audiopad);
+		gst_object_unref (audiopad);
+	}
+
+	if (g_strrstr (mime, "video")) {
+		videopad = gst_element_get_static_pad (d_video, "sink");
+		g_assert(videopad);
+		if (GST_PAD_IS_LINKED (videopad)) {
+			g_object_unref (videopad);
+			return;
+		}
+		gst_pad_link (pad, videopad);
+		gst_object_unref (videopad);
+	}
+
+
+	gst_caps_unref (caps);
 }
 
 static void on_pad_added (GstElement *element,
@@ -153,7 +207,7 @@ static void on_pad_added (GstElement *element,
 		gst_object_unref (audiopad);
 	}
 
-	if (g_strrstr (mime, "video/mpeg")) {
+	if (g_strrstr (mime, "video")) {
 		videopad = gst_element_get_static_pad (d_video, "sink");
 		g_assert(videopad);
 		if (GST_PAD_IS_LINKED (videopad)) {
