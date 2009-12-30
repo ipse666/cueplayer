@@ -940,7 +940,7 @@ void CuePlayer::seekGst(int time)
 									&fmt,
 									&dur);
 		pos = (pos/188)*188;
-		int shift = pos+time*1880;
+		gint64 shift = pos+time*1880;
 		if (!gst_element_seek_simple(tsfile,
 					GST_FORMAT_BYTES,
 					(GstSeekFlags)(GST_SEEK_FLAG_SKIP),
@@ -948,7 +948,7 @@ void CuePlayer::seekGst(int time)
 			qDebug() << QString(trUtf8("Ошибка поиска"));
 		gst_element_set_state (play, GST_STATE_PLAYING);
 		gst_bin_recalculate_latency ((GstBin*)d_video);
-		g_print("Позиция: %ld, смещение %d, размер %ld. Время: %d\n", pos, shift, dur, time);
+		g_print("Позиция: %ld, смещение %ld, размер %ld. Время: %d\n", pos, shift, dur, time);
 	}
 }
 
