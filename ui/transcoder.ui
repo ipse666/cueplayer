@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>574</width>
+    <width>619</width>
     <height>387</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <string>Конвертор/Разделитель</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../ressources.qrc">
+   <iconset>
     <normaloff>:/images/convertor.png</normaloff>:/images/convertor.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -227,7 +227,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>574</width>
+     <width>619</width>
      <height>24</height>
     </rect>
    </property>
@@ -295,7 +295,7 @@
   </widget>
   <action name="quitAction">
    <property name="icon">
-    <iconset resource="../ressources.qrc">
+    <iconset>
      <normaloff>:/images/application-exit.png</normaloff>:/images/application-exit.png</iconset>
    </property>
    <property name="text">
@@ -309,7 +309,7 @@
   </action>
   <action name="selectAllAction">
    <property name="icon">
-    <iconset resource="../ressources.qrc">
+    <iconset>
      <normaloff>:/images/format-indent-more.png</normaloff>:/images/format-indent-more.png</iconset>
    </property>
    <property name="text">
@@ -317,9 +317,7 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="../ressources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>pushButton_5</sender>

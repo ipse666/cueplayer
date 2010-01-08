@@ -1,7 +1,6 @@
 #ifndef VIDEOSLIDER_H
 #define VIDEOSLIDER_H
 
-#include <QtGui/QWidget>
 #include <QShortcut>
 #include <QMouseEvent>
 

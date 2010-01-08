@@ -1,4 +1,3 @@
-#include <QtGui>
 #include "cueplayer.h"
 #include "callbacks.h"
 
@@ -34,7 +33,8 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	primaryDPMS = checkDPMS();
 
 	// Фильтр диалога
-	filters << trUtf8("CUE образы (*.cue)")
+	filters << trUtf8("Все поддерживаемые файлы (*.cue *.ogg *.ogv *.avi *.mkv *.mp4 *.mp3 *.flac *.ogm)")
+			<< trUtf8("CUE образы (*.cue)")
 			<< trUtf8("Видеофайлы (*.ogg *.ogv *.avi *.mkv *.mp4)")
 			<< trUtf8("Аудиофайлы (*.mp3 *.flac *.ogg *.ogm)")
 			<< trUtf8("Все файлы (*.*)")
@@ -107,6 +107,8 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	 this, SLOT(pauseTrack()));
 	connect(timeLineSlider, SIGNAL(sliderReleased()),
 	 this, SLOT(sliderRelease()));
+	connect(timeLineSlider, SIGNAL(actionTriggered(int)),
+	 this, SLOT(sliderValue(int)));
 	connect(volumeDial, SIGNAL(valueChanged(int)),
 	 this, SLOT(volumeValue(int)));
 	connect(treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*,int)),
@@ -184,7 +186,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		fi.suffix() == "CUE")
 	{
 		refparser = new CueParser(filename);
-		setWindowTitle(refparser->getTitle());
+		setWindowsTitles(refparser->getTitle());
 		label->setText("1. " + refparser->getTrackTitle(numTrack));
 		cueFlag = true;
 		if (refparser->getTrackNumber() > 1 && refparser->getTrackFile(1) != refparser->getTrackFile(2))
@@ -229,7 +231,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			return;
 		}
 #endif
-		setWindowTitle(mp3trackName);
+		setWindowsTitles(mp3trackName);
 		label->setText(mp3trackName);
 		if (fi.suffix() == "ts")
 		{
@@ -296,7 +298,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	{
 		videoFlag = true;
 		streamFlag = true;
-		setWindowTitle(trUtf8("FLV-видео"));
+		setWindowsTitles(trUtf8("FLV-видео"));
 		label->setText(fi.fileName());
 		play = gst_element_factory_make ("playbin2", "play");
 		if (rxFilename.indexIn(filename) != -1)
@@ -308,7 +310,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			 fi.suffix() == "wvx" ||
 			 fi.suffix() == "m3u")
 	{
-		setWindowTitle(trUtf8("Список воспроизведения"));
+		setWindowsTitles(trUtf8("Список воспроизведения"));
 		label->setText(trUtf8("Подождите. Инициализация списка."));
 		plparser->setPlUri(filename);
 		return;
@@ -370,7 +372,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		}
 		else
 		{
-			setWindowTitle(trUtf8("Медиафайлы не обнаружены"));
+			setWindowsTitles(trUtf8("Медиафайлы не обнаружены"));
 			label->setText(trUtf8("откройте файл"));
 			return;
 		}
@@ -378,7 +380,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	else if (rxFilename5.indexIn(filename) != -1)
 	{
 		videoFlag = true;
-		setWindowTitle(trUtf8("Ютуб"));
+		setWindowsTitles(trUtf8("Ютуб"));
 		label->setText(trUtf8("Ютуб"));
 		youtuber = new YouTubeDL(filename);
 		connect(youtuber, SIGNAL(putUrl(QStringList)), this, SLOT(cueFileSelected(QStringList)));
@@ -387,14 +389,14 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	else if (rxFilename6.indexIn(filename) != -1)
 	{
 		videoFlag = true;
-		setWindowTitle(trUtf8("Ютуб"));
+		setWindowsTitles(trUtf8("Ютуб"));
 		label->setText(trUtf8("Ютуб"));
 		play = gst_element_factory_make ("playbin2", "play");
 		g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
 	}
 	else if (rxFilename3.indexIn(filename) != -1)
 	{
-		setWindowTitle(trUtf8("Радио"));
+		setWindowsTitles(trUtf8("Радио"));
 		label->setText(trUtf8("Радио"));
 		play = gst_element_factory_make ("playbin2", "play");
 
@@ -412,7 +414,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	}
 	else
 	{
-		setWindowTitle(trUtf8("Формат не поддерживается"));
+		setWindowsTitles(trUtf8("Формат не поддерживается"));
 		label->setText(trUtf8("откройте файл"));
 		return;
 	}
@@ -575,6 +577,7 @@ void CuePlayer::playTrack()
 		gst_x_overlay_set_xwindow_id (GST_X_OVERLAY (videosink), win);
 		gst_x_overlay_expose (GST_X_OVERLAY (videosink));
 		videowindow->show();
+		videowindow->setWindowTitle(savetitle);
 		dpmsTrigger(false);
 	}
 	trd->setPlayBin(play);
@@ -639,8 +642,29 @@ void CuePlayer::tick(qint64 time)
 // ручное перемещение слайдера
 void CuePlayer::sliderRelease()
 {
-		int time = (totalTime + timeLineSlider->value()) * 1000;
-		seekGst(time);
+	int time = (totalTime + timeLineSlider->value()) * 1000;
+	seekGst(time);
+}
+
+void CuePlayer::sliderValue(int i)
+{
+	int time;
+	switch (i)
+	{
+	case QAbstractSlider::SliderPageStepAdd:
+		break;
+	case QAbstractSlider::SliderPageStepSub:
+		break;
+	default:
+		return;
+	}
+	QCursor cursor = timeLineSlider->cursor();
+	QPoint pos = this->pos() + timeLineSlider->pos();
+	int cursorpixpos = cursor.pos().x() - pos.x();
+	double percentsld = (double)timeLineSlider->maximum()/100;
+	int percentpix = cursorpixpos / ((double)timeLineSlider->size().width()/100);
+	time = (totalTime + (percentsld * percentpix)) * 1000;
+	seekGst(time);
 }
 
 // ручное перемещение слайдера видеоокна
@@ -792,6 +816,7 @@ void CuePlayer::createTrayIconMenu()
 	transcodeAction->setIcon(QIcon(":/images/convertor.png"));
 	transcodeAction->setShortcut(trUtf8("Ctrl+c"));
 	connect(transcodeAction, SIGNAL(triggered()), transcoder, SLOT(show()));
+	connect(transcoder, SIGNAL(transQuit()), this, SLOT(endBlock()));
 
 	apetoflac = new ApeToFlac(this);
 	apetoflacAction = new QAction(trUtf8("Ape->Flac"), this);
@@ -845,9 +870,9 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(29) +  " "
-									+ QString(curdate.longMonthName(12)) +  " "
-									+ QString::number(2009) +
+									+ QString::number(9) +  " "
+									+ QString(curdate.longMonthName(1)) +  " "
+									+ QString::number(2010) +
 									trUtf8("<p>Мультимедиа проигрыватель."
 									"<p><p>Разработчик: <a href=xmpp:ipse@ipse.zapto.org name=jid type=application/xmpp+xml>ipse</a>"));
 }
@@ -997,7 +1022,7 @@ void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
 		prewlabel = label->text(); // Необходимо сохранить асинхронную метку
 	}
 	if (valbum && vartist)
-		setWindowTitle(trUtf8(g_value_get_string(vartist)) + " - " + trUtf8(g_value_get_string(valbum)));
+		setWindowsTitles(trUtf8(g_value_get_string(vartist)) + " - " + trUtf8(g_value_get_string(valbum)));
 }
 
 // Обнаружение типа файла
@@ -1335,7 +1360,7 @@ void CuePlayer::createDvdPipe()
 
 
 	dvdFlag = true;
-	setWindowTitle(trUtf8("DVD видео"));
+	setWindowsTitles(trUtf8("DVD видео"));
 	label->setText(trUtf8("DVD видео : 1"));
 
 	aqueue = make_queue ();
@@ -1643,6 +1668,13 @@ void CuePlayer::dropEvent(QDropEvent *event)
 		cueFileSelected(QStringList() << urls.first().toLocalFile());
 	else
 		cueFileSelected(QStringList() << urls.first().toString());
+}
+
+void CuePlayer::setWindowsTitles(QString s)
+{
+	setWindowTitle(s);
+	if (videoFlag) videowindow->setWindowTitle(s);
+	savetitle = s;
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)

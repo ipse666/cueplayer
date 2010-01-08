@@ -1,9 +1,12 @@
 #ifndef YOUTUBEDL_H
 #define YOUTUBEDL_H
 
-#include <QObject>
 #include <QFile>
-#include <QtNetwork>
+#include <QHttp>
+#include <QUrl>
+#include <QFileInfo>
+#include <QDebug>
+#include <QDir>
 
 class VideoInfos
 {

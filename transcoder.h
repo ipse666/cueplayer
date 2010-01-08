@@ -40,6 +40,7 @@ private:
 	int defaultCodec;
 
 private slots:
+	void on_closeAction_triggered();
 	void selectAllTrigger();
 	void startTranscode();
 	void stopTranscode();
@@ -50,6 +51,8 @@ private slots:
 	void updateSettings();
 	void restoreSettings();
 	void toolItem(QTreeWidgetItem*,int);
+signals:
+	void transQuit();
 };
 
 #endif // TRANSCODER_H

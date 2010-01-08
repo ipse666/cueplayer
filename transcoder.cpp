@@ -4,7 +4,7 @@
 
 #define TIME 200
 #define APPNAME "CuePlayer"
-#define VERSION "0.17"
+#define VERSION "0.20"
 
 Q_EXPORT_PLUGIN2(trans_coder, TransCoder)
 		TransCoder *transcoder = 0;
@@ -154,6 +154,7 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 	connect(bitrateBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSettings()));
 	connect(treeWidget, SIGNAL(itemEntered(QTreeWidgetItem*,int)), this, SLOT(toolItem(QTreeWidgetItem*,int)));
 	connect(treeWidget, SIGNAL(itemPressed(QTreeWidgetItem*,int)), this, SLOT(toolItem(QTreeWidgetItem*,int)));
+	connect(quitAction, SIGNAL(triggered()), this, SIGNAL(transQuit()));
 }
 
 // Заполнение списка композиций
@@ -426,7 +427,7 @@ void TransCoder::pipeRun(int ind)
 	gst_bus_add_watch (bus, bus_call, loop);
 	gst_object_unref (bus);
 
-	//g_signal_connect (pipeline, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг!
+	g_signal_connect (pipeline, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг!
 	g_print ("Кодируется: %s\n", refparser->getSoundFile().toUtf8().data());
 
 	gst_element_set_state (pipeline, GST_STATE_PLAYING);
@@ -517,4 +518,9 @@ void TransCoder::restoreSettings()
 void TransCoder::toolItem(QTreeWidgetItem*,int)
 {
 	statusLabel->setText(trUtf8("Нажмите \"Начать\" для кодирования."));
+}
+
+void TransCoder::on_closeAction_triggered()
+{
+	close();
 }
