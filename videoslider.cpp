@@ -51,6 +51,7 @@ VideoSlider::VideoSlider(QWidget *parent) :
 
 	connect(m_ui->timeSlider, SIGNAL(valueChanged(int)), this, SLOT(setNumLCDs(int)));
 	connect(m_ui->timeSlider, SIGNAL(sliderReleased()), this, SIGNAL(sliderRelease()));
+	connect(m_ui->timeSlider, SIGNAL(actionTriggered(int)), this, SLOT(sliderTrigger(int)));
 
 	connect(m_ui->pauseButton, SIGNAL(clicked()), this, SIGNAL(pauseEvent()));
 	connect(m_ui->stopButton, SIGNAL(clicked()), this, SIGNAL(stopEvent()));
@@ -126,6 +127,27 @@ void VideoSlider::setNumLCDs(int sec)
 	else
 		m_ui->minNumber->display(min);
 	m_ui->hourNumber->display(hour);
+}
+
+void VideoSlider::sliderTrigger(int i)
+{
+	int time;
+	switch (i)
+	{
+	case QAbstractSlider::SliderPageStepAdd:
+		break;
+	case QAbstractSlider::SliderPageStepSub:
+		break;
+	default:
+		return;
+	}
+	QCursor cursor = m_ui->timeSlider->cursor();
+	QPoint pos = this->pos() + m_ui->timeSlider->pos();
+	int cursorpixpos = cursor.pos().x() - pos.x();
+	double percentsld = (double)m_ui->timeSlider->maximum()/100;
+	int percentpix = cursorpixpos / ((double)m_ui->timeSlider->size().width()/100);
+	time = percentsld * percentpix * 1000;
+	emit newTime(time);
 }
 
 int VideoSlider::getSliderPos()

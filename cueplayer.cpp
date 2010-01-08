@@ -142,6 +142,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(videowindow, SIGNAL(videoExit()), this, SLOT(endBlock()));
 	connect(videowindow, SIGNAL(draganddrop(QStringList)),
 	 this, SLOT(cueFileSelected(QStringList)));
+	connect(videowindow, SIGNAL(newTime(int)), this, SLOT(seekGst(int)));
 
 	// Плейлист парсер
 	connect(plparser, SIGNAL(ready()), this, SLOT(plInit()));
