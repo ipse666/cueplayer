@@ -2,7 +2,10 @@
 #define PLPARSER_H
 
 #include <QStringList>
-#include <QtNetwork>
+#include <QNetworkReply>
+#include <QFileInfo>
+#include <QTextStream>
+#include <QXmlStreamReader>
 
 class PlParser : public QObject
 {

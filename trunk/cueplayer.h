@@ -1,11 +1,13 @@
 #ifndef CUEPLAYER_H
 #define CUEPLAYER_H
-#include <QWidget>
+
 #include <QFileDialog>
 #include <QSystemTrayIcon>
 #include <QThread>
 #include <QX11Info>
 #include <QProcess>
+#include <QDate>
+#include <QDesktopWidget>
 #include <gst/interfaces/xoverlay.h>
 #include "ui_cueplayer.h"
 #include "cueparser.h"
@@ -69,6 +71,7 @@ private:
 	QString primaryDPMS;
 	QString prewlabel;
 	QTimer *paramtimer;
+	QString savetitle;
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;
@@ -99,6 +102,7 @@ private slots:
 	void pauseTrack();
 	void tick(qint64);
 	void sliderRelease();
+	void sliderValue(int);
 	void volumeValue(int);
 	void listItemClicked(QTreeWidgetItem *, int);
 	void initAlbum(int);
@@ -135,6 +139,7 @@ private slots:
 	void plInit();
 	void plError(QString);
 	void ape2flacShow();
+	void setWindowsTitles(QString);
 signals:
 	void gstError();
 };

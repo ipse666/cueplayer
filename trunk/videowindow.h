@@ -1,7 +1,6 @@
 #ifndef VIDEOWINDOW_H
 #define VIDEOWINDOW_H
 
-#include <QWidget>
 #include <QShortcut>
 #include "ui_videowindow.h"
 #include "videoslider.h"

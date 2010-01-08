@@ -101,6 +101,7 @@ void VideoWindow::mouseMoveEvent(QMouseEvent *event)
 void VideoWindow::closeEvent(QCloseEvent *event)
 {
 	event->ignore();
+	emit stopEvent();
 }
 
 void VideoWindow::fullScreen()
