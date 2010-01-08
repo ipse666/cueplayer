@@ -77,6 +77,7 @@ VideoWindow::VideoWindow(QWidget *parent)
 	connect(slider, SIGNAL(doubleClick()), this, SLOT(fullScreen()));
 	connect(slider, SIGNAL(sliderRelease()), this, SIGNAL(sliderRelease()));
 	connect(slider, SIGNAL(volumeChan(int)), this, SIGNAL(volumeChan(int)));
+	connect(slider, SIGNAL(newTime(int)), this, SIGNAL(newTime(int)));
 
 	(void) *parent;
 }

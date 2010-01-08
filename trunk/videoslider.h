@@ -41,6 +41,7 @@ private:
 
 private slots:
 	void setNumLCDs(int);
+	void sliderTrigger(int);
 signals:
 	void doubleClick();
 	void pauseEvent();
@@ -56,6 +57,7 @@ signals:
 	void pressKeyPgDown();
 	void sliderRelease();
 	void volumeChan(int);
+	void newTime(int);
 };
 
 #endif // VIDEOSLIDER_H

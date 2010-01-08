@@ -72,6 +72,7 @@ signals:
 	void volumeChan(int);
 	void videoExit();
 	void draganddrop(QStringList);
+	void newTime(int);
 };
 
 #endif // VIDEOWINDOW_H
