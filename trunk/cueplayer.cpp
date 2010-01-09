@@ -974,7 +974,7 @@ void CuePlayer::seekGst(int time)
 			qDebug() << QString(trUtf8("Ошибка поиска"));
 		gst_element_set_state (play, GST_STATE_PLAYING);
 		gst_bin_recalculate_latency ((GstBin*)d_video);
-		g_print("Позиция: %ld, смещение %ld, размер %ld. Время: %d\n", pos, shift, dur, time);
+		//g_print("Позиция: %ld, смещение %ld, размер %ld. Время: %d\n", pos, shift, dur, time);
 	}
 }
 
