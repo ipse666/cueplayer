@@ -2,7 +2,7 @@ TEMPLATE = app
 QT += network
 TARGET = 
 
-isEmpty(PREFIX) {
+isEmpty($$PREFIX) {
 		$$PREFIX = /usr/local
 }
 
