@@ -2,8 +2,8 @@ TEMPLATE = app
 QT += network
 TARGET = 
 
-isEmpty($$PREFIX) {
-		$$PREFIX = /usr/local
+isEmpty(PREFIX) {
+		PREFIX = /usr/local
 }
 
 target.path = $$PREFIX/bin
