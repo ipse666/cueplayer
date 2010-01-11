@@ -1,6 +1,14 @@
 TEMPLATE = app
 QT += network
 TARGET = 
+isEmpty(PREFIX) {
+		PREFIX = /usr/local
+}
+
+binaries.path = $$PREFIX/bin
+binaries.files = $$TARGET
+
+INSTALLS += binaries
 DEPENDPATH += . \
     ui
 HEADERS += cueplayer.h \
@@ -39,11 +47,3 @@ OTHER_FILES += INSTALL \
     INSTALL \
 	README	\
 	CHANGELOG
-isEmpty(PREFIX) {
-		PREFIX = /usr/local
-}
-
-binaries.path = $$PREFIX/bin
-binaries.files = $$TARGET
-
-INSTALLS += binaries
