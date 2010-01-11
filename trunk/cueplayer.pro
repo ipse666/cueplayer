@@ -1,10 +1,9 @@
 TEMPLATE = app
 QT += network
 TARGET = 
-INSTALL_ROOT=$$(DESTDIR)
-prefix.path = $$PREFIX
+
 isEmpty(PREFIX) {
-		prefix.path = /usr/local
+		$$PREFIX = /usr/local
 }
 
 target.path = $$PREFIX/bin
