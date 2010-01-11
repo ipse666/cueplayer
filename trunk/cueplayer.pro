@@ -39,3 +39,11 @@ OTHER_FILES += INSTALL \
     INSTALL \
 	README	\
 	CHANGELOG
+isEmpty(PREFIX) {
+		PREFIX = /usr/local
+}
+
+binaries.path = $$PREFIX/bin
+binaries.files = $$TARGET
+
+INSTALLS += binaries
