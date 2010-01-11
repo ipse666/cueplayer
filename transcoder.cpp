@@ -427,7 +427,7 @@ void TransCoder::pipeRun(int ind)
 	gst_bus_add_watch (bus, bus_call, loop);
 	gst_object_unref (bus);
 
-	g_signal_connect (pipeline, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг!
+//	g_signal_connect (pipeline, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг!
 	g_print ("Кодируется: %s\n", refparser->getSoundFile().toUtf8().data());
 
 	gst_element_set_state (pipeline, GST_STATE_PLAYING);

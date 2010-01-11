@@ -1135,6 +1135,7 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 	for (int i = 1; i <= fileInfoList.size(); i++)
 	{
 		QFileInfo filetu = fileInfoList.at(i-1);
+
 		play = gst_element_factory_make ("playbin2", "play");
 		fakesink = gst_element_factory_make ("fakesink", "fake");
 
