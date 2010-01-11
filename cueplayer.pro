@@ -7,10 +7,10 @@ isEmpty(PREFIX) {
 		prefix.path = /usr/local
 }
 
-binaries.path = prefix.path/bin
-binaries.files = $$TARGET
+target.path = $$PREFIX/bin
+target.files = $$TARGET
 
-INSTALLS += binaries
+INSTALLS += target
 DEPENDPATH += . \
     ui
 HEADERS += cueplayer.h \
