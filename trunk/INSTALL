@@ -4,5 +4,6 @@ make
 
 Опции qmake:
 DEFINES += FTPPLAY включает проигрывание с ftp
+PREFIX префикс установки, по умолчанию /usr/local
 пример конфигурации:
 qmake "DEFINES += FTPPLAY"
