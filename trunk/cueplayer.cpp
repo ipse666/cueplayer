@@ -205,6 +205,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	}
 	else if (fi.suffix() == "mp3" ||
 			 fi.suffix() == "flac" ||
+			 fi.suffix() == "ape" ||
 			 fi.suffix() == "ogg" ||
 			 fi.suffix() == "ogm" ||
 			 fi.suffix() == "ogv" ||
