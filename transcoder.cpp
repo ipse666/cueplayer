@@ -118,12 +118,12 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 
 	containerBox->addItems(QStringList() << "ogg" << "mp3" << "flac");
 	codecBox->addItems(QStringList() << "vorbis" << "lame" << "flac");
-	bitrateBox->addItems(QStringList() << "8"  << "16" << "24" << "32" << "40" <<
+	bitrateBox->addItems(QStringList() << "vbr" << "8"  << "16" << "24" << "32" << "40" <<
 						 "48" << "56" << "64" << "80" << "96" << "112" << "128" << "160" << "192" << "224" << "256" << "320");
 
 	containerBox->setCurrentIndex(defaultContainer);
 	codecBox->setCurrentIndex(defaultCodec);
-	bitrateBox->setCurrentIndex(11);
+	bitrateBox->setCurrentIndex(12);
 
 	statusLabel = new QLabel();
 	lineEdit->setText(QDir::homePath());
@@ -152,6 +152,7 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 	connect(codecBox, SIGNAL(currentIndexChanged(int)), this, SLOT(formatError(int)));
 	connect(codecBox, SIGNAL(activated(int)), containerBox, SLOT(setCurrentIndex(int)));
 	connect(bitrateBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSettings()));
+	connect(bitrateBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setVbr()));
 	connect(treeWidget, SIGNAL(itemEntered(QTreeWidgetItem*,int)), this, SLOT(toolItem(QTreeWidgetItem*,int)));
 	connect(treeWidget, SIGNAL(itemPressed(QTreeWidgetItem*,int)), this, SLOT(toolItem(QTreeWidgetItem*,int)));
 	connect(quitAction, SIGNAL(triggered()), this, SIGNAL(transQuit()));
@@ -361,7 +362,10 @@ void TransCoder::pipeRun(int ind)
 			muxer = gst_element_factory_make ("id3v2mux", "audio-muxer");
 			gst_bin_add_many (GST_BIN (audio), conv, encoder, muxer, fileout, NULL);
 			gst_element_link_many (conv, encoder, muxer, fileout, NULL);
-			g_object_set (encoder, "bitrate", bitrateBox->currentText().toInt(&ok, 10), NULL);
+			if (bitrateBox->currentIndex())
+				g_object_set (encoder, "bitrate", bitrateBox->currentText().toInt(&ok, 10), NULL);
+			else
+				g_object_set (encoder, "vbr", 4, NULL);
 			gst_tag_setter_add_tags (GST_TAG_SETTER (muxer),
 								GST_TAG_MERGE_REPLACE_ALL,
 								GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
@@ -493,6 +497,10 @@ void TransCoder::formatError(int index)
 		connect(codecwarn, SIGNAL(finished(int)), this, SLOT(setDefaultIndex()));
 		codecwarn->exec();
 	}
+	else if (index == 2)
+	{
+		bitrateBox->setCurrentIndex(0);
+	}
 }
 
 void TransCoder::setDefaultIndex()
@@ -510,6 +518,18 @@ void TransCoder::updateSettings()
 {
 	settings.setValue("transcoder/outdir", lineEdit->text());
 	settings.setValue("transcoder/bitrate", bitrateBox->currentIndex());
+}
+
+void TransCoder::setVbr()
+{
+	if (bitrateBox->currentIndex())
+	{
+		label_6->show();
+		if (codecBox->currentIndex() == 2)
+			bitrateBox->setCurrentIndex(0);
+	}
+	else
+		label_6->hide();
 }
 
 void TransCoder::restoreSettings()

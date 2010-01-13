@@ -49,6 +49,7 @@ private slots:
 	void setDefaultIndex();
 	void stopAll();
 	void updateSettings();
+	void setVbr();
 	void restoreSettings();
 	void toolItem(QTreeWidgetItem*,int);
 signals:
