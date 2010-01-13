@@ -410,9 +410,15 @@ void TransCoder::pipeRun(int ind)
 
 	// Выходной файл
 	QRegExp rxFileSlash("/");
+	QRegExp rxTilda("^~(.*)");
 	QString filename;
 	QString trackName = refparser->getTrackTitle(ind);
 	trackName.replace(rxFileSlash, trUtf8("⁄"));
+	if (rxTilda.indexIn(lineEdit->text()) != -1)
+		lineEdit->setText(QDir::homePath() + rxTilda.cap(1));
+	QDir updir(lineEdit->text());
+	if (!updir.exists())
+		updir.mkdir(lineEdit->text());
 	QString dirname = lineEdit->text() + "/" + refparser->getTitle();
 	QDir dir(dirname);
 	if (!dir.exists())
