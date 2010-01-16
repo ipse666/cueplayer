@@ -70,7 +70,8 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	plparser = new PlParser(this);
 	secNumLCD->display("00");
 	enableButtons(false);
-	restoreSettings();
+	if (qApp->argc() <= 1)
+		restoreSettings();
 	apetoflacAction->setEnabled(false);
 	streamButton->setShortcut(trUtf8("Ctrl+u"));
 	dvdButton->setShortcut(trUtf8("Ctrl+d"));
@@ -1197,10 +1198,7 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 void CuePlayer::paramFile(QStringList list)
 {
 	cueFileSelected(list);
-	if (!multiFileFlag) // Временный костыль
-		playTrack();
-	else
-		paramtimer->start(1000);
+	paramtimer->start(TIME);
 }
 
 void CuePlayer::restoreSettings()
