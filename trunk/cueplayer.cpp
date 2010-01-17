@@ -1182,6 +1182,7 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 		g_object_set (G_OBJECT (play), "uri", filetu.filePath().toUtf8().data(), NULL);
 	else
 		g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
+	g_object_set(play, "volume", (double)volumeDial->value() / 100, NULL);
 	bus = gst_pipeline_get_bus (GST_PIPELINE (play));
 	gst_bus_add_watch (bus, bus_callback, play);
 	gst_object_unref (bus);
