@@ -230,6 +230,11 @@ void TransCoder::startTranscode()
 			statusLabel->setText(trUtf8("Идет кодирование трека: ") + refparser->getTrackTitle(i + 1));
 			transcode = true;
 			pipeRun(i+1);
+			if (!containerBox->currentIndex())
+			{
+				pipeRun(i+1);
+				tmpfile.remove();
+			}
 			if (transcode)
 				this->stopTranscode();
 			if (progressBar->value() == 100)
@@ -297,7 +302,7 @@ void TransCoder::setTrackTime(qint64 start, qint64 stop)
 {
 		GstClockTime nach   = (GstClockTime)(start * GST_MSECOND);
 		GstClockTime kon   = (GstClockTime)(stop * GST_MSECOND);
-		if (!gst_element_seek(pipeline, 1.0,
+		if (!gst_element_seek (pipeline, 1.0,
 				GST_FORMAT_TIME,
 				(GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE),
 				GST_SEEK_TYPE_SET, nach,
@@ -309,12 +314,13 @@ void TransCoder::setTrackTime(qint64 start, qint64 stop)
 
 void TransCoder::pipeRun(int ind)
 {
-	GstElement *source, *dec, *conv, *encoder, *muxer, *fileout, *tagger;
+	GstElement *source, *dec, *conv, *encoder, *muxer, *fileout, *tagger, *volume;
 	GstBus *bus;
 	GstState state;
 	GstPad *audiopad;//, *encoderpad;
 
 	numTrack = ind;
+	bool ok, preenc;
 
 	loop = g_main_loop_new (NULL, FALSE);
 
@@ -331,33 +337,72 @@ void TransCoder::pipeRun(int ind)
 
 	audio = gst_bin_new ("audiobin");
 	conv = gst_element_factory_make ("audioconvert", "aconv");
+	volume = gst_element_factory_make ("volume", "vol");
 	audiopad = gst_element_get_static_pad (conv, "sink");
 	fileout = gst_element_factory_make ("filesink", "file-out");
+
+	// Выходной файл
+	QRegExp rxFileSlash("/");
+	QRegExp rxTilda("^~(.*)");
+	QString filename;
+	QString trackName = refparser->getTrackTitle(ind);
+	trackName.replace(rxFileSlash, trUtf8("⁄"));
+	if (rxTilda.indexIn(lineEdit->text()) != -1)
+		lineEdit->setText(QDir::homePath() + rxTilda.cap(1));
+	QDir updir(lineEdit->text());
+	if (!updir.exists())
+		updir.mkdir(lineEdit->text());
+	QString dirname = lineEdit->text() + "/" + refparser->getTitle();
+	QDir dir(dirname);
+	if (!dir.exists())
+		dir.mkdir(dirname);
+	if (ind < 10)
+		filename = dirname + "/" + "0" + QString::number(ind,10) + " - " + trackName + "." + containerBox->currentText();
+	else
+		filename = dirname + "/" + QString::number(ind,10) + " - " + trackName + "." + containerBox->currentText();
+	g_object_set (fileout, "location", filename.toUtf8().data(), NULL);
+
+	tmpfile.setFileName(dirname + "/" + QString::number(ind,10) + " - " + trackName + ".tmp");
 
 	switch (codecBox->currentIndex())
 	{
 		case CODEC_VORBIS:
-			encoder = gst_element_factory_make ("vorbisenc", "audio-encoder");
-			tagger = gst_element_factory_make ("vorbistag", "tagger");
-			muxer = gst_element_factory_make ("oggmux", "audio-muxer");
-			gst_bin_add_many (GST_BIN (audio), conv, encoder, tagger, muxer, fileout, NULL);
-			gst_element_link_many (conv, encoder, tagger, muxer, fileout, NULL);
-			gst_tag_setter_add_tags (GST_TAG_SETTER (tagger),
-								GST_TAG_MERGE_REPLACE_ALL,
-								GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
-								GST_TAG_ARTIST, refparser->getPerformer().toUtf8().data(),
-								GST_TAG_TRACK_NUMBER, ind,
-								GST_TAG_TRACK_COUNT, refparser->getTrackNumber(),
-								GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
-								GST_TAG_ENCODER, APPNAME,
-								GST_TAG_ENCODER_VERSION, VERSION,
-								GST_TAG_COMMENT, APPNAME " " VERSION,
-								GST_TAG_CODEC, "vorbis",
-								NULL);
-			containerBox->setCurrentIndex(CODEC_VORBIS);
+			if (tmpfile.exists())
+			{
+				g_object_set (source, "location", tmpfile.fileName().toUtf8().data(), NULL);
+				encoder = gst_element_factory_make ("vorbisenc", "audio-encoder");
+				tagger = gst_element_factory_make ("vorbistag", "tagger");
+				muxer = gst_element_factory_make ("oggmux", "audio-muxer");
+				gst_bin_add_many (GST_BIN (audio), conv, encoder, tagger, muxer, fileout, NULL);
+				gst_element_link_many (conv, encoder, tagger, muxer, fileout, NULL);
+				if (bitrateBox->currentIndex())
+					g_object_set (encoder, "bitrate", bitrateBox->currentText().toInt(&ok, 10) * 1000, NULL);
+				gst_tag_setter_add_tags (GST_TAG_SETTER (tagger),
+									GST_TAG_MERGE_REPLACE_ALL,
+									GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
+									GST_TAG_ARTIST, refparser->getPerformer().toUtf8().data(),
+									GST_TAG_TRACK_NUMBER, ind,
+									GST_TAG_TRACK_COUNT, refparser->getTrackNumber(),
+									GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
+									GST_TAG_ENCODER, APPNAME,
+									GST_TAG_ENCODER_VERSION, VERSION,
+									GST_TAG_COMMENT, APPNAME " " VERSION,
+									GST_TAG_CODEC, "vorbis",
+									NULL);
+				containerBox->setCurrentIndex(CODEC_VORBIS);
+			}
+			else
+			{
+				preenc = true;
+				encoder = gst_element_factory_make ("flacenc", "audio-encoder");
+				g_object_set(encoder, "quality", 0, NULL);
+				gst_bin_add_many (GST_BIN (audio), conv, volume, encoder, fileout, NULL);
+				gst_element_link_many (conv, volume, encoder, fileout, NULL);
+				g_object_set (volume, "mute", true, NULL);
+				g_object_set (fileout, "location", tmpfile.fileName().toUtf8().data(), NULL);
+			}
 			break;
 		case CODEC_LAME:
-			bool ok;
 			encoder = gst_element_factory_make ("lame", "audio-encoder");
 			muxer = gst_element_factory_make ("id3v2mux", "audio-muxer");
 			gst_bin_add_many (GST_BIN (audio), conv, encoder, muxer, fileout, NULL);
@@ -397,10 +442,6 @@ void TransCoder::pipeRun(int ind)
 								GST_TAG_COMMENT, APPNAME " " VERSION,
 								GST_TAG_CODEC, "flac",
 								NULL);
-			/*encoderpad = gst_element_get_static_pad (encoder, "src");
-			gst_pad_add_buffer_probe (encoderpad, G_CALLBACK (cb_encoderpad), NULL);
-			gst_object_unref (encoderpad);*/
-
 			containerBox->setCurrentIndex(CODEC_FLAC);
 			break;
 		case CODEC_NO:
@@ -412,32 +453,11 @@ void TransCoder::pipeRun(int ind)
 	gst_object_unref (audiopad);
 	gst_bin_add (GST_BIN (pipeline), audio);
 
-	// Выходной файл
-	QRegExp rxFileSlash("/");
-	QRegExp rxTilda("^~(.*)");
-	QString filename;
-	QString trackName = refparser->getTrackTitle(ind);
-	trackName.replace(rxFileSlash, trUtf8("⁄"));
-	if (rxTilda.indexIn(lineEdit->text()) != -1)
-		lineEdit->setText(QDir::homePath() + rxTilda.cap(1));
-	QDir updir(lineEdit->text());
-	if (!updir.exists())
-		updir.mkdir(lineEdit->text());
-	QString dirname = lineEdit->text() + "/" + refparser->getTitle();
-	QDir dir(dirname);
-	if (!dir.exists())
-		dir.mkdir(dirname);
-	if (ind < 10)
-		filename = dirname + "/" + "0" + QString::number(ind,10) + " - " + trackName + "." + containerBox->currentText();
-	else
-		filename = dirname + "/" + QString::number(ind,10) + " - " + trackName + "." + containerBox->currentText();
-	g_object_set (fileout, "location", filename.toUtf8().data(), NULL);
-
 	bus = gst_pipeline_get_bus (GST_PIPELINE (pipeline));
 	gst_bus_add_watch (bus, bus_call, loop);
 	gst_object_unref (bus);
 
-//	g_signal_connect (pipeline, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг!
+	//g_signal_connect (pipeline, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг!
 	g_print ("Кодируется: %s\n", refparser->getSoundFile().toUtf8().data());
 
 	gst_element_set_state (pipeline, GST_STATE_PLAYING);
@@ -450,6 +470,8 @@ void TransCoder::pipeRun(int ind)
 			setTrackTime(refparser->getTrackIndex(ind),saveTotalTime);
 		else
 			setTrackTime(refparser->getTrackIndex(ind),refparser->getTrackIndex(ind+1));
+		if (preenc)
+			g_object_set (volume, "mute", false, NULL);
 		g_print ("Запущено...\n");
 		g_main_loop_run (loop);
 	}
@@ -488,14 +510,14 @@ void TransCoder::formatError(int index)
 {
 	if (!index)
 	{
-		QMessageBox *codecwarn = new QMessageBox(this);
-		codecwarn->setIcon(QMessageBox::Warning);
-		codecwarn->setWindowTitle(trUtf8("Внимание!"));
-		codecwarn->setText(trUtf8("<h2>Формат не поддерживается.</h2>"
-									"<p>Заданный формат временно не поддерживается транскодером."
-									"<p>Будет применен формат по-умолчанию."));
-		connect(codecwarn, SIGNAL(finished(int)), this, SLOT(setDefaultIndex()));
-		codecwarn->exec();
+//		QMessageBox *codecwarn = new QMessageBox(this);
+//		codecwarn->setIcon(QMessageBox::Warning);
+//		codecwarn->setWindowTitle(trUtf8("Внимание!"));
+//		codecwarn->setText(trUtf8("<h2>Формат не поддерживается.</h2>"
+//									"<p>Заданный формат временно не поддерживается транскодером."
+//									"<p>Будет применен формат по-умолчанию."));
+//		connect(codecwarn, SIGNAL(finished(int)), this, SLOT(setDefaultIndex()));
+//		codecwarn->exec();
 	}
 	else if (index == 2)
 	{

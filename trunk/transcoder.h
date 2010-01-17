@@ -33,6 +33,7 @@ private:
 	qint64 saveTotalTime;
 	QFileDialog *dirdialog;
 	QSettings settings;
+	QFile tmpfile;
 	void setTrack();
 	void setTrackTime(qint64,qint64);
 	void pipeRun(int);
