@@ -30,7 +30,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../ressources.qrc">
-    <normaloff>:/images/knotify.png</normaloff>:/images/knotify.png</iconset>
+    <normaloff>:/images/cueplayer.png</normaloff>:/images/cueplayer.png</iconset>
   </property>
   <property name="toolTip">
    <string>Мультимедиа проигрыватель.</string>
