@@ -836,7 +836,7 @@ void CuePlayer::createTrayIconMenu()
 	trayIconMenu->addAction(quitAction);
 	trayIcon = new QSystemTrayIcon(this);
 	trayIcon->setContextMenu(trayIconMenu);
-	trayIcon->setIcon(QIcon(":/images/knotify.png"));
+	trayIcon->setIcon(QIcon(":/images/cueplayer.png"));
 	trayIcon->show();
 
 	addAction(extbutAction);

@@ -25,7 +25,7 @@ void StreamForm::changeEvent(QEvent *e)
         ui->retranslateUi(this);
         break;
     default:
-        break;
+		break;
     }
 }
 
