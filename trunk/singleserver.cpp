@@ -30,7 +30,7 @@ void SingleServer::readArgs()
 	QRegExp rxFilename3("^(mms://|http://|ftp://).*");
 	QStringList file;
 
-	QString arg = clientConnection->readLine();
+	QString arg = trUtf8(clientConnection->readLine());
 
 	if (rxPath.indexIn(arg) != -1 ||
 		rxFilename3.indexIn(arg) != -1)
