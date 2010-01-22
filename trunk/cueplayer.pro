@@ -1,14 +1,9 @@
 TEMPLATE = app
 QT += network
 TARGET = 
-
-isEmpty(PREFIX) {
-		PREFIX = /usr/local
-}
-
+isEmpty(PREFIX):PREFIX = /usr/local
 target.path = $$PREFIX/bin
 target.files = $$TARGET
-
 INSTALLS += target
 DEPENDPATH += . \
     ui
@@ -21,7 +16,9 @@ HEADERS += cueplayer.h \
     callbacks.h \
     streamform.h \
     plparser.h \
-    youtubedl.h
+    youtubedl.h \
+    singleserver.h \
+    singleclient.h
 FORMS += ui/cueplayer.ui \
     ui/transcoder.ui \
     ui/apetoflacdialog.ui \
@@ -37,7 +34,9 @@ SOURCES += cueplayer.cpp \
     videoslider.cpp \
     streamform.cpp \
     plparser.cpp \
-    youtubedl.cpp
+    youtubedl.cpp \
+    singleserver.cpp \
+    singleclient.cpp
 RESOURCES += ressources.qrc
 CONFIG += release \
     link_pkgconfig \
@@ -46,5 +45,5 @@ PKGCONFIG += gstreamer-0.10 \
     gstreamer-interfaces-0.10
 OTHER_FILES += INSTALL \
     INSTALL \
-	README	\
-	CHANGELOG
+    README \
+    CHANGELOG
