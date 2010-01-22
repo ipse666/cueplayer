@@ -150,6 +150,11 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(plparser, SIGNAL(plperror(QString)), this, SLOT(plError(QString)));
 }
 
+void CuePlayer::setServer(SingleServer *ss)
+{
+	connect(ss, SIGNAL(sendArgs(QStringList)), this, SLOT(paramFile(QStringList)));
+}
+
 void CuePlayer::setNumLCDs(int sec)
 {
 	int min = sec / 60;
@@ -1496,6 +1501,7 @@ void CuePlayer::endBlock()
 			dpmsTrigger(true);
 		}
 	}
+	QLocalServer::removeServer("cueplayer");
 	qApp->quit();
 }
 

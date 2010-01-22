@@ -8,6 +8,7 @@
 #include <QProcess>
 #include <QDate>
 #include <QDesktopWidget>
+#include <QLocalServer>
 #include <gst/interfaces/xoverlay.h>
 #include "ui_cueplayer.h"
 #include "cueparser.h"
@@ -17,6 +18,7 @@
 #include "streamform.h"
 #include "plparser.h"
 #include "youtubedl.h"
+#include "singleserver.h"
 
 class GstThread;
 
@@ -30,12 +32,12 @@ protected:
 	void dropEvent(QDropEvent *event);
 public:
 	CuePlayer(QWidget *parent = 0);
+	void setServer(SingleServer*);
 	GstThread *trd;
 	QTimer *trdtimer;
 	void stopAll();
 	void setMp3Title(GValue *, GValue *, GValue *);
 	void apeFound(bool);
-	void paramFile(QStringList);
 	void setDvdAudio(gchar*, int);
 	gchar* getDvdAudio(int);
 	void postPlay();
@@ -92,6 +94,7 @@ private:
 	int loadpoints;
 public slots:
 	void playNextTrack();
+	void paramFile(QStringList);
 private slots:
 	void setNumLCDs(int);
 	void cueFileSelected(QStringList);

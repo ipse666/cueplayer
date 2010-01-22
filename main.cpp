@@ -1,36 +1,6 @@
 #include <QApplication>
 #include "cueplayer.h"
-
-bool isAlreadyRunning(QApplication *appref)
-{
-	QRegExp rxFile("/([^/]*)$");
-	QFile pidfile;
-
-	if (rxFile.indexIn(appref->applicationFilePath()) != -1)
-		pidfile.setFileName(QDir::homePath() + "/." + rxFile.cap(1) + ".pid");
-	if (!pidfile.exists())
-	{
-		qDebug() << QObject::trUtf8("pid файл не найден");
-		if (!pidfile.open(QFile::WriteOnly))
-			qDebug() << QObject::trUtf8("Не удалось создать pid файл") << pidfile.fileName()
-			<< pidfile.errorString();
-		QTextStream pidstream(&pidfile);
-		pidstream << appref->applicationPid();
-		pidfile.close();
-	}
-	else
-	{
-		pidfile.open(QFile::ReadOnly);
-		qint64 pid = pidfile.readLine().toInt();
-		pidfile.close();
-		QProcess::execute("kill", QStringList() << QString::number(pid));
-		pidfile.open(QFile::WriteOnly);
-		QTextStream pidstream(&pidfile);
-		pidstream << appref->applicationPid();
-		pidfile.close();
-	}
-	return true;
-}
+#include "singleclient.h"
 
 int main(int argc, char *argv[])
 {
@@ -40,7 +10,25 @@ int main(int argc, char *argv[])
 
 	QString arg = QObject::trUtf8(argv[1]);
 	QApplication app(argc, argv);
-	isAlreadyRunning(&app);
+	SingleServer *sserver = new SingleServer;
+	SingleClient *sclient = new SingleClient;
+	sclient->connServer("cueplayer");
+	if (sclient->getState() == "ConnectedState")
+	{
+		if (argc >= 2)
+			sclient->setArgs(QByteArray(argv[1]));
+		return 0;
+	}
+	else if (sclient->getState() == "UnconnectedState")
+	{
+		sserver->startServer();
+	}
+	else
+	{
+		qDebug() << QObject::trUtf8("Ошибка. Отпишитесь разработчику.");
+		return 1;
+	}
+
 	if (!QSystemTrayIcon::isSystemTrayAvailable()) {
 		/*QMessageBox::critical(0, QObject::trUtf8("Лоток"),
 		QObject::trUtf8("Не найден системный лоток в вашей системе."
@@ -55,8 +43,9 @@ int main(int argc, char *argv[])
 	gst_init(0,0);
 	gst_registry_fork_set_enabled(true);
 	CuePlayer *player = new CuePlayer;
+	player->setServer(sserver);
 	player->show();
-	if(argc == 2)
+	if(argc >= 2)
 	{
 		QStringList file;
 		if (rxPath.indexIn(arg) != -1 ||
