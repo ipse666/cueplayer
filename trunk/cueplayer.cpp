@@ -906,10 +906,10 @@ void CuePlayer::stopAll()
 	timer->stop();
 	if (videoFlag || dvdFlag)
 	{
+		if (videowindow->parentWidget() == this)
+			if (videowindow->isVisible()) this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() + getLayoutSize().height()));
 		videowindow->hide();
 		videowindow->newTrack();
-		if (videowindow->parentWidget() == this)
-			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() + getLayoutSize().height()));
 		dpmsTrigger(true);
 	}
 	timeLineSlider->setSliderPosition(0);
@@ -1726,7 +1726,7 @@ void CuePlayer::integVideo(bool b)
 	verticalLayout_3->insertWidget(0, videowindow, 0, Qt::AlignTop);
 	win = videowindow->winId();
 	videowindow->setFixedSize(getLayoutSize());
-	this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() - getLayoutSize().height()));
+	if (!videowindow->isVisible()) this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() - getLayoutSize().height()));
 }
 
 QSize CuePlayer::getLayoutSize()
