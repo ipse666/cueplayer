@@ -18,7 +18,8 @@ HEADERS += cueplayer.h \
     plparser.h \
     youtubedl.h \
     singleserver.h \
-    singleclient.h
+    singleclient.h \
+    widgetmanager.h
 FORMS += ui/cueplayer.ui \
     ui/transcoder.ui \
     ui/apetoflacdialog.ui \
@@ -36,7 +37,8 @@ SOURCES += cueplayer.cpp \
     plparser.cpp \
     youtubedl.cpp \
     singleserver.cpp \
-    singleclient.cpp
+    singleclient.cpp \
+    widgetmanager.cpp
 RESOURCES += ressources.qrc
 CONFIG += release \
     link_pkgconfig \
