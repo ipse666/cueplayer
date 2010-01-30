@@ -31,6 +31,7 @@ protected:
 	void closeEvent(QCloseEvent *event);
 	void dragEnterEvent(QDragEnterEvent *event);
 	void dropEvent(QDropEvent *event);
+	void resizeEvent(QResizeEvent *event);
 public:
 	CuePlayer(QWidget *parent = 0);
 	void setServer(SingleServer*);
