@@ -906,8 +906,6 @@ void CuePlayer::stopAll()
 	timer->stop();
 	if (videoFlag || dvdFlag)
 	{
-		if (videowindow->parentWidget() == this)
-			if (videowindow->isVisible()) this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() + getLayoutSize().height()));
 		videowindow->hide();
 		videowindow->newTrack();
 		dpmsTrigger(true);
@@ -1700,6 +1698,19 @@ void CuePlayer::dropEvent(QDropEvent *event)
 		cueFileSelected(QStringList() << urls.first().toString());
 }
 
+void CuePlayer::resizeEvent(QResizeEvent *event)
+{
+	qDebug() << event->oldSize();
+	qDebug() << event->size();
+	if ((videoFlag || dvdFlag) && event->oldSize().height() != -1)
+	{
+		if (event->oldSize().height() <  event->size().height())
+			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() - getLayoutSize().height()));
+		else
+			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() + getLayoutSize().height()));
+	}
+}
+
 void CuePlayer::setWindowsTitles(QString s)
 {
 	setWindowTitle(s);
@@ -1726,7 +1737,6 @@ void CuePlayer::integVideo(bool b)
 	verticalLayout_3->insertWidget(0, videowindow, 0, Qt::AlignTop);
 	win = videowindow->winId();
 	videowindow->setFixedSize(getLayoutSize());
-	if (!videowindow->isVisible()) this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() - getLayoutSize().height()));
 }
 
 QSize CuePlayer::getLayoutSize()
@@ -1742,15 +1752,7 @@ void CuePlayer::intWindCheck(bool b)
 {
 	if (videowindow->isVisible())
 	{
-		if (b)
-		{
-			integVideo(b);
-		}
-		else
-		{
-			integVideo(b);
-			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() + getLayoutSize().height()));
-		}
+		integVideo(b);
 		gst_x_overlay_set_xwindow_id (GST_X_OVERLAY (videosink), win);
 		gst_x_overlay_expose (GST_X_OVERLAY (videosink));
 		videowindow->show();
