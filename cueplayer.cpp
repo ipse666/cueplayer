@@ -1497,7 +1497,7 @@ void CuePlayer::extButtons(bool b)
 		dvdButton->show();
 		streamButton->show();
 		if (intWindAction->isChecked())
-				integVideo(true);
+				videowindow->setFixedSize(getLayoutSize());
 	}
 	else
 	{
