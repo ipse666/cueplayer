@@ -71,8 +71,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	plparser = new PlParser(this);
 	secNumLCD->display("00");
 	enableButtons(false);
-	if (qApp->argc() <= 1)
-		restoreSettings();
+	restoreSettings();
 	apetoflacAction->setEnabled(false);
 	streamButton->setShortcut(trUtf8("Ctrl+u"));
 	dvdButton->setShortcut(trUtf8("Ctrl+d"));
@@ -1227,7 +1226,7 @@ void CuePlayer::paramFile(QStringList list)
 void CuePlayer::restoreSettings()
 {
 	bool ok;
-	if (settings.value("player/recentfile").toBool())
+	if (settings.value("player/recentfile").toBool() && qApp->argc() <= 1)
 		cueFileSelected(settings.value("player/recentfile").toStringList());
 	if (settings.value("player/volume").toBool())
 	{
