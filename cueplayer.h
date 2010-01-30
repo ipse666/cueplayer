@@ -19,6 +19,7 @@
 #include "plparser.h"
 #include "youtubedl.h"
 #include "singleserver.h"
+#include "widgetmanager.h"
 
 class GstThread;
 
@@ -41,6 +42,7 @@ public:
 	void setDvdAudio(gchar*, int);
 	gchar* getDvdAudio(int);
 	void postPlay();
+	WidgetManager *winman;
 private:
 	void seekAndLCD(int);
 	void createTrayIconMenu();
@@ -51,12 +53,17 @@ private:
 	void createDvdPipe();
 	void createFtpPipe();
 	void initPlayer();
+	void integVideo(bool);
+	QSize getLayoutSize();
+	QSize minwin;
+	QRect vidwingeom;
 	QFileDialog *filedialog;
 	QTreeWidgetItem *playlistItem[100];
 	QSystemTrayIcon *trayIcon;
 	QMenu *trayIconMenu;
 	QAction *quitAction;
 	QAction *aboutAction;
+	QAction *intWindAction;
 	QAction *extbutAction;
 	QAction *transcodeAction;
 	QAction *apetoflacAction;
@@ -143,6 +150,7 @@ private slots:
 	void plError(QString);
 	void ape2flacShow();
 	void setWindowsTitles(QString);
+	void intWindCheck(bool);
 signals:
 	void gstError();
 };

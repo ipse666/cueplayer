@@ -61,6 +61,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	filedialog = new QFileDialog(this, trUtf8("Открыть файл"));
 	filedialog->setNameFilters(filters);
 	videowindow = new VideoWindow(this);
+	winman = new WidgetManager(this);
 	int vidWidth = videowindow->width();
 	int vidHeight = videowindow->height();
 	int vidWidthPos = desktop->width()/2 - vidWidth/2;
@@ -224,6 +225,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			 fi.suffix() == "VOB" ||
 			 fi.suffix() == "vob" ||
 			 fi.suffix() == "wmv" ||
+			 fi.suffix() == "mpg" ||
 			 fi.suffix() == "mkv")
 	{
 		if (rxFilename2.indexIn(filename) != -1)
@@ -351,6 +353,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 					 filetu.suffix() == "VOB" ||
 					 filetu.suffix() == "vob" ||
 					 filetu.suffix() == "wmv" ||
+					 filetu.suffix() == "mpg" ||
 					 filetu.suffix() == "mkv")
 			{
 				filesList.prepend(filetu);
@@ -582,12 +585,17 @@ void CuePlayer::playTrack()
 {
 	if (videoFlag || dvdFlag)
 	{
+		if (intWindAction->isChecked())
+			integVideo(true);
+		else
+			integVideo(false);
 		gst_x_overlay_set_xwindow_id (GST_X_OVERLAY (videosink), win);
 		gst_x_overlay_expose (GST_X_OVERLAY (videosink));
 		videowindow->show();
 		videowindow->setWindowTitle(savetitle);
 		dpmsTrigger(false);
 	}
+	winman->raiseWidget(this);
 	trd->setPlayBin(play);
 	trd->setFunc(POST_PLAY);
 	trd->start();
@@ -654,6 +662,7 @@ void CuePlayer::sliderRelease()
 	seekGst(time);
 }
 
+// ручное перемещение слайдера (кликом)
 void CuePlayer::sliderValue(int i)
 {
 	int time;
@@ -814,6 +823,11 @@ void CuePlayer::createTrayIconMenu()
 	aboutAction->setShortcut(trUtf8("Ctrl+a"));
 	connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
 
+	intWindAction = new QAction(trUtf8("&Интеграция"), this);
+	intWindAction->setCheckable(true);
+	intWindAction->setShortcut(trUtf8("Ctrl+i"));
+	connect(intWindAction, SIGNAL(triggered(bool)), this, SLOT(intWindCheck(bool)));
+
 	extbutAction = new QAction(trUtf8("&Расширенный"), this);
 	extbutAction->setCheckable(true);
 	extbutAction->setShortcut(trUtf8("Ctrl+e"));
@@ -844,6 +858,7 @@ void CuePlayer::createTrayIconMenu()
 	trayIcon->setIcon(QIcon(":/images/cueplayer.png"));
 	trayIcon->show();
 
+	addAction(intWindAction);
 	addAction(extbutAction);
 	addAction(apetoflacAction);
 	addAction(transcodeAction);
@@ -894,6 +909,8 @@ void CuePlayer::stopAll()
 	{
 		videowindow->hide();
 		videowindow->newTrack();
+		if (videowindow->parentWidget() == this)
+			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() + getLayoutSize().height()));
 		dpmsTrigger(true);
 	}
 	timeLineSlider->setSliderPosition(0);
@@ -1217,6 +1234,7 @@ void CuePlayer::restoreSettings()
 		volumeDial->setValue(settings.value("player/volume").toInt(&ok));
 		if (videoFlag || dvdFlag) videowindow->setVolumePos(settings.value("player/volume").toInt(&ok));
 	}
+	intWindAction->setChecked(settings.value("player/intwin").toBool());
 }
 
 void CuePlayer::nminSeek()
@@ -1476,13 +1494,18 @@ void CuePlayer::extButtons(bool b)
 {
 	if(b)
 	{
+		minwin = getLayoutSize();
 		dvdButton->show();
 		streamButton->show();
+		if (intWindAction->isChecked())
+				integVideo(true);
 	}
 	else
 	{
 		dvdButton->hide();
 		streamButton->hide();
+		if (intWindAction->isChecked())
+				videowindow->setFixedSize(minwin);
 	}
 }
 
@@ -1683,6 +1706,57 @@ void CuePlayer::setWindowsTitles(QString s)
 	setWindowTitle(s);
 	if (videoFlag) videowindow->setWindowTitle(s);
 	savetitle = s;
+}
+
+void CuePlayer::integVideo(bool b)
+{
+	if (!videoFlag && !dvdFlag)
+		return;
+	if (!b)
+	{
+		verticalLayout_3->removeWidget(videowindow);
+		if (!vidwingeom.isNull())
+		{
+			videowindow->setGeometry(vidwingeom);
+			videowindow->setParent(0);
+		}
+		win = videowindow->winId();
+		return;
+	}
+	vidwingeom = videowindow->frameGeometry();
+	verticalLayout_3->insertWidget(0, videowindow, 0, Qt::AlignTop);
+	win = videowindow->winId();
+	videowindow->setFixedSize(getLayoutSize());
+	this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() - getLayoutSize().height()));
+}
+
+QSize CuePlayer::getLayoutSize()
+{
+	int left, top, right, bottom;
+	layout()->getContentsMargins(&left, &top, &right, &bottom);
+	int videosize = this->width() - left - right;
+	QSize recentsize(videosize, videosize/16*10);
+	return recentsize;
+}
+
+void CuePlayer::intWindCheck(bool b)
+{
+	if (videowindow->isVisible())
+	{
+		if (b)
+		{
+			integVideo(b);
+		}
+		else
+		{
+			integVideo(b);
+			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() + getLayoutSize().height()));
+		}
+		gst_x_overlay_set_xwindow_id (GST_X_OVERLAY (videosink), win);
+		gst_x_overlay_expose (GST_X_OVERLAY (videosink));
+		videowindow->show();
+	}
+	settings.setValue("player/intwin", b);
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)
