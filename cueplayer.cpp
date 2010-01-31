@@ -144,6 +144,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(videowindow, SIGNAL(draganddrop(QStringList)),
 	 this, SLOT(cueFileSelected(QStringList)));
 	connect(videowindow, SIGNAL(newTime(int)), this, SLOT(seekGst(int)));
+	connect(videowindow, SIGNAL(showWin(bool)), this, SLOT(mover(bool)));
 
 	// Плейлист парсер
 	connect(plparser, SIGNAL(ready()), this, SLOT(plInit()));
@@ -469,10 +470,6 @@ void CuePlayer::discSet()
 
 void CuePlayer::initPlayer()
 {
-	if (videoFlag || dvdFlag)
-		oldFlag = true;
-	else
-		oldFlag = false;
 	treeWidget->clear();
 	treeWidget->hide();
 	enableButtons(false);
@@ -1702,17 +1699,14 @@ void CuePlayer::dropEvent(QDropEvent *event)
 		cueFileSelected(QStringList() << urls.first().toString());
 }
 
-void CuePlayer::resizeEvent(QResizeEvent *event)
+void CuePlayer::mover(bool b)
 {
-	if ((videoFlag || dvdFlag || oldFlag) &&
-		event->oldSize().height() != -1 &&
-		!fileList->isChecked())
+	if (videowindow->parentWidget() == this)
 	{
-		if (event->oldSize().height() <  event->size().height())
+		if (b)
 			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() - getLayoutSize().height()));
 		else
 			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() + getLayoutSize().height()));
-		oldFlag = false;
 	}
 }
 

@@ -262,3 +262,12 @@ void VideoWindow::dropEvent(QDropEvent *event)
 	else
 		emit draganddrop(QStringList() << urls.first().toString());
 }
+
+bool VideoWindow::event(QEvent *event)
+{
+	if (event->type() == QEvent::Show)
+		emit showWin(true);
+	else if (event->type() == QEvent::Hide)
+		emit showWin(false);
+	return QWidget::event(event);
+}
