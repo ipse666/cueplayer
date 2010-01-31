@@ -84,6 +84,10 @@ VideoWindow::VideoWindow(QWidget *parent)
 
 void VideoWindow::mouseDoubleClickEvent(QMouseEvent *event)
 {
+	if (this->parentWidget() != 0)
+		emit doubleClick(true);
+	else
+		emit doubleClick(false);
 	fullScreen();
 	(void) *event;
 }

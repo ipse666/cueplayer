@@ -152,6 +152,7 @@ private slots:
 	void setWindowsTitles(QString);
 	void intWindCheck(bool);
 	void mover(bool);
+	void dclIntVw(bool);
 signals:
 	void gstError();
 };

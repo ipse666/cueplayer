@@ -75,6 +75,7 @@ signals:
 	void draganddrop(QStringList);
 	void newTime(int);
 	void showWin(bool);
+	void doubleClick(bool);
 };
 
 #endif // VIDEOWINDOW_H
