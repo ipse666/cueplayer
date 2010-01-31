@@ -84,10 +84,6 @@ VideoWindow::VideoWindow(QWidget *parent)
 
 void VideoWindow::mouseDoubleClickEvent(QMouseEvent *event)
 {
-	if (this->parentWidget() != 0)
-		emit doubleClick(true);
-	else
-		emit doubleClick(false);
 	fullScreen();
 	(void) *event;
 }
@@ -111,6 +107,11 @@ void VideoWindow::closeEvent(QCloseEvent *event)
 
 void VideoWindow::fullScreen()
 {
+	if (this->parentWidget() != 0)
+		emit doubleClick(true);
+	else
+		emit doubleClick(false);
+
 	if (isFullScreen())
 	{
 		setCursor(Qt::ArrowCursor);
