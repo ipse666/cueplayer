@@ -1704,10 +1704,11 @@ void CuePlayer::mover(bool b)
 	if (videowindow->parentWidget() == this)
 	{
 		if (b)
-			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() - getLayoutSize().height()));
+			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() - getLayoutSize().height() - 7));
 		else
-			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() + getLayoutSize().height()));
+			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() + getLayoutSize().height() + 7));
 	}
+	qDebug() << this->frameSize() << this->size();
 }
 
 void CuePlayer::setWindowsTitles(QString s)
