@@ -145,6 +145,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	 this, SLOT(cueFileSelected(QStringList)));
 	connect(videowindow, SIGNAL(newTime(int)), this, SLOT(seekGst(int)));
 	connect(videowindow, SIGNAL(showWin(bool)), this, SLOT(mover(bool)));
+	connect(videowindow, SIGNAL(doubleClick(bool)), this, SLOT(dclIntVw(bool)));
 
 	// Плейлист парсер
 	connect(plparser, SIGNAL(ready()), this, SLOT(plInit()));
@@ -1708,7 +1709,6 @@ void CuePlayer::mover(bool b)
 		else
 			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() + getLayoutSize().height() + 7));
 	}
-	qDebug() << this->frameSize() << this->size();
 }
 
 void CuePlayer::setWindowsTitles(QString s)
@@ -1758,6 +1758,17 @@ void CuePlayer::intWindCheck(bool b)
 		videowindow->show();
 	}
 	settings.setValue("player/intwin", b);
+}
+
+void CuePlayer::dclIntVw(bool b)
+{
+	if (intWindAction->isChecked())
+	{
+		integVideo(!b);
+		gst_x_overlay_set_xwindow_id (GST_X_OVERLAY (videosink), win);
+		gst_x_overlay_expose (GST_X_OVERLAY (videosink));
+		videowindow->show();
+	}
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)

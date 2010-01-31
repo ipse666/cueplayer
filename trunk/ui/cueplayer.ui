@@ -29,13 +29,51 @@
    <string>CUE Проигрыватель</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../ressources.qrc">
+   <iconset>
     <normaloff>:/images/cueplayer.png</normaloff>:/images/cueplayer.png</iconset>
   </property>
   <property name="toolTip">
    <string>Мультимедиа проигрыватель.</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0">
+    <widget class="QTreeWidget" name="treeWidget">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="textElideMode">
+      <enum>Qt::ElideRight</enum>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <property name="columnCount">
+      <number>2</number>
+     </property>
+     <attribute name="headerCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="headerHighlightSections">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="headerStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>1</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>2</string>
+      </property>
+     </column>
+    </widget>
+   </item>
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
@@ -194,7 +232,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/net-stream.png</normaloff>:/images/net-stream.png</iconset>
              </property>
              <property name="autoDefault">
@@ -226,7 +264,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/media-optical.png</normaloff>:/images/media-optical.png</iconset>
              </property>
              <property name="autoDefault">
@@ -258,7 +296,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
              </property>
              <property name="autoDefault">
@@ -287,7 +325,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/play.png</normaloff>:/images/play.png</iconset>
              </property>
              <property name="autoDefault">
@@ -319,7 +357,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/pause.png</normaloff>:/images/pause.png</iconset>
              </property>
             </widget>
@@ -345,7 +383,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/stop.png</normaloff>:/images/stop.png</iconset>
              </property>
             </widget>
@@ -371,7 +409,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/prev.png</normaloff>:/images/prev.png</iconset>
              </property>
             </widget>
@@ -397,7 +435,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/next.png</normaloff>:/images/next.png</iconset>
              </property>
             </widget>
@@ -423,7 +461,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/format-list-unordered.png</normaloff>:/images/format-list-unordered.png</iconset>
              </property>
              <property name="checkable">
@@ -464,49 +502,9 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
-    <widget class="QTreeWidget" name="treeWidget">
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
-     </property>
-     <property name="textElideMode">
-      <enum>Qt::ElideRight</enum>
-     </property>
-     <property name="rootIsDecorated">
-      <bool>false</bool>
-     </property>
-     <property name="columnCount">
-      <number>2</number>
-     </property>
-     <attribute name="headerCascadingSectionResizes">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="headerHighlightSections">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="headerStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>1</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>2</string>
-      </property>
-     </column>
-    </widget>
-   </item>
   </layout>
   <zorder>treeWidget</zorder>
-  <zorder>frame</zorder>
   <zorder></zorder>
-  <zorder>volumeDial</zorder>
  </widget>
  <tabstops>
   <tabstop>playButton</tabstop>
@@ -518,9 +516,7 @@
   <tabstop>timeLineSlider</tabstop>
   <tabstop>volumeDial</tabstop>
  </tabstops>
- <resources>
-  <include location="../ressources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>fileList</sender>
