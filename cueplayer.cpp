@@ -469,6 +469,10 @@ void CuePlayer::discSet()
 
 void CuePlayer::initPlayer()
 {
+	if (videoFlag || dvdFlag)
+		oldFlag = true;
+	else
+		oldFlag = false;
 	treeWidget->clear();
 	treeWidget->hide();
 	enableButtons(false);
@@ -1700,14 +1704,15 @@ void CuePlayer::dropEvent(QDropEvent *event)
 
 void CuePlayer::resizeEvent(QResizeEvent *event)
 {
-	qDebug() << event->oldSize();
-	qDebug() << event->size();
-	if ((videoFlag || dvdFlag) && event->oldSize().height() != -1)
+	if ((videoFlag || dvdFlag || oldFlag) &&
+		event->oldSize().height() != -1 &&
+		!fileList->isChecked())
 	{
 		if (event->oldSize().height() <  event->size().height())
 			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() - getLayoutSize().height()));
 		else
 			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() + getLayoutSize().height()));
+		oldFlag = false;
 	}
 }
 
