@@ -53,6 +53,7 @@ private:
 private slots:
 	void fullScreen();
 	void normCursor();
+	void normWind();
 	void createMenu();
 	void changeAid(QAction*);
 	void changeTid(QAction*);
