@@ -76,25 +76,6 @@ cb_newpad (GstElement *decodebin,
   gst_pad_link (pad, audiopad);
 }
 
-/*gboolean
-cb_encoderpad (GstPad *pad,
-			   GstBuffer *buffer,
-			   gpointer u_data)
-{
-	g_print("БУФЕРОК %d\n", GST_BUFFER_SIZE(buffer));
-	g_print("Данные %s\n", GST_BUFFER_DATA(buffer));
-	if (GST_BUFFER_SIZE(buffer))
-	{
-		//gst_buffer_set_data(buffer, GST_BUFFER_DATA(buffer), 0);
-	}
-	//guint16 *data = (guint16 *) GST_BUFFER_DATA (buffer), t;
-	//data = 0;
-	//gst_buffer_unref (buffer);
-	(void) pad;
-	(void) u_data;
-	return true;
-}*/
-
 enum {
 	CODEC_VORBIS,
 	CODEC_LAME,

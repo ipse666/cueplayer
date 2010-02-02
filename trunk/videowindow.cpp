@@ -53,7 +53,7 @@ VideoWindow::VideoWindow(QWidget *parent)
 	connect(slider, SIGNAL(stopEvent()), this, SIGNAL(stopEvent()));
 	connect(shortcutfs, SIGNAL(activated()), this, SLOT(fullScreen()));
 	connect(slider, SIGNAL(fullScreen()), this, SLOT(fullScreen()));
-	connect(shortcutesc, SIGNAL(activated()), this, SLOT(showNormal()));
+	connect(shortcutesc, SIGNAL(activated()), this, SLOT(normWind()));
 	connect(slider, SIGNAL(showNormal()), this, SLOT(showNormal()));
 	connect(shortcutesc, SIGNAL(activated()), this, SLOT(normCursor()));
 	connect(slider, SIGNAL(normCursor()), this, SLOT(normCursor()));
@@ -107,11 +107,7 @@ void VideoWindow::closeEvent(QCloseEvent *event)
 
 void VideoWindow::fullScreen()
 {
-	if (this->parentWidget() != 0)
-		emit doubleClick(true);
-	else
-		emit doubleClick(false);
-
+	emit doubleClick(this->parentWidget());
 	if (isFullScreen())
 	{
 		setCursor(Qt::ArrowCursor);
@@ -275,4 +271,10 @@ bool VideoWindow::event(QEvent *event)
 	else if (event->type() == QEvent::Hide)
 		emit showWin(false);
 	return QWidget::event(event);
+}
+
+void VideoWindow::normWind()
+{
+	emit doubleClick(false);
+	this->showNormal();
 }
