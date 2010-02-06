@@ -595,8 +595,8 @@ void CuePlayer::playTrack()
 		videowindow->show();
 		videowindow->setWindowTitle(savetitle);
 		dpmsTrigger(false);
+		winman->raiseWidget(this);
 	}
-	winman->raiseWidget(this);
 	trd->setPlayBin(play);
 	trd->setFunc(POST_PLAY);
 	trd->start();
