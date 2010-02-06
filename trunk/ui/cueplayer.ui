@@ -504,7 +504,6 @@
    </item>
   </layout>
   <zorder>treeWidget</zorder>
-  <zorder></zorder>
  </widget>
  <tabstops>
   <tabstop>playButton</tabstop>
