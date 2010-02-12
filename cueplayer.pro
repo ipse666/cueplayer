@@ -48,4 +48,5 @@ PKGCONFIG += gstreamer-0.10 \
 OTHER_FILES += INSTALL \
     INSTALL \
     README \
-    CHANGELOG
+	CHANGELOG
+TRANSLATIONS = loc/cueplayer_pl.ts

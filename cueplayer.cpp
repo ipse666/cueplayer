@@ -226,6 +226,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			 fi.suffix() == "VOB" ||
 			 fi.suffix() == "vob" ||
 			 fi.suffix() == "wmv" ||
+			 fi.suffix() == "wav" ||
 			 fi.suffix() == "mpg" ||
 			 fi.suffix() == "mkv")
 	{
@@ -298,11 +299,44 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		else
 		{
 			preInit(filename);
-			play = gst_element_factory_make ("playbin2", "play");
-			if (rxFilename.indexIn(filename) != -1)
-				g_object_set (G_OBJECT (play), "uri", ("file://" + filename).toUtf8().data(), NULL);
+
+			if (!videoFlag && progFlag)
+			{
+				qDebug() << trUtf8("Включен прогрессивный режим.");
+				GstElement *aufile, *typefind, *decoder, *audioconvert, *audioconvert2, *audiosink;
+				GstElement *aqueue;
+				GstPad *audiopad;
+				tsFlag = true;
+				play = gst_pipeline_new ("player");
+				aqueue = gst_element_factory_make ("queue", NULL);
+				aufile = gst_element_factory_make ("filesrc", "file-source");
+				g_object_set (aufile, "location", filename.toUtf8().data(), NULL);
+				typefind = gst_element_factory_make ("typefind", "typefinder");
+				g_signal_connect (typefind, "have-type", G_CALLBACK (cb_typefound), NULL);
+				decoder = gst_element_factory_make ("decodebin2", "bindecoder");
+				audioconvert = gst_element_factory_make ("audioconvert", "aconv");
+				audioconvert2 = gst_element_factory_make ("audioconvert", "aconv2");
+				d_volume = gst_element_factory_make ("volume", "volume");
+				audiosink = gst_element_factory_make ("autoaudiosink", "asink");
+				gst_bin_add_many (GST_BIN (play), aufile, typefind, decoder, NULL);
+				gst_element_link_many (aufile, typefind, decoder, NULL);
+				g_signal_connect (decoder, "new-decoded-pad", G_CALLBACK (new_pad_added), NULL);
+				d_audio = gst_bin_new ("audiobin");
+				gst_bin_add_many (GST_BIN (d_audio), aqueue, audioconvert, d_volume, audiosink, NULL);
+				gst_element_link_many(aqueue, audioconvert, d_volume, audiosink, NULL);
+				audiopad = gst_element_get_static_pad (aqueue, "sink");
+				gst_element_add_pad (d_audio, gst_ghost_pad_new ("sink", audiopad));
+				gst_object_unref (audiopad);
+				gst_bin_add (GST_BIN (play), d_audio);
+			}
 			else
-				g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+			{
+				play = gst_element_factory_make ("playbin2", "play");
+				if (rxFilename.indexIn(filename) != -1)
+					g_object_set (G_OBJECT (play), "uri", ("file://" + filename).toUtf8().data(), NULL);
+				else
+					g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+			}
 		}
 	}
 	else if (fi.suffix() == "flv")
@@ -354,6 +388,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 					 filetu.suffix() == "VOB" ||
 					 filetu.suffix() == "vob" ||
 					 filetu.suffix() == "wmv" ||
+					 filetu.suffix() == "wav" ||
 					 filetu.suffix() == "mpg" ||
 					 filetu.suffix() == "mkv")
 			{
@@ -859,8 +894,8 @@ void CuePlayer::createTrayIconMenu()
 	trayIcon->setIcon(QIcon(":/images/cueplayer.png"));
 	trayIcon->show();
 
-	addAction(intWindAction);
 	addAction(extbutAction);
+	addAction(intWindAction);
 	addAction(apetoflacAction);
 	addAction(transcodeAction);
 	addAction(aboutAction);
