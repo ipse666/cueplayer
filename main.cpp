@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
 	QTranslator myappTranslator;
 		 myappTranslator.load("/usr/share/cueplayer/loc/cueplayer_" + QLocale::system().name());
 		 app.installTranslator(&myappTranslator);
+	qDebug() << QLocale::system().name();
 	app.setApplicationName("cueplayer");
 	gst_init(0,0);
 	gst_registry_fork_set_enabled(true);
