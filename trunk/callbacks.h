@@ -16,6 +16,7 @@ bool discFlag;
 bool streamFlag;
 bool ftpFlag;
 bool tsFlag;
+bool progFlag;
 int dvdAudioPads;
 int dvdAudioCurrentPad;
 int threadRet;
