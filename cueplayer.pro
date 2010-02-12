@@ -1,10 +1,10 @@
 TEMPLATE = app
 QT += network
-TARGET = cueplayer
+TARGET =
 isEmpty(PREFIX):PREFIX = /usr/local
 target.path = $$PREFIX/bin
 target.files = $$TARGET
-locale.path = /usr/share/$${TARGET}/loc
+locale.path = /usr/share/cueplayer/loc
 locale.files = loc/*.qm
 INSTALLS += target locale
 DEPENDPATH += . \
@@ -51,4 +51,4 @@ OTHER_FILES += INSTALL \
     INSTALL \
     README \
 	CHANGELOG
-TRANSLATIONS = loc/$${TARGET}_pl_PL.ts
+TRANSLATIONS = loc/cueplayer_pl_PL.ts
