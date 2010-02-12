@@ -51,4 +51,4 @@ OTHER_FILES += INSTALL \
     INSTALL \
     README \
 	CHANGELOG
-TRANSLATIONS = loc/cueplayer_pl_PL.ts
+TRANSLATIONS = loc/cueplayer_pl.ts
