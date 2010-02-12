@@ -1,6 +1,6 @@
 TEMPLATE = app
 QT += network
-TARGET = 
+TARGET = cueplayer
 isEmpty(PREFIX):PREFIX = /usr/local
 target.path = $$PREFIX/bin
 target.files = $$TARGET
