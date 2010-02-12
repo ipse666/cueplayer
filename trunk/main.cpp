@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QTranslator>
 #include "cueplayer.h"
 #include "singleclient.h"
 
@@ -39,6 +40,9 @@ int main(int argc, char *argv[])
 	else
 		QApplication::setQuitOnLastWindowClosed(false);
 	QCoreApplication::setOrganizationName("CuePlayer");
+	QTranslator myappTranslator;
+		 myappTranslator.load("cueplayer_" + QLocale::system().name());
+		 app.installTranslator(&myappTranslator);
 	app.setApplicationName("cueplayer");
 	gst_init(0,0);
 	gst_registry_fork_set_enabled(true);

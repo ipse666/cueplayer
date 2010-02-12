@@ -4,7 +4,9 @@ TARGET =
 isEmpty(PREFIX):PREFIX = /usr/local
 target.path = $$PREFIX/bin
 target.files = $$TARGET
-INSTALLS += target
+locale.path = /usr/share/$${TARGET}/loc
+locale.files = loc/*.qm
+INSTALLS += target locale
 DEPENDPATH += . \
     ui
 HEADERS += cueplayer.h \
@@ -49,4 +51,4 @@ OTHER_FILES += INSTALL \
     INSTALL \
     README \
 	CHANGELOG
-TRANSLATIONS = loc/cueplayer_pl.ts
+TRANSLATIONS = loc/$${TARGET}_pl.ts
