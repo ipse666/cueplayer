@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 		QApplication::setQuitOnLastWindowClosed(false);
 	QCoreApplication::setOrganizationName("CuePlayer");
 	QTranslator myappTranslator;
-		 myappTranslator.load("cueplayer_" + QLocale::system().name());
+		 myappTranslator.load("/usr/share/cueplayer/loc/cueplayer_" + QLocale::system().name());
 		 app.installTranslator(&myappTranslator);
 	app.setApplicationName("cueplayer");
 	gst_init(0,0);
