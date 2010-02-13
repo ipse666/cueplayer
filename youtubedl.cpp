@@ -117,7 +117,7 @@ QString YouTubeDL::extractVideoId()
 void YouTubeDL::downResponse(bool error, QString reasonPhrase)
 {
 	if (error) {
-		qDebug() << trUtf8("Ошибка") << tr("Ошибка загрузки: %1.") << reasonPhrase;
+		qDebug() << trUtf8("Ошибка") << trUtf8("Ошибка загрузки: %1.") << reasonPhrase;
 	}
 	else
 	{
@@ -176,5 +176,5 @@ void YouTubeDL::extractVideoUrl()
 		qDebug() << trUtf8("Прямой линк ") << videoUrl + videoUrlArgs;
 	}
 	else
-		qDebug() << trUtf8("Ошибка") << tr("Неверный адрес!");
+		qDebug() << trUtf8("Ошибка") << trUtf8("Неверный адрес!");
 }
