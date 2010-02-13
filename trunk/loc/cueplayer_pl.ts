@@ -810,6 +810,7 @@
     <name>YouTubeDL</name>
     <message utf8="both">
         <location filename="../youtubedl.cpp" line="66"/>
+        <location filename="../youtubedl.cpp" line="120"/>
         <source>Ошибка загрузки: %1.</source>
         <translation>Błąd wczytywania: %1.</translation>
     </message>
@@ -859,11 +860,6 @@
         <source>Ошибка</source>
         <translation>Pomyłka</translation>
     </message>
-    <message>
-        <location filename="../youtubedl.cpp" line="120"/>
-        <source>ÐÑÐ¸Ð±ÐºÐ° Ð·Ð°Ð³ÑÑÐ·ÐºÐ¸: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message utf8="true">
         <location filename="../youtubedl.cpp" line="134"/>
         <source>Ошибка открытия файла!</source>
@@ -874,14 +870,10 @@
         <source>Прямой линк </source>
         <translation>Link bezpośredni</translation>
     </message>
-    <message>
+    <message utf8="true">
         <location filename="../youtubedl.cpp" line="179"/>
-        <source>ÐÐµÐ²ÐµÑÐ½ÑÐ¹ Ð°Ð´ÑÐµÑ!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Неверный адрес!</source>
-        <translation type="obsolete">Błędny adres!</translation>
+        <translation type="unfinished">Błędny adres!</translation>
     </message>
 </context>
 </TS>
