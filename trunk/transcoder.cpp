@@ -4,7 +4,7 @@
 
 #define TIME 200
 #define APPNAME "CuePlayer"
-#define VERSION "0.21"
+#define VERSION "0.22"
 
 Q_EXPORT_PLUGIN2(trans_coder, TransCoder)
 		TransCoder *transcoder = 0;
