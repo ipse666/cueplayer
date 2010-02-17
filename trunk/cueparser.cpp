@@ -3,12 +3,12 @@
 CueParser::CueParser(QString s)
 {
 	int in = 0;
+	trackNumber = 0;
 	QRegExp rxPerformer("^PERFORMER \"(.*)\"");
-	QRegExp rxAlbum("^TITLE \"(.*)\"");
 	QRegExp rxSoundfile("^FILE \"(.*)\"");
-	QRegExp rxTitle("    TITLE \"(.*)\"");
-	QRegExp rxIndex("    INDEX \\d+ (.*)");
-	QRegExp rxTrackNumber("  TRACK (\\d\\d) .*");
+	QRegExp rxTitle("TITLE \"(.*)\"");
+	QRegExp rxIndex("INDEX \\d+ (.*)");
+	QRegExp rxTrackNumber("TRACK (\\d\\d) .*");
 	QRegExp rxAudioPath("(.*/).*");
 	QRegExp rxFileWav("(.*)(\\.wav)");
 
@@ -25,12 +25,15 @@ CueParser::CueParser(QString s)
 		line = cuetext.readLine();
 		if (rxPerformer.indexIn(line) != -1)
 			parsedFile.performer = rxPerformer.cap(1);
-		else if (rxAlbum.indexIn(line) != -1)
-			parsedFile.album = rxAlbum.cap(1);
 		else if (rxSoundfile.indexIn(line) != -1)
 			parsedFile.soundfile = rxSoundfile.cap(1);
 		else if (rxTitle.indexIn(line) != -1)
-			tracks[++in].title = rxTitle.cap(1);
+		{
+			if (trackNumber)
+				tracks[++in].title = rxTitle.cap(1);
+			else
+				parsedFile.album = rxTitle.cap(1);
+		}
 		else if (rxIndex.indexIn(line) != -1)
 		{
 			tracks[in].index = rxIndex.cap(1);
@@ -38,6 +41,9 @@ CueParser::CueParser(QString s)
 		}
 		else if (rxTrackNumber.indexIn(line) != -1)
 			trackNumber = rxTrackNumber.cap(1).toInt(0,10);
+
+		if (in == 99)
+			break;
 	} while (!line.isNull());
 
 	if (!in)
@@ -57,6 +63,9 @@ CueParser::CueParser(QString s)
 					tracks[in].title = parsedFile.soundfile;
 					tracks[in].file = parsedFile.soundfile;
 				}
+
+				if (in == 99)
+					break;
 			} while (!line.isNull());
 		}
 		/*else

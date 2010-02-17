@@ -191,8 +191,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 
 	QFileInfo fi(filename);
 
-	if (fi.suffix() == "cue" ||
-		fi.suffix() == "CUE")
+	if (!QString::compare(fi.suffix(), "cue", Qt::CaseInsensitive))
 	{
 		refparser = new CueParser(filename);
 		setWindowsTitles(refparser->getTitle());
@@ -211,24 +210,23 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		nextButton->setToolTip(nextTool);
 		prewButton->setToolTip(prewTool);
 	}
-	else if (fi.suffix() == "mp3" ||
-			 fi.suffix() == "flac" ||
-			 fi.suffix() == "ape" ||
-			 fi.suffix() == "ogg" ||
-			 fi.suffix() == "ogm" ||
-			 fi.suffix() == "ogv" ||
-			 fi.suffix() == "mp4" ||
-			 fi.suffix() == "avi" ||
-			 fi.suffix() == "ts" ||
-			 fi.suffix() == "wv" ||
-			 fi.suffix() == "3gp" ||
-			 fi.suffix() == "m2ts" ||
-			 fi.suffix() == "VOB" ||
-			 fi.suffix() == "vob" ||
-			 fi.suffix() == "wmv" ||
-			 fi.suffix() == "wav" ||
-			 fi.suffix() == "mpg" ||
-			 fi.suffix() == "mkv")
+	else if (!QString::compare(fi.suffix(), "mp3", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "flac", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "ape", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "ogg", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "ogm", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "ogv", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "mp4", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "avi", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "ts", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "wv", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "3gp", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "m2ts", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "vob", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "wmv", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "wav", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "mpg", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "mkv", Qt::CaseInsensitive))
 	{
 		if (rxFilename2.indexIn(filename) != -1)
 			mp3trackName = rxFilename2.cap(1);
@@ -339,7 +337,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			}
 		}
 	}
-	else if (fi.suffix() == "flv")
+	else if (!QString::compare(fi.suffix(), "flv", Qt::CaseInsensitive))
 	{
 		videoFlag = true;
 		streamFlag = true;
@@ -351,9 +349,9 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		else
 			g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
 	}
-	else if (fi.suffix() == "pls" ||
-			 fi.suffix() == "wvx" ||
-			 fi.suffix() == "m3u")
+	else if (!QString::compare(fi.suffix(), "pls", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "wvx", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "m3u", Qt::CaseInsensitive))
 	{
 		setWindowsTitles(trUtf8("Список воспроизведения"));
 		label->setText(trUtf8("Подождите. Инициализация списка."));
@@ -372,25 +370,24 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		{
 			QFileInfo filetu = fileInfoList.last();
 			fileInfoList.pop_back();
-			if (filetu.suffix() == "VOB")
+			if (!QString::compare(filetu.suffix(), "VOB", Qt::CaseSensitive))
 				counterVOB++;
-			else if (filetu.suffix() == "mp3" ||
-					 filetu.suffix() == "flac" ||
-					 filetu.suffix() == "ogg" ||
-					 filetu.suffix() == "ogm" ||
-					 filetu.suffix() == "ogv" ||
-					 filetu.suffix() == "mp4" ||
-					 filetu.suffix() == "avi" ||
-					 filetu.suffix() == "ts" ||
-					 filetu.suffix() == "wv" ||
-					 filetu.suffix() == "3gp" ||
-					 filetu.suffix() == "m2ts" ||
-					 filetu.suffix() == "VOB" ||
-					 filetu.suffix() == "vob" ||
-					 filetu.suffix() == "wmv" ||
-					 filetu.suffix() == "wav" ||
-					 filetu.suffix() == "mpg" ||
-					 filetu.suffix() == "mkv")
+			else if (!QString::compare(filetu.suffix(), "mp3", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "flac", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "ogg", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "ogm", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "ogv", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "mp4", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "avi", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "ts", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "wv", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "3gp", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "m2ts", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "vob", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "wmv", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "wav", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "mpg", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "mkv", Qt::CaseInsensitive))
 			{
 				filesList.prepend(filetu);
 				counterFiles++;
