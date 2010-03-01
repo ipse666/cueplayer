@@ -67,6 +67,11 @@ private:
 	QAction *extbutAction;
 	QAction *transcodeAction;
 	QAction *apetoflacAction;
+	QAction *playAction;
+	QAction *pauseAction;
+	QAction *stopAction;
+	QAction *prewAction;
+	QAction *nextAction;
 	QWidget *desktop;
 	QString filename;
 	QTimer *timer;
