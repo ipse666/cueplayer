@@ -746,6 +746,10 @@ void CuePlayer::seekAndLCD(int num)
 	if (refparser)
 	{
 		label->setText(stringNumTrack + ". " + refparser->getTrackTitle(num));
+		qDebug() << trUtf8("Играет: ") +
+			refparser->getPerformer() + " - " +
+			refparser->getAlbum() + " / " +
+			refparser->getTrackTitle(num);
 		if (!multiCueFlag)
 		{
 			seekGst(refparser->getTrackIndex(num));
