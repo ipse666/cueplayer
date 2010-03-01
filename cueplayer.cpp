@@ -1074,7 +1074,10 @@ void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
 	if (vtitle)
 	{
 		label->setText(trUtf8(g_value_get_string(vtitle)));
-		qDebug() << trUtf8("Играет: ") +
+		if (trUtf8(g_value_get_string(vartist)).isEmpty() || trUtf8(g_value_get_string(valbum)).isEmpty())
+			qDebug() << trUtf8("Играет: ") + trUtf8(g_value_get_string(vtitle));
+		else
+			qDebug() << trUtf8("Играет: ") +
 				trUtf8(g_value_get_string(vartist)) + " - " +
 				trUtf8(g_value_get_string(valbum)) + " / " +
 				trUtf8(g_value_get_string(vtitle));
