@@ -518,6 +518,7 @@ void CuePlayer::initPlayer()
 	streamFlag = false;
 	ftpFlag = false;
 	tsFlag = false;
+	playButtonFlag = false;
 	videowindow->hide();
 	memset(multiFiles,0,100);
 	mp3trackName = trUtf8("неизвестно");
@@ -632,11 +633,13 @@ void CuePlayer::playTrack()
 	trd->setPlayBin(play);
 	trd->setFunc(POST_PLAY);
 	trd->start();
+	playButtonFlag = true;
 }
 
 // остановка воспроизведения трека/альбома
 void CuePlayer::stopTrack()
 {
+	playButtonFlag = false;
 	if (state == GST_STATE_PLAYING)
 	{
 		if (multiCueFlag || multiFileFlag)
@@ -746,10 +749,19 @@ void CuePlayer::seekAndLCD(int num)
 	if (refparser)
 	{
 		label->setText(stringNumTrack + ". " + refparser->getTrackTitle(num));
-		qDebug() << trUtf8("Играет: ") +
-			refparser->getPerformer() + " - " +
-			refparser->getAlbum() + " / " +
-			refparser->getTrackTitle(num);
+		if (playButtonFlag)
+		{
+			qDebug() << trUtf8("Играет: ") +
+								refparser->getPerformer() + " - " +
+								refparser->getAlbum() + " / " +
+								refparser->getTrackTitle(num);
+			trayIcon->showMessage(trUtf8("Играет"),
+								refparser->getTrackTitle(num) + "\n" +
+								refparser->getPerformer() + " - " +
+								refparser->getAlbum(),
+								QSystemTrayIcon::Information,
+								2000);
+		}
 		if (!multiCueFlag)
 		{
 			seekGst(refparser->getTrackIndex(num));
@@ -883,17 +895,46 @@ void CuePlayer::createTrayIconMenu()
 	apetoflacAction->setShortcut(trUtf8("Ctrl+h"));
 	connect(apetoflacAction, SIGNAL(triggered()), this, SLOT(ape2flacShow()));
 
+	// Кнопки
+	playAction = new QAction(trUtf8("&Играть"), this);
+	playAction->setIcon(QIcon(":/images/play.png"));
+	playAction->setShortcut(trUtf8("Ctrl+p"));
+	connect(playAction, SIGNAL(triggered(bool)), this, SLOT(playTrack()));
+
+	pauseAction = new QAction(trUtf8("&Пауза"), this);
+	pauseAction->setIcon(QIcon(":/images/pause.png"));
+	pauseAction->setShortcut(trUtf8(" "));
+	connect(pauseAction, SIGNAL(triggered(bool)), this, SLOT(pauseTrack()));
+
+	stopAction = new QAction(trUtf8("&Стоп"), this);
+	stopAction->setIcon(QIcon(":/images/stop.png"));
+	stopAction->setShortcut(trUtf8("Ctrl+s"));
+	connect(pauseAction, SIGNAL(triggered(bool)), this, SLOT(stopTrack()));
+
+	prewAction = new QAction(trUtf8("П&редыдущий"), this);
+	prewAction->setIcon(QIcon(":/images/prev.png"));
+	prewAction->setShortcut(trUtf8("Ctrl+r"));
+	connect(prewAction, SIGNAL(triggered(bool)), this, SLOT(playPrewTrack()));
+
+	nextAction = new QAction(trUtf8("С&ледующий"), this);
+	nextAction->setIcon(QIcon(":/images/next.png"));
+	nextAction->setShortcut(trUtf8("Ctrl+n"));
+	connect(nextAction, SIGNAL(triggered(bool)), this, SLOT(playNextTrack()));
+
 	trayIcon = new QSystemTrayIcon(this);
 	trayIconMenu = new QMenu(this);
-	trayIconMenu->addAction(extbutAction);
-	trayIconMenu->addAction(apetoflacAction);
-	trayIconMenu->addAction(transcodeAction);
+	trayIconMenu->addAction(playAction);
+	trayIconMenu->addAction(pauseAction);
+	trayIconMenu->addAction(stopAction);
+	trayIconMenu->addAction(prewAction);
+	trayIconMenu->addAction(nextAction);
 	trayIconMenu->addAction(aboutAction);
 	trayIconMenu->addAction(quitAction);
 	trayIcon = new QSystemTrayIcon(this);
 	trayIcon->setContextMenu(trayIconMenu);
 	trayIcon->setIcon(QIcon(":/images/cueplayer.png"));
 	trayIcon->show();
+	trayIcon->setToolTip(trUtf8("CuePlayer"));
 
 	addAction(extbutAction);
 	addAction(intWindAction);
@@ -1636,7 +1677,10 @@ void CuePlayer::threadStop()
 	switch (threadRet)
 	{
 		case ERR_STATE:
-			cueplayer->stopAll();
+			if (multiCueFlag || multiFileFlag)
+				cueplayer->playPrewTrack(); // Костыли
+			else
+				cueplayer->stopAll();
 			break;
 		case FUNC_PLAY:
 			timer->start(TIME);
