@@ -12,6 +12,7 @@ CueParser::CueParser(QString s)
 	QRegExp rxAudioPath("(.*/).*");
 	QRegExp rxFileWav("(.*)(\\.wav)");
 
+	rxFileWav.setCaseSensitivity(Qt::CaseInsensitive);
 	rxAudioPath.indexIn(s);
 	audioPath = rxAudioPath.cap(1);
 	

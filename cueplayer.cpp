@@ -924,10 +924,10 @@ void CuePlayer::about()
 {
 	QDate curdate = QDate::currentDate();
 	QMessageBox::information(this, trUtf8("О программе"),
-							 trUtf8("<h2>CuePlayer</h2>"
+							 trUtf8("<h2>CuePlayer 0.22-svn</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(28) +  " "
-									+ QString(curdate.longMonthName(2)) +  " "
+									+ QString::number(1) +  " "
+									+ QString(curdate.longMonthName(3)) +  " "
 									+ QString::number(2010) +
 									trUtf8("<p>Мультимедиа проигрыватель."
 									"<p><p>Разработчик: <a href=xmpp:ipse@ipse.zapto.org name=jid type=application/xmpp+xml>ipse</a>"));
@@ -1074,7 +1074,10 @@ void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
 	if (vtitle)
 	{
 		label->setText(trUtf8(g_value_get_string(vtitle)));
-		qDebug() << trUtf8("Играет: ") + trUtf8(g_value_get_string(vtitle));
+		qDebug() << trUtf8("Играет: ") +
+				trUtf8(g_value_get_string(vartist)) + " - " +
+				trUtf8(g_value_get_string(valbum)) + " / " +
+				trUtf8(g_value_get_string(vtitle));
 		prewlabel = label->text(); // Необходимо сохранить асинхронную метку
 	}
 	if (valbum && vartist)
