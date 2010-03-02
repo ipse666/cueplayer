@@ -909,7 +909,7 @@ void CuePlayer::createTrayIconMenu()
 	stopAction = new QAction(trUtf8("&Стоп"), this);
 	stopAction->setIcon(QIcon(":/images/stop.png"));
 	stopAction->setShortcut(trUtf8("Ctrl+s"));
-	connect(pauseAction, SIGNAL(triggered(bool)), this, SLOT(stopTrack()));
+	connect(stopAction, SIGNAL(triggered(bool)), this, SLOT(stopTrack()));
 
 	prewAction = new QAction(trUtf8("П&редыдущий"), this);
 	prewAction->setIcon(QIcon(":/images/prev.png"));
