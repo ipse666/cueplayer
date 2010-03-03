@@ -226,6 +226,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			 !QString::compare(fi.suffix(), "wmv", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "wav", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "mpg", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "mov", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "mkv", Qt::CaseInsensitive))
 	{
 		if (rxFilename2.indexIn(filename) != -1)
@@ -387,6 +388,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 					 !QString::compare(filetu.suffix(), "wmv", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "wav", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "mpg", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "mov", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "mkv", Qt::CaseInsensitive))
 			{
 				filesList.prepend(filetu);

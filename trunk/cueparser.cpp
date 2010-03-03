@@ -21,6 +21,7 @@ CueParser::CueParser(QString s)
                 return;
 	QTextStream cuetext(&cuefile);
 	cuetext.setCodec("Windows-1251");
+	cuetext.setAutoDetectUnicode(true);
 
 	do {
 		line = cuetext.readLine();
