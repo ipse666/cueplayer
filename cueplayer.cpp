@@ -59,6 +59,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	layout()->setSizeConstraint(QLayout::SetFixedSize);
 	refparser = NULL;
 	filedialog = new QFileDialog(this, trUtf8("Открыть файл"));
+	filedialog->setOption(QFileDialog::DontUseNativeDialog, true);
 	filedialog->setNameFilters(filters);
 	videowindow = new VideoWindow(this);
 	winman = new WidgetManager(this);
