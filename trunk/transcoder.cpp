@@ -110,6 +110,7 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 	lineEdit->setText(QDir::homePath());
 	dirdialog = new QFileDialog(this, trUtf8("Выбрать директорию для сохранения альбома"), QDir::homePath());
 	dirdialog->setFileMode(QFileDialog::DirectoryOnly);
+	dirdialog->setOption(QFileDialog::DontUseNativeDialog, true);
 	statusBar()->addWidget(statusLabel, 1);
 	selectAllAction->setStatusTip(trUtf8("Выбор всех композиций для кодирования"));
 
