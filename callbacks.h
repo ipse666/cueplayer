@@ -114,6 +114,7 @@ cb_typefound (GstElement *typefind,
 		!strcmp(type ,"video/x-ms-asf") ||
 		!strncmp(type ,"video/mpegts", 12) ||
 		!strncmp(type ,"video/mpeg", 10) ||
+		!strncmp(type ,"audio/x-m4a", 11) ||
 		!strcmp(type ,"video/quicktime"))
 		if (!dvdFlag)
 			videoFlag = true;
