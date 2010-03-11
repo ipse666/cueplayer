@@ -100,7 +100,7 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 	containerBox->addItems(QStringList() << "ogg" << "mp3" << "flac");
 	codecBox->addItems(QStringList() << "vorbis" << "lame" << "flac");
 	bitrateBox->addItems(QStringList() << "vbr" << "8"  << "16" << "24" << "32" << "40" <<
-						 "48" << "56" << "64" << "80" << "96" << "112" << "128" << "160" << "192" << "224" << "256" << "320");
+						 "48" << "56" << "64" << "80" << "96" << "112" << "128" << "160" << "192" << "224" << "256" << "320" << "500");
 
 	containerBox->setCurrentIndex(defaultContainer);
 	codecBox->setCurrentIndex(defaultCodec);
@@ -357,8 +357,12 @@ void TransCoder::pipeRun(int ind)
 				muxer = gst_element_factory_make ("oggmux", "audio-muxer");
 				gst_bin_add_many (GST_BIN (audio), conv, encoder, tagger, muxer, fileout, NULL);
 				gst_element_link_many (conv, encoder, tagger, muxer, fileout, NULL);
-				if (bitrateBox->currentIndex())
+				if (bitrateBox->currentIndex() == 18)
+					g_object_set (encoder, "quality", 1.0, NULL);
+				else if (bitrateBox->currentIndex())
 					g_object_set (encoder, "bitrate", bitrateBox->currentText().toInt(&ok, 10) * 1000, NULL);
+				else
+					bitrateBox->setCurrentIndex(11);
 				gst_tag_setter_add_tags (GST_TAG_SETTER (tagger),
 									GST_TAG_MERGE_REPLACE_ALL,
 									GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
@@ -492,14 +496,13 @@ void TransCoder::formatError(int index)
 {
 	if (!index)
 	{
-//		QMessageBox *codecwarn = new QMessageBox(this);
-//		codecwarn->setIcon(QMessageBox::Warning);
-//		codecwarn->setWindowTitle(trUtf8("Внимание!"));
-//		codecwarn->setText(trUtf8("<h2>Формат не поддерживается.</h2>"
-//									"<p>Заданный формат временно не поддерживается транскодером."
-//									"<p>Будет применен формат по-умолчанию."));
-//		connect(codecwarn, SIGNAL(finished(int)), this, SLOT(setDefaultIndex()));
-//		codecwarn->exec();
+		if (bitrateBox->currentIndex() > 15)
+			bitrateBox->setCurrentIndex(18);
+	}
+	else if (index == 1)
+	{
+		if (bitrateBox->currentIndex() > 17)
+			bitrateBox->setCurrentIndex(17);
 	}
 	else if (index == 2)
 	{
@@ -526,12 +529,9 @@ void TransCoder::updateSettings()
 
 void TransCoder::setVbr()
 {
+	formatError(codecBox->currentIndex());
 	if (bitrateBox->currentIndex())
-	{
 		label_6->show();
-		if (codecBox->currentIndex() == 2)
-			bitrateBox->setCurrentIndex(0);
-	}
 	else
 		label_6->hide();
 }
