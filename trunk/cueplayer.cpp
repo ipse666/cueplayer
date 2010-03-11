@@ -228,6 +228,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			 !QString::compare(fi.suffix(), "wav", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "mpg", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "mov", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "m4v", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "mkv", Qt::CaseInsensitive))
 	{
 		if (rxFilename2.indexIn(filename) != -1)
@@ -390,6 +391,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 					 !QString::compare(filetu.suffix(), "wav", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "mpg", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "mov", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "m4v", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "mkv", Qt::CaseInsensitive))
 			{
 				filesList.prepend(filetu);
@@ -974,7 +976,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer 0.22-svn</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(1) +  " "
+									+ QString::number(10) +  " "
 									+ QString(curdate.longMonthName(3)) +  " "
 									+ QString::number(2010) +
 									trUtf8("<p>Мультимедиа проигрыватель."
