@@ -1794,7 +1794,7 @@ void CuePlayer::dropEvent(QDropEvent *event)
 void CuePlayer::keyPressEvent (QKeyEvent  *event)
 {
 	static int volume;
-	qDebug() << event->nativeScanCode();
+	//qDebug() << event->nativeScanCode();
 	switch (event->nativeScanCode())
 	{
 	case 162:
