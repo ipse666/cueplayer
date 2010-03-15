@@ -63,284 +63,330 @@
     </message>
     <message utf8="true">
         <location filename="../cueplayer.cpp" line="41"/>
-        <location filename="../cueplayer.cpp" line="1364"/>
-        <location filename="../cueplayer.cpp" line="1368"/>
+        <location filename="../cueplayer.cpp" line="1417"/>
+        <location filename="../cueplayer.cpp" line="1421"/>
         <source>Каталог с файлами или DVD каталог</source>
         <translation>Katalog z plikami video lub DVD</translation>
     </message>
     <message utf8="true">
         <location filename="../cueplayer.cpp" line="54"/>
-        <location filename="../cueplayer.cpp" line="423"/>
-        <location filename="../cueplayer.cpp" line="465"/>
+        <location filename="../cueplayer.cpp" line="425"/>
+        <location filename="../cueplayer.cpp" line="467"/>
         <source>откройте файл</source>
         <translation>Otwórz plik</translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/cueplayer.ui" line="290"/>
         <location filename="../cueplayer.cpp" line="61"/>
+        <location filename="../ui/cueplayer.ui" line="290"/>
         <source>Открыть файл</source>
         <translation>Otwórz plik</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="76"/>
+        <location filename="../cueplayer.cpp" line="77"/>
         <source>Ctrl+u</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="77"/>
+        <location filename="../cueplayer.cpp" line="78"/>
         <source>Ctrl+d</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="78"/>
+        <location filename="../cueplayer.cpp" line="79"/>
         <source>Ctrl+o</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="79"/>
+        <location filename="../cueplayer.cpp" line="80"/>
+        <location filename="../cueplayer.cpp" line="906"/>
         <source>Ctrl+p</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="80"/>
+        <location filename="../cueplayer.cpp" line="81"/>
+        <location filename="../cueplayer.cpp" line="911"/>
         <source> </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="81"/>
+        <location filename="../cueplayer.cpp" line="82"/>
+        <location filename="../cueplayer.cpp" line="916"/>
         <source>Ctrl+s</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="82"/>
+        <location filename="../cueplayer.cpp" line="83"/>
+        <location filename="../cueplayer.cpp" line="921"/>
         <source>Ctrl+r</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="83"/>
+        <location filename="../cueplayer.cpp" line="84"/>
+        <location filename="../cueplayer.cpp" line="926"/>
         <source>Ctrl+n</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="84"/>
+        <location filename="../cueplayer.cpp" line="85"/>
         <source>Ctrl+l</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="305"/>
+        <location filename="../cueplayer.cpp" line="306"/>
         <source>Включен прогрессивный режим.</source>
-        <translation type="unfinished"></translation>
+        <translation>Włączony tryb progresywny.</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="346"/>
+        <location filename="../cueplayer.cpp" line="347"/>
         <source>FLV-видео</source>
         <translation>FLV Video</translation>
     </message>
     <message utf8="true">
+        <location filename="../cueplayer.cpp" line="359"/>
         <location filename="../ui/cueplayer.ui" line="458"/>
-        <location filename="../cueplayer.cpp" line="358"/>
         <source>Список воспроизведения</source>
         <translation>Lista utworów</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="359"/>
+        <location filename="../cueplayer.cpp" line="360"/>
         <source>Подождите. Инициализация списка.</source>
         <translation>Czekaj. Przygotowywanie listy.</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="409"/>
-        <location filename="../cueplayer.cpp" line="497"/>
+        <location filename="../cueplayer.cpp" line="411"/>
+        <location filename="../cueplayer.cpp" line="499"/>
         <source>Следующая дорожка</source>
         <translation>Następny utwór</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="411"/>
-        <location filename="../cueplayer.cpp" line="499"/>
+        <location filename="../cueplayer.cpp" line="413"/>
+        <location filename="../cueplayer.cpp" line="501"/>
         <source>Предыдущая дорожка</source>
         <translation>Poprzedni utwór</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="422"/>
+        <location filename="../cueplayer.cpp" line="424"/>
         <source>Медиафайлы не обнаружены</source>
         <translation>Nie znaleziono pliku</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="430"/>
-        <location filename="../cueplayer.cpp" line="431"/>
-        <location filename="../cueplayer.cpp" line="439"/>
-        <location filename="../cueplayer.cpp" line="440"/>
+        <location filename="../cueplayer.cpp" line="432"/>
+        <location filename="../cueplayer.cpp" line="433"/>
+        <location filename="../cueplayer.cpp" line="441"/>
+        <location filename="../cueplayer.cpp" line="442"/>
         <source>Ютуб</source>
         <translation>Youtube</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="446"/>
-        <location filename="../cueplayer.cpp" line="447"/>
+        <location filename="../cueplayer.cpp" line="448"/>
+        <location filename="../cueplayer.cpp" line="449"/>
         <source>Радио</source>
         <translation>Radio</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="464"/>
+        <location filename="../cueplayer.cpp" line="466"/>
         <source>Формат не поддерживается</source>
         <translation>Format nie obsługiwany</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="526"/>
+        <location filename="../cueplayer.cpp" line="529"/>
         <source>неизвестно</source>
         <translation>nieznany</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="561"/>
-        <location filename="../cueplayer.cpp" line="598"/>
+        <location filename="../cueplayer.cpp" line="564"/>
+        <location filename="../cueplayer.cpp" line="601"/>
         <source>DVD видео : </source>
         <translation>DVD Video : </translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="801"/>
-        <location filename="../cueplayer.cpp" line="1127"/>
-        <location filename="../cueplayer.cpp" line="1189"/>
+        <location filename="../cueplayer.cpp" line="763"/>
+        <source>Играет</source>
+        <translation>Odtwarza</translation>
+    </message>
+    <message utf8="true">
+        <location filename="../cueplayer.cpp" line="819"/>
+        <location filename="../cueplayer.cpp" line="1180"/>
+        <location filename="../cueplayer.cpp" line="1242"/>
         <source>Композиция</source>
         <translation>Utwór</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="801"/>
-        <location filename="../cueplayer.cpp" line="1127"/>
-        <location filename="../cueplayer.cpp" line="1189"/>
+        <location filename="../cueplayer.cpp" line="819"/>
+        <location filename="../cueplayer.cpp" line="1180"/>
+        <location filename="../cueplayer.cpp" line="1242"/>
         <source>Время</source>
         <translation>Czas</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="852"/>
+        <location filename="../cueplayer.cpp" line="870"/>
         <source>&amp;Выход</source>
         <translation>&amp;Wyjdź</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="854"/>
+        <location filename="../cueplayer.cpp" line="872"/>
         <source>Ctrl+q</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="857"/>
+        <location filename="../cueplayer.cpp" line="875"/>
         <source>&amp;О программе</source>
         <translation>&amp;O programie</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="859"/>
+        <location filename="../cueplayer.cpp" line="877"/>
         <source>Ctrl+a</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="862"/>
+        <location filename="../cueplayer.cpp" line="880"/>
         <source>&amp;Интеграция</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Integracja</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="864"/>
+        <location filename="../cueplayer.cpp" line="882"/>
         <source>Ctrl+i</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="867"/>
+        <location filename="../cueplayer.cpp" line="885"/>
         <source>&amp;Расширенный</source>
         <translation>&amp;Zaawansowane</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="869"/>
+        <location filename="../cueplayer.cpp" line="887"/>
         <source>Ctrl+e</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="873"/>
+        <location filename="../cueplayer.cpp" line="891"/>
         <source>Конвертор</source>
         <translation>Konwerter</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="875"/>
+        <location filename="../cueplayer.cpp" line="893"/>
         <source>Ctrl+c</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="880"/>
+        <location filename="../cueplayer.cpp" line="898"/>
         <source>Ape-&gt;Flac</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="882"/>
+        <location filename="../cueplayer.cpp" line="900"/>
         <source>Ctrl+h</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="929"/>
+        <location filename="../cueplayer.cpp" line="904"/>
+        <source>&amp;Играть</source>
+        <translation>O&amp;dtwarzaj</translation>
+    </message>
+    <message utf8="true">
+        <location filename="../cueplayer.cpp" line="909"/>
+        <source>&amp;Пауза</source>
+        <translation>&amp;Pauza</translation>
+    </message>
+    <message utf8="true">
+        <location filename="../cueplayer.cpp" line="914"/>
+        <source>&amp;Стоп</source>
+        <translation>&amp;Zatrzymaj</translation>
+    </message>
+    <message utf8="true">
+        <location filename="../cueplayer.cpp" line="919"/>
+        <source>П&amp;редыдущий</source>
+        <translation>Pop&amp;rzedni</translation>
+    </message>
+    <message utf8="true">
+        <location filename="../cueplayer.cpp" line="924"/>
+        <source>С&amp;ледующий</source>
+        <translation>&amp;Następny</translation>
+    </message>
+    <message>
+        <location filename="../cueplayer.cpp" line="942"/>
+        <source>CuePlayer</source>
+        <translation></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../cueplayer.cpp" line="976"/>
         <source>О программе</source>
         <translation>O programie</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="930"/>
         <source>&lt;h2&gt;CuePlayer&lt;/h2&gt;&lt;p&gt;Дата ревизии: </source>
-        <translation>&lt;h2&gt;CuePlayer&lt;/h2&gt;&lt;p&gt;Data kompiacji: </translation>
+        <translation type="obsolete">&lt;h2&gt;CuePlayer&lt;/h2&gt;&lt;p&gt;Data kompiacji: </translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="935"/>
+        <location filename="../cueplayer.cpp" line="982"/>
         <source>&lt;p&gt;Мультимедиа проигрыватель.&lt;p&gt;&lt;p&gt;Разработчик: &lt;a href=xmpp:ipse@ipse.zapto.org name=jid type=application/xmpp+xml&gt;ipse&lt;/a&gt;</source>
         <translation>&lt;p&gt;Odtwarzacz multimedialny.&lt;p&gt;&lt;p&gt;Autor: &lt;a href=xmpp:ipse@ipse.zapto.org name=jid type=application/xmpp+xml&gt;ipse&lt;/a&gt;</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1013"/>
-        <location filename="../cueplayer.cpp" line="1032"/>
+        <location filename="../cueplayer.cpp" line="1060"/>
+        <location filename="../cueplayer.cpp" line="1079"/>
         <source>Ошибка поиска</source>
         <translation>Błąd wyszukiwania</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1080"/>
+        <location filename="../cueplayer.cpp" line="759"/>
+        <location filename="../cueplayer.cpp" line="1128"/>
+        <location filename="../cueplayer.cpp" line="1130"/>
         <source>Играет: </source>
         <translation>Odtwarza: </translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1202"/>
+        <location filename="../cueplayer.cpp" line="977"/>
+        <source>&lt;h2&gt;CuePlayer 0.22-svn&lt;/h2&gt;&lt;p&gt;Дата ревизии: </source>
+        <translation>&lt;h2&gt;CuePlayer 0.22-svn&lt;/h2&gt;&lt;p&gt;Data kompiacji: </translation>
+    </message>
+    <message utf8="true">
+        <location filename="../cueplayer.cpp" line="1255"/>
         <source>Инициализация канала: </source>
         <translation>Przygotowywanie kanału: </translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1406"/>
+        <location filename="../cueplayer.cpp" line="1459"/>
         <source>ошибка инициализации файла</source>
         <translation>Błąd przetwarzania pliku</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1422"/>
+        <location filename="../cueplayer.cpp" line="1475"/>
         <source>DVD видео</source>
         <translation>DVD Video</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1423"/>
+        <location filename="../cueplayer.cpp" line="1476"/>
         <source>DVD видео : 1</source>
         <translation>DVD Video : 1</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1477"/>
+        <location filename="../cueplayer.cpp" line="1530"/>
         <source>Открыт ftp файл</source>
         <translation>Otwórz plik przez FTP</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1554"/>
+        <location filename="../cueplayer.cpp" line="1607"/>
         <source>Внимание! Энергосбережение выключено.</source>
         <translation>Uwaga! Oszczędzanie energii wyłączone.</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1612"/>
+        <location filename="../cueplayer.cpp" line="1665"/>
         <source> Подождите.</source>
         <translation> Czekaj.</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1615"/>
+        <location filename="../cueplayer.cpp" line="1668"/>
         <source>  Подождите..</source>
         <translation>  Czekaj..</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1618"/>
+        <location filename="../cueplayer.cpp" line="1671"/>
         <source>   Подождите...</source>
         <translation>   Czekaj...</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1717"/>
+        <location filename="../cueplayer.cpp" line="1773"/>
         <source>Ошибка чтения списка воспроизведения
 </source>
         <translation>Błąd czytania listy utworów
@@ -464,7 +510,7 @@
 <context>
     <name>QObject</name>
     <message utf8="true">
-        <location filename="../callbacks.h" line="79"/>
+        <location filename="../callbacks.h" line="80"/>
         <source>Ошибка</source>
         <translation>Błąd</translation>
     </message>
@@ -479,7 +525,7 @@
     <message utf8="true">
         <location filename="../main.cpp" line="29"/>
         <source>Ошибка. Отпишитесь разработчику.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomyłka. Odpis programisty.</translation>
     </message>
 </context>
 <context>
@@ -487,7 +533,7 @@
     <message utf8="true">
         <location filename="../singleclient.cpp" line="19"/>
         <source>Отправляю аргуметы запущенной копии проигрывателя.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyślij argumenty do uruchomionej kopii cueplayera.</translation>
     </message>
 </context>
 <context>
@@ -495,12 +541,12 @@
     <message>
         <location filename="../singleserver.cpp" line="12"/>
         <source>CuePlayer Server</source>
-        <translation type="unfinished"></translation>
+        <translation>CuePlayer Server</translation>
     </message>
     <message utf8="true">
         <location filename="../singleserver.cpp" line="12"/>
         <source>Ошибка запуска сервера: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Serwer nie uruchomiony: %1.</translation>
     </message>
 </context>
 <context>
@@ -539,53 +585,53 @@
         <translation>Wybierz katalog do zapisu</translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="114"/>
+        <location filename="../transcoder.cpp" line="115"/>
         <source>Выбор всех композиций для кодирования</source>
         <translation>Zaznacz wszystkie utwory do konwersji</translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="147"/>
+        <location filename="../transcoder.cpp" line="148"/>
         <source>[конвертор] </source>
         <translation>[konwerter] </translation>
     </message>
     <message utf8="true">
+        <location filename="../transcoder.cpp" line="183"/>
         <location filename="../ui/transcoder.ui" line="316"/>
-        <location filename="../transcoder.cpp" line="182"/>
         <source>Выделить всё</source>
         <translation>Zaznacz wszystko</translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="188"/>
+        <location filename="../transcoder.cpp" line="189"/>
         <source>Снять выделение</source>
         <translation>Odznacz</translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="211"/>
+        <location filename="../transcoder.cpp" line="212"/>
         <source>Идет кодирование трека: </source>
         <translation>Kodowany utwór: </translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="232"/>
+        <location filename="../transcoder.cpp" line="233"/>
         <source>Все задания завершены.</source>
         <translation>Kodowanie ukończone.</translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="234"/>
+        <location filename="../transcoder.cpp" line="235"/>
         <source>Выделите треки для кодирования.</source>
         <translation>Wybierz utwory do konwersji.</translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="291"/>
+        <location filename="../transcoder.cpp" line="292"/>
         <source>Ошибка поиска </source>
         <translation>Błąd wyszukiwania </translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="293"/>
+        <location filename="../transcoder.cpp" line="294"/>
         <source>Начало потока </source>
         <translation>Rozpocznij konwersje </translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="330"/>
+        <location filename="../transcoder.cpp" line="331"/>
         <source>⁄</source>
         <translation></translation>
     </message>
@@ -598,7 +644,7 @@
         <translation type="obsolete">&lt;h2&gt;Format nie obsługiwany.&lt;/h2&gt;&lt;p&gt;Wybrany format czasu jest nie obsługiwany przez transkoder.&lt;p&gt;Zostanie użyty format domyśny.</translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="549"/>
+        <location filename="../transcoder.cpp" line="550"/>
         <source>Нажмите &quot;Начать&quot; для кодирования.</source>
         <translation>Kliknij &quot;Sart&quot; aby rozpocząć.</translation>
     </message>
@@ -873,7 +919,7 @@
     <message utf8="true">
         <location filename="../youtubedl.cpp" line="179"/>
         <source>Неверный адрес!</source>
-        <translation type="unfinished">Błędny adres!</translation>
+        <translation>Błędny adres!</translation>
     </message>
 </context>
 </TS>
