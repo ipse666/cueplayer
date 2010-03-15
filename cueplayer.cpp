@@ -1791,6 +1791,51 @@ void CuePlayer::dropEvent(QDropEvent *event)
 		cueFileSelected(QStringList() << urls.first().toString());
 }
 
+void CuePlayer::keyPressEvent (QKeyEvent  *event)
+{
+	static int volume;
+	qDebug() << event->nativeScanCode();
+	switch (event->nativeScanCode())
+	{
+	case 162:
+		gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * 1);
+		if (state > GST_STATE_READY)
+			pauseTrack();
+		else
+			playTrack();
+		break;
+	case 164:
+		stopTrack();
+		break;
+	case 174:
+		if (volumeDial->isEnabled())
+			volumeDial->setValue(volumeDial->value() - 1);
+		break;
+	case 176:
+		if (volumeDial->isEnabled())
+			volumeDial->setValue(volumeDial->value() + 1);
+		break;
+	case 160:
+		if (volumeDial->isEnabled())
+		{
+			volume = volumeDial->value();
+			volumeDial->setValue(0);
+			volumeDial->setEnabled(false);
+		}
+		else
+		{
+			volumeDial->setEnabled(true);
+			volumeDial->setValue(volume);
+		}
+		break;
+	case 204:
+		// eject
+		break;
+	default:
+		break;
+	}
+}
+
 void CuePlayer::mover(bool b)
 {
 	if (videowindow->parentWidget() == this)
