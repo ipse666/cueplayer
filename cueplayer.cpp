@@ -1797,6 +1797,14 @@ void CuePlayer::keyPressEvent (QKeyEvent  *event)
 	//qDebug() << event->nativeScanCode();
 	switch (event->nativeScanCode())
 	{
+	case 144:
+		if (prewButton->isEnabled())
+			playPrewTrack();
+		break;
+	case 153:
+		if (nextButton->isEnabled())
+			playNextTrack();
+		break;
 	case 162:
 		gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * 1);
 		if (state > GST_STATE_READY)
