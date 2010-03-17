@@ -4,6 +4,15 @@
 #define TIME 200
 #define TIMEOUT 3
 
+#define KEY_PLAY 162
+#define KEY_STOP 164
+#define KEY_PREV 144
+#define KEY_NEXT 153
+#define KEY_VOL_UP 176
+#define KEY_VOL_DOWN 174
+#define KEY_MUTE 160
+#define KEY_EJECT 204
+
 enum Func {
 	NULL_FUNC,
 	POST_PLAY,
@@ -1797,33 +1806,33 @@ void CuePlayer::keyPressEvent (QKeyEvent  *event)
 	//qDebug() << event->nativeScanCode();
 	switch (event->nativeScanCode())
 	{
-	case 144:
+	case KEY_PREV:
 		if (prewButton->isEnabled())
 			playPrewTrack();
 		break;
-	case 153:
+	case KEY_NEXT:
 		if (nextButton->isEnabled())
 			playNextTrack();
 		break;
-	case 162:
+	case KEY_PLAY:
 		gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * 1);
 		if (state > GST_STATE_READY)
 			pauseTrack();
 		else
 			playTrack();
 		break;
-	case 164:
+	case KEY_STOP:
 		stopTrack();
 		break;
-	case 174:
+	case KEY_VOL_DOWN:
 		if (volumeDial->isEnabled())
 			volumeDial->setValue(volumeDial->value() - 1);
 		break;
-	case 176:
+	case KEY_VOL_UP:
 		if (volumeDial->isEnabled())
 			volumeDial->setValue(volumeDial->value() + 1);
 		break;
-	case 160:
+	case KEY_MUTE:
 		if (volumeDial->isEnabled())
 		{
 			volume = volumeDial->value();
@@ -1836,7 +1845,7 @@ void CuePlayer::keyPressEvent (QKeyEvent  *event)
 			volumeDial->setValue(volume);
 		}
 		break;
-	case 204:
+	case KEY_EJECT:
 		// eject
 		break;
 	default:
