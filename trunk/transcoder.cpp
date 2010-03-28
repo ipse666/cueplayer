@@ -80,6 +80,7 @@ enum {
 	CODEC_VORBIS,
 	CODEC_LAME,
 	CODEC_FLAC,
+	CODEC_FAAC,
 	CODEC_NO
 };
 
@@ -97,8 +98,8 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 	treeWidget->setColumnWidth(1, 75);
 	treeWidget->header()->setResizeMode(0,QHeaderView::Stretch);
 
-	containerBox->addItems(QStringList() << "ogg" << "mp3" << "flac");
-	codecBox->addItems(QStringList() << "vorbis" << "lame" << "flac");
+	containerBox->addItems(QStringList() << "ogg" << "mp3" << "flac" << "aac");
+	codecBox->addItems(QStringList() << "vorbis" << "lame" << "flac" << "faac");
 	bitrateBox->addItems(QStringList() << "vbr" << "8"  << "16" << "24" << "32" << "40" <<
 						 "48" << "56" << "64" << "80" << "96" << "112" << "128" << "160" << "192" << "224" << "256" << "320" << "500");
 
@@ -430,6 +431,15 @@ void TransCoder::pipeRun(int ind)
 								NULL);
 			containerBox->setCurrentIndex(CODEC_FLAC);
 			break;
+		case CODEC_FAAC:
+			encoder = gst_element_factory_make ("faac", "audio-encoder");
+			gst_bin_add_many (GST_BIN (audio), conv, encoder, fileout, NULL);
+			gst_element_link_many (conv, encoder, fileout, NULL);
+			g_object_set (encoder, "bitrate", bitrateBox->currentText().toInt(&ok, 10) * 1000,
+						  "outputformat", 1,
+						  "profile", 2, NULL);
+			containerBox->setCurrentIndex(CODEC_FAAC);
+			break;
 		case CODEC_NO:
 		default:
 			break;
@@ -494,20 +504,24 @@ void TransCoder::timerUpdate()
 
 void TransCoder::formatError(int index)
 {
-	if (!index)
+	switch (index)
 	{
+	case CODEC_VORBIS:
 		if (bitrateBox->currentIndex() > 15)
 			bitrateBox->setCurrentIndex(18);
-	}
-	else if (index == 1)
-	{
+		break;
+	case CODEC_LAME:
+	case CODEC_FAAC:
 		if (bitrateBox->currentIndex() > 17)
 			bitrateBox->setCurrentIndex(17);
-	}
-	else if (index == 2)
-	{
+		break;
+	case CODEC_FLAC:
 		bitrateBox->setCurrentIndex(0);
+		break;
+	default:
+		break;
 	}
+
 }
 
 void TransCoder::setDefaultIndex()

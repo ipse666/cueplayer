@@ -18,5 +18,6 @@
         <file>images/net-stream.png</file>
         <file>images/media-optical.png</file>
         <file>images/cueplayer.png</file>
+        <file>images/equalizer.png</file>
     </qresource>
 </RCC>

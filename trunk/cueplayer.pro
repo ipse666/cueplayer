@@ -1,12 +1,13 @@
 TEMPLATE = app
 QT += network
-TARGET =
+TARGET = 
 isEmpty(PREFIX):PREFIX = /usr/local
 target.path = $$PREFIX/bin
 target.files = $$TARGET
 locale.path = /usr/share/cueplayer/loc
 locale.files = loc/*.qm
-INSTALLS += target locale
+INSTALLS += target \
+    locale
 DEPENDPATH += . \
     ui
 HEADERS += cueplayer.h \
@@ -21,13 +22,15 @@ HEADERS += cueplayer.h \
     youtubedl.h \
     singleserver.h \
     singleclient.h \
-    widgetmanager.h
+    widgetmanager.h \
+    equalizer.h
 FORMS += ui/cueplayer.ui \
     ui/transcoder.ui \
     ui/apetoflacdialog.ui \
     ui/videowindow.ui \
     ui/videoslider.ui \
-    ui/streamform.ui
+    ui/streamform.ui \
+    ui/equalizer.ui
 SOURCES += cueplayer.cpp \
     main.cpp \
     cueparser.cpp \
@@ -40,7 +43,8 @@ SOURCES += cueplayer.cpp \
     youtubedl.cpp \
     singleserver.cpp \
     singleclient.cpp \
-    widgetmanager.cpp
+    widgetmanager.cpp \
+    equalizer.cpp
 RESOURCES += ressources.qrc
 CONFIG += release \
     link_pkgconfig \
@@ -50,5 +54,5 @@ PKGCONFIG += gstreamer-0.10 \
 OTHER_FILES += INSTALL \
     INSTALL \
     README \
-	CHANGELOG
+    CHANGELOG
 TRANSLATIONS = loc/cueplayer_pl.ts
