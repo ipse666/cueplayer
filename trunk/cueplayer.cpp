@@ -1128,6 +1128,7 @@ void CuePlayer::checkState()
 	else if (multiFileFlag)
 	{
 		QRegExp rxFilename("^\\w{3,5}://.*");
+		QString finame;
 		qDebug() << numTrack;
 		QFileInfo filetu = saveFileList.at(numTrack-1);
 		gst_element_set_state (play, GST_STATE_NULL);
@@ -1135,15 +1136,15 @@ void CuePlayer::checkState()
 		if (rxFilename.indexIn(filetu.filePath()) != -1)
 		{
 			setEqualizerAction->setChecked(false);
-			filename = filetu.filePath();
+			finame = filetu.filePath();
 		}
 		else
-			filename = "file://" + filetu.absoluteFilePath();
+			finame = "file://" + filetu.absoluteFilePath();
 
 		if (!videoFlag && setEqualizerAction->isChecked())
 			g_object_set (aufile, "location", filetu.absoluteFilePath().toUtf8().data(), NULL);
 		else
-			g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+			g_object_set (G_OBJECT (play), "uri", finame.toUtf8().data(), NULL);
 		gst_element_set_state (play, GST_STATE_READY);
 	}
 	trd->setPlayBin(play);
@@ -1268,6 +1269,7 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 	GstElement *fakesink;
 	int duration = 0;
 	QString strSec;
+	QString finame;
 	saveFileList = fileInfoList;
 	treeWidget->clear();
 
@@ -1319,13 +1321,14 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 	numTrack = 1;
 
 	QFileInfo filetu = fileInfoList.at(numTrack - 1);
+
 	if (rxFilename.indexIn(filetu.filePath()) != -1)
 	{
-		filename = filetu.filePath();
+		finame = filetu.filePath();
 		setEqualizerAction->setChecked(false);
 	}
 	else
-		filename = "file://" + filetu.absoluteFilePath();
+		finame = "file://" + filetu.absoluteFilePath();
 
 	if (!videoFlag && setEqualizerAction->isChecked())
 	{
@@ -1335,7 +1338,7 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 	else
 	{
 		play = gst_element_factory_make ("playbin2", "play");
-		g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+		g_object_set (G_OBJECT (play), "uri", finame.toUtf8().data(), NULL);
 		g_object_set(play, "volume", (double)volumeDial->value() / 100, NULL);
 	}
 
@@ -1983,6 +1986,7 @@ void CuePlayer::equalizerCheck(bool b)
 		editEqualizerAction->setEnabled(false);
 		equalizer->close();
 	}
+	cueFileSelected(QStringList() << filename);
 }
 
 void CuePlayer::equalizerChang(double *band)
