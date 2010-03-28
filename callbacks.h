@@ -5,7 +5,7 @@
 #define TRDTIME 500
 
 GstState state;
-GstElement *dvdsrc, *d_audio, *d_video, *d_volume;
+GstElement *dvdsrc, *d_audio, *d_video, *d_volume, *equalizer10bands, *aufile;
 bool cueFlag;
 bool multiCueFlag;
 bool multiFileFlag;
@@ -119,7 +119,7 @@ cb_typefound (GstElement *typefind,
 		if (!dvdFlag)
 			videoFlag = true;
 	g_free (type);
-	if (tsFlag)
+	if (tsFlag || progFlag)
 		dvdAudioPads = 0;
 }
 

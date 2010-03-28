@@ -160,6 +160,9 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	// Плейлист парсер
 	connect(plparser, SIGNAL(ready()), this, SLOT(plInit()));
 	connect(plparser, SIGNAL(plperror(QString)), this, SLOT(plError(QString)));
+
+	// Эквалайзер
+	connect(equalizer, SIGNAL(bandsValue(double*)), this, SLOT(equalizerChang(double*)));
 }
 
 void CuePlayer::setServer(SingleServer *ss)
@@ -215,12 +218,20 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			return;
 		}
 		preInit(refparser->getSoundFile());
-		play = gst_element_factory_make ("playbin2", "play");
-		g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getSoundFile()).toUtf8().data(), NULL);
+		if (!videoFlag && setEqualizerAction->isChecked())
+		{
+			progressiveMode(refparser->getSoundFile());
+		}
+		else
+		{
+			play = gst_element_factory_make ("playbin2", "play");
+			g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getSoundFile()).toUtf8().data(), NULL);
+		}
 		nextButton->setToolTip(nextTool);
 		prewButton->setToolTip(prewTool);
 	}
-	else if (!QString::compare(fi.suffix(), "mp3", Qt::CaseInsensitive) ||
+	else if (!QString::compare(fi.suffix(), "aac", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "mp3", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "flac", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "ape", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "ogg", Qt::CaseInsensitive) ||
@@ -310,34 +321,9 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		{
 			preInit(filename);
 
-			if (!videoFlag && progFlag)
+			if (!videoFlag && setEqualizerAction->isChecked())
 			{
-				qDebug() << trUtf8("Включен прогрессивный режим.");
-				GstElement *aufile, *typefind, *decoder, *audioconvert, *audioconvert2, *audiosink;
-				GstElement *aqueue;
-				GstPad *audiopad;
-				tsFlag = true;
-				play = gst_pipeline_new ("player");
-				aqueue = gst_element_factory_make ("queue", NULL);
-				aufile = gst_element_factory_make ("filesrc", "file-source");
-				g_object_set (aufile, "location", filename.toUtf8().data(), NULL);
-				typefind = gst_element_factory_make ("typefind", "typefinder");
-				g_signal_connect (typefind, "have-type", G_CALLBACK (cb_typefound), NULL);
-				decoder = gst_element_factory_make ("decodebin2", "bindecoder");
-				audioconvert = gst_element_factory_make ("audioconvert", "aconv");
-				audioconvert2 = gst_element_factory_make ("audioconvert", "aconv2");
-				d_volume = gst_element_factory_make ("volume", "volume");
-				audiosink = gst_element_factory_make ("autoaudiosink", "asink");
-				gst_bin_add_many (GST_BIN (play), aufile, typefind, decoder, NULL);
-				gst_element_link_many (aufile, typefind, decoder, NULL);
-				g_signal_connect (decoder, "new-decoded-pad", G_CALLBACK (new_pad_added), NULL);
-				d_audio = gst_bin_new ("audiobin");
-				gst_bin_add_many (GST_BIN (d_audio), aqueue, audioconvert, d_volume, audiosink, NULL);
-				gst_element_link_many(aqueue, audioconvert, d_volume, audiosink, NULL);
-				audiopad = gst_element_get_static_pad (aqueue, "sink");
-				gst_element_add_pad (d_audio, gst_ghost_pad_new ("sink", audiopad));
-				gst_object_unref (audiopad);
-				gst_bin_add (GST_BIN (play), d_audio);
+				progressiveMode(filename);
 			}
 			else
 			{
@@ -384,7 +370,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			fileInfoList.pop_back();
 			if (!QString::compare(filetu.suffix(), "VOB", Qt::CaseSensitive))
 				counterVOB++;
-			else if (!QString::compare(filetu.suffix(), "mp3", Qt::CaseInsensitive) ||
+			else if (!QString::compare(filetu.suffix(), "aac", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "mp3", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "flac", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "ogg", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "ogm", Qt::CaseInsensitive) ||
@@ -424,8 +411,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		else if (counterFiles)
 		{
 			multiFileFlag = true;
-			multiFileInit(filesList);
 			settings.setValue("player/recentfile", filename);
+			multiFileInit(filesList);
 			return;
 		}
 		else
@@ -532,6 +519,7 @@ void CuePlayer::initPlayer()
 	streamFlag = false;
 	ftpFlag = false;
 	tsFlag = false;
+	progFlag = false;
 	playButtonFlag = false;
 	videowindow->hide();
 	memset(multiFiles,0,100);
@@ -744,7 +732,7 @@ void CuePlayer::sliderVideoRelease()
 // регулировка громкости
 void CuePlayer::volumeValue(int volume)
 {
-	if (dvdFlag || ftpFlag || tsFlag)
+	if (dvdFlag || ftpFlag || tsFlag || progFlag)
 		g_object_set(d_volume, "volume", (double)volume / 100, NULL);
 	else
 		g_object_set(play, "volume", (double)volume / 100, NULL);
@@ -857,7 +845,10 @@ void CuePlayer::initAlbum(int totalTimeAlbum)
 	enableButtons(true);
 	transcoder->setFileName(filename, totalTimeAlbum);
 	connect(this, SIGNAL(gstError()), transcoder, SLOT(close()));
-	g_object_set(play, "volume", (double)volumeDial->value() / 100, NULL);
+	if (progFlag)
+		g_object_set(d_volume, "volume", (double)volumeDial->value() / 100, NULL);
+	else
+		g_object_set(play, "volume", (double)volumeDial->value() / 100, NULL);
 }
 
 // инициализация после загрузки аудиофайла (mp3)
@@ -867,7 +858,7 @@ void CuePlayer::initFile()
 	playButton->setEnabled(true);
 	pauseButton->setEnabled(true);
 	stopButton->setEnabled(true);
-	if(dvdFlag || ftpFlag || tsFlag)
+	if(dvdFlag || ftpFlag || tsFlag || progFlag)
 		g_object_set(d_volume, "volume", (double)volumeDial->value() / 100, NULL);
 	else
 		g_object_set(play, "volume", (double)volumeDial->value() / 100, NULL);
@@ -908,6 +899,28 @@ void CuePlayer::createTrayIconMenu()
 	apetoflacAction->setIcon(QIcon(":/images/hint.png"));
 	apetoflacAction->setShortcut(trUtf8("Ctrl+h"));
 	connect(apetoflacAction, SIGNAL(triggered()), this, SLOT(ape2flacShow()));
+
+	equalizer = new Equalizer(0);
+	equalizerAction = new QAction(trUtf8("Эквалайзер"), this);
+	equalizerAction->setIcon(QIcon(":/images/equalizer.png"));
+	equalizerAction->setShortcut(trUtf8("Ctrl+z"));
+
+	setEqualizerAction = new QAction(trUtf8("&Включить"), this);
+	setEqualizerAction->setCheckable(true);
+	setEqualizerAction->setShortcut(trUtf8("Ctrl+v"));
+	connect(setEqualizerAction, SIGNAL(triggered(bool)), this, SLOT(equalizerCheck(bool)));
+	connect(setEqualizerAction, SIGNAL(toggled(bool)), this, SLOT(equalizerCheck(bool)));
+
+	editEqualizerAction = new QAction(trUtf8("&Настройки"), this);
+	editEqualizerAction->setIcon(QIcon(":/images/equalizer.png"));
+	editEqualizerAction->setShortcut(trUtf8("Ctrl+j"));
+	editEqualizerAction->setEnabled(false);
+	connect(editEqualizerAction, SIGNAL(triggered()), equalizer, SLOT(show()));
+
+	equalizerMenu = new QMenu(this);
+	equalizerAction->setMenu(equalizerMenu);
+	equalizerMenu->addAction(setEqualizerAction);
+	equalizerMenu->addAction(editEqualizerAction);
 
 	// Кнопки
 	playAction = new QAction(trUtf8("&Играть"), this);
@@ -952,6 +965,7 @@ void CuePlayer::createTrayIconMenu()
 
 	addAction(extbutAction);
 	addAction(intWindAction);
+	addAction(equalizerAction);
 	addAction(apetoflacAction);
 	addAction(transcodeAction);
 	addAction(aboutAction);
@@ -985,7 +999,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer 0.23-svn</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(16) +  " "
+									+ QString::number(27) +  " "
 									+ QString(curdate.longMonthName(3)) +  " "
 									+ QString::number(2010) +
 									trUtf8("<p>Мультимедиа проигрыватель."
@@ -1085,7 +1099,7 @@ void CuePlayer::seekGst(int time)
 					GST_FORMAT_BYTES,
 					(GstSeekFlags)(GST_SEEK_FLAG_SKIP),
 					shift))
-			qDebug() << QString(trUtf8("Ошибка поиска"));
+			qDebug() << QString(trUtf8("Ошибка поиска ts"));
 		gst_element_set_state (play, GST_STATE_PLAYING);
 		gst_bin_recalculate_latency ((GstBin*)d_video);
 		//g_print("Позиция: %ld, смещение %ld, размер %ld. Время: %d\n", pos, shift, dur, time);
@@ -1117,10 +1131,19 @@ void CuePlayer::checkState()
 		qDebug() << numTrack;
 		QFileInfo filetu = saveFileList.at(numTrack-1);
 		gst_element_set_state (play, GST_STATE_NULL);
+
 		if (rxFilename.indexIn(filetu.filePath()) != -1)
-			g_object_set (G_OBJECT (play), "uri", filetu.filePath().toUtf8().data(), NULL);
+		{
+			setEqualizerAction->setChecked(false);
+			filename = filetu.filePath();
+		}
 		else
-			g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
+			filename = "file://" + filetu.absoluteFilePath();
+
+		if (!videoFlag && setEqualizerAction->isChecked())
+			g_object_set (aufile, "location", filetu.absoluteFilePath().toUtf8().data(), NULL);
+		else
+			g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
 		gst_element_set_state (play, GST_STATE_READY);
 	}
 	trd->setPlayBin(play);
@@ -1294,13 +1317,28 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 	}
 	treeWidget->setCurrentItem(treeWidget->topLevelItem(0));
 	numTrack = 1;
-	play = gst_element_factory_make ("playbin2", "play");
+
 	QFileInfo filetu = fileInfoList.at(numTrack - 1);
 	if (rxFilename.indexIn(filetu.filePath()) != -1)
-		g_object_set (G_OBJECT (play), "uri", filetu.filePath().toUtf8().data(), NULL);
+	{
+		filename = filetu.filePath();
+		setEqualizerAction->setChecked(false);
+	}
 	else
-		g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
-	g_object_set(play, "volume", (double)volumeDial->value() / 100, NULL);
+		filename = "file://" + filetu.absoluteFilePath();
+
+	if (!videoFlag && setEqualizerAction->isChecked())
+	{
+		progressiveMode(filetu.absoluteFilePath());
+		g_object_set(d_volume, "volume", (double)volumeDial->value() / 100, NULL);
+	}
+	else
+	{
+		play = gst_element_factory_make ("playbin2", "play");
+		g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+		g_object_set(play, "volume", (double)volumeDial->value() / 100, NULL);
+	}
+
 	bus = gst_pipeline_get_bus (GST_PIPELINE (play));
 	gst_bus_add_watch (bus, bus_callback, play);
 	gst_object_unref (bus);
@@ -1323,6 +1361,8 @@ void CuePlayer::paramFile(QStringList list)
 void CuePlayer::restoreSettings()
 {
 	bool ok;
+	setEqualizerAction->setChecked(settings.value("player/equalizer").toBool());
+	editEqualizerAction->setEnabled(settings.value("player/equalizer").toBool());
 	if (settings.value("player/recentfile").toBool() && qApp->argc() <= 1)
 		cueFileSelected(settings.value("player/recentfile").toStringList());
 	if (settings.value("player/volume").toBool())
@@ -1436,7 +1476,7 @@ void CuePlayer::fileDialogFilter(QString filter)
 // Пробный запуск конвеера, инициализация
 bool CuePlayer::playProbe()
 {
-	if (!dvdFlag && !tsFlag) g_object_set(play, "mute", true, NULL);
+	if (!dvdFlag && !tsFlag && !progFlag) g_object_set(play, "mute", true, NULL);
 	preInitFlag = true;
 	dvdAudioPads = 0;
 	dvdAudioCurrentPad = 0;
@@ -1460,7 +1500,7 @@ bool CuePlayer::playProbe()
 
 		stopAll();
 		preInitFlag = false;
-		if (!dvdFlag && !tsFlag) g_object_set(play, "mute", false, NULL);
+		if (!dvdFlag && !tsFlag && !progFlag) g_object_set(play, "mute", false, NULL);
 		return true;
 	}
 	else
@@ -1735,6 +1775,13 @@ void CuePlayer::postPlay()
 			videowindow->createAudioMenu(dvdAudioPads - 1, 0);
 		}
 	}
+	if (progFlag)
+	{
+		if (state == GST_STATE_PLAYING)
+		{
+			equalizer->restoreValue();
+		}
+	}
 }
 
 void CuePlayer::postCheck()
@@ -1922,6 +1969,68 @@ void CuePlayer::dclIntVw(bool b)
 		gst_x_overlay_expose (GST_X_OVERLAY (videosink));
 		videowindow->show();
 	}
+}
+
+void CuePlayer::equalizerCheck(bool b)
+{
+	settings.setValue("player/equalizer", b);
+	if (b)
+	{
+		editEqualizerAction->setEnabled(true);
+	}
+	else
+	{
+		editEqualizerAction->setEnabled(false);
+		equalizer->close();
+	}
+}
+
+void CuePlayer::equalizerChang(double *band)
+{
+	g_object_set (G_OBJECT (equalizer10bands),
+				  "band0", band[0],
+				  "band1", band[1],
+				  "band2", band[2],
+				  "band3", band[3],
+				  "band4", band[4],
+				  "band5", band[5],
+				  "band6", band[6],
+				  "band7", band[7],
+				  "band8", band[8],
+				  "band9", band[9],
+				  NULL);
+}
+
+void CuePlayer::progressiveMode(QString fname)
+{
+	qDebug() << trUtf8("Внимание! Включен прогрессивный режим.");
+	GstElement *typefind, *decoder, *audioconvert, *audiosink;
+	GstElement *aqueue, *multiqueue;
+	GstPad *audiopad;
+
+	progFlag = true;
+	play = gst_pipeline_new ("player");
+	aqueue = gst_element_factory_make ("queue", NULL);
+	multiqueue = gst_element_factory_make ("multiqueue", NULL);
+	aufile = gst_element_factory_make ("filesrc", "file-source");
+	g_object_set (aufile, "location", fname.toUtf8().data(), NULL);
+	typefind = gst_element_factory_make ("typefind", "typefinder");
+	g_signal_connect (typefind, "have-type", G_CALLBACK (cb_typefound), NULL);
+	decoder = gst_element_factory_make ("decodebin2", "bindecoder");
+	audioconvert = gst_element_factory_make ("audioconvert", "aconv");
+	equalizer10bands = gst_element_factory_make ("equalizer-10bands", "equalizer");
+	d_volume = gst_element_factory_make ("volume", "volume");
+	audiosink = gst_element_factory_make ("autoaudiosink", "asink");
+	gst_bin_add_many (GST_BIN (play), aufile, typefind, multiqueue, decoder, NULL);
+	gst_element_link_many (aufile, typefind, multiqueue, decoder, NULL);
+	g_signal_connect (decoder, "new-decoded-pad", G_CALLBACK (new_pad_added), NULL);
+	d_audio = gst_bin_new ("audiobin");
+	gst_bin_add_many (GST_BIN (d_audio), aqueue, audioconvert, equalizer10bands, d_volume, audiosink, NULL);
+	gst_element_link_many(aqueue, audioconvert, equalizer10bands, d_volume, audiosink, NULL);
+	audiopad = gst_element_get_static_pad (aqueue, "sink");
+	gst_element_add_pad (d_audio, gst_ghost_pad_new ("sink", audiopad));
+	gst_object_unref (audiopad);
+	gst_bin_add (GST_BIN (play), d_audio);
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)

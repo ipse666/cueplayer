@@ -20,6 +20,7 @@
 #include "youtubedl.h"
 #include "singleserver.h"
 #include "widgetmanager.h"
+#include "equalizer.h"
 
 class GstThread;
 
@@ -55,6 +56,7 @@ private:
 	void createFtpPipe();
 	void initPlayer();
 	void integVideo(bool);
+	void progressiveMode(QString);
 	QSize getLayoutSize();
 	QSize minwin;
 	QRect vidwingeom;
@@ -73,6 +75,10 @@ private:
 	QAction *stopAction;
 	QAction *prewAction;
 	QAction *nextAction;
+	QAction *equalizerAction;
+	QAction *setEqualizerAction;
+	QAction *editEqualizerAction;
+	QMenu *equalizerMenu;
 	QWidget *desktop;
 	QString filename;
 	QTimer *timer;
@@ -93,6 +99,7 @@ private:
 	StreamForm *streamform;
 	PlParser *plparser;
 	YouTubeDL *youtuber;
+	Equalizer *equalizer;
 	int numTrack;
 	int totalTime;
 	int d_title;
@@ -159,6 +166,8 @@ private slots:
 	void intWindCheck(bool);
 	void mover(bool);
 	void dclIntVw(bool);
+	void equalizerCheck(bool);
+	void equalizerChang(double*);
 signals:
 	void gstError();
 };
