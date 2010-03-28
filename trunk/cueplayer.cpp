@@ -220,6 +220,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		preInit(refparser->getSoundFile());
 		if (!videoFlag && setEqualizerAction->isChecked())
 		{
+			/* Это говно нихуя не работает,
+			 надо писать нормальный playbin */
 			progressiveMode(refparser->getSoundFile());
 		}
 		else
@@ -266,8 +268,13 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 #endif
 		setWindowsTitles(mp3trackName);
 		label->setText(mp3trackName);
+
 		if (fi.suffix() == "ts")
 		{
+			/* Этот блок с тонной костылей
+			   создан исключительно для
+			   перемотки ts файлов */
+
 			GstElement *typefind, *audiosink, *ffmpegcolorspace;
 			GstElement *audioconvert, *audioresample;
 			GstElement *aqueue, *vqueue;
@@ -901,6 +908,13 @@ void CuePlayer::createTrayIconMenu()
 	connect(apetoflacAction, SIGNAL(triggered()), this, SLOT(ape2flacShow()));
 
 	equalizer = new Equalizer(0);
+	int appHeight = height();
+	int eqWidth = equalizer->width();
+	int eqHeight = equalizer->height();
+	int eqWidthPos = desktop->width()/2 - eqWidth/2;
+	int appHeightPos = desktop->height()/2 - appHeight/2;
+	equalizer->move(eqWidthPos, appHeightPos - eqHeight);
+
 	equalizerAction = new QAction(trUtf8("Эквалайзер"), this);
 	equalizerAction->setIcon(QIcon(":/images/equalizer.png"));
 	equalizerAction->setShortcut(trUtf8("Ctrl+z"));
@@ -2011,6 +2025,10 @@ void CuePlayer::progressiveMode(QString fname)
 	GstElement *typefind, *decoder, *audioconvert, *audiosink;
 	GstElement *aqueue, *multiqueue;
 	GstPad *audiopad;
+
+	/* Это пиздец какой хуёвый playbin,
+	   на самом деле очень хуёвый playbin,
+	   могло бы быть намного лучше как-то */
 
 	progFlag = true;
 	play = gst_pipeline_new ("player");
