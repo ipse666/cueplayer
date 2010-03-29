@@ -5,12 +5,25 @@
 #define TIMEOUT 3
 
 #define KEY_PLAY 162
+#define KEY_PLAY_CURVE 172
+
 #define KEY_STOP 164
+
 #define KEY_PREV 144
+#define KEY_PREV_CURVE 166
+
 #define KEY_NEXT 153
+#define KEY_NEXT_CURVE 167
+
 #define KEY_VOL_UP 176
+#define KEY_VOL_UP_CURVE 123
+
 #define KEY_VOL_DOWN 174
+#define KEY_VOL_DOWN_CURVE 122
+
 #define KEY_MUTE 160
+#define KEY_MUTE_CURVE 121
+
 #define KEY_EJECT 204
 
 enum Func {
@@ -251,6 +264,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			 !QString::compare(fi.suffix(), "mpg", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "mov", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "m4v", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "mka", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "mkv", Qt::CaseInsensitive))
 	{
 		if (rxFilename2.indexIn(filename) != -1)
@@ -395,6 +409,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 					 !QString::compare(filetu.suffix(), "mpg", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "mov", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "m4v", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "mka", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "mkv", Qt::CaseInsensitive))
 			{
 				filesList.prepend(filetu);
@@ -1871,14 +1886,17 @@ void CuePlayer::keyPressEvent (QKeyEvent  *event)
 	switch (event->nativeScanCode())
 	{
 	case KEY_PREV:
+	case KEY_PREV_CURVE:
 		if (prewButton->isEnabled())
 			playPrewTrack();
 		break;
 	case KEY_NEXT:
+	case KEY_NEXT_CURVE:
 		if (nextButton->isEnabled())
 			playNextTrack();
 		break;
 	case KEY_PLAY:
+	case KEY_PLAY_CURVE:
 		gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * 1);
 		if (state > GST_STATE_READY)
 			pauseTrack();
@@ -1889,14 +1907,17 @@ void CuePlayer::keyPressEvent (QKeyEvent  *event)
 		stopTrack();
 		break;
 	case KEY_VOL_DOWN:
+	case KEY_VOL_DOWN_CURVE:
 		if (volumeDial->isEnabled())
 			volumeDial->setValue(volumeDial->value() - 1);
 		break;
 	case KEY_VOL_UP:
+	case KEY_VOL_UP_CURVE:
 		if (volumeDial->isEnabled())
 			volumeDial->setValue(volumeDial->value() + 1);
 		break;
 	case KEY_MUTE:
+	case KEY_MUTE_CURVE:
 		if (volumeDial->isEnabled())
 		{
 			volume = volumeDial->value();
@@ -2028,7 +2049,7 @@ void CuePlayer::progressiveMode(QString fname)
 
 	/* Это пиздец какой хуёвый playbin,
 	   на самом деле очень хуёвый playbin,
-	   могло бы быть намного лучше как-то */
+	   могло бы быть намного лучше это всё */
 
 	progFlag = true;
 	play = gst_pipeline_new ("player");
