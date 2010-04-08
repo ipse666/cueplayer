@@ -264,6 +264,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			 !QString::compare(fi.suffix(), "mpg", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "mov", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "m4v", Qt::CaseInsensitive) ||
+			 !QString::compare(fi.suffix(), "m4a", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "mka", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "mkv", Qt::CaseInsensitive))
 	{
@@ -409,6 +410,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 					 !QString::compare(filetu.suffix(), "mpg", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "mov", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "m4v", Qt::CaseInsensitive) ||
+					 !QString::compare(filetu.suffix(), "m4a", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "mka", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "mkv", Qt::CaseInsensitive))
 			{
@@ -779,7 +781,7 @@ void CuePlayer::seekAndLCD(int num)
 								refparser->getPerformer() + " - " +
 								refparser->getAlbum() + " / " +
 								refparser->getTrackTitle(num);
-			trayIcon->showMessage(trUtf8("Играет"),
+			if (tray) trayIcon->showMessage(trUtf8("Играет"),
 								refparser->getTrackTitle(num) + "\n" +
 								refparser->getPerformer() + " - " +
 								refparser->getAlbum(),
@@ -2074,6 +2076,11 @@ void CuePlayer::progressiveMode(QString fname)
 	gst_element_add_pad (d_audio, gst_ghost_pad_new ("sink", audiopad));
 	gst_object_unref (audiopad);
 	gst_bin_add (GST_BIN (play), d_audio);
+}
+
+void CuePlayer::setTray(bool b)
+{
+	tray = b;
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)

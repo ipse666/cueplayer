@@ -5,6 +5,7 @@
 
 int main(int argc, char *argv[])
 {
+	bool tray;
 	QDir currentdir;
 	QRegExp rxPath("^/.*");
 	QRegExp rxFilename3("^(mms://|http://|ftp://).*");
@@ -36,9 +37,13 @@ int main(int argc, char *argv[])
 						"<p>Вероятна некорректная работа приложения."
 						"<p>Работа приложения будет продолжена."));*/
 		//return 1;
+		tray = false;
 	}
 	else
+	{
 		QApplication::setQuitOnLastWindowClosed(false);
+		tray = true;
+	}
 	QCoreApplication::setOrganizationName("CuePlayer");
 	QTranslator myappTranslator;
 		 myappTranslator.load("/usr/share/cueplayer/loc/cueplayer_" + QLocale::system().name().left(2));
@@ -47,6 +52,7 @@ int main(int argc, char *argv[])
 	gst_init(0,0);
 	gst_registry_fork_set_enabled(true);
 	CuePlayer *player = new CuePlayer;
+	player->setTray(tray);
 	player->setServer(sserver);
 	player->show();
 	if(argc >= 2)

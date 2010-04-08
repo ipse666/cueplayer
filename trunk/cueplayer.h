@@ -115,6 +115,7 @@ private:
 public slots:
 	void playNextTrack();
 	void paramFile(QStringList);
+	void setTray(bool);
 private slots:
 	void setNumLCDs(int);
 	void cueFileSelected(QStringList);
