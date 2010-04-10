@@ -39,6 +39,12 @@ enum EndOp {
 	FUNC_CHECK
 };
 
+enum Codec {
+	AUTO,
+	CP1251,
+	UTF8
+};
+
 CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 {
 	setupUi(this);
@@ -211,7 +217,6 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	QRegExp rxFilename6("^http://youtube.com/get_video\\?video_id=.*");
 	QString nextTool = nextButton->toolTip();
 	QString prewTool = prewButton->toolTip();
-	int codec = preferences->checkCodec();
 
 	initPlayer();
 
@@ -221,7 +226,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 
 	if (!QString::compare(fi.suffix(), "cue", Qt::CaseInsensitive))
 	{
-		refparser = new CueParser(filename, codec);
+		refparser = new CueParser(filename, checkCodec());
 		setWindowsTitles(refparser->getTitle());
 		label->setText("1. " + refparser->getTrackTitle(numTrack));
 		cueFlag = true;
@@ -872,7 +877,7 @@ void CuePlayer::initAlbum(int totalTimeAlbum)
 	}
 	treeWidget->setCurrentItem(treeWidget->topLevelItem(0));
 	enableButtons(true);
-	transcoder->setFileName(filename, totalTimeAlbum, preferences->checkCodec());
+	transcoder->setFileName(filename, totalTimeAlbum, checkCodec());
 	connect(this, SIGNAL(gstError()), transcoder, SLOT(close()));
 	if (progFlag)
 		g_object_set(d_volume, "volume", (double)volumeDial->value() / 100, NULL);
@@ -2064,6 +2069,22 @@ void CuePlayer::settingsApply(bool b)
 		equalizer->close();
 	}
 	cueFileSelected(QStringList() << filename);
+}
+
+// Кодировка CUE, чтение установок
+int CuePlayer::checkCodec()
+{
+	QSettings settings;
+	int codec = AUTO;
+
+	if (settings.value("preferences/autocuec").toBool())
+		codec = AUTO;
+	else if (settings.value("preferences/cpcuec").toBool())
+		codec = CP1251;
+	else if (settings.value("preferences/utfcuec").toBool())
+		codec = UTF8;
+
+	return codec;
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)
