@@ -58,6 +58,7 @@ private:
 	void initPlayer();
 	void integVideo(bool);
 	void progressiveMode(QString);
+	int checkCodec();
 	QSize getLayoutSize();
 	QSize minwin;
 	QRect vidwingeom;

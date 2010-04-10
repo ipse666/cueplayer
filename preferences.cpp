@@ -1,12 +1,6 @@
 #include "preferences.h"
 #include "ui_preferences.h"
 
-enum Codec {
-	AUTO,
-	CP1251,
-	UTF8
-};
-
 Preferences::Preferences(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Preferences)
@@ -63,19 +57,4 @@ void Preferences::readSettings()
 	ui->autoRadioButton->setChecked(settings.value("preferences/autocuec").toBool());
 	ui->cpRadioButton->setChecked(settings.value("preferences/cpcuec").toBool());
 	ui->utfRadioButton->setChecked(settings.value("preferences/utfcuec").toBool());
-}
-
-int Preferences::checkCodec()
-{
-	QSettings settings;
-	int codec = AUTO;
-
-	if (settings.value("preferences/autocuec").toBool())
-		codec = AUTO;
-	else if (settings.value("preferences/cpcuec").toBool())
-		codec = CP1251;
-	else if (settings.value("preferences/utfcuec").toBool())
-		codec = UTF8;
-
-	return codec;
 }
