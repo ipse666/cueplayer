@@ -19,5 +19,6 @@
         <file>images/media-optical.png</file>
         <file>images/cueplayer.png</file>
         <file>images/equalizer.png</file>
+        <file>images/preferences.png</file>
     </qresource>
 </RCC>
