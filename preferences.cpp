@@ -6,6 +6,10 @@ Preferences::Preferences(QWidget *parent) :
     ui(new Ui::Preferences)
 {
     ui->setupUi(this);
+
+	readSettings();
+
+	connect(ui->okButton, SIGNAL(clicked()), this, SLOT(saveSettings()));
 }
 
 Preferences::~Preferences()
@@ -23,4 +27,26 @@ void Preferences::changeEvent(QEvent *e)
     default:
         break;
     }
+}
+
+void Preferences::saveSettings()
+{
+	QSettings settings;
+
+	settings.setValue("preferences/integration", ui->integrationBox->isChecked());
+	settings.setValue("preferences/equalizer", ui->equalizerBox->isChecked());
+	settings.setValue("preferences/traytext", ui->trayTextBox->isChecked());
+
+	emit equalizerCheck(ui->equalizerBox->isChecked());
+
+	close();
+}
+
+void Preferences::readSettings()
+{
+	QSettings settings;
+
+	ui->integrationBox->setChecked(settings.value("preferences/integration").toBool());
+	ui->equalizerBox->setChecked(settings.value("preferences/equalizer").toBool());
+	ui->trayTextBox->setChecked(settings.value("preferences/traytext").toBool());
 }

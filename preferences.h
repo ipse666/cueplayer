@@ -2,6 +2,7 @@
 #define PREFERENCES_H
 
 #include <QWidget>
+#include <QSettings>
 
 namespace Ui {
     class Preferences;
@@ -18,6 +19,13 @@ protected:
 
 private:
     Ui::Preferences *ui;
+
+private slots:
+	void saveSettings();
+	void readSettings();
+
+signals:
+	void equalizerCheck(bool);
 };
 
 #endif // PREFERENCES_H

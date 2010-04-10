@@ -18,6 +18,9 @@
     <normaloff>:/images/equalizer.png</normaloff>:/images/equalizer.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
+   <property name="margin">
+    <number>5</number>
+   </property>
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout" rowminimumheight="0,0,0,0">
      <item row="0" column="0">
