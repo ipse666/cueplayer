@@ -23,14 +23,16 @@ HEADERS += cueplayer.h \
     singleserver.h \
     singleclient.h \
     widgetmanager.h \
-    equalizer.h
+    equalizer.h \
+    preferences.h
 FORMS += ui/cueplayer.ui \
     ui/transcoder.ui \
     ui/apetoflacdialog.ui \
     ui/videowindow.ui \
     ui/videoslider.ui \
     ui/streamform.ui \
-    ui/equalizer.ui
+    ui/equalizer.ui \
+    ui/preferences.ui
 SOURCES += cueplayer.cpp \
     main.cpp \
     cueparser.cpp \
@@ -44,7 +46,8 @@ SOURCES += cueplayer.cpp \
     singleserver.cpp \
     singleclient.cpp \
     widgetmanager.cpp \
-    equalizer.cpp
+    equalizer.cpp \
+    preferences.cpp
 RESOURCES += ressources.qrc
 CONFIG += release \
     link_pkgconfig \
