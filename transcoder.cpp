@@ -359,6 +359,8 @@ void TransCoder::pipeRun(int ind)
 				muxer = gst_element_factory_make ("oggmux", "audio-muxer");
 				gst_bin_add_many (GST_BIN (audio), conv, encoder, tagger, muxer, fileout, NULL);
 				gst_element_link_many (conv, encoder, tagger, muxer, fileout, NULL);
+				if (!settings.value("preferences/vorbisquality").isNull())
+					g_object_set (encoder, "quality", settings.value("preferences/vorbisquality").toDouble()/10, NULL);
 				if (bitrateBox->currentIndex() == 18)
 					g_object_set (encoder, "quality", 1.0, NULL);
 				else if (bitrateBox->currentIndex())
@@ -395,6 +397,10 @@ void TransCoder::pipeRun(int ind)
 			muxer = gst_element_factory_make ("id3v2mux", "audio-muxer");
 			gst_bin_add_many (GST_BIN (audio), conv, encoder, muxer, fileout, NULL);
 			gst_element_link_many (conv, encoder, muxer, fileout, NULL);
+			if (!settings.value("preferences/lamequality").isNull())
+				g_object_set (encoder, "quality", settings.value("preferences/lamequality").toInt(), NULL);
+			if (!settings.value("preferences/lamevbrquality").isNull())
+				g_object_set (encoder, "vbr-quality", settings.value("preferences/lamevbrquality").toInt(), NULL);
 			if (bitrateBox->currentIndex())
 				g_object_set (encoder, "bitrate", bitrateBox->currentText().toInt(&ok, 10), NULL);
 			else
@@ -416,6 +422,8 @@ void TransCoder::pipeRun(int ind)
 		case CODEC_FLAC:
 			encoder = gst_element_factory_make ("flacenc", "audio-encoder");
 			tagger = gst_element_factory_make ("flactag", "tagger");
+			if (!settings.value("preferences/flacquality").isNull())
+				g_object_set (encoder, "quality", settings.value("preferences/flacquality").toInt(), NULL);
 			gst_bin_add_many (GST_BIN (audio), conv, encoder, tagger, fileout, NULL);
 			gst_element_link_many (conv, encoder, tagger, fileout, NULL);
 			gst_tag_setter_add_tags (GST_TAG_SETTER (tagger),
@@ -434,6 +442,8 @@ void TransCoder::pipeRun(int ind)
 			break;
 		case CODEC_FAAC:
 			encoder = gst_element_factory_make ("faac", "audio-encoder");
+			if (!settings.value("preferences/faacquality").isNull())
+				g_object_set(encoder, "profile", settings.value("preferences/faacquality").toInt()+1, NULL);
 			gst_bin_add_many (GST_BIN (audio), conv, encoder, fileout, NULL);
 			gst_element_link_many (conv, encoder, fileout, NULL);
 			g_object_set (encoder, "bitrate", bitrateBox->currentText().toInt(&ok, 10) * 1000,
