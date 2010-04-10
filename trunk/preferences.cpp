@@ -11,6 +11,7 @@ Preferences::Preferences(QWidget *parent) :
 
 	connect(ui->okButton, SIGNAL(clicked()), this, SLOT(saveSettings()));
 	connect(ui->vorbisQuaSlider, SIGNAL(valueChanged(int)), this, SLOT(prefDeci(int)));
+	connect(ui->defaultButton, SIGNAL(clicked()), this, SLOT(setDefault()));
 }
 
 Preferences::~Preferences()
@@ -119,4 +120,35 @@ void Preferences::prefDeci(int i)
 		ui->vorbisQuaValue->setText("1.0");
 	else
 		ui->vorbisQuaValue->setNum(vorbisQvalue);
+}
+
+void Preferences::setDefault()
+{
+	// Основное. Видео
+	ui->integrationBox->setChecked(false);
+	// Основное. Аудио
+	ui->equalizerBox->setChecked(false);
+	ui->trayTextBox->setChecked(true);
+
+	// Основное. Кодировка CUE файла
+	ui->autoRadioButton->setChecked(true);
+	//ui->cpRadioButton->setChecked(settings.value("preferences/cpcuec").toBool());
+	//ui->utfRadioButton->setChecked(settings.value("preferences/utfcuec").toBool());
+
+
+	// Транскодер. vorbisenc
+	ui->vorbisQuaSlider->setValue(3);
+	prefDeci(3);
+
+	// Транскодер. lame
+	ui->lameQuaSlider->setValue(5);
+
+	// Транскодер. lame vbr
+	ui->lameVbrQuaSlider->setValue(5);
+
+	// Транскодер. flacenc
+	ui->flacQuaSlider->setValue(5);
+
+	// Транскодер. faac
+	ui->comboBox->setCurrentIndex(1);
 }

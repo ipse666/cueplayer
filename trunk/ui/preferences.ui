@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>449</width>
-    <height>359</height>
+    <width>457</width>
+    <height>366</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,9 +18,29 @@
     <normaloff>:/images/preferences.png</normaloff>:/images/preferences.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_4">
-   <property name="margin">
-    <number>5</number>
-   </property>
+   <item row="0" column="0">
+    <widget class="QListWidget" name="listWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>1</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentRow">
+      <number>0</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>Основное</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Транскодер</string>
+      </property>
+     </item>
+    </widget>
+   </item>
    <item row="0" column="1">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="sizePolicy">
@@ -30,7 +50,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_5">
@@ -91,6 +111,9 @@ p, li { white-space: pre-wrap; }
            <widget class="QCheckBox" name="trayTextBox">
             <property name="text">
              <string>Показывать трей уведомления (Только для cue)</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -172,7 +195,7 @@ p, li { white-space: pre-wrap; }
              <number>0</number>
             </property>
             <property name="maximum">
-             <number>10</number>
+             <number>9</number>
             </property>
             <property name="singleStep">
              <number>1</number>
@@ -232,7 +255,7 @@ p, li { white-space: pre-wrap; }
              <number>0</number>
             </property>
             <property name="maximum">
-             <number>10</number>
+             <number>9</number>
             </property>
             <property name="singleStep">
              <number>1</number>
@@ -307,7 +330,7 @@ p, li { white-space: pre-wrap; }
              <number>0</number>
             </property>
             <property name="maximum">
-             <number>10</number>
+             <number>9</number>
             </property>
             <property name="singleStep">
              <number>1</number>
@@ -499,6 +522,19 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="defaultButton">
+       <property name="text">
+        <string>По умолчанию</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="closeButton">
        <property name="text">
         <string>Закрыть</string>
@@ -507,47 +543,24 @@ p, li { white-space: pre-wrap; }
      </item>
     </layout>
    </item>
-   <item row="0" column="0">
-    <widget class="QListWidget" name="listWidget">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-       <horstretch>1</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="currentRow">
-      <number>0</number>
-     </property>
-     <item>
-      <property name="text">
-       <string>Основное</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Транскодер</string>
-      </property>
-     </item>
-    </widget>
-   </item>
   </layout>
  </widget>
  <tabstops>
   <tabstop>okButton</tabstop>
+  <tabstop>defaultButton</tabstop>
   <tabstop>closeButton</tabstop>
   <tabstop>listWidget</tabstop>
+  <tabstop>vorbisQuaSlider</tabstop>
+  <tabstop>lameQuaSlider</tabstop>
+  <tabstop>lameVbrQuaSlider</tabstop>
+  <tabstop>flacQuaSlider</tabstop>
+  <tabstop>comboBox</tabstop>
   <tabstop>integrationBox</tabstop>
-  <tabstop>equalizerBox</tabstop>
   <tabstop>trayTextBox</tabstop>
   <tabstop>autoRadioButton</tabstop>
   <tabstop>cpRadioButton</tabstop>
   <tabstop>utfRadioButton</tabstop>
-  <tabstop>checkBox_7</tabstop>
-  <tabstop>checkBox_8</tabstop>
-  <tabstop>checkBox_3</tabstop>
-  <tabstop>checkBox_4</tabstop>
-  <tabstop>checkBox_5</tabstop>
-  <tabstop>checkBox_6</tabstop>
+  <tabstop>equalizerBox</tabstop>
  </tabstops>
  <resources>
   <include location="../ressources.qrc"/>
@@ -624,8 +637,8 @@ p, li { white-space: pre-wrap; }
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>405</x>
-     <y>224</y>
+     <x>396</x>
+     <y>239</y>
     </hint>
     <hint type="destinationlabel">
      <x>418</x>
