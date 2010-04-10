@@ -53,6 +53,7 @@ private slots:
 	void setVbr();
 	void restoreSettings();
 	void toolItem(QTreeWidgetItem*,int);
+
 signals:
 	void transQuit();
 	void prefShow();

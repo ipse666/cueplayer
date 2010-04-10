@@ -24,6 +24,7 @@ private:
 private slots:
 	void saveSettings();
 	void readSettings();
+	void prefDeci(int);
 
 signals:
 	void settingsApply(bool);
