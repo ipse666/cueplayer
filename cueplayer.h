@@ -168,6 +168,7 @@ private slots:
 	void dclIntVw(bool);
 	void settingsApply(bool);
 	void equalizerChang(double*);
+	void prefTrShow();
 signals:
 	void gstError();
 };

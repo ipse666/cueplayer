@@ -55,6 +55,7 @@ private slots:
 	void toolItem(QTreeWidgetItem*,int);
 signals:
 	void transQuit();
+	void prefShow();
 };
 
 #endif // TRANSCODER_H
