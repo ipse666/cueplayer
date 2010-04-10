@@ -947,6 +947,7 @@ void CuePlayer::createTrayIconMenu()
 	editEqualizerAction->setShortcut(trUtf8("Ctrl+j"));
 	editEqualizerAction->setEnabled(settings.value("preferences/equalizer").toBool());
 	connect(editEqualizerAction, SIGNAL(triggered()), equalizer, SLOT(show()));
+	connect(editEqualizerAction, SIGNAL(triggered()), equalizer, SLOT(restoreValue()));
 	connect(preferences, SIGNAL(equalizerCheck(bool)), this, SLOT(equalizerCheck(bool)));
 
 	// Кнопки

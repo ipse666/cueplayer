@@ -12,7 +12,6 @@ class Equalizer : public QWidget {
     Q_OBJECT
 public:
     Equalizer(QWidget *parent = 0);
-	void restoreValue();
     ~Equalizer();
 
 protected:
@@ -25,6 +24,9 @@ private slots:
 	void valueChan(int);
 	void saveValue();
 	void getValue(double*);
+
+public slots:
+	void restoreValue();
 
 signals:
 	void bandsValue(double*);
