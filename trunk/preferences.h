@@ -12,6 +12,7 @@ class Preferences : public QWidget {
     Q_OBJECT
 public:
     Preferences(QWidget *parent = 0);
+	int checkCodec();
     ~Preferences();
 
 protected:
@@ -25,7 +26,7 @@ private slots:
 	void readSettings();
 
 signals:
-	void equalizerCheck(bool);
+	void settingsApply(bool);
 };
 
 #endif // PREFERENCES_H

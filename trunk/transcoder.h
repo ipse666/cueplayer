@@ -15,7 +15,7 @@ class TransCoder : public QMainWindow, public Ui::TransCoder
 
 public:
 	TransCoder(QWidget *parent = 0);
-	virtual void setFileName(QString, qint64);
+	virtual void setFileName(QString, qint64, int);
 	virtual void stopAllPub();
 
 private:

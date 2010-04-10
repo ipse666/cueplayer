@@ -211,15 +211,17 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	QRegExp rxFilename6("^http://youtube.com/get_video\\?video_id=.*");
 	QString nextTool = nextButton->toolTip();
 	QString prewTool = prewButton->toolTip();
+	int codec = preferences->checkCodec();
 
 	initPlayer();
-	filename = filenames.join("");
+
+	filename = filenames.at(0);
 
 	QFileInfo fi(filename);
 
 	if (!QString::compare(fi.suffix(), "cue", Qt::CaseInsensitive))
 	{
-		refparser = new CueParser(filename);
+		refparser = new CueParser(filename, codec);
 		setWindowsTitles(refparser->getTitle());
 		label->setText("1. " + refparser->getTrackTitle(numTrack));
 		cueFlag = true;
@@ -870,7 +872,7 @@ void CuePlayer::initAlbum(int totalTimeAlbum)
 	}
 	treeWidget->setCurrentItem(treeWidget->topLevelItem(0));
 	enableButtons(true);
-	transcoder->setFileName(filename, totalTimeAlbum);
+	transcoder->setFileName(filename, totalTimeAlbum, preferences->checkCodec());
 	connect(this, SIGNAL(gstError()), transcoder, SLOT(close()));
 	if (progFlag)
 		g_object_set(d_volume, "volume", (double)volumeDial->value() / 100, NULL);
@@ -948,7 +950,7 @@ void CuePlayer::createTrayIconMenu()
 	editEqualizerAction->setEnabled(settings.value("preferences/equalizer").toBool());
 	connect(editEqualizerAction, SIGNAL(triggered()), equalizer, SLOT(show()));
 	connect(editEqualizerAction, SIGNAL(triggered()), equalizer, SLOT(restoreValue()));
-	connect(preferences, SIGNAL(equalizerCheck(bool)), this, SLOT(equalizerCheck(bool)));
+	connect(preferences, SIGNAL(settingsApply(bool)), this, SLOT(settingsApply(bool)));
 
 	// Кнопки
 	playAction = new QAction(trUtf8("&Играть"), this);
@@ -2050,19 +2052,19 @@ void CuePlayer::setTray(bool b)
 	tray = b;
 }
 
-void CuePlayer::equalizerCheck(bool b)
-  {
-		  if (b)
-		  {
-				  editEqualizerAction->setEnabled(true);
-		  }
-		  else
-		  {
-				  editEqualizerAction->setEnabled(false);
-				  equalizer->close();
-		  }
-		  cueFileSelected(QStringList() << filename);
-  }
+void CuePlayer::settingsApply(bool b)
+{
+	if (b)
+	{
+		editEqualizerAction->setEnabled(true);
+	}
+	else
+	{
+		editEqualizerAction->setEnabled(false);
+		equalizer->close();
+	}
+	cueFileSelected(QStringList() << filename);
+}
 
 GstThread::GstThread(QObject *parent) : QThread(parent)
 {

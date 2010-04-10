@@ -165,7 +165,7 @@ private slots:
 	void setWindowsTitles(QString);
 	void mover(bool);
 	void dclIntVw(bool);
-	void equalizerCheck(bool);
+	void settingsApply(bool);
 	void equalizerChang(double*);
 signals:
 	void gstError();
