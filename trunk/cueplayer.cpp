@@ -925,6 +925,7 @@ void CuePlayer::createTrayIconMenu()
 	transcodeAction->setShortcut(trUtf8("Ctrl+c"));
 	connect(transcodeAction, SIGNAL(triggered()), transcoder, SLOT(show()));
 	connect(transcoder, SIGNAL(transQuit()), this, SLOT(endBlock()));
+	connect(transcoder, SIGNAL(prefShow()), this, SLOT(prefTrShow()));
 
 	apetoflac = new ApeToFlac(this);
 	apetoflacAction = new QAction(trUtf8("Ape->Flac"), this);
@@ -2085,6 +2086,12 @@ int CuePlayer::checkCodec()
 		codec = UTF8;
 
 	return codec;
+}
+
+void CuePlayer::prefTrShow()
+{
+	preferences->setTrPref();
+	preferences->show();
 }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)

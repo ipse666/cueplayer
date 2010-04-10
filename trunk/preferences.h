@@ -12,6 +12,7 @@ class Preferences : public QWidget {
     Q_OBJECT
 public:
     Preferences(QWidget *parent = 0);
+	void setTrPref();
     ~Preferences();
 
 protected:

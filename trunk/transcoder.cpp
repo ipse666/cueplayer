@@ -139,6 +139,7 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 	connect(treeWidget, SIGNAL(itemEntered(QTreeWidgetItem*,int)), this, SLOT(toolItem(QTreeWidgetItem*,int)));
 	connect(treeWidget, SIGNAL(itemPressed(QTreeWidgetItem*,int)), this, SLOT(toolItem(QTreeWidgetItem*,int)));
 	connect(quitAction, SIGNAL(triggered()), this, SIGNAL(transQuit()));
+	connect(prefAction, SIGNAL(triggered()), this, SIGNAL(prefShow()));
 }
 
 // Заполнение списка композиций

@@ -63,6 +63,18 @@
       <attribute name="headerStretchLastSection">
        <bool>true</bool>
       </attribute>
+      <attribute name="headerVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="headerMinimumSectionSize">
+       <number>21</number>
+      </attribute>
+      <attribute name="headerShowSortIndicator" stdset="0">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="headerStretchLastSection">
+       <bool>true</bool>
+      </attribute>
       <column>
        <property name="text">
         <string notr="true">1</string>
@@ -228,7 +240,7 @@
      <x>0</x>
      <y>0</y>
      <width>619</width>
-     <height>24</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -253,6 +265,7 @@
     <property name="title">
      <string>&amp;Настройки</string>
     </property>
+    <addaction name="prefAction"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="editMenu"/>
@@ -314,6 +327,15 @@
    </property>
    <property name="text">
     <string>Выделить всё</string>
+   </property>
+  </action>
+  <action name="prefAction">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/preferences.png</normaloff>:/images/preferences.png</iconset>
+   </property>
+   <property name="text">
+    <string>Настроить транскодер</string>
    </property>
   </action>
  </widget>

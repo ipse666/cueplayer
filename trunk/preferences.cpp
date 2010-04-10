@@ -58,3 +58,8 @@ void Preferences::readSettings()
 	ui->cpRadioButton->setChecked(settings.value("preferences/cpcuec").toBool());
 	ui->utfRadioButton->setChecked(settings.value("preferences/utfcuec").toBool());
 }
+
+void Preferences::setTrPref()
+{
+	ui->listWidget->setCurrentRow(1);
+}
