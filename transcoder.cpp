@@ -142,10 +142,10 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 }
 
 // Заполнение списка композиций
-void TransCoder::setFileName(QString filename, qint64 totalTime)
+void TransCoder::setFileName(QString filename, qint64 totalTime, int codec)
 {
 	treeWidget->clear();
-	refparser = new CueParser(filename);
+	refparser = new CueParser(filename, codec);
 	setWindowTitle(trUtf8("[конвертор] ") + refparser->getTitle());
 	qint64 startTime = refparser->getTrackIndex(1);
 	qint64 currentTime;

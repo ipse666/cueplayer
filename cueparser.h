@@ -4,11 +4,12 @@
 #include <QFile>
 #include <QTextStream>
 #include <QRegExp>
+#include <QSettings>
 
 class CueParser
 {
 public:
-	CueParser(QString);
+	CueParser(QString, int);
 	QString getTitle();
 	QString getTrackTitle(int);
 	qint64 getTrackIndex(int);
@@ -33,6 +34,7 @@ private:
 	QString line;
 	QString audioPath;
 	int trackNumber;
+	int codec;
 	qint64 indexMil;
 };
 

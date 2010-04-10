@@ -1,6 +1,12 @@
 #include "cueparser.h"
 
-CueParser::CueParser(QString s)
+enum Codec {
+	AUTO,
+	CP1251,
+	UTF8
+};
+
+CueParser::CueParser(QString s, int codec)
 {
 	int in = 0;
 	trackNumber = 0;
@@ -20,8 +26,22 @@ CueParser::CueParser(QString s)
 	if (!cuefile.open(QIODevice::ReadOnly | QIODevice::Text))
                 return;
 	QTextStream cuetext(&cuefile);
-	cuetext.setCodec("Windows-1251");
-	cuetext.setAutoDetectUnicode(true);
+	switch (codec) {
+	case AUTO:
+		cuetext.setCodec("Windows-1251");
+		cuetext.setAutoDetectUnicode(true);
+		break;
+	case CP1251:
+		cuetext.setCodec("Windows-1251");
+		break;
+	case UTF8:
+		cuetext.setCodec("UTF-8");
+		break;
+	default:
+		cuetext.setCodec("Windows-1251");
+		cuetext.setAutoDetectUnicode(true);
+		break;
+	}
 
 	do {
 		line = cuetext.readLine();
