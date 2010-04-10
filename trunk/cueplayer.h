@@ -21,6 +21,7 @@
 #include "singleserver.h"
 #include "widgetmanager.h"
 #include "equalizer.h"
+#include "preferences.h"
 
 class GstThread;
 
@@ -66,7 +67,6 @@ private:
 	QMenu *trayIconMenu;
 	QAction *quitAction;
 	QAction *aboutAction;
-	QAction *intWindAction;
 	QAction *extbutAction;
 	QAction *transcodeAction;
 	QAction *apetoflacAction;
@@ -75,10 +75,8 @@ private:
 	QAction *stopAction;
 	QAction *prewAction;
 	QAction *nextAction;
-	QAction *equalizerAction;
-	QAction *setEqualizerAction;
 	QAction *editEqualizerAction;
-	QMenu *equalizerMenu;
+	QAction *preferencesAction;
 	QWidget *desktop;
 	QString filename;
 	QTimer *timer;
@@ -100,6 +98,7 @@ private:
 	PlParser *plparser;
 	YouTubeDL *youtuber;
 	Equalizer *equalizer;
+	Preferences *preferences;
 	int numTrack;
 	int totalTime;
 	int d_title;
@@ -164,7 +163,6 @@ private slots:
 	void plError(QString);
 	void ape2flacShow();
 	void setWindowsTitles(QString);
-	void intWindCheck(bool);
 	void mover(bool);
 	void dclIntVw(bool);
 	void equalizerCheck(bool);

@@ -231,7 +231,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			return;
 		}
 		preInit(refparser->getSoundFile());
-		if (!videoFlag && setEqualizerAction->isChecked())
+		if (!videoFlag && settings.value("preferences/equalizer").toBool())
 		{
 			/* Это говно нихуя не работает,
 			 надо писать нормальный playbin */
@@ -343,7 +343,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		{
 			preInit(filename);
 
-			if (!videoFlag && setEqualizerAction->isChecked())
+			if (!videoFlag && editEqualizerAction->isEnabled())
 			{
 				progressiveMode(filename);
 			}
@@ -645,7 +645,7 @@ void CuePlayer::playTrack()
 {
 	if (videoFlag || dvdFlag)
 	{
-		if (intWindAction->isChecked())
+		if (settings.value("preferences/integration").toBool())
 			integVideo(true);
 		else
 			integVideo(false);
@@ -781,12 +781,15 @@ void CuePlayer::seekAndLCD(int num)
 								refparser->getPerformer() + " - " +
 								refparser->getAlbum() + " / " +
 								refparser->getTrackTitle(num);
-			if (tray) trayIcon->showMessage(trUtf8("Играет"),
+			if (tray && settings.value("preferences/traytext").toBool())
+			{
+				trayIcon->showMessage(trUtf8("Играет"),
 								refparser->getTrackTitle(num) + "\n" +
 								refparser->getPerformer() + " - " +
 								refparser->getAlbum(),
 								QSystemTrayIcon::Information,
 								2000);
+			}
 		}
 		if (!multiCueFlag)
 		{
@@ -891,6 +894,9 @@ void CuePlayer::initFile()
 // создание иконки в лотке и контекстных меню
 void CuePlayer::createTrayIconMenu()
 {
+	int appHeight = height();
+	int appHeightPos = desktop->height()/2 - appHeight/2;
+
 	quitAction = new QAction(trUtf8("&Выход"), this);
 	quitAction->setIcon(QIcon(":/images/application-exit.png"));
 	quitAction->setShortcut(trUtf8("Ctrl+q"));
@@ -900,11 +906,6 @@ void CuePlayer::createTrayIconMenu()
 	aboutAction->setIcon(QIcon(":/images/help-about.png"));
 	aboutAction->setShortcut(trUtf8("Ctrl+a"));
 	connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
-
-	intWindAction = new QAction(trUtf8("&Интеграция"), this);
-	intWindAction->setCheckable(true);
-	intWindAction->setShortcut(trUtf8("Ctrl+i"));
-	connect(intWindAction, SIGNAL(triggered(bool)), this, SLOT(intWindCheck(bool)));
 
 	extbutAction = new QAction(trUtf8("&Расширенный"), this);
 	extbutAction->setCheckable(true);
@@ -924,34 +925,29 @@ void CuePlayer::createTrayIconMenu()
 	apetoflacAction->setShortcut(trUtf8("Ctrl+h"));
 	connect(apetoflacAction, SIGNAL(triggered()), this, SLOT(ape2flacShow()));
 
+	preferences = new Preferences(0);
+	int prWidth = preferences->width();
+	int prHeight = preferences->height();
+	int prWidthPos = desktop->width()/2 - prWidth/2;
+	preferences->move(prWidthPos, appHeightPos - prHeight);
+
+	preferencesAction = new QAction(trUtf8("Настройки"), this);
+	preferencesAction->setIcon(QIcon(":/images/preferences.png"));
+	preferencesAction->setShortcut(trUtf8("Ctrl+t"));
+	connect(preferencesAction, SIGNAL(triggered()), preferences, SLOT(show()));
+
 	equalizer = new Equalizer(0);
-	int appHeight = height();
 	int eqWidth = equalizer->width();
 	int eqHeight = equalizer->height();
 	int eqWidthPos = desktop->width()/2 - eqWidth/2;
-	int appHeightPos = desktop->height()/2 - appHeight/2;
 	equalizer->move(eqWidthPos, appHeightPos - eqHeight);
 
-	equalizerAction = new QAction(trUtf8("Эквалайзер"), this);
-	equalizerAction->setIcon(QIcon(":/images/equalizer.png"));
-	equalizerAction->setShortcut(trUtf8("Ctrl+z"));
-
-	setEqualizerAction = new QAction(trUtf8("&Включить"), this);
-	setEqualizerAction->setCheckable(true);
-	setEqualizerAction->setShortcut(trUtf8("Ctrl+v"));
-	connect(setEqualizerAction, SIGNAL(triggered(bool)), this, SLOT(equalizerCheck(bool)));
-	connect(setEqualizerAction, SIGNAL(toggled(bool)), this, SLOT(equalizerCheck(bool)));
-
-	editEqualizerAction = new QAction(trUtf8("&Настройки"), this);
+	editEqualizerAction = new QAction(trUtf8("&Эквалайзер"), this);
 	editEqualizerAction->setIcon(QIcon(":/images/equalizer.png"));
 	editEqualizerAction->setShortcut(trUtf8("Ctrl+j"));
-	editEqualizerAction->setEnabled(false);
+	editEqualizerAction->setEnabled(settings.value("preferences/equalizer").toBool());
 	connect(editEqualizerAction, SIGNAL(triggered()), equalizer, SLOT(show()));
-
-	equalizerMenu = new QMenu(this);
-	equalizerAction->setMenu(equalizerMenu);
-	equalizerMenu->addAction(setEqualizerAction);
-	equalizerMenu->addAction(editEqualizerAction);
+	connect(preferences, SIGNAL(equalizerCheck(bool)), this, SLOT(equalizerCheck(bool)));
 
 	// Кнопки
 	playAction = new QAction(trUtf8("&Играть"), this);
@@ -995,8 +991,8 @@ void CuePlayer::createTrayIconMenu()
 	trayIcon->setToolTip(trUtf8("CuePlayer"));
 
 	addAction(extbutAction);
-	addAction(intWindAction);
-	addAction(equalizerAction);
+	addAction(preferencesAction);
+	addAction(editEqualizerAction);
 	addAction(apetoflacAction);
 	addAction(transcodeAction);
 	addAction(aboutAction);
@@ -1030,8 +1026,8 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer 0.23-svn</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(27) +  " "
-									+ QString(curdate.longMonthName(3)) +  " "
+									+ QString::number(10) +  " "
+									+ QString(curdate.longMonthName(4)) +  " "
 									+ QString::number(2010) +
 									trUtf8("<p>Мультимедиа проигрыватель."
 									"<p><p>Разработчик: <a href=xmpp:ipse@ipse.zapto.org name=jid type=application/xmpp+xml>ipse</a>"));
@@ -1166,13 +1162,13 @@ void CuePlayer::checkState()
 
 		if (rxFilename.indexIn(filetu.filePath()) != -1)
 		{
-			setEqualizerAction->setChecked(false);
+			//setEqualizerAction->setChecked(false); заменить на messagebox
 			finame = filetu.filePath();
 		}
 		else
 			finame = "file://" + filetu.absoluteFilePath();
 
-		if (!videoFlag && setEqualizerAction->isChecked())
+		if (!videoFlag && settings.value("preferences/equalizer").toBool())
 			g_object_set (aufile, "location", filetu.absoluteFilePath().toUtf8().data(), NULL);
 		else
 			g_object_set (G_OBJECT (play), "uri", finame.toUtf8().data(), NULL);
@@ -1356,12 +1352,12 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 	if (rxFilename.indexIn(filetu.filePath()) != -1)
 	{
 		finame = filetu.filePath();
-		setEqualizerAction->setChecked(false);
+		//setEqualizerAction->setChecked(false); заменить на messagebox
 	}
 	else
 		finame = "file://" + filetu.absoluteFilePath();
 
-	if (!videoFlag && setEqualizerAction->isChecked())
+	if (!videoFlag && settings.value("preferences/equalizer").toBool())
 	{
 		progressiveMode(filetu.absoluteFilePath());
 		g_object_set(d_volume, "volume", (double)volumeDial->value() / 100, NULL);
@@ -1395,8 +1391,6 @@ void CuePlayer::paramFile(QStringList list)
 void CuePlayer::restoreSettings()
 {
 	bool ok;
-	setEqualizerAction->setChecked(settings.value("player/equalizer").toBool());
-	editEqualizerAction->setEnabled(settings.value("player/equalizer").toBool());
 	if (settings.value("player/recentfile").toBool() && qApp->argc() <= 1)
 		cueFileSelected(settings.value("player/recentfile").toStringList());
 	if (settings.value("player/volume").toBool())
@@ -1404,7 +1398,6 @@ void CuePlayer::restoreSettings()
 		volumeDial->setValue(settings.value("player/volume").toInt(&ok));
 		if (videoFlag || dvdFlag) videowindow->setVolumePos(settings.value("player/volume").toInt(&ok));
 	}
-	intWindAction->setChecked(settings.value("player/intwin").toBool());
 }
 
 void CuePlayer::nminSeek()
@@ -1667,14 +1660,14 @@ void CuePlayer::extButtons(bool b)
 		minwin = getLayoutSize();
 		dvdButton->show();
 		streamButton->show();
-		if (intWindAction->isChecked())
+		if (settings.value("preferences/integration").toBool())
 				videowindow->setFixedSize(getLayoutSize());
 	}
 	else
 	{
 		dvdButton->hide();
 		streamButton->hide();
-		if (intWindAction->isChecked())
+		if (settings.value("preferences/integration").toBool())
 				videowindow->setFixedSize(minwin);
 	}
 }
@@ -1988,42 +1981,15 @@ QSize CuePlayer::getLayoutSize()
 	return recentsize;
 }
 
-void CuePlayer::intWindCheck(bool b)
-{
-	if (videowindow->isVisible())
-	{
-		integVideo(b);
-		gst_x_overlay_set_xwindow_id (GST_X_OVERLAY (videosink), win);
-		gst_x_overlay_expose (GST_X_OVERLAY (videosink));
-		videowindow->show();
-	}
-	settings.setValue("player/intwin", b);
-}
-
 void CuePlayer::dclIntVw(bool b)
 {
-	if (intWindAction->isChecked())
+	if (settings.value("preferences/integration").toBool())
 	{
 		integVideo(!b);
 		gst_x_overlay_set_xwindow_id (GST_X_OVERLAY (videosink), win);
 		gst_x_overlay_expose (GST_X_OVERLAY (videosink));
 		videowindow->show();
 	}
-}
-
-void CuePlayer::equalizerCheck(bool b)
-{
-	settings.setValue("player/equalizer", b);
-	if (b)
-	{
-		editEqualizerAction->setEnabled(true);
-	}
-	else
-	{
-		editEqualizerAction->setEnabled(false);
-		equalizer->close();
-	}
-	cueFileSelected(QStringList() << filename);
 }
 
 void CuePlayer::equalizerChang(double *band)
@@ -2082,6 +2048,20 @@ void CuePlayer::setTray(bool b)
 {
 	tray = b;
 }
+
+void CuePlayer::equalizerCheck(bool b)
+  {
+		  if (b)
+		  {
+				  editEqualizerAction->setEnabled(true);
+		  }
+		  else
+		  {
+				  editEqualizerAction->setEnabled(false);
+				  equalizer->close();
+		  }
+		  cueFileSelected(QStringList() << filename);
+  }
 
 GstThread::GstThread(QObject *parent) : QThread(parent)
 {
