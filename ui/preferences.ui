@@ -210,6 +210,23 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>okButton</tabstop>
+  <tabstop>closeButton</tabstop>
+  <tabstop>listWidget</tabstop>
+  <tabstop>integrationBox</tabstop>
+  <tabstop>equalizerBox</tabstop>
+  <tabstop>trayTextBox</tabstop>
+  <tabstop>autoRadioButton</tabstop>
+  <tabstop>cpRadioButton</tabstop>
+  <tabstop>utfRadioButton</tabstop>
+  <tabstop>checkBox_7</tabstop>
+  <tabstop>checkBox_8</tabstop>
+  <tabstop>checkBox_3</tabstop>
+  <tabstop>checkBox_4</tabstop>
+  <tabstop>checkBox_5</tabstop>
+  <tabstop>checkBox_6</tabstop>
+ </tabstops>
  <resources>
   <include location="../ressources.qrc"/>
  </resources>
