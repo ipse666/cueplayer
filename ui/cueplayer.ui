@@ -29,7 +29,7 @@
    <string>CUE Проигрыватель</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../ressources.qrc">
+   <iconset>
     <normaloff>:/images/cueplayer.png</normaloff>:/images/cueplayer.png</iconset>
   </property>
   <property name="toolTip">
@@ -197,7 +197,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/net-stream.png</normaloff>:/images/net-stream.png</iconset>
              </property>
              <property name="autoDefault">
@@ -229,7 +229,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/media-optical.png</normaloff>:/images/media-optical.png</iconset>
              </property>
              <property name="autoDefault">
@@ -261,7 +261,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
              </property>
              <property name="autoDefault">
@@ -290,7 +290,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/play.png</normaloff>:/images/play.png</iconset>
              </property>
              <property name="autoDefault">
@@ -322,7 +322,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/pause.png</normaloff>:/images/pause.png</iconset>
              </property>
             </widget>
@@ -348,7 +348,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/stop.png</normaloff>:/images/stop.png</iconset>
              </property>
             </widget>
@@ -374,7 +374,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/prev.png</normaloff>:/images/prev.png</iconset>
              </property>
             </widget>
@@ -400,7 +400,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/next.png</normaloff>:/images/next.png</iconset>
              </property>
             </widget>
@@ -426,7 +426,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../ressources.qrc">
+              <iconset>
                <normaloff>:/images/format-list-unordered.png</normaloff>:/images/format-list-unordered.png</iconset>
              </property>
              <property name="checkable">
@@ -526,9 +526,7 @@
   <tabstop>timeLineSlider</tabstop>
   <tabstop>volumeDial</tabstop>
  </tabstops>
- <resources>
-  <include location="../ressources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>fileList</sender>

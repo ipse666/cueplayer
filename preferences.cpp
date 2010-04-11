@@ -40,6 +40,7 @@ void Preferences::saveSettings()
 	// Основное. Аудио
 	settings.setValue("preferences/equalizer", ui->equalizerBox->isChecked());
 	settings.setValue("preferences/traytext", ui->trayTextBox->isChecked());
+	settings.setValue("preferences/cover",ui->coverBox->isChecked());
 
 	// Основное. Кодировка CUE файла
 	settings.setValue("preferences/autocuec", ui->autoRadioButton->isChecked());
@@ -75,6 +76,7 @@ void Preferences::readSettings()
 	// Основное. Аудио
 	ui->equalizerBox->setChecked(settings.value("preferences/equalizer").toBool());
 	ui->trayTextBox->setChecked(settings.value("preferences/traytext").toBool());
+	ui->coverBox->setChecked(settings.value("preferences/cover").toBool());
 
 	// Основное. Кодировка CUE файла
 	ui->autoRadioButton->setChecked(settings.value("preferences/autocuec").toBool());
@@ -129,6 +131,7 @@ void Preferences::setDefault()
 	// Основное. Аудио
 	ui->equalizerBox->setChecked(false);
 	ui->trayTextBox->setChecked(true);
+	ui->coverBox->setChecked(false);
 
 	// Основное. Кодировка CUE файла
 	ui->autoRadioButton->setChecked(true);
