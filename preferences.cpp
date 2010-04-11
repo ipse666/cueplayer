@@ -1,17 +1,21 @@
 #include "preferences.h"
 #include "ui_preferences.h"
 
+#include <QDebug>
+
 Preferences::Preferences(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Preferences)
 {
     ui->setupUi(this);
 
+	ui->treeWidget->setCurrentItem(ui->treeWidget->topLevelItem(0));
 	readSettings();
 
 	connect(ui->okButton, SIGNAL(clicked()), this, SLOT(saveSettings()));
 	connect(ui->vorbisQuaSlider, SIGNAL(valueChanged(int)), this, SLOT(prefDeci(int)));
 	connect(ui->defaultButton, SIGNAL(clicked()), this, SLOT(setDefault()));
+	connect(ui->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(listItemClicked(QTreeWidgetItem*,int)));
 }
 
 Preferences::~Preferences()
@@ -49,7 +53,11 @@ void Preferences::saveSettings()
 
 
 	// Транскодер. vorbisenc
+	settings.setValue("preferences/vorbismaxbitrate", ui->vorbisMaxBitrateSlider->value());
+	settings.setValue("preferences/vorbisbitrate", ui->vorbisBitrateSlider->value());
+	settings.setValue("preferences/vorbisminbitrate", ui->vorbisMinBitrateSlider->value());
 	settings.setValue("preferences/vorbisquality", ui->vorbisQuaSlider->value());
+	settings.setValue("preferences/vorbismanaged", ui->vorbisManagedBox->isChecked());
 
 	// Транскодер. lame
 	settings.setValue("preferences/lamequality", ui->lameQuaSlider->value());
@@ -87,8 +95,12 @@ void Preferences::readSettings()
 	// Транскодер. vorbisenc
 	if (!settings.value("preferences/vorbisquality").isNull())
 	{
+		ui->vorbisMaxBitrateSlider->setValue(settings.value("preferences/vorbismaxbitrate").toInt());
+		ui->vorbisBitrateSlider->setValue(settings.value("preferences/vorbisbitrate").toInt());
+		ui->vorbisMinBitrateSlider->setValue(settings.value("preferences/vorbisminbitrate").toInt());
 		ui->vorbisQuaSlider->setValue(settings.value("preferences/vorbisquality").toInt());
 		prefDeci(settings.value("preferences/vorbisquality").toInt());
+		ui->vorbisManagedBox->setChecked(settings.value("preferences/vorbismanaged").toBool());
 	}
 
 	// Транскодер. lame
@@ -110,18 +122,14 @@ void Preferences::readSettings()
 // Внешний вызов настроек транскодера
 void Preferences::setTrPref()
 {
-	ui->listWidget->setCurrentRow(1);
+	ui->treeWidget->setCurrentItem(ui->treeWidget->topLevelItem(1));
+	ui->treeWidget->expandItem(ui->treeWidget->topLevelItem(1));
+	ui->stackedWidget->setCurrentIndex(1);
 }
 
 void Preferences::prefDeci(int i)
 {
-	double vorbisQvalue = (double)i/10;
-	if (!vorbisQvalue)
-		ui->vorbisQuaValue->setText("0.0");
-	else if (vorbisQvalue == 1)
-		ui->vorbisQuaValue->setText("1.0");
-	else
-		ui->vorbisQuaValue->setNum(vorbisQvalue);
+	ui->vorbisQuaValue->setValue((double)i/10);
 }
 
 void Preferences::setDefault()
@@ -135,13 +143,14 @@ void Preferences::setDefault()
 
 	// Основное. Кодировка CUE файла
 	ui->autoRadioButton->setChecked(true);
-	//ui->cpRadioButton->setChecked(settings.value("preferences/cpcuec").toBool());
-	//ui->utfRadioButton->setChecked(settings.value("preferences/utfcuec").toBool());
-
 
 	// Транскодер. vorbisenc
+	ui->vorbisMaxBitrateSlider->setValue(-1);
+	ui->vorbisBitrateSlider->setValue(-1);
+	ui->vorbisMinBitrateSlider->setValue(-1);
 	ui->vorbisQuaSlider->setValue(3);
 	prefDeci(3);
+	ui->vorbisManagedBox->setChecked(false);
 
 	// Транскодер. lame
 	ui->lameQuaSlider->setValue(5);
@@ -154,4 +163,15 @@ void Preferences::setDefault()
 
 	// Транскодер. faac
 	ui->comboBox->setCurrentIndex(1);
+}
+
+void Preferences::listItemClicked(QTreeWidgetItem *item, int column)
+{
+	int ind = ui->treeWidget->indexOfTopLevelItem(item);
+	column = 0;
+
+	if (ind != -1)
+		ui->stackedWidget->setCurrentIndex(ind);
+	else
+		ui->stackedWidget->setCurrentIndex(ui->treeWidget->indexOfTopLevelItem(item->parent()) + item->parent()->indexOfChild(item) + 1);
 }
