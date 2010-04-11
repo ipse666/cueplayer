@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QSettings>
+#include <QTreeWidgetItem>
 
 namespace Ui {
     class Preferences;
@@ -26,6 +27,7 @@ private slots:
 	void readSettings();
 	void prefDeci(int);
 	void setDefault();
+	void listItemClicked(QTreeWidgetItem *, int);
 
 signals:
 	void settingsApply(bool);

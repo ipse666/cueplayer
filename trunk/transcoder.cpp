@@ -360,13 +360,16 @@ void TransCoder::pipeRun(int ind)
 				gst_bin_add_many (GST_BIN (audio), conv, encoder, tagger, muxer, fileout, NULL);
 				gst_element_link_many (conv, encoder, tagger, muxer, fileout, NULL);
 				if (!settings.value("preferences/vorbisquality").isNull())
-					g_object_set (encoder, "quality", settings.value("preferences/vorbisquality").toDouble()/10, NULL);
-				if (bitrateBox->currentIndex() == 18)
-					g_object_set (encoder, "quality", 1.0, NULL);
-				else if (bitrateBox->currentIndex())
-					g_object_set (encoder, "bitrate", bitrateBox->currentText().toInt(&ok, 10) * 1000, NULL);
-				else
-					bitrateBox->setCurrentIndex(11);
+				{
+					g_object_set (encoder,
+								  "max-bitrate", settings.value("preferences/vorbismaxbitrate").toInt(),
+								  "bitrate", settings.value("preferences/vorbisbitrate").toInt(),
+								  "min-bitrate", settings.value("preferences/vorbisminbitrate").toInt(),
+								  "quality", settings.value("preferences/vorbisquality").toDouble()/10,
+								  "managed", settings.value("preferences/vorbismanaged").toBool(),
+								  NULL);
+				}
+				bitrateBox->setDisabled(true);
 				gst_tag_setter_add_tags (GST_TAG_SETTER (tagger),
 									GST_TAG_MERGE_REPLACE_ALL,
 									GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
@@ -532,7 +535,7 @@ void TransCoder::formatError(int index)
 	default:
 		break;
 	}
-
+	bitrateBox->setDisabled(false); // ВРЕМЕННО
 }
 
 void TransCoder::setDefaultIndex()
