@@ -1050,7 +1050,7 @@ void CuePlayer::about()
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer 0.23-svn</h2>"
 									"<p>Дата ревизии: ")
-									+ QString::number(10) +  " "
+									+ QString::number(11) +  " "
 									+ QString(curdate.longMonthName(4)) +  " "
 									+ QString::number(2010) +
 									trUtf8("<p>Мультимедиа проигрыватель."
