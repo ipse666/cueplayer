@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>457</width>
+    <width>476</width>
     <height>366</height>
    </rect>
   </property>
@@ -114,6 +114,13 @@ p, li { white-space: pre-wrap; }
             </property>
             <property name="checked">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="coverBox">
+            <property name="text">
+             <string>Показывать обложку альбома (Только для каталогов)</string>
             </property>
            </widget>
           </item>

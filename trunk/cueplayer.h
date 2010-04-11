@@ -92,6 +92,7 @@ private:
 	QString prewlabel;
 	QTimer *paramtimer;
 	QString savetitle;
+	QLabel *imglabel;
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;

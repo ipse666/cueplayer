@@ -53,6 +53,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	trdtimer = new QTimer(this);
 	paramtimer = new QTimer(this);
 	trd = new GstThread(this);
+	imglabel = new QLabel(this);
 
 	// Иксы
 	xinfo = new QX11Info();
@@ -391,6 +392,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		int counterVOB = 0;
 		int counterFiles = 0;
 		QDir dir = fi.filePath();
+		QString imagename;
 		QFileInfoList fileInfoList = dir.entryInfoList();
 		QFileInfoList filesList;
 		while (fileInfoList.size())
@@ -399,6 +401,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			fileInfoList.pop_back();
 			if (!QString::compare(filetu.suffix(), "VOB", Qt::CaseSensitive))
 				counterVOB++;
+			else if (!QString::compare(filetu.suffix(), "jpg", Qt::CaseInsensitive))
+				imagename = filetu.absoluteFilePath();
 			else if (!QString::compare(filetu.suffix(), "aac", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "mp3", Qt::CaseInsensitive) ||
 					 !QString::compare(filetu.suffix(), "flac", Qt::CaseInsensitive) ||
@@ -444,6 +448,16 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			multiFileFlag = true;
 			settings.setValue("player/recentfile", filename);
 			multiFileInit(filesList);
+			if (settings.value("preferences/cover").toBool())
+			{
+				QImage img(imagename);
+				QImage img2 = img.scaledToHeight(100);
+				imglabel->setPixmap(QPixmap::fromImage(img2));
+				horizontalLayout_3->addWidget(imglabel);
+				imglabel->show();
+			}
+			else
+				imglabel->hide();
 			return;
 		}
 		else
@@ -575,6 +589,7 @@ void CuePlayer::initPlayer()
 		threadStop();
 	}
 	timeLineSlider->setSliderPosition(0);
+	imglabel->hide();
 }
 
 // переключение на следующий трек
