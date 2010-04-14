@@ -34,6 +34,7 @@ private:
 	QFileDialog *dirdialog;
 	QSettings settings;
 	QFile tmpfile;
+	QList<int> bitrateList;
 	void setTrack();
 	void setTrackTime(qint64,qint64);
 	void pipeRun(int);
