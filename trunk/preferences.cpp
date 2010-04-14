@@ -46,7 +46,8 @@ void Preferences::saveSettings()
 
 	// Основное. Кодировка CUE файла
 	settings.setValue("preferences/autocuec", ui->autoRadioButton->isChecked());
-	settings.setValue("preferences/cpcuec", ui->cpRadioButton->isChecked());
+	settings.setValue("preferences/cp1250cuec", ui->cp1250RadioButton->isChecked());
+	settings.setValue("preferences/cp1251cuec", ui->cp1251RadioButton->isChecked());
 	settings.setValue("preferences/utfcuec", ui->utfRadioButton->isChecked());
 
 
@@ -97,7 +98,8 @@ void Preferences::readSettings()
 
 	// Основное. Кодировка CUE файла
 	ui->autoRadioButton->setChecked(settings.value("preferences/autocuec").toBool());
-	ui->cpRadioButton->setChecked(settings.value("preferences/cpcuec").toBool());
+	ui->cp1250RadioButton->setChecked(settings.value("preferences/cp1250cuec").toBool());
+	ui->cp1251RadioButton->setChecked(settings.value("preferences/cp1251cuec").toBool());
 	ui->utfRadioButton->setChecked(settings.value("preferences/utfcuec").toBool());
 
 
