@@ -800,7 +800,7 @@ void CuePlayer::seekAndLCD(int num)
 		if (playButtonFlag)
 		{
 			qDebug() << trUtf8("Играет: ") +
-								refparser->getPerformer() + " - " +
+								refparser->getPerformer() + " / " +
 								refparser->getAlbum() + " / " +
 								refparser->getTrackTitle(num);
 			if (tray && settings.value("preferences/traytext").toBool())
@@ -1212,7 +1212,7 @@ void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
 			qDebug() << trUtf8("Играет: ") + trUtf8(g_value_get_string(vtitle));
 		else
 			qDebug() << trUtf8("Играет: ") +
-				trUtf8(g_value_get_string(vartist)) + " - " +
+				trUtf8(g_value_get_string(vartist)) + " / " +
 				trUtf8(g_value_get_string(valbum)) + " / " +
 				trUtf8(g_value_get_string(vtitle));
 		prewlabel = label->text(); // Необходимо сохранить асинхронную метку

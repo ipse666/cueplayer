@@ -58,11 +58,12 @@ int main(int argc, char *argv[])
 	if(argc >= 2)
 	{
 		QStringList file;
+		QString fullfile = currentdir.currentPath() + "/" + arg;
 		if (rxPath.indexIn(arg) != -1 ||
 			rxFilename3.indexIn(arg) != -1)
 			file << arg;
 		else
-			file << currentdir.currentPath() << "/" << arg;
+			file << fullfile;
 		player->paramFile(file);
 	}
 	return app.exec();

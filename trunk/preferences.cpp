@@ -1,8 +1,6 @@
 #include "preferences.h"
 #include "ui_preferences.h"
 
-#include <QDebug>
-
 Preferences::Preferences(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Preferences)
@@ -60,8 +58,19 @@ void Preferences::saveSettings()
 	settings.setValue("preferences/vorbismanaged", ui->vorbisManagedBox->isChecked());
 
 	// Транскодер. lame
+	settings.setValue("preferences/lamebitrate", ui->lameBitrateBox->currentIndex());
+	settings.setValue("preferences/lamecompressionratio", ui->lameCRSlider->value());
 	settings.setValue("preferences/lamequality", ui->lameQuaSlider->value());
-	// Транскодер. lame vbr
+	settings.setValue("preferences/lamemode", ui->lameModeComboBox->currentIndex());
+	settings.setValue("preferences/lameforcems", ui->lameForseMs->isChecked());
+	settings.setValue("preferences/lamefreeformat", ui->lameFreeFormat->isChecked());
+	settings.setValue("preferences/lamecopyright", ui->lameCopyight->isChecked());
+	settings.setValue("preferences/lameoriginal", ui->lameOriginal->isChecked());
+	settings.setValue("preferences/lameerrprot", ui->lameErrProt->isChecked());
+	settings.setValue("preferences/lamepaddingtype", ui->lamePaddingType->currentIndex());
+	settings.setValue("preferences/lameextension", ui->lameExtention->isChecked());
+	settings.setValue("preferences/lamestrictiso", ui->lameStrictIso->isChecked());
+	settings.setValue("preferences/lamedisrese", ui->lameDisRese->isChecked());
 	settings.setValue("preferences/lamevbrquality", ui->lameVbrQuaSlider->value());
 
 	// Транскодер. flacenc
@@ -105,10 +114,22 @@ void Preferences::readSettings()
 
 	// Транскодер. lame
 	if (!settings.value("preferences/lamequality").isNull())
+	{
+		ui->lameBitrateBox->setCurrentIndex(settings.value("preferences/lamebitrate").toInt());
+		ui->lameCRSlider->setValue(settings.value("preferences/lamecompressionratio").toInt());
 		ui->lameQuaSlider->setValue(settings.value("preferences/lamequality").toInt());
-	// Транскодер. lame vbr
-	if (!settings.value("preferences/lamevbrquality").isNull())
+		ui->lameModeComboBox->setCurrentIndex(settings.value("preferences/lamemode").toInt());
+		ui->lameForseMs->setChecked(settings.value("preferences/lameforcems").toBool());
+		ui->lameFreeFormat->setChecked(settings.value("preferences/lamefreeformat").toBool());
+		ui->lameCopyight->setChecked(settings.value("preferences/lamecopyright").toBool());
+		ui->lameOriginal->setChecked(settings.value("preferences/lameoriginal").toBool());
+		ui->lameErrProt->setChecked(settings.value("preferences/lameerrprot").toBool());
+		ui->lamePaddingType->setCurrentIndex(settings.value("preferences/lamepaddingtype").toInt());
+		ui->lameExtention->setChecked(settings.value("preferences/lameextension").toBool());
+		ui->lameStrictIso->setChecked(settings.value("preferences/lamestrictiso").toBool());
+		ui->lameDisRese->setChecked(settings.value("preferences/lamedisrese").toBool());
 		ui->lameVbrQuaSlider->setValue(settings.value("preferences/lamevbrquality").toInt());
+	}
 
 	// Транскодер. flacenc
 	if (!settings.value("preferences/flacquality").isNull())
@@ -134,35 +155,55 @@ void Preferences::prefDeci(int i)
 
 void Preferences::setDefault()
 {
-	// Основное. Видео
-	ui->integrationBox->setChecked(false);
-	// Основное. Аудио
-	ui->equalizerBox->setChecked(false);
-	ui->trayTextBox->setChecked(true);
-	ui->coverBox->setChecked(false);
-
-	// Основное. Кодировка CUE файла
-	ui->autoRadioButton->setChecked(true);
-
-	// Транскодер. vorbisenc
-	ui->vorbisMaxBitrateSlider->setValue(-1);
-	ui->vorbisBitrateSlider->setValue(-1);
-	ui->vorbisMinBitrateSlider->setValue(-1);
-	ui->vorbisQuaSlider->setValue(3);
-	prefDeci(3);
-	ui->vorbisManagedBox->setChecked(false);
-
-	// Транскодер. lame
-	ui->lameQuaSlider->setValue(5);
-
-	// Транскодер. lame vbr
-	ui->lameVbrQuaSlider->setValue(5);
-
-	// Транскодер. flacenc
-	ui->flacQuaSlider->setValue(5);
-
-	// Транскодер. faac
-	ui->comboBox->setCurrentIndex(1);
+	switch (ui->stackedWidget->currentIndex())
+	{
+	case 0:
+		// Основное. Видео
+		ui->integrationBox->setChecked(false);
+		// Основное. Аудио
+		ui->equalizerBox->setChecked(false);
+		ui->trayTextBox->setChecked(true);
+		ui->coverBox->setChecked(false);
+		// Основное. Кодировка CUE файла
+		ui->autoRadioButton->setChecked(true);
+		break;
+	case 2:
+		// Транскодер. vorbisenc
+		ui->vorbisMaxBitrateSlider->setValue(-1);
+		ui->vorbisBitrateSlider->setValue(-1);
+		ui->vorbisMinBitrateSlider->setValue(-1);
+		ui->vorbisQuaSlider->setValue(3);
+		prefDeci(3);
+		ui->vorbisManagedBox->setChecked(false);
+		break;
+	case 3:
+		// Транскодер. lame
+		ui->lameBitrateBox->setCurrentIndex(11);
+		ui->lameCRSlider->setValue(0);
+		ui->lameQuaSlider->setValue(3);
+		ui->lameModeComboBox->setCurrentIndex(1);
+		ui->lameForseMs->setChecked(false);
+		ui->lameFreeFormat->setChecked(false);
+		ui->lameCopyight->setChecked(false);
+		ui->lameOriginal->setChecked(true);
+		ui->lameErrProt->setChecked(false);
+		ui->lamePaddingType->setCurrentIndex(0);
+		ui->lameExtention->setChecked(false);
+		ui->lameStrictIso->setChecked(false);
+		ui->lameDisRese->setChecked(false);
+		ui->lameVbrQuaSlider->setValue(4);
+		break;
+	case 4:
+		// Транскодер. flacenc
+		ui->flacQuaSlider->setValue(5);
+		break;
+	case 5:
+		// Транскодер. faac
+		ui->comboBox->setCurrentIndex(1);
+		break;
+	default:
+		break;
+	}
 }
 
 void Preferences::listItemClicked(QTreeWidgetItem *item, int column)

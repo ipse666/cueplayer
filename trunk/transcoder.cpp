@@ -92,6 +92,9 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 	defaultContainer = 1;
 	defaultCodec = 1;
 	transcoder = this;
+	bitrateList << 8 << 16 << 24 << 32 << 40 <<
+			48 << 56 << 64 << 80 << 96 << 112 <<
+			128 << 160 << 192 << 224 << 256 << 320;
 
 	treeWidget->setHeaderLabels(QStringList() << trUtf8("Композиция") << trUtf8("Время"));
 	treeWidget->header()->setStretchLastSection(false);
@@ -101,7 +104,8 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 	containerBox->addItems(QStringList() << "ogg" << "mp3" << "flac" << "aac");
 	codecBox->addItems(QStringList() << "vorbis" << "lame" << "flac" << "faac");
 	bitrateBox->addItems(QStringList() << "vbr" << "8"  << "16" << "24" << "32" << "40" <<
-						 "48" << "56" << "64" << "80" << "96" << "112" << "128" << "160" << "192" << "224" << "256" << "320" << "500");
+						 "48" << "56" << "64" << "80" << "96" << "112" << "128" << "160" <<
+						 "192" << "224" << "256" << "320" << "500");
 
 	containerBox->setCurrentIndex(defaultContainer);
 	codecBox->setCurrentIndex(defaultCodec);
@@ -400,14 +404,26 @@ void TransCoder::pipeRun(int ind)
 			muxer = gst_element_factory_make ("id3v2mux", "audio-muxer");
 			gst_bin_add_many (GST_BIN (audio), conv, encoder, muxer, fileout, NULL);
 			gst_element_link_many (conv, encoder, muxer, fileout, NULL);
+
 			if (!settings.value("preferences/lamequality").isNull())
-				g_object_set (encoder, "quality", settings.value("preferences/lamequality").toInt(), NULL);
-			if (!settings.value("preferences/lamevbrquality").isNull())
-				g_object_set (encoder, "vbr-quality", settings.value("preferences/lamevbrquality").toInt(), NULL);
-			if (bitrateBox->currentIndex())
-				g_object_set (encoder, "bitrate", bitrateBox->currentText().toInt(&ok, 10), NULL);
-			else
-				g_object_set (encoder, "vbr", 4, NULL);
+			{
+				g_object_set (encoder,
+							  "bitrate", bitrateList.at(settings.value("preferences/lamebitrate").toInt()),
+							  "compression-ratio", settings.value("preferences/lamecompressionratio").toInt(),
+							  "quality", settings.value("preferences/lamequality").toInt(),
+							  "mode", settings.value("preferences/lamemode").toInt(),
+							  "force-ms", settings.value("preferences/lameforcems").toBool(),
+							  "free-format", settings.value("preferences/lamefreeformat").toBool(),
+							  "copyright", settings.value("preferences/lamecopyright").toBool(),
+							  "original", settings.value("preferences/lameoriginal").toBool(),
+							  "error-protection", settings.value("preferences/lameerrprot").toBool(),
+							  "padding-type", settings.value("preferences/lamepaddingtype").toInt(),
+							  "extension", settings.value("preferences/lameextension").toBool(),
+							  "strict-iso", settings.value("preferences/lamestrictiso").toBool(),
+							  "disable-reservoir", settings.value("preferences/lamedisrese").toBool(),
+							  NULL);
+			}
+			bitrateBox->setDisabled(true);
 			gst_tag_setter_add_tags (GST_TAG_SETTER (muxer),
 								GST_TAG_MERGE_REPLACE_ALL,
 								GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
