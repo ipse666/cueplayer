@@ -76,6 +76,18 @@ void Preferences::saveSettings()
 
 	// Транскодер. flacenc
 	settings.setValue("preferences/flacquality", ui->flacQuaSlider->value());
+	settings.setValue("preferences/flacstreamablesubset", ui->flacStreamableSubsetBox->isChecked());
+	settings.setValue("preferences/flacmidsidestereo", ui->flacMidSideStereoBox->isChecked());
+	settings.setValue("preferences/flacloosemidsidestereo", ui->flacLooseMidSideStereoBox->isChecked());
+	settings.setValue("preferences/flacblocksize", ui->flacBlocksizeSlider->value());
+	settings.setValue("preferences/flacmaxlpcorder", ui->flacMaxLpcOrderSlider->value());
+	settings.setValue("preferences/flacqlpcoeffprecision", ui->flacQlpCoeffPrecisionSlider->value());
+	settings.setValue("preferences/flacqlpcoeffprecsearch", ui->flacQlpCoeffPrecSearchCheckBox->isChecked());
+	settings.setValue("preferences/flacescapecoding", ui->flacEscapeCodingCheckBox->isChecked());
+	settings.setValue("preferences/flacexhaustivemodelsearch", ui->flacExhaustiveModelSearchCheckBox->isChecked());
+	settings.setValue("preferences/flacminresidualpartitionorder", ui->flacMinResidualPartitionOrderSlider->value());
+	settings.setValue("preferences/flacmaxresidualpartitionorder", ui->flacMaxResidualPartitionOrderSlider->value());
+	settings.setValue("preferences/flacriceparametersearchdist", ui->flacRiceParameterSearchDistSlider->value());
 
 	// Транскодер. faac
 	settings.setValue("preferences/faacquality", ui->comboBox->currentIndex());
@@ -135,7 +147,21 @@ void Preferences::readSettings()
 
 	// Транскодер. flacenc
 	if (!settings.value("preferences/flacquality").isNull())
+	{
 		ui->flacQuaSlider->setValue(settings.value("preferences/flacquality").toInt());
+		ui->flacStreamableSubsetBox->setChecked(settings.value("preferences/flacstreamablesubset").toBool());
+		ui->flacMidSideStereoBox->setChecked(settings.value("preferences/flacmidsidestereo").toBool());
+		ui->flacLooseMidSideStereoBox->setChecked(settings.value("preferences/flacloosemidsidestereo").toBool());
+		ui->flacBlocksizeSlider->setValue(settings.value("preferences/flacblocksize").toInt());
+		ui->flacMaxLpcOrderSlider->setValue(settings.value("preferences/flacmaxlpcorder").toInt());
+		ui->flacQlpCoeffPrecisionSlider->setValue(settings.value("preferences/flacqlpcoeffprecision").toInt());
+		ui->flacQlpCoeffPrecSearchCheckBox->setChecked(settings.value("preferences/flacqlpcoeffprecsearch").toBool());
+		ui->flacEscapeCodingCheckBox->setChecked(settings.value("preferences/flacescapecoding").toBool());
+		ui->flacExhaustiveModelSearchCheckBox->setChecked(settings.value("preferences/flacexhaustivemodelsearch").toBool());
+		ui->flacMinResidualPartitionOrderSlider->setValue(settings.value("preferences/flacminresidualpartitionorder").toInt());
+		ui->flacMaxResidualPartitionOrderSlider->setValue(settings.value("preferences/flacmaxresidualpartitionorder").toInt());
+		ui->flacRiceParameterSearchDistSlider->setValue(settings.value("preferences/flacriceparametersearchdist").toInt());
+	}
 
 	// Транскодер. faac
 	if (!settings.value("preferences/faacquality").isNull())
@@ -198,6 +224,18 @@ void Preferences::setDefault()
 	case 4:
 		// Транскодер. flacenc
 		ui->flacQuaSlider->setValue(5);
+		ui->flacStreamableSubsetBox->setChecked(true);
+		ui->flacMidSideStereoBox->setChecked(true);
+		ui->flacLooseMidSideStereoBox->setChecked(false);
+		ui->flacBlocksizeSlider->setValue(4608);
+		ui->flacMaxLpcOrderSlider->setValue(8);
+		ui->flacQlpCoeffPrecisionSlider->setValue(0);
+		ui->flacQlpCoeffPrecSearchCheckBox->setChecked(false);
+		ui->flacEscapeCodingCheckBox->setChecked(false);
+		ui->flacExhaustiveModelSearchCheckBox->setChecked(false);
+		ui->flacMinResidualPartitionOrderSlider->setValue(3);
+		ui->flacMaxResidualPartitionOrderSlider->setValue(3);
+		ui->flacRiceParameterSearchDistSlider->setValue(0);
 		break;
 	case 5:
 		// Транскодер. faac

@@ -442,7 +442,23 @@ void TransCoder::pipeRun(int ind)
 			encoder = gst_element_factory_make ("flacenc", "audio-encoder");
 			tagger = gst_element_factory_make ("flactag", "tagger");
 			if (!settings.value("preferences/flacquality").isNull())
-				g_object_set (encoder, "quality", settings.value("preferences/flacquality").toInt(), NULL);
+			{
+				g_object_set (encoder,
+							  "quality", settings.value("preferences/flacquality").toInt(),
+							  "streamable-subset", settings.value("preferences/flacstreamablesubset").toBool(),
+							  "mid-side-stereo", settings.value("preferences/flacmidsidestereo").toBool(),
+							  "loose-mid-side-stereo", settings.value("preferences/flacloosemidsidestereo").toBool(),
+							  "blocksize", settings.value("preferences/flacblocksize").toInt(),
+							  "max-lpc-order", settings.value("preferences/flacmaxlpcorder").toInt(),
+							  "qlp-coeff-precision", settings.value("preferences/flacqlpcoeffprecision").toInt(),
+							  "qlp-coeff-prec-search", settings.value("preferences/flacqlpcoeffprecsearch").toBool(),
+							  "escape-coding", settings.value("preferences/flacescapecoding").toBool(),
+							  "exhaustive-model-search", settings.value("preferences/flacexhaustivemodelsearch").toBool(),
+							  "min-residual-partition-order", settings.value("preferences/flacminresidualpartitionorder").toInt(),
+							  "max-residual-partition-order", settings.value("preferences/flacmaxresidualpartitionorder").toInt(),
+							  "rice-parameter-search-dist", settings.value("preferences/flacriceparametersearchdist").toInt(),
+							  NULL);
+			}
 			gst_bin_add_many (GST_BIN (audio), conv, encoder, tagger, fileout, NULL);
 			gst_element_link_many (conv, encoder, tagger, fileout, NULL);
 			gst_tag_setter_add_tags (GST_TAG_SETTER (tagger),
