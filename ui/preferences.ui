@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>555</width>
-    <height>351</height>
+    <width>576</width>
+    <height>360</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Настройки</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../ressources.qrc">
+   <iconset>
     <normaloff>:/images/preferences.png</normaloff>:/images/preferences.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_4">
@@ -172,13 +172,20 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QRadioButton" name="cpRadioButton">
+           <widget class="QRadioButton" name="cp1250RadioButton">
+            <property name="text">
+             <string>Windows-1250</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="cp1251RadioButton">
             <property name="text">
              <string>Windows-1251</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QRadioButton" name="utfRadioButton">
             <property name="text">
              <string>UTF-8</string>
@@ -1333,13 +1340,11 @@ p, li { white-space: pre-wrap; }
   <tabstop>integrationBox</tabstop>
   <tabstop>trayTextBox</tabstop>
   <tabstop>autoRadioButton</tabstop>
-  <tabstop>cpRadioButton</tabstop>
+  <tabstop>cp1251RadioButton</tabstop>
   <tabstop>utfRadioButton</tabstop>
   <tabstop>equalizerBox</tabstop>
  </tabstops>
- <resources>
-  <include location="../ressources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>closeButton</sender>

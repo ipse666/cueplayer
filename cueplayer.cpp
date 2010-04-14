@@ -41,6 +41,7 @@ enum EndOp {
 
 enum Codec {
 	AUTO,
+	CP1250,
 	CP1251,
 	UTF8
 };
@@ -2095,7 +2096,9 @@ int CuePlayer::checkCodec()
 
 	if (settings.value("preferences/autocuec").toBool())
 		codec = AUTO;
-	else if (settings.value("preferences/cpcuec").toBool())
+	else if (settings.value("preferences/cp1250cuec").toBool())
+		codec = CP1250;
+	else if (settings.value("preferences/cp1251cuec").toBool())
 		codec = CP1251;
 	else if (settings.value("preferences/utfcuec").toBool())
 		codec = UTF8;

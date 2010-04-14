@@ -2,6 +2,7 @@
 
 enum Codec {
 	AUTO,
+	CP1250,
 	CP1251,
 	UTF8
 };
@@ -30,6 +31,9 @@ CueParser::CueParser(QString s, int codec)
 	case AUTO:
 		cuetext.setCodec("Windows-1251");
 		cuetext.setAutoDetectUnicode(true);
+		break;
+	case CP1250:
+		cuetext.setCodec("Windows-1250");
 		break;
 	case CP1251:
 		cuetext.setCodec("Windows-1251");
