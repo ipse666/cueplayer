@@ -4,7 +4,7 @@
 
 #define TIME 200
 #define APPNAME "CuePlayer"
-#define VERSION "0.23"
+#define VERSION "0.24"
 
 Q_EXPORT_PLUGIN2(trans_coder, TransCoder)
 		TransCoder *transcoder = 0;
@@ -477,8 +477,17 @@ void TransCoder::pipeRun(int ind)
 			break;
 		case CODEC_FAAC:
 			encoder = gst_element_factory_make ("faac", "audio-encoder");
-			if (!settings.value("preferences/faacquality").isNull())
-				g_object_set(encoder, "profile", settings.value("preferences/faacquality").toInt()+1, NULL);
+			if (!settings.value("preferences/faacprofile").isNull())
+			{
+				g_object_set(encoder,
+							 "outputformat", settings.value("preferences/faacoutputformat").toInt(),
+							 "bitrate", settings.value("preferences/faacbitrate").toInt(),
+							 "profile", settings.value("preferences/faacprofile").toInt()+1,
+							 "tns", settings.value("preferences/faactns").toBool(),
+							 "midside", settings.value("preferences/faacmidside").toBool(),
+							 "shortctl", settings.value("preferences/faacshortctl").toInt(),
+							 NULL);
+			}
 			gst_bin_add_many (GST_BIN (audio), conv, encoder, fileout, NULL);
 			gst_element_link_many (conv, encoder, fileout, NULL);
 			g_object_set (encoder, "bitrate", bitrateBox->currentText().toInt(&ok, 10) * 1000,
