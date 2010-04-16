@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>592</width>
     <height>368</height>
    </rect>
   </property>
@@ -221,7 +221,7 @@ p, li { white-space: pre-wrap; }
           <item row="0" column="0">
            <widget class="QLabel" name="label_6">
             <property name="text">
-             <string>Дополнительные опции для кодирования видео.
+             <string>Дополнительные опции для кодирования аудио файлов.
 Наименования согласно опциям gst-плагинов</string>
             </property>
            </widget>
@@ -1899,15 +1899,106 @@ p, li { white-space: pre-wrap; }
           <string>Free AAC Encoder (FAAC)</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_6">
-          <item row="0" column="0">
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="label_28">
+            <property name="text">
+             <string>outputformat</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QComboBox" name="faacOutputformatComboBox">
+            <item>
+             <property name="text">
+              <string>(0): Raw AAC</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>(1): ADTS headers</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>68</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_29">
+            <property name="text">
+             <string>bitrate</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" colspan="2">
+           <widget class="QSlider" name="faacBitrateSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>9</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimum">
+             <number>8000</number>
+            </property>
+            <property name="maximum">
+             <number>320000</number>
+            </property>
+            <property name="singleStep">
+             <number>8000</number>
+            </property>
+            <property name="pageStep">
+             <number>40000</number>
+            </property>
+            <property name="value">
+             <number>128000</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>8000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QSpinBox" name="faacBitrateSpinBox">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <number>8000</number>
+            </property>
+            <property name="maximum">
+             <number>320000</number>
+            </property>
+            <property name="value">
+             <number>128000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
            <widget class="QLabel" name="label_5">
             <property name="text">
              <string>profile</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="comboBox">
+          <item row="2" column="1" colspan="2">
+           <widget class="QComboBox" name="faacProfileComboBox">
             <property name="currentIndex">
              <number>1</number>
             </property>
@@ -1932,6 +2023,75 @@ p, li { white-space: pre-wrap; }
              </property>
             </item>
            </widget>
+          </item>
+          <item row="2" column="3" rowspan="2">
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>68</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="faacTnsCheckBox">
+            <property name="text">
+             <string>tns</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QCheckBox" name="faacMidsideCheckBox">
+            <property name="text">
+             <string>midside</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>shortctl</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QComboBox" name="faacShortctlComboBox">
+            <item>
+             <property name="text">
+              <string>(0): Normal block type</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>(1): No short blocks</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>(2): No long blocks</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>68</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -2028,7 +2188,7 @@ p, li { white-space: pre-wrap; }
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>586</x>
+     <x>578</x>
      <y>335</y>
     </hint>
     <hint type="destinationlabel">
@@ -2044,12 +2204,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>41</y>
+     <x>272</x>
+     <y>42</y>
     </hint>
     <hint type="destinationlabel">
-     <x>231</x>
-     <y>41</y>
+     <x>520</x>
+     <y>45</y>
     </hint>
    </hints>
   </connection>
@@ -2060,12 +2220,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>231</x>
-     <y>41</y>
+     <x>520</x>
+     <y>45</y>
     </hint>
     <hint type="destinationlabel">
-     <x>213</x>
-     <y>41</y>
+     <x>272</x>
+     <y>42</y>
     </hint>
    </hints>
   </connection>
@@ -2076,12 +2236,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>38</y>
+     <x>272</x>
+     <y>74</y>
     </hint>
     <hint type="destinationlabel">
-     <x>231</x>
-     <y>38</y>
+     <x>520</x>
+     <y>77</y>
     </hint>
    </hints>
   </connection>
@@ -2092,12 +2252,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>231</x>
-     <y>38</y>
+     <x>520</x>
+     <y>77</y>
     </hint>
     <hint type="destinationlabel">
-     <x>213</x>
-     <y>38</y>
+     <x>272</x>
+     <y>74</y>
     </hint>
    </hints>
   </connection>
@@ -2108,12 +2268,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>35</y>
+     <x>272</x>
+     <y>106</y>
     </hint>
     <hint type="destinationlabel">
-     <x>231</x>
-     <y>35</y>
+     <x>520</x>
+     <y>109</y>
     </hint>
    </hints>
   </connection>
@@ -2124,12 +2284,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>231</x>
-     <y>35</y>
+     <x>520</x>
+     <y>109</y>
     </hint>
     <hint type="destinationlabel">
-     <x>213</x>
-     <y>35</y>
+     <x>272</x>
+     <y>106</y>
     </hint>
    </hints>
   </connection>
@@ -2144,7 +2304,7 @@ p, li { white-space: pre-wrap; }
      <y>89</y>
     </hint>
     <hint type="destinationlabel">
-     <x>453</x>
+     <x>520</x>
      <y>90</y>
     </hint>
    </hints>
@@ -2156,7 +2316,7 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>453</x>
+     <x>520</x>
      <y>96</y>
     </hint>
     <hint type="destinationlabel">
@@ -2176,7 +2336,7 @@ p, li { white-space: pre-wrap; }
      <y>124</y>
     </hint>
     <hint type="destinationlabel">
-     <x>453</x>
+     <x>520</x>
      <y>123</y>
     </hint>
    </hints>
@@ -2192,7 +2352,7 @@ p, li { white-space: pre-wrap; }
      <y>310</y>
     </hint>
     <hint type="destinationlabel">
-     <x>450</x>
+     <x>517</x>
      <y>308</y>
     </hint>
    </hints>
@@ -2204,7 +2364,7 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>433</x>
+     <x>500</x>
      <y>316</y>
     </hint>
     <hint type="destinationlabel">
@@ -2224,7 +2384,7 @@ p, li { white-space: pre-wrap; }
      <y>397</y>
     </hint>
     <hint type="destinationlabel">
-     <x>438</x>
+     <x>505</x>
      <y>398</y>
     </hint>
    </hints>
@@ -2236,7 +2396,7 @@ p, li { white-space: pre-wrap; }
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>508</x>
+     <x>500</x>
      <y>50</y>
     </hint>
     <hint type="destinationlabel">
@@ -2252,7 +2412,7 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>507</x>
+     <x>499</x>
      <y>111</y>
     </hint>
     <hint type="destinationlabel">
@@ -2284,7 +2444,7 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>505</x>
+     <x>497</x>
      <y>140</y>
     </hint>
     <hint type="destinationlabel">
@@ -2316,7 +2476,7 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>504</x>
+     <x>496</x>
      <y>170</y>
     </hint>
     <hint type="destinationlabel">
@@ -2348,7 +2508,7 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>503</x>
+     <x>495</x>
      <y>232</y>
     </hint>
     <hint type="destinationlabel">
@@ -2380,7 +2540,7 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>503</x>
+     <x>495</x>
      <y>260</y>
     </hint>
     <hint type="destinationlabel">
@@ -2412,7 +2572,7 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>507</x>
+     <x>499</x>
      <y>291</y>
     </hint>
     <hint type="destinationlabel">
@@ -2434,6 +2594,38 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>488</x>
      <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>faacBitrateSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>faacBitrateSpinBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>482</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>504</x>
+     <y>84</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>faacBitrateSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>faacBitrateSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>517</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>92</y>
     </hint>
    </hints>
   </connection>

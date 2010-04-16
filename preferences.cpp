@@ -90,7 +90,12 @@ void Preferences::saveSettings()
 	settings.setValue("preferences/flacriceparametersearchdist", ui->flacRiceParameterSearchDistSlider->value());
 
 	// Транскодер. faac
-	settings.setValue("preferences/faacquality", ui->comboBox->currentIndex());
+	settings.setValue("preferences/faacoutputformat", ui->faacOutputformatComboBox->currentIndex());
+	settings.setValue("preferences/faacbitrate", ui->faacBitrateSlider->value());
+	settings.setValue("preferences/faacprofile", ui->faacProfileComboBox->currentIndex());
+	settings.setValue("preferences/faactns", ui->faacTnsCheckBox->isChecked());
+	settings.setValue("preferences/faacmidside", ui->faacMidsideCheckBox->isChecked());
+	settings.setValue("preferences/faacshortctl", ui->faacShortctlComboBox->currentIndex());
 
 	emit settingsApply(ui->equalizerBox->isChecked());
 
@@ -164,8 +169,15 @@ void Preferences::readSettings()
 	}
 
 	// Транскодер. faac
-	if (!settings.value("preferences/faacquality").isNull())
-		ui->comboBox->setCurrentIndex(settings.value("preferences/faacquality").toInt());
+	if (!settings.value("preferences/faacprofile").isNull())
+	{
+		ui->faacOutputformatComboBox->setCurrentIndex(settings.value("preferences/faacoutputformat").toInt());
+		ui->faacBitrateSlider->setValue(settings.value("preferences/faacbitrate").toInt());
+		ui->faacProfileComboBox->setCurrentIndex(settings.value("preferences/faacprofile").toInt());
+		ui->faacTnsCheckBox->setChecked(settings.value("preferences/faactns").toBool());
+		ui->faacMidsideCheckBox->setChecked(settings.value("preferences/faacmidside").toBool());
+		ui->faacShortctlComboBox->setCurrentIndex(settings.value("preferences/faacshortctl").toInt());
+	}
 }
 
 // Внешний вызов настроек транскодера
@@ -239,7 +251,12 @@ void Preferences::setDefault()
 		break;
 	case 5:
 		// Транскодер. faac
-		ui->comboBox->setCurrentIndex(1);
+		ui->faacOutputformatComboBox->setCurrentIndex(0);
+		ui->faacBitrateSlider->setValue(128000);
+		ui->faacProfileComboBox->setCurrentIndex(1);
+		ui->faacTnsCheckBox->setChecked(false);
+		ui->faacMidsideCheckBox->setChecked(true);
+		ui->faacShortctlComboBox->setCurrentIndex(0);
 		break;
 	default:
 		break;
