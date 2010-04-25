@@ -26,6 +26,7 @@ private slots:
 	void saveSettings();
 	void readSettings();
 	void prefDeci(int);
+	void prefDeci(double);
 	void setDefault();
 	void listItemClicked(QTreeWidgetItem *, int);
 

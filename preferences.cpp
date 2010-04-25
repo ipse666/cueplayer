@@ -12,6 +12,7 @@ Preferences::Preferences(QWidget *parent) :
 
 	connect(ui->okButton, SIGNAL(clicked()), this, SLOT(saveSettings()));
 	connect(ui->vorbisQuaSlider, SIGNAL(valueChanged(int)), this, SLOT(prefDeci(int)));
+	connect(ui->vorbisQuaValue, SIGNAL(valueChanged(double)), this, SLOT(prefDeci(double)));
 	connect(ui->defaultButton, SIGNAL(clicked()), this, SLOT(setDefault()));
 	connect(ui->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(listItemClicked(QTreeWidgetItem*,int)));
 }
@@ -191,6 +192,11 @@ void Preferences::setTrPref()
 void Preferences::prefDeci(int i)
 {
 	ui->vorbisQuaValue->setValue((double)i/10);
+}
+
+void Preferences::prefDeci(double i)
+{
+	ui->vorbisQuaSlider->setValue(i * 10);
 }
 
 void Preferences::setDefault()
