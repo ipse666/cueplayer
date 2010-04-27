@@ -4,7 +4,6 @@
 
 #define TIME 200
 #define APPNAME "CuePlayer"
-#define VERSION "0.24"
 
 Q_EXPORT_PLUGIN2(trans_coder, TransCoder)
 		TransCoder *transcoder = 0;
@@ -333,6 +332,7 @@ void TransCoder::pipeRun(int ind)
 	QRegExp rxFileSlash("/");
 	QRegExp rxTilda("^~(.*)");
 	QString filename;
+	QString comment = trUtf8("CuePlayer ") + qApp->applicationVersion();
 	QString trackName = refparser->getTrackTitle(ind);
 	trackName.replace(rxFileSlash, trUtf8("⁄"));
 	if (rxTilda.indexIn(lineEdit->text()) != -1)
@@ -382,8 +382,8 @@ void TransCoder::pipeRun(int ind)
 									GST_TAG_TRACK_COUNT, refparser->getTrackNumber(),
 									GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
 									GST_TAG_ENCODER, APPNAME,
-									GST_TAG_ENCODER_VERSION, VERSION,
-									GST_TAG_COMMENT, APPNAME " " VERSION,
+									GST_TAG_ENCODER_VERSION, qApp->applicationVersion().toUtf8().data(),
+									GST_TAG_COMMENT, comment.toUtf8().data(),
 									GST_TAG_CODEC, "vorbis",
 									NULL);
 				containerBox->setCurrentIndex(CODEC_VORBIS);
@@ -432,8 +432,8 @@ void TransCoder::pipeRun(int ind)
 								GST_TAG_TRACK_COUNT, refparser->getTrackNumber(),
 								GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
 								GST_TAG_ENCODER, APPNAME,
-								GST_TAG_ENCODER_VERSION, VERSION,
-								GST_TAG_COMMENT, APPNAME " " VERSION,
+								GST_TAG_ENCODER_VERSION, qApp->applicationVersion().toUtf8().data(),
+								GST_TAG_COMMENT, comment.toUtf8().data(),
 								GST_TAG_CODEC, "lame",
 								NULL);
 			containerBox->setCurrentIndex(CODEC_LAME);
@@ -469,8 +469,8 @@ void TransCoder::pipeRun(int ind)
 								GST_TAG_TRACK_COUNT, refparser->getTrackNumber(),
 								GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
 								GST_TAG_ENCODER, APPNAME,
-								GST_TAG_ENCODER_VERSION, VERSION,
-								GST_TAG_COMMENT, APPNAME " " VERSION,
+								GST_TAG_ENCODER_VERSION, qApp->applicationVersion().toUtf8().data(),
+								GST_TAG_COMMENT, comment.toUtf8().data(),
 								GST_TAG_CODEC, "flac",
 								NULL);
 			containerBox->setCurrentIndex(CODEC_FLAC);

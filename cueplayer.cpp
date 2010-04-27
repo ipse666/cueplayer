@@ -1049,8 +1049,9 @@ void CuePlayer::about()
 {
 	QDate curdate = QDate::currentDate();
 	QMessageBox::information(this, trUtf8("О программе"),
-							 trUtf8("<h2>CuePlayer 0.24-svn</h2>"
-									"<p>Дата ревизии: ")
+							 trUtf8("<h2>CuePlayer ")
+									+ qApp->applicationVersion()
+									+ trUtf8("</h2> <p>Дата ревизии: ")
 									+ QString::number(25) +  " "
 									+ QString(curdate.longMonthName(4)) +  " "
 									+ QString::number(2010) +
