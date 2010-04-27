@@ -3,6 +3,8 @@
 #include "cueplayer.h"
 #include "singleclient.h"
 
+#define APPVERSION "0.24"
+
 int main(int argc, char *argv[])
 {
 	bool tray;
@@ -49,6 +51,7 @@ int main(int argc, char *argv[])
 		 myappTranslator.load("/usr/share/cueplayer/loc/cueplayer_" + QLocale::system().name().left(2));
 		 app.installTranslator(&myappTranslator);
 	app.setApplicationName("cueplayer");
+	app.setApplicationVersion(APPVERSION);
 	gst_init(0,0);
 	gst_registry_fork_set_enabled(true);
 	CuePlayer *player = new CuePlayer;
