@@ -62,7 +62,6 @@ QList<int> checkrevision()
 
 	entfile.close();
 	datarev << day << month << year << rev;
-	qDebug() << datarev;
 	return datarev;
 }
 
@@ -115,9 +114,13 @@ int main(int argc, char *argv[])
 		 app.installTranslator(&myappTranslator);
 	datarev = checkrevision();
 	fullver = APPVERSION;
-
+#ifdef BUILDER
 	if (!datarev.isEmpty())
-		fullver += "-r" + QString::number(datarev.at(3));
+	{
+		fullver += "-r";
+		fullver += REVISION;
+	}
+#endif
 	app.setApplicationName("cueplayer");
 	app.setApplicationVersion(fullver);
 	gst_init(0,0);
