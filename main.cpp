@@ -5,12 +5,73 @@
 
 #define APPVERSION "0.24"
 
+QList<int> checkrevision()
+{
+	QRegExp rxData("(\\d{4})-(\\d{2})-(\\d{2}).*");
+	QRegExp rxRev("^(\\d+)$");
+	QFile entfile("./.svn/entries");
+	int year, month, day, rev;
+	year = month = day = rev = 0;
+	bool readnextline = false;
+	QList<int> datarev;
+	QString line;
+
+	if (!entfile.open(QIODevice::ReadOnly | QIODevice::Text))
+				return datarev;
+	QTextStream enttext(&entfile);
+
+	do {
+		line = enttext.readLine();
+		if (rxData.indexIn(line) != -1)
+		{
+			if (rxData.cap(1).toInt() >= year)
+			{
+				year = rxData.cap(1).toInt();
+				if (rxData.cap(2).toInt() >= month)
+				{
+					month = rxData.cap(2).toInt();
+					if (rxData.cap(3).toInt() >= day)
+					{
+						day = rxData.cap(3).toInt();
+						readnextline = true;
+					}
+					else
+						readnextline = false;
+				}
+				else
+				{
+					day = 0;
+					readnextline = false;
+				}
+			}
+			else
+			{
+				month = day = 0;
+				readnextline = false;
+			}
+		}
+		else if (rxRev.indexIn(line) != -1 && readnextline)
+		{
+			readnextline = false;
+			rev = rxRev.cap(1).toInt();
+		}
+
+	} while (!line.isNull());
+
+	entfile.close();
+	datarev << day << month << year << rev;
+	qDebug() << datarev;
+	return datarev;
+}
+
 int main(int argc, char *argv[])
 {
 	bool tray;
 	QDir currentdir;
 	QRegExp rxPath("^/.*");
 	QRegExp rxFilename3("^(mms://|http://|ftp://).*");
+	QList<int> datarev;
+	QString fullver;
 
 	QString arg = QObject::trUtf8(argv[1]);
 	QApplication app(argc, argv);
@@ -50,8 +111,13 @@ int main(int argc, char *argv[])
 	QTranslator myappTranslator;
 		 myappTranslator.load("/usr/share/cueplayer/loc/cueplayer_" + QLocale::system().name().left(2));
 		 app.installTranslator(&myappTranslator);
+	datarev = checkrevision();
+	fullver = APPVERSION;
+
+	if (!datarev.isEmpty())
+		fullver += "r" + datarev.at(3);
 	app.setApplicationName("cueplayer");
-	app.setApplicationVersion(APPVERSION);
+	app.setApplicationVersion(fullver);
 	gst_init(0,0);
 	gst_registry_fork_set_enabled(true);
 	CuePlayer *player = new CuePlayer;
