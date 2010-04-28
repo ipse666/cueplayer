@@ -23,6 +23,10 @@
 #include "equalizer.h"
 #include "preferences.h"
 
+#ifdef BUILDER
+#include "defines.h"
+#endif
+
 class GstThread;
 
 class CuePlayer : public QWidget, public Ui::CuePlayer
