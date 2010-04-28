@@ -39,7 +39,7 @@ if ($fh->open("< ./.svn/entries")) {
 		elsif ($readnextline && $_ =~ /^\d+$/)
 		{
 			$readnextline = 0;
-			$rev = $_;
+			$rev = $_ if $rev < $_;
 		}
 	}
 	print $saveden .'-'. $savemes .'-'. $savegod . "\n";
