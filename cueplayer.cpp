@@ -1050,6 +1050,7 @@ void CuePlayer::about()
 #ifdef BUILDER
 	QRegExp rxData("(\\d{2})-(\\d{2})-(\\d{4}).*");
 	rxData.indexIn(DATA);
+	QDate curdate = QDate::currentDate();
 #endif
 	QMessageBox::information(this, trUtf8("О программе"),
 							 trUtf8("<h2>CuePlayer ")
