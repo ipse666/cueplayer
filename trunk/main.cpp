@@ -26,9 +26,13 @@ QList<int> checkrevision()
 		{
 			if (rxData.cap(1).toInt() >= year)
 			{
+				if (rxData.cap(1).toInt() > year)
+					month = day = 0;
 				year = rxData.cap(1).toInt();
 				if (rxData.cap(2).toInt() >= month)
 				{
+					if (rxData.cap(2).toInt() > month)
+						day = 0;
 					month = rxData.cap(2).toInt();
 					if (rxData.cap(3).toInt() >= day)
 					{
@@ -40,13 +44,11 @@ QList<int> checkrevision()
 				}
 				else
 				{
-					day = 0;
 					readnextline = false;
 				}
 			}
 			else
 			{
-				month = day = 0;
 				readnextline = false;
 			}
 		}
@@ -115,7 +117,7 @@ int main(int argc, char *argv[])
 	fullver = APPVERSION;
 
 	if (!datarev.isEmpty())
-		fullver += "r" + datarev.at(3);
+		fullver += "-r" + QString::number(datarev.at(3));
 	app.setApplicationName("cueplayer");
 	app.setApplicationVersion(fullver);
 	gst_init(0,0);
