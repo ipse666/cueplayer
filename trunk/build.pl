@@ -57,7 +57,7 @@ if ($fh->open("> defines.h")) {
 	print $fh "#define REVISION \"$rev\"\n";
 	print $fh "#define DATA \"$saveden-$savemes-$savegod\"\n";
 	print $fh "#endif\n";
-	$dataver = 'DATAVER';
+	$dataver = ' DATAVER';
   }
   else
   {
@@ -77,16 +77,16 @@ if ($#ARGV != -1)
   {
 	  $argu = "@ARGV";
 	  $argu =~ s/DEFINES *\+*= *//;
-	  $argu = "\"DEFINES += BUILDER $argu $dataver\"";
+	  $argu = "\"DEFINES += BUILDER$dataver $argu\"";
   }
   else
   {
-	  $argu = "\"DEFINES += BUILDER $dataver @ARGV\"";
+	  $argu = "\"DEFINES += BUILDER$dataver @ARGV\"";
   }
 }
 else
 {
-  $argu = "\"DEFINES += BUILDER $dataver\"";
+  $argu = "\"DEFINES += BUILDER$dataver\"";
 }
 print "$argu\n";
 system qmake, $argu;
