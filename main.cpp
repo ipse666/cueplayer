@@ -53,11 +53,10 @@ int main(int argc, char *argv[])
 		 app.installTranslator(&myappTranslator);
 	fullver = APPVERSION;
 #ifdef BUILDER
-	if (REVISION)
-	{
-		fullver += "-r";
-		fullver += REVISION;
-	}
+#ifdef DATAVER
+	fullver += "-r";
+	fullver += REVISION;
+#endif
 #endif
 	app.setApplicationName("cueplayer");
 	app.setApplicationVersion(fullver);

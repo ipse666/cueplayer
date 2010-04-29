@@ -57,13 +57,14 @@ if ($fh->open("> defines.h")) {
 	print $fh "#define REVISION \"$rev\"\n";
 	print $fh "#define DATA \"$saveden-$savemes-$savegod\"\n";
 	print $fh "#endif\n";
+	$dataver = 'DATAVER';
   }
   else
   {
 	print $fh "#ifndef DEFINES_H\n";
 	print $fh "#define DEFINES_H\n";
-	print $fh "#define REVISION 0\n";
-	print $fh "#define DATA 0\n";
+	print $fh "#define REVISION \"0\"\n";
+	print $fh "#define DATA \"0\"\n";
 	print $fh "#endif\n";
   }
   $fh->close;
@@ -76,11 +77,11 @@ if ($#ARGV != -1)
   {
 	  $argu = "@ARGV";
 	  $argu =~ s/DEFINES *\+*= *//;
-	  $argu = "\"DEFINES += BUILDER $argu\"";
+	  $argu = "\"DEFINES += BUILDER $argu $dataver\"";
   }
   else
   {
-	  $argu = "\"DEFINES += BUILDER @ARGV\"";
+	  $argu = "\"DEFINES += BUILDER $dataver @ARGV\"";
   }
 }
 else
