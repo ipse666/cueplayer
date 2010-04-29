@@ -62,8 +62,8 @@ if ($fh->open("> defines.h")) {
   {
 	print $fh "#ifndef DEFINES_H\n";
 	print $fh "#define DEFINES_H\n";
-	print $fh "#define REVISION \"\"\n";
-	print $fh "#define DATA \"\"\n";
+	print $fh "#define REVISION false\n";
+	print $fh "#define DATA false\n";
 	print $fh "#endif\n";
   }
   $fh->close;
