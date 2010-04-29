@@ -86,7 +86,7 @@ if ($#ARGV != -1)
 }
 else
 {
-  $argu = "\"DEFINES += BUILDER\"";
+  $argu = "\"DEFINES += BUILDER $dataver\"";
 }
 print "$argu\n";
 system qmake, $argu;
