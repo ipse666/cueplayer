@@ -88,6 +88,20 @@ else
 {
   $argu = "\"DEFINES += BUILDER$dataver\"";
 }
+
+if (`qmake-qt4 -v`)
+{
+  $qmake = qmake-qt4;
+}
+elsif (`qmake -v` =~ /qt4/)
+{
+  $qmake = qmake;
+}
+else
+{
+  warn "qmake не найден";
+  exit 1;
+}
 print "$argu\n";
-system qmake, $argu;
+system $qmake, $argu;
 exec(make);
