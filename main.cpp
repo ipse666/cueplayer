@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 		 app.installTranslator(&myappTranslator);
 	fullver = APPVERSION;
 #ifdef BUILDER
-	if (REVISION != 0)
+	if (REVISION)
 	{
 		fullver += "-r";
 		fullver += REVISION;
