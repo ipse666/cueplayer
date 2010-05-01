@@ -1,6 +1,5 @@
 #include "preferences.h"
 #include "ui_preferences.h"
-#include <QDebug>
 
 Preferences::Preferences(QWidget *parent) :
     QWidget(parent),
@@ -23,6 +22,7 @@ Preferences::Preferences(QWidget *parent) :
 		else
 			ui->tableWidget->item(counter,1)->setText("X");
 
+		ui->tableWidget->item(counter,2)->setText(codeclist.at(counter));
 		counter++;
 	}
 
@@ -90,6 +90,7 @@ void Preferences::saveSettings()
 	settings.setValue("preferences/lameextension", ui->lameExtention->isChecked());
 	settings.setValue("preferences/lamestrictiso", ui->lameStrictIso->isChecked());
 	settings.setValue("preferences/lamedisrese", ui->lameDisRese->isChecked());
+	settings.setValue("preferences/lamevbr", ui->lameVbrComboBox->currentIndex());
 	settings.setValue("preferences/lamevbrquality", ui->lameVbrQuaSlider->value());
 
 	// Транскодер. flacenc
@@ -165,6 +166,7 @@ void Preferences::readSettings()
 		ui->lameExtention->setChecked(settings.value("preferences/lameextension").toBool());
 		ui->lameStrictIso->setChecked(settings.value("preferences/lamestrictiso").toBool());
 		ui->lameDisRese->setChecked(settings.value("preferences/lamedisrese").toBool());
+		ui->lameVbrComboBox->setCurrentIndex(settings.value("preferences/lamevbr").toInt());
 		ui->lameVbrQuaSlider->setValue(settings.value("preferences/lamevbrquality").toInt());
 	}
 
@@ -230,7 +232,7 @@ void Preferences::setDefault()
 		// Основное. Кодировка CUE файла
 		ui->autoRadioButton->setChecked(true);
 		break;
-	case 2:
+	case 3:
 		// Транскодер. vorbisenc
 		ui->vorbisMaxBitrateSlider->setValue(-1);
 		ui->vorbisBitrateSlider->setValue(-1);
@@ -239,7 +241,7 @@ void Preferences::setDefault()
 		prefDeci(3);
 		ui->vorbisManagedBox->setChecked(false);
 		break;
-	case 3:
+	case 4:
 		// Транскодер. lame
 		ui->lameBitrateBox->setCurrentIndex(11);
 		ui->lameCRSlider->setValue(0);
@@ -254,9 +256,10 @@ void Preferences::setDefault()
 		ui->lameExtention->setChecked(false);
 		ui->lameStrictIso->setChecked(false);
 		ui->lameDisRese->setChecked(false);
+		ui->lameVbrComboBox->setCurrentIndex(0);
 		ui->lameVbrQuaSlider->setValue(4);
 		break;
-	case 4:
+	case 5:
 		// Транскодер. flacenc
 		ui->flacQuaSlider->setValue(5);
 		ui->flacStreamableSubsetBox->setChecked(true);
@@ -272,7 +275,7 @@ void Preferences::setDefault()
 		ui->flacMaxResidualPartitionOrderSlider->setValue(3);
 		ui->flacRiceParameterSearchDistSlider->setValue(0);
 		break;
-	case 5:
+	case 6:
 		// Транскодер. faac
 		ui->faacOutputformatComboBox->setCurrentIndex(0);
 		ui->faacBitrateSlider->setValue(128000);

@@ -323,6 +323,11 @@ p, li { white-space: pre-wrap; }
 			  <string>Не найден</string>
 			 </property>
 			</column>
+			<column>
+			 <property name="text">
+			  <string>Название элемента</string>
+			 </property>
+			</column>
 			<item row="0" column="0">
 			 <property name="text">
 			  <string/>
@@ -348,6 +353,11 @@ p, li { white-space: pre-wrap; }
 			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
 			 </property>
 			</item>
+			<item row="0" column="2">
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
 			<item row="1" column="0">
 			 <property name="text">
 			  <string/>
@@ -360,6 +370,11 @@ p, li { white-space: pre-wrap; }
 			 <property name="text">
 			  <string/>
 			 </property>
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
+			<item row="1" column="2">
 			 <property name="textAlignment">
 			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
 			 </property>
@@ -380,6 +395,11 @@ p, li { white-space: pre-wrap; }
 			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
 			 </property>
 			</item>
+			<item row="2" column="2">
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
 			<item row="3" column="0">
 			 <property name="text">
 			  <string/>
@@ -392,6 +412,11 @@ p, li { white-space: pre-wrap; }
 			 <property name="text">
 			  <string/>
 			 </property>
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
+			<item row="3" column="2">
 			 <property name="textAlignment">
 			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
 			 </property>
@@ -412,20 +437,12 @@ p, li { white-space: pre-wrap; }
 			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
 			 </property>
 			</item>
+			<item row="4" column="2">
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
 		   </widget>
-		  </item>
-		  <item row="0" column="1">
-		   <spacer name="horizontalSpacer_6">
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="sizeHint" stdset="0">
-			 <size>
-			  <width>135</width>
-			  <height>20</height>
-			 </size>
-			</property>
-		   </spacer>
 		  </item>
 		  <item row="1" column="0">
 		   <spacer name="verticalSpacer_4">
@@ -434,7 +451,7 @@ p, li { white-space: pre-wrap; }
 			</property>
 			<property name="sizeHint" stdset="0">
 			 <size>
-			  <width>20</width>
+			  <width>397</width>
 			  <height>83</height>
 			 </size>
 			</property>
@@ -1006,6 +1023,9 @@ p, li { white-space: pre-wrap; }
 			  </item>
 			  <item row="1" column="0">
 			   <widget class="QLabel" name="label_13">
+				<property name="enabled">
+				 <bool>false</bool>
+				</property>
 				<property name="text">
 				 <string>compression-ratio</string>
 				</property>
@@ -1013,6 +1033,9 @@ p, li { white-space: pre-wrap; }
 			  </item>
 			  <item row="1" column="1" colspan="5">
 			   <widget class="QSlider" name="lameCRSlider">
+				<property name="enabled">
+				 <bool>false</bool>
+				</property>
 				<property name="sizePolicy">
 				 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
 				  <horstretch>9</horstretch>
@@ -1047,6 +1070,9 @@ p, li { white-space: pre-wrap; }
 			  </item>
 			  <item row="1" column="6">
 			   <widget class="QSpinBox" name="lameCRspinBox">
+				<property name="enabled">
+				 <bool>false</bool>
+				</property>
 				<property name="alignment">
 				 <set>Qt::AlignCenter</set>
 				</property>
@@ -1247,9 +1273,9 @@ p, li { white-space: pre-wrap; }
 			   </widget>
 			  </item>
 			  <item row="8" column="1" colspan="6">
-			   <widget class="QComboBox" name="comboBox_2">
+			   <widget class="QComboBox" name="lameVbrComboBox">
 				<property name="enabled">
-				 <bool>false</bool>
+				 <bool>true</bool>
 				</property>
 				<item>
 				 <property name="text">

@@ -308,6 +308,7 @@ void TransCoder::pipeRun(int ind)
 
 	numTrack = ind;
 	bool ok, preenc;
+	int vbr = 0;
 
 	loop = g_main_loop_new (NULL, FALSE);
 
@@ -405,11 +406,14 @@ void TransCoder::pipeRun(int ind)
 			gst_bin_add_many (GST_BIN (audio), conv, encoder, muxer, fileout, NULL);
 			gst_element_link_many (conv, encoder, muxer, fileout, NULL);
 
+			if (settings.value("preferences/lamevbr").toInt())
+				vbr = settings.value("preferences/lamevbr").toInt() + 1;
+
 			if (!settings.value("preferences/lamequality").isNull())
 			{
 				g_object_set (encoder,
 							  "bitrate", bitrateList.at(settings.value("preferences/lamebitrate").toInt()),
-							  "compression-ratio", settings.value("preferences/lamecompressionratio").toInt(),
+							  //"compression-ratio", settings.value("preferences/lamecompressionratio").toInt(), // Баг. Перекрывает VBR
 							  "quality", settings.value("preferences/lamequality").toInt(),
 							  "mode", settings.value("preferences/lamemode").toInt(),
 							  "force-ms", settings.value("preferences/lameforcems").toBool(),
@@ -420,6 +424,7 @@ void TransCoder::pipeRun(int ind)
 							  "padding-type", settings.value("preferences/lamepaddingtype").toInt(),
 							  "extension", settings.value("preferences/lameextension").toBool(),
 							  "strict-iso", settings.value("preferences/lamestrictiso").toBool(),
+							  "vbr", vbr,
 							  "disable-reservoir", settings.value("preferences/lamedisrese").toBool(),
 							  NULL);
 			}
