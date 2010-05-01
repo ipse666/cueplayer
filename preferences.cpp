@@ -1,5 +1,6 @@
 #include "preferences.h"
 #include "ui_preferences.h"
+#include <QDebug>
 
 Preferences::Preferences(QWidget *parent) :
     QWidget(parent),
@@ -9,7 +10,23 @@ Preferences::Preferences(QWidget *parent) :
 
 	ui->treeWidget->setCurrentItem(ui->treeWidget->topLevelItem(0));
 	readSettings();
+	cugstbinds = new CuGstBinds(this);
 
+	QStringList codeclist;
+	codeclist << "mad" << "vorbisdec" << "flacdec" << "ffdec_ape" << "faad";
+	int counter = 0;
+
+	foreach (QString str, codeclist)
+	{
+		if (cugstbinds->checkElement(str))
+			ui->tableWidget->item(counter,0)->setText("X");
+		else
+			ui->tableWidget->item(counter,1)->setText("X");
+
+		counter++;
+	}
+
+	ui->tableWidget->verticalHeader()->show();
 	connect(ui->okButton, SIGNAL(clicked()), this, SLOT(saveSettings()));
 	connect(ui->vorbisQuaSlider, SIGNAL(valueChanged(int)), this, SLOT(prefDeci(int)));
 	connect(ui->vorbisQuaValue, SIGNAL(valueChanged(double)), this, SLOT(prefDeci(double)));
@@ -186,7 +203,7 @@ void Preferences::setTrPref()
 {
 	ui->treeWidget->setCurrentItem(ui->treeWidget->topLevelItem(1));
 	ui->treeWidget->expandItem(ui->treeWidget->topLevelItem(1));
-	ui->stackedWidget->setCurrentIndex(1);
+	ui->stackedWidget->setCurrentIndex(1 + ui->treeWidget->topLevelItem(0)->childCount());
 }
 
 void Preferences::prefDeci(int i)
@@ -274,8 +291,22 @@ void Preferences::listItemClicked(QTreeWidgetItem *item, int column)
 	int ind = ui->treeWidget->indexOfTopLevelItem(item);
 	column = 0;
 
-	if (ind != -1)
+	if (ind == -1)
+	{
+		switch (ui->treeWidget->indexOfTopLevelItem(item->parent()))
+		{
+		case 0:
+			ui->stackedWidget->setCurrentIndex(ui->treeWidget->indexOfTopLevelItem(item->parent()) + item->parent()->indexOfChild(item) + 1);
+			break;
+		case 1:
+			ui->stackedWidget->setCurrentIndex(ui->treeWidget->indexOfTopLevelItem(item->parent()) +
+											   item->parent()->indexOfChild(item) + 1 +
+											   ui->treeWidget->topLevelItem(ui->treeWidget->indexOfTopLevelItem(item->parent()) - 1)->childCount());
+			break;
+		}
+	}
+	else if (ind <= 0)
 		ui->stackedWidget->setCurrentIndex(ind);
 	else
-		ui->stackedWidget->setCurrentIndex(ui->treeWidget->indexOfTopLevelItem(item->parent()) + item->parent()->indexOfChild(item) + 1);
+		ui->stackedWidget->setCurrentIndex(ind + ui->treeWidget->topLevelItem(ind - 1)->childCount());
 }

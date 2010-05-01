@@ -24,7 +24,8 @@ HEADERS += cueplayer.h \
     singleclient.h \
     widgetmanager.h \
     equalizer.h \
-    preferences.h
+    preferences.h \
+    cugstbinds.h
 FORMS += ui/cueplayer.ui \
     ui/transcoder.ui \
     ui/apetoflacdialog.ui \
@@ -47,7 +48,8 @@ SOURCES += cueplayer.cpp \
     singleclient.cpp \
     widgetmanager.cpp \
     equalizer.cpp \
-    preferences.cpp
+    preferences.cpp \
+    cugstbinds.cpp
 RESOURCES += ressources.qrc
 CONFIG += release \
     link_pkgconfig \

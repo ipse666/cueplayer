@@ -47,6 +47,15 @@ if ($fh->open("< ./.svn/entries")) {
    $fh->close;
 }
 
+# Поиск gst плагинов
+&gst_plugins_check('gstreamer-0.10');
+&gst_plugins_check('gstreamer-base-0.10');
+&gst_plugins_check('gstreamer-interfaces-0.10');
+&gst_plugins_check('gstreamer-plugins-base-0.10');
+
+# Проверка элементов
+&gst_elements_check('autoaudiosink');
+
 # Создание define файла;
 if ($fh->open("> defines.h")) {
   if ($rev)
@@ -99,9 +108,42 @@ elsif (`qmake -v` =~ /qt4/)
 }
 else
 {
-  warn "qmake не найден";
+  warn "qmake не найден\n";
   exit 1;
 }
-print "$argu\n";
+print "qmake $argu\n";
 system $qmake, $argu;
 exec(make);
+
+# Подпрограмма поиска gst плагинов
+sub gst_plugins_check {
+	$modul = shift;
+	$result = `pkg-config --modversion --silence-errors $modul`;
+	if ($result =~ /0\.10\.\d+/)
+	{
+		print "Обнаружен $modul\tверсии $result";
+	}
+	else
+	{
+		warn "$modul не обнаружен!\n";
+		exit 1;
+	}
+}
+
+# Подпрограмма проверки gst элементов
+sub gst_elements_check {
+	$elem = shift;
+	@out = `gst-inspect-0.10 $elem`;
+	if ($#out)
+	{
+		print "Обнаружен элемент $elem\n";
+	}
+	else
+	{
+		warn "
+			Элемент $elem не обнаружен!
+			установите gst-plugins-good
+			http://www.gstreamer.net/src/gst-plugins-good/\n";
+		exit 1;
+	}
+}
