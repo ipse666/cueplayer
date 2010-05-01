@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QSettings>
 #include <QTreeWidgetItem>
+#include "cugstbinds.h"
 
 namespace Ui {
     class Preferences;
@@ -21,6 +22,7 @@ protected:
 
 private:
     Ui::Preferences *ui;
+	CuGstBinds *cugstbinds;
 
 private slots:
 	void saveSettings();

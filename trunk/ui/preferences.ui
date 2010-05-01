@@ -6,7 +6,7 @@
    <rect>
 	<x>0</x>
 	<y>0</y>
-	<width>592</width>
+	<width>590</width>
 	<height>368</height>
    </rect>
   </property>
@@ -38,6 +38,11 @@
 	  <property name="text">
 	   <string>Проигрыватель</string>
 	  </property>
+	  <item>
+	   <property name="text">
+		<string>кодеки</string>
+	   </property>
+	  </item>
 	 </item>
 	 <item>
 	  <property name="text">
@@ -204,6 +209,239 @@ p, li { white-space: pre-wrap; }
 		  </size>
 		 </property>
 		</spacer>
+	   </item>
+	  </layout>
+	 </widget>
+	 <widget class="QWidget" name="page_7">
+	  <layout class="QGridLayout" name="gridLayout_17">
+	   <item row="0" column="0">
+		<widget class="QGroupBox" name="groupBox_4">
+		 <property name="title">
+		  <string>Кодеки для воспроизведения</string>
+		 </property>
+		 <layout class="QGridLayout" name="gridLayout_18">
+		  <item row="0" column="0">
+		   <widget class="QTableWidget" name="tableWidget">
+			<property name="sizePolicy">
+			 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+			  <horstretch>0</horstretch>
+			  <verstretch>0</verstretch>
+			 </sizepolicy>
+			</property>
+			<property name="focusPolicy">
+			 <enum>Qt::NoFocus</enum>
+			</property>
+			<property name="verticalScrollBarPolicy">
+			 <enum>Qt::ScrollBarAlwaysOff</enum>
+			</property>
+			<property name="horizontalScrollBarPolicy">
+			 <enum>Qt::ScrollBarAlwaysOff</enum>
+			</property>
+			<property name="autoScroll">
+			 <bool>false</bool>
+			</property>
+			<property name="editTriggers">
+			 <set>QAbstractItemView::NoEditTriggers</set>
+			</property>
+			<property name="tabKeyNavigation">
+			 <bool>false</bool>
+			</property>
+			<property name="showDropIndicator" stdset="0">
+			 <bool>false</bool>
+			</property>
+			<property name="dragDropOverwriteMode">
+			 <bool>false</bool>
+			</property>
+			<property name="selectionMode">
+			 <enum>QAbstractItemView::NoSelection</enum>
+			</property>
+			<property name="gridStyle">
+			 <enum>Qt::SolidLine</enum>
+			</property>
+			<property name="cornerButtonEnabled">
+			 <bool>true</bool>
+			</property>
+			<attribute name="horizontalHeaderCascadingSectionResizes">
+			 <bool>false</bool>
+			</attribute>
+			<attribute name="horizontalHeaderHighlightSections">
+			 <bool>true</bool>
+			</attribute>
+			<attribute name="horizontalHeaderStretchLastSection">
+			 <bool>true</bool>
+			</attribute>
+			<attribute name="verticalHeaderVisible">
+			 <bool>false</bool>
+			</attribute>
+			<attribute name="verticalHeaderCascadingSectionResizes">
+			 <bool>false</bool>
+			</attribute>
+			<attribute name="verticalHeaderHighlightSections">
+			 <bool>true</bool>
+			</attribute>
+			<attribute name="verticalHeaderMinimumSectionSize">
+			 <number>30</number>
+			</attribute>
+			<attribute name="verticalHeaderShowSortIndicator" stdset="0">
+			 <bool>false</bool>
+			</attribute>
+			<attribute name="verticalHeaderStretchLastSection">
+			 <bool>true</bool>
+			</attribute>
+			<row>
+			 <property name="text">
+			  <string>mp3</string>
+			 </property>
+			</row>
+			<row>
+			 <property name="text">
+			  <string>ogg</string>
+			 </property>
+			</row>
+			<row>
+			 <property name="text">
+			  <string>flac</string>
+			 </property>
+			</row>
+			<row>
+			 <property name="text">
+			  <string>ape</string>
+			 </property>
+			</row>
+			<row>
+			 <property name="text">
+			  <string>aac</string>
+			 </property>
+			</row>
+			<column>
+			 <property name="text">
+			  <string>Найден</string>
+			 </property>
+			</column>
+			<column>
+			 <property name="text">
+			  <string>Не найден</string>
+			 </property>
+			</column>
+			<item row="0" column="0">
+			 <property name="text">
+			  <string/>
+			 </property>
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			 <property name="foreground">
+			  <brush brushstyle="NoBrush">
+			   <color alpha="255">
+				<red>0</red>
+				<green>0</green>
+				<blue>0</blue>
+			   </color>
+			  </brush>
+			 </property>
+			</item>
+			<item row="0" column="1">
+			 <property name="text">
+			  <string/>
+			 </property>
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
+			<item row="1" column="0">
+			 <property name="text">
+			  <string/>
+			 </property>
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
+			<item row="1" column="1">
+			 <property name="text">
+			  <string/>
+			 </property>
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
+			<item row="2" column="0">
+			 <property name="text">
+			  <string/>
+			 </property>
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
+			<item row="2" column="1">
+			 <property name="text">
+			  <string/>
+			 </property>
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
+			<item row="3" column="0">
+			 <property name="text">
+			  <string/>
+			 </property>
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
+			<item row="3" column="1">
+			 <property name="text">
+			  <string/>
+			 </property>
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
+			<item row="4" column="0">
+			 <property name="text">
+			  <string/>
+			 </property>
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
+			<item row="4" column="1">
+			 <property name="text">
+			  <string/>
+			 </property>
+			 <property name="textAlignment">
+			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+			 </property>
+			</item>
+		   </widget>
+		  </item>
+		  <item row="0" column="1">
+		   <spacer name="horizontalSpacer_6">
+			<property name="orientation">
+			 <enum>Qt::Horizontal</enum>
+			</property>
+			<property name="sizeHint" stdset="0">
+			 <size>
+			  <width>135</width>
+			  <height>20</height>
+			 </size>
+			</property>
+		   </spacer>
+		  </item>
+		  <item row="1" column="0">
+		   <spacer name="verticalSpacer_4">
+			<property name="orientation">
+			 <enum>Qt::Vertical</enum>
+			</property>
+			<property name="sizeHint" stdset="0">
+			 <size>
+			  <width>20</width>
+			  <height>83</height>
+			 </size>
+			</property>
+		   </spacer>
+		  </item>
+		 </layout>
+		</widget>
 	   </item>
 	  </layout>
 	 </widget>
@@ -634,7 +872,7 @@ p, li { white-space: pre-wrap; }
 		   <rect>
 			<x>0</x>
 			<y>0</y>
-			<width>319</width>
+			<width>406</width>
 			<height>408</height>
 		   </rect>
 		  </property>
