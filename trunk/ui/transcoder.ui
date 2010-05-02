@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>619</width>
-    <height>387</height>
+    <width>502</width>
+    <height>384</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Конвертор/Разделитель</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../ressources.qrc">
     <normaloff>:/images/convertor.png</normaloff>:/images/convertor.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="8">
+    <item row="0" column="0" colspan="9">
      <widget class="QTreeWidget" name="treeWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -63,18 +63,6 @@
       <attribute name="headerStretchLastSection">
        <bool>true</bool>
       </attribute>
-      <attribute name="headerVisible">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="headerMinimumSectionSize">
-       <number>21</number>
-      </attribute>
-      <attribute name="headerShowSortIndicator" stdset="0">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="headerStretchLastSection">
-       <bool>true</bool>
-      </attribute>
       <column>
        <property name="text">
         <string notr="true">1</string>
@@ -94,7 +82,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="1" colspan="7">
+    <item row="1" column="1" colspan="8">
      <widget class="QProgressBar" name="progressBar">
       <property name="maximum">
        <number>100</number>
@@ -111,20 +99,46 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="1" colspan="6">
+    <item row="2" column="1" colspan="7">
      <widget class="QLineEdit" name="lineEdit"/>
     </item>
-    <item row="4" column="0">
+    <item row="2" column="8" rowspan="2">
+     <widget class="QPushButton" name="selectDirButton">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Обзор</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" rowspan="2" colspan="2">
+     <spacer name="horizontalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>118</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="4" column="2" colspan="2">
      <widget class="QLabel" name="label_3">
       <property name="text">
        <string>Контейнер:</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
+    <item row="4" column="4">
      <widget class="QComboBox" name="containerBox"/>
     </item>
-    <item row="4" column="2">
+    <item row="4" column="5">
      <widget class="QLabel" name="label_4">
       <property name="text">
        <string>Кодек:</string>
@@ -134,37 +148,37 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="3">
+    <item row="4" column="6">
      <widget class="QComboBox" name="codecBox"/>
     </item>
-    <item row="4" column="4">
-     <widget class="QLabel" name="label_5">
-      <property name="text">
-       <string>Битрейт:</string>
+    <item row="4" column="7" colspan="2">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
       </property>
-     </widget>
+     </spacer>
     </item>
-    <item row="4" column="5">
-     <widget class="QComboBox" name="bitrateBox"/>
-    </item>
-    <item row="6" column="0">
+    <item row="5" column="0">
      <widget class="QPushButton" name="startButton">
       <property name="text">
        <string>Начать</string>
       </property>
      </widget>
     </item>
-    <item row="6" column="1">
+    <item row="5" column="1" colspan="2">
      <widget class="QPushButton" name="stopButton">
       <property name="text">
        <string>Отменить</string>
       </property>
      </widget>
     </item>
-    <item row="6" column="2" colspan="5">
+    <item row="5" column="3" colspan="5">
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -180,7 +194,7 @@
       </property>
      </spacer>
     </item>
-    <item row="6" column="7">
+    <item row="5" column="8">
      <widget class="QPushButton" name="pushButton_5">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -193,45 +207,6 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="7">
-     <widget class="QPushButton" name="selectDirButton">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Обзор</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="6">
-     <widget class="QLabel" name="label_6">
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
-      </property>
-      <property name="text">
-       <string>Кбит/сек</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="7">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -239,7 +214,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>619</width>
+     <width>502</width>
      <height>23</height>
     </rect>
    </property>
@@ -308,7 +283,7 @@
   </widget>
   <action name="quitAction">
    <property name="icon">
-    <iconset>
+    <iconset resource="../ressources.qrc">
      <normaloff>:/images/application-exit.png</normaloff>:/images/application-exit.png</iconset>
    </property>
    <property name="text">
@@ -322,7 +297,7 @@
   </action>
   <action name="selectAllAction">
    <property name="icon">
-    <iconset>
+    <iconset resource="../ressources.qrc">
      <normaloff>:/images/format-indent-more.png</normaloff>:/images/format-indent-more.png</iconset>
    </property>
    <property name="text">
@@ -331,7 +306,7 @@
   </action>
   <action name="prefAction">
    <property name="icon">
-    <iconset>
+    <iconset resource="../ressources.qrc">
      <normaloff>:/images/preferences.png</normaloff>:/images/preferences.png</iconset>
    </property>
    <property name="text">
@@ -339,7 +314,9 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>pushButton_5</sender>

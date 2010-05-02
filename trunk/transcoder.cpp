@@ -102,13 +102,9 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 
 	containerBox->addItems(QStringList() << "ogg" << "mp3" << "flac" << "aac");
 	codecBox->addItems(QStringList() << "vorbis" << "lame" << "flac" << "faac");
-	bitrateBox->addItems(QStringList() << "vbr" << "8"  << "16" << "24" << "32" << "40" <<
-						 "48" << "56" << "64" << "80" << "96" << "112" << "128" << "160" <<
-						 "192" << "224" << "256" << "320" << "500");
 
 	containerBox->setCurrentIndex(defaultContainer);
 	codecBox->setCurrentIndex(defaultCodec);
-	bitrateBox->setCurrentIndex(12);
 
 	statusLabel = new QLabel();
 	lineEdit->setText(QDir::homePath());
@@ -133,12 +129,8 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 	connect(selectAllAction, SIGNAL(triggered()), this, SLOT(selectAllTrigger()));
 	connect(startButton, SIGNAL(clicked()), this, SLOT(startTranscode()));
 	connect(stopButton, SIGNAL(clicked()), this, SLOT(stopAll()));
-	connect(containerBox, SIGNAL(currentIndexChanged(int)), this, SLOT(formatError(int)));
 	connect(containerBox, SIGNAL(activated(int)), codecBox, SLOT(setCurrentIndex(int)));
-	connect(codecBox, SIGNAL(currentIndexChanged(int)), this, SLOT(formatError(int)));
 	connect(codecBox, SIGNAL(activated(int)), containerBox, SLOT(setCurrentIndex(int)));
-	connect(bitrateBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSettings()));
-	connect(bitrateBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setVbr()));
 	connect(treeWidget, SIGNAL(itemEntered(QTreeWidgetItem*,int)), this, SLOT(toolItem(QTreeWidgetItem*,int)));
 	connect(treeWidget, SIGNAL(itemPressed(QTreeWidgetItem*,int)), this, SLOT(toolItem(QTreeWidgetItem*,int)));
 	connect(quitAction, SIGNAL(triggered()), this, SIGNAL(transQuit()));
@@ -374,7 +366,6 @@ void TransCoder::pipeRun(int ind)
 								  "managed", settings.value("preferences/vorbismanaged").toBool(),
 								  NULL);
 				}
-				bitrateBox->setDisabled(true);
 				gst_tag_setter_add_tags (GST_TAG_SETTER (tagger),
 									GST_TAG_MERGE_REPLACE_ALL,
 									GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
@@ -428,7 +419,6 @@ void TransCoder::pipeRun(int ind)
 							  "disable-reservoir", settings.value("preferences/lamedisrese").toBool(),
 							  NULL);
 			}
-			bitrateBox->setDisabled(true);
 			gst_tag_setter_add_tags (GST_TAG_SETTER (muxer),
 								GST_TAG_MERGE_REPLACE_ALL,
 								GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
@@ -482,6 +472,8 @@ void TransCoder::pipeRun(int ind)
 			break;
 		case CODEC_FAAC:
 			encoder = gst_element_factory_make ("faac", "audio-encoder");
+			gst_bin_add_many (GST_BIN (audio), conv, encoder, fileout, NULL);
+			gst_element_link_many (conv, encoder, fileout, NULL);
 			if (!settings.value("preferences/faacprofile").isNull())
 			{
 				g_object_set(encoder,
@@ -493,11 +485,6 @@ void TransCoder::pipeRun(int ind)
 							 "shortctl", settings.value("preferences/faacshortctl").toInt(),
 							 NULL);
 			}
-			gst_bin_add_many (GST_BIN (audio), conv, encoder, fileout, NULL);
-			gst_element_link_many (conv, encoder, fileout, NULL);
-			g_object_set (encoder, "bitrate", bitrateBox->currentText().toInt(&ok, 10) * 1000,
-						  "outputformat", 1,
-						  "profile", 2, NULL);
 			containerBox->setCurrentIndex(CODEC_FAAC);
 			break;
 		case CODEC_NO:
@@ -562,28 +549,6 @@ void TransCoder::timerUpdate()
 	progressBar->setValue(curpercent);
 }
 
-void TransCoder::formatError(int index)
-{
-	switch (index)
-	{
-	case CODEC_VORBIS:
-		if (bitrateBox->currentIndex() > 15)
-			bitrateBox->setCurrentIndex(18);
-		break;
-	case CODEC_LAME:
-	case CODEC_FAAC:
-		if (bitrateBox->currentIndex() > 17)
-			bitrateBox->setCurrentIndex(17);
-		break;
-	case CODEC_FLAC:
-		bitrateBox->setCurrentIndex(0);
-		break;
-	default:
-		break;
-	}
-	bitrateBox->setDisabled(false); // ВРЕМЕННО
-}
-
 void TransCoder::setDefaultIndex()
 {
 	codecBox->setCurrentIndex(defaultCodec);
@@ -598,23 +563,10 @@ void TransCoder::stopAllPub()
 void TransCoder::updateSettings()
 {
 	settings.setValue("transcoder/outdir", lineEdit->text());
-	settings.setValue("transcoder/bitrate", bitrateBox->currentIndex());
-}
-
-void TransCoder::setVbr()
-{
-	formatError(codecBox->currentIndex());
-	if (bitrateBox->currentIndex())
-		label_6->show();
-	else
-		label_6->hide();
 }
 
 void TransCoder::restoreSettings()
 {
-	bool ok;
-	if (settings.value("transcoder/bitrate").toBool())
-		bitrateBox->setCurrentIndex(settings.value("transcoder/bitrate").toInt(&ok));
 	if (settings.value("transcoder/outdir").toBool())
 		lineEdit->setText(settings.value("transcoder/outdir").toString());
 }

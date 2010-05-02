@@ -47,11 +47,9 @@ private slots:
 	void startTranscode();
 	void stopTranscode();
 	void timerUpdate();
-	void formatError(int);
 	void setDefaultIndex();
 	void stopAll();
 	void updateSettings();
-	void setVbr();
 	void restoreSettings();
 	void toolItem(QTreeWidgetItem*,int);
 
