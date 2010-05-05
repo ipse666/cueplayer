@@ -55,8 +55,9 @@ CONFIG += release \
     link_pkgconfig \
     warn_on
 PKGCONFIG += gstreamer-0.10 \
-    gstreamer-interfaces-0.10
+	gstreamer-interfaces-0.10
 OTHER_FILES += INSTALL \
     README \
-    CHANGELOG
+	CHANGELOG \
+	build.pl
 TRANSLATIONS = loc/cueplayer_pl.ts
