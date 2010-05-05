@@ -115,43 +115,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="0" rowspan="2" colspan="2">
-     <spacer name="horizontalSpacer_3">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>118</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="4" column="2" colspan="2">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>Контейнер:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="4">
-     <widget class="QComboBox" name="containerBox"/>
-    </item>
-    <item row="4" column="5">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>Кодек:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="6">
-     <widget class="QComboBox" name="codecBox"/>
-    </item>
-    <item row="4" column="7" colspan="2">
+    <item row="4" column="4" colspan="5">
      <spacer name="horizontalSpacer_2">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -171,14 +135,14 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="1" colspan="2">
+    <item row="5" column="1">
      <widget class="QPushButton" name="stopButton">
       <property name="text">
        <string>Отменить</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="3" colspan="5">
+    <item row="5" column="2" colspan="6">
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -206,6 +170,29 @@
        <string>Закрыть</string>
       </property>
      </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Контейнер:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QComboBox" name="containerBox"/>
+    </item>
+    <item row="4" column="2">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Кодек:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="3">
+     <widget class="QComboBox" name="codecBox"/>
     </item>
    </layout>
   </widget>

@@ -299,7 +299,7 @@ void TransCoder::pipeRun(int ind)
 	GstPad *audiopad;//, *encoderpad;
 
 	numTrack = ind;
-	bool ok, preenc;
+	bool preenc;
 	int vbr = 0;
 
 	loop = g_main_loop_new (NULL, FALSE);
