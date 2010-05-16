@@ -38,6 +38,9 @@
 	 <property name="autoScroll">
 	  <bool>true</bool>
 	 </property>
+	 <property name="textElideMode">
+	  <enum>Qt::ElideNone</enum>
+	 </property>
 	 <attribute name="headerVisible">
 	  <bool>false</bool>
 	 </attribute>
