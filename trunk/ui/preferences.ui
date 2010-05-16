@@ -21,10 +21,16 @@
    <item row="0" column="0" rowspan="2">
 	<widget class="QTreeWidget" name="treeWidget">
 	 <property name="sizePolicy">
-	  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-	   <horstretch>4</horstretch>
+	  <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+	   <horstretch>5</horstretch>
 	   <verstretch>0</verstretch>
 	  </sizepolicy>
+	 </property>
+	 <property name="maximumSize">
+	  <size>
+	   <width>119</width>
+	   <height>16777215</height>
+	  </size>
 	 </property>
 	 <attribute name="headerVisible">
 	  <bool>false</bool>
