@@ -100,11 +100,11 @@ else
 
 if (`qmake-qt4 -v`)
 {
-  $qmake = qmake-qt4;
+  $qmake = 'qmake-qt4';
 }
 elsif (`qmake -v` =~ /qt4/)
 {
-  $qmake = qmake;
+  $qmake = 'qmake';
 }
 else
 {
