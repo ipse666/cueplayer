@@ -38,6 +38,7 @@ protected:
 	void dragEnterEvent(QDragEnterEvent *event);
 	void dropEvent(QDropEvent *event);
 	void keyPressEvent (QKeyEvent  *event);
+
 public:
 	CuePlayer(QWidget *parent = 0);
 	void setServer(SingleServer*);
@@ -50,6 +51,7 @@ public:
 	gchar* getDvdAudio(int);
 	void postPlay();
 	WidgetManager *winman;
+
 private:
 	void seekAndLCD(int);
 	void createTrayIconMenu();
@@ -117,10 +119,12 @@ private:
 	GstBus *bus;
 	int multiFiles[100];
 	int loadpoints;
+
 public slots:
 	void playNextTrack();
 	void paramFile(QStringList);
 	void setTray(bool);
+
 private slots:
 	void setNumLCDs(int);
 	void cueFileSelected(QStringList);
@@ -174,8 +178,9 @@ private slots:
 	void settingsApply(bool);
 	void equalizerChang(double*);
 	void prefTrShow();
+
 signals:
-	void gstError();
+	void gstError();	
 };
 
 class GstThread : public QThread
@@ -186,8 +191,10 @@ public:
 	GstThread(QObject * parent = 0);
 	void setPlayBin(GstElement *);
 	void setFunc(int);
+
 protected:
 	void run();
+
 private:
 	void setState();
 	GstElement *thplay;
