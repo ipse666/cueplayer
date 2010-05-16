@@ -51,6 +51,12 @@ void Preferences::changeEvent(QEvent *e)
     }
 }
 
+void Preferences::resizeEvent(QResizeEvent  *e)
+{
+	ui->treeWidget->setMinimumWidth(126);
+	QWidget::resizeEvent(e);
+}
+
 void Preferences::saveSettings()
 {
 	QSettings settings;
@@ -115,6 +121,9 @@ void Preferences::saveSettings()
 	settings.setValue("preferences/faactns", ui->faacTnsCheckBox->isChecked());
 	settings.setValue("preferences/faacmidside", ui->faacMidsideCheckBox->isChecked());
 	settings.setValue("preferences/faacshortctl", ui->faacShortctlComboBox->currentIndex());
+
+	// Ширина левого поля
+	settings.setValue("preferences/treewidgetwidth", ui->treeWidget->width());
 
 	emit settingsApply(ui->equalizerBox->isChecked());
 
@@ -198,6 +207,10 @@ void Preferences::readSettings()
 		ui->faacMidsideCheckBox->setChecked(settings.value("preferences/faacmidside").toBool());
 		ui->faacShortctlComboBox->setCurrentIndex(settings.value("preferences/faacshortctl").toInt());
 	}
+
+	// Ширина левого поля
+	if (!settings.value("preferences/treewidgetwidth").isNull())
+		ui->treeWidget->setMinimumWidth(settings.value("preferences/treewidgetwidth").toInt());
 }
 
 // Внешний вызов настроек транскодера
