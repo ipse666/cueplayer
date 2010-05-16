@@ -369,7 +369,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	else if (!QString::compare(fi.suffix(), "flv", Qt::CaseInsensitive))
 	{
 		videoFlag = true;
-		streamFlag = true;
+		//streamFlag = true;
 		setWindowsTitles(trUtf8("FLV-видео"));
 		label->setText(fi.fileName());
 		play = gst_element_factory_make ("playbin2", "play");
