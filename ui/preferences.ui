@@ -33,7 +33,10 @@
 	  </size>
 	 </property>
 	 <property name="autoScroll">
-	  <bool>false</bool>
+	  <bool>true</bool>
+	 </property>
+	 <property name="horizontalScrollMode">
+	  <enum>QAbstractItemView::ScrollPerItem</enum>
 	 </property>
 	 <attribute name="headerVisible">
 	  <bool>false</bool>
