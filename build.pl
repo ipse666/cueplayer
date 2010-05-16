@@ -111,7 +111,7 @@ else
   warn "qmake не найден\n";
   exit 1;
 }
-print "qmake $argu\n";
+print "$qmake $argu\n";
 system $qmake, $argu;
 exec(make);
 
