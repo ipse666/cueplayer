@@ -46,6 +46,10 @@ enum Codec {
 	UTF8
 };
 
+#ifdef LIBNOTIFY
+NotifyNotification *notification;
+#endif
+
 CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 {
 	setupUi(this);
@@ -806,12 +810,35 @@ void CuePlayer::seekAndLCD(int num)
 								refparser->getTrackTitle(num);
 			if (tray && settings.value("preferences/traytext").toBool())
 			{
+#ifdef LIBNOTIFY
+				QString str1 = refparser->getTrackTitle(num);
+				QByteArray ba = str1.toUtf8();
+				const char *c_str2 = ba.data();
+				QString str2 = refparser->getPerformer() + " - " + refparser->getAlbum();
+				QByteArray ba2 = str2.toUtf8();
+				const char *c_str3 = ba2.data();
+
+				/* Create notification */
+				if (!notification) notification = notify_notification_new(c_str2, c_str3, NULL, NULL);
+
+				if (notification) {
+				notify_notification_update(notification, c_str2, c_str3, NULL);
+				/* Set timeout */
+				notify_notification_set_timeout(notification, 2000);
+				/* Schedule notification for showing */
+				notify_notification_show(notification, NULL);
+
+				/* Clean up the memory */
+				//g_object_unref(notification);
+				}
+#else
 				trayIcon->showMessage(trUtf8("Играет"),
 								refparser->getTrackTitle(num) + "\n" +
 								refparser->getPerformer() + " - " +
 								refparser->getAlbum(),
 								QSystemTrayIcon::Information,
 								2000);
+#endif
 			}
 		}
 		if (!multiCueFlag)

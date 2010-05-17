@@ -61,3 +61,7 @@ OTHER_FILES += INSTALL \
 	CHANGELOG \
 	build.pl
 TRANSLATIONS = loc/cueplayer_pl.ts
+
+contains(DEFINES, LIBNOTIFY) {
+	PKGCONFIG += libnotify
+}

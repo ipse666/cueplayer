@@ -1,6 +1,10 @@
 #ifndef CUEPLAYER_H
 #define CUEPLAYER_H
 
+#ifdef LIBNOTIFY
+#include <libnotify/notify.h>
+#endif
+
 #include <QFileDialog>
 #include <QSystemTrayIcon>
 #include <QThread>
