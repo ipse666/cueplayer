@@ -795,6 +795,10 @@ void CuePlayer::volumeValue(int volume)
 // переключение между треками и индикация
 void CuePlayer::seekAndLCD(int num)
 {
+	int timeout = 2000;
+	if (!settings.value("preferences/traytimeout").isNull())
+		timeout = settings.value("preferences/traytimeout").toDouble() * 1000;
+
 	QString stringNumTrack;
 	int totalTimeNext = 0;
 	int totalTimeAlbum = getDuration();
@@ -824,7 +828,7 @@ void CuePlayer::seekAndLCD(int num)
 				if (notification) {
 				notify_notification_update(notification, c_str2, c_str3, NULL);
 				/* Set timeout */
-				notify_notification_set_timeout(notification, 2000);
+				notify_notification_set_timeout(notification, timeout);
 				/* Schedule notification for showing */
 				notify_notification_show(notification, NULL);
 
@@ -837,7 +841,7 @@ void CuePlayer::seekAndLCD(int num)
 								refparser->getPerformer() + " - " +
 								refparser->getAlbum(),
 								QSystemTrayIcon::Information,
-								2000);
+								timeout);
 #endif
 			}
 		}
@@ -1245,16 +1249,54 @@ void CuePlayer::checkState()
 
 void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
 {
+	int timeout = 2000;
+	if (!settings.value("preferences/traytimeout").isNull())
+		timeout = settings.value("preferences/traytimeout").toDouble() * 1000;
+
 	if (vtitle)
 	{
 		label->setText(trUtf8(g_value_get_string(vtitle)));
 		if (trUtf8(g_value_get_string(vartist)).isEmpty() || trUtf8(g_value_get_string(valbum)).isEmpty())
 			qDebug() << trUtf8("Играет: ") + trUtf8(g_value_get_string(vtitle));
-		else
+		else if (playButtonFlag)
+		{
 			qDebug() << trUtf8("Играет: ") +
 				trUtf8(g_value_get_string(vartist)) + " / " +
 				trUtf8(g_value_get_string(valbum)) + " / " +
 				trUtf8(g_value_get_string(vtitle));
+			if (tray && settings.value("preferences/traytext").toBool())
+			{
+#ifdef LIBNOTIFY
+				QString str1 = trUtf8(g_value_get_string(vtitle));
+				QByteArray ba = str1.toUtf8();
+				const char *c_str2 = ba.data();
+				QString str2 = trUtf8(g_value_get_string(vartist)) + " - " + trUtf8(g_value_get_string(valbum));
+				QByteArray ba2 = str2.toUtf8();
+				const char *c_str3 = ba2.data();
+
+				/* Create notification */
+				if (!notification) notification = notify_notification_new(c_str2, c_str3, NULL, NULL);
+
+				if (notification) {
+				notify_notification_update(notification, c_str2, c_str3, NULL);
+				/* Set timeout */
+				notify_notification_set_timeout(notification, timeout);
+				/* Schedule notification for showing */
+				notify_notification_show(notification, NULL);
+
+				/* Clean up the memory */
+				//g_object_unref(notification);
+				}
+#else
+				trayIcon->showMessage(trUtf8("Играет"),
+								trUtf8(g_value_get_string(vtitle)) + "\n" +
+								trUtf8(g_value_get_string(vartist)) + " - " +
+								trUtf8(g_value_get_string(valbum)),
+								QSystemTrayIcon::Information,
+								timeout);
+#endif
+			}
+		}
 		prewlabel = label->text(); // Необходимо сохранить асинхронную метку
 	}
 	if (valbum && vartist)
