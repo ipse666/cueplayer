@@ -2473,11 +2473,70 @@ p, li { white-space: pre-wrap; }
   <tabstop>closeButton</tabstop>
   <tabstop>treeWidget</tabstop>
   <tabstop>integrationBox</tabstop>
+  <tabstop>equalizerBox</tabstop>
   <tabstop>trayTextBox</tabstop>
+  <tabstop>doubleSpinBox</tabstop>
+  <tabstop>coverBox</tabstop>
   <tabstop>autoRadioButton</tabstop>
+  <tabstop>cp1250RadioButton</tabstop>
   <tabstop>cp1251RadioButton</tabstop>
   <tabstop>utfRadioButton</tabstop>
-  <tabstop>equalizerBox</tabstop>
+  <tabstop>spinBox</tabstop>
+  <tabstop>vorbisBitrateSlider</tabstop>
+  <tabstop>spinBox_2</tabstop>
+  <tabstop>vorbisMinBitrateSlider</tabstop>
+  <tabstop>spinBox_3</tabstop>
+  <tabstop>vorbisQuaSlider</tabstop>
+  <tabstop>vorbisManagedBox</tabstop>
+  <tabstop>vorbisQuaValue</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>lameBitrateBox</tabstop>
+  <tabstop>lameCRSlider</tabstop>
+  <tabstop>lameCRspinBox</tabstop>
+  <tabstop>lameQuaSlider</tabstop>
+  <tabstop>lameModeComboBox</tabstop>
+  <tabstop>lameForseMs</tabstop>
+  <tabstop>lameFreeFormat</tabstop>
+  <tabstop>lameCopyight</tabstop>
+  <tabstop>lameOriginal</tabstop>
+  <tabstop>lameErrProt</tabstop>
+  <tabstop>lamePaddingType</tabstop>
+  <tabstop>lameExtention</tabstop>
+  <tabstop>lameStrictIso</tabstop>
+  <tabstop>lameDisRese</tabstop>
+  <tabstop>lameVbrComboBox</tabstop>
+  <tabstop>lameCRSlider_2</tabstop>
+  <tabstop>lameCRspinBox_2</tabstop>
+  <tabstop>lameBitrateBox_2</tabstop>
+  <tabstop>lameBitrateBox_3</tabstop>
+  <tabstop>lameVbrQuaSlider</tabstop>
+  <tabstop>flacQuaSlider</tabstop>
+  <tabstop>flacStreamableSubsetBox</tabstop>
+  <tabstop>flacMidSideStereoBox</tabstop>
+  <tabstop>flacLooseMidSideStereoBox</tabstop>
+  <tabstop>flacBlocksizeSlider</tabstop>
+  <tabstop>flacBlocksizeSpinBox</tabstop>
+  <tabstop>flacMaxLpcOrderSlider</tabstop>
+  <tabstop>flacMaxLpcOrderSpinBox</tabstop>
+  <tabstop>flacQlpCoeffPrecisionSlider</tabstop>
+  <tabstop>flacQlpCoeffPrecisionSpinBox</tabstop>
+  <tabstop>flacQlpCoeffPrecSearchCheckBox</tabstop>
+  <tabstop>flacEscapeCodingCheckBox</tabstop>
+  <tabstop>flacExhaustiveModelSearchCheckBox</tabstop>
+  <tabstop>flacMinResidualPartitionOrderSlider</tabstop>
+  <tabstop>flacMinResidualPartitionOrderSpinBox</tabstop>
+  <tabstop>flacMaxResidualPartitionOrderSlider</tabstop>
+  <tabstop>flacMaxResidualPartitionOrderSpinBox</tabstop>
+  <tabstop>flacRiceParameterSearchDistSlider</tabstop>
+  <tabstop>flacRiceParameterSearchDistSpinBox</tabstop>
+  <tabstop>faacOutputformatComboBox</tabstop>
+  <tabstop>faacBitrateSlider</tabstop>
+  <tabstop>faacBitrateSpinBox</tabstop>
+  <tabstop>faacProfileComboBox</tabstop>
+  <tabstop>faacTnsCheckBox</tabstop>
+  <tabstop>faacMidsideCheckBox</tabstop>
+  <tabstop>faacShortctlComboBox</tabstop>
+  <tabstop>vorbisMaxBitrateSlider</tabstop>
  </tabstops>
  <resources>
   <include location="../ressources.qrc"/>
