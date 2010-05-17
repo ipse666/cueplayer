@@ -1,3 +1,7 @@
+#ifdef LIBNOTIFY
+#include <libnotify/notify.h>
+#endif
+
 #include <QApplication>
 #include <QTranslator>
 #include "cueplayer.h"
@@ -62,6 +66,11 @@ int main(int argc, char *argv[])
 	app.setApplicationVersion(fullver);
 	gst_init(0,0);
 	gst_registry_fork_set_enabled(true);
+#ifdef LIBNOTIFY
+	/* Init libnotify library */
+	notify_init("CuePlayer");
+#endif
+
 	CuePlayer *player = new CuePlayer;
 	player->setTray(tray);
 	player->setServer(sserver);

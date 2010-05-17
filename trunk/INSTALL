@@ -5,6 +5,7 @@ make
 Опции qmake:
 DEFINES += FTPPLAY включает проигрывание с ftp
 PREFIX префикс установки, по умолчанию /usr/local
+LIBNOTIFY использование libnotify для уведомлений.
 пример конфигурации:
 qmake "DEFINES += FTPPLAY"
 ------------------------------------------------
