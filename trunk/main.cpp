@@ -69,6 +69,7 @@ int main(int argc, char *argv[])
 #ifdef LIBNOTIFY
 	/* Init libnotify library */
 	notify_init("CuePlayer");
+	tray = true;
 #endif
 
 	CuePlayer *player = new CuePlayer;
