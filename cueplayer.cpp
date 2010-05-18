@@ -826,7 +826,7 @@ void CuePlayer::seekAndLCD(int num)
 				if (!notification) notification = notify_notification_new(c_str2, c_str3, NULL, NULL);
 
 				if (notification) {
-				notify_notification_update(notification, c_str2, c_str3, NULL);
+				notify_notification_update(notification, c_str2, c_str3, "cueplayer");
 				/* Set timeout */
 				notify_notification_set_timeout(notification, timeout);
 				/* Schedule notification for showing */
@@ -1278,7 +1278,7 @@ void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
 				if (!notification) notification = notify_notification_new(c_str2, c_str3, NULL, NULL);
 
 				if (notification) {
-				notify_notification_update(notification, c_str2, c_str3, NULL);
+				notify_notification_update(notification, c_str2, c_str3, "cueplayer");
 				/* Set timeout */
 				notify_notification_set_timeout(notification, timeout);
 				/* Schedule notification for showing */
