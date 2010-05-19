@@ -223,6 +223,11 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	QRegExp rxFilename6("^http://youtube.com/get_video\\?video_id=.*");
 	QString nextTool = nextButton->toolTip();
 	QString prewTool = prewButton->toolTip();
+	static QStringList fsuffixes = QStringList()	<< "aac" << "mp3" << "flac" << "ape" << "ogg"
+													<< "ogm" << "ogv" << "mp4"  << "avi" << "ts"
+													<< "wv"  << "3gp" << "m2ts" << "vob" << "wmv"
+													<< "wav" << "mpg" << "mov"  << "m4a" << "m4v"
+													<< "mka" << "mkv";
 
 	initPlayer();
 
@@ -258,28 +263,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		nextButton->setToolTip(nextTool);
 		prewButton->setToolTip(prewTool);
 	}
-	else if (!QString::compare(fi.suffix(), "aac", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "mp3", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "flac", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "ape", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "ogg", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "ogm", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "ogv", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "mp4", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "avi", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "ts", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "wv", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "3gp", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "m2ts", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "vob", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "wmv", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "wav", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "mpg", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "mov", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "m4v", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "m4a", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "mka", Qt::CaseInsensitive) ||
-			 !QString::compare(fi.suffix(), "mkv", Qt::CaseInsensitive))
+	else if (fsuffixes.contains(fi.suffix().toLower()))
 	{
 		if (rxFilename2.indexIn(filename) != -1)
 			mp3trackName = rxFilename2.cap(1);
@@ -408,27 +392,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 				counterVOB++;
 			else if (!QString::compare(filetu.suffix(), "jpg", Qt::CaseInsensitive))
 				imagename = filetu.absoluteFilePath();
-			else if (!QString::compare(filetu.suffix(), "aac", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "mp3", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "flac", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "ogg", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "ogm", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "ogv", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "mp4", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "avi", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "ts", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "wv", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "3gp", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "m2ts", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "vob", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "wmv", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "wav", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "mpg", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "mov", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "m4v", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "m4a", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "mka", Qt::CaseInsensitive) ||
-					 !QString::compare(filetu.suffix(), "mkv", Qt::CaseInsensitive))
+			else if (fsuffixes.contains(filetu.suffix().toLower()))
 			{
 				filesList.prepend(filetu);
 				counterFiles++;
