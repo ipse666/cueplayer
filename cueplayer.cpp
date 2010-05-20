@@ -85,6 +85,9 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	// Drag and Drop
 	setAcceptDrops(true);
 
+	// Костыль для неюникодовых локалей
+	localFileNamesEncoder = QTextCodec::codecForLocale()->makeEncoder();
+
 	label->setText(trUtf8("откройте файл"));
 	treeWidget->hide();
 	dvdButton->hide();
@@ -258,7 +261,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		else
 		{
 			play = gst_element_factory_make ("playbin2", "play");
-			g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getSoundFile()).toUtf8().data(), NULL);
+			g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode("file://" + refparser->getSoundFile()).data(), NULL);
 		}
 		nextButton->setToolTip(nextTool);
 		prewButton->setToolTip(prewTool);
@@ -300,7 +303,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 
 			play = gst_pipeline_new ("ts-player");
 			tsfile = gst_element_factory_make ("filesrc", "file-source");
-			g_object_set (tsfile, "location", filename.toUtf8().data(), NULL);
+			g_object_set (tsfile, "location", localFileNamesEncoder->fromUnicode(filename).data(), NULL);
 
 			typefind = gst_element_factory_make ("typefind", "typefinder");
 			g_signal_connect (typefind, "have-type", G_CALLBACK (cb_typefound), NULL);
@@ -348,9 +351,9 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 			{
 				play = gst_element_factory_make ("playbin2", "play");
 				if (rxFilename.indexIn(filename) != -1)
-					g_object_set (G_OBJECT (play), "uri", ("file://" + filename).toUtf8().data(), NULL);
+					g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode("file://" + filename).data(), NULL);
 				else
-					g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+					g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode(filename).data(), NULL);
 			}
 		}
 	}
@@ -362,9 +365,9 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		label->setText(fi.fileName());
 		play = gst_element_factory_make ("playbin2", "play");
 		if (rxFilename.indexIn(filename) != -1)
-			g_object_set (G_OBJECT (play), "uri", ("file://" + filename).toUtf8().data(), NULL);
+			g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode("file://" + filename).data(), NULL);
 		else
-			g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+			g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode(filename).data(), NULL);
 	}
 	else if (!QString::compare(fi.suffix(), "pls", Qt::CaseInsensitive) ||
 			 !QString::compare(fi.suffix(), "wvx", Qt::CaseInsensitive) ||
@@ -451,7 +454,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		setWindowsTitles(trUtf8("Ютуб"));
 		label->setText(trUtf8("Ютуб"));
 		play = gst_element_factory_make ("playbin2", "play");
-		g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+		g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode(filename).data(), NULL);
 	}
 	else if (rxFilename3.indexIn(filename) != -1)
 	{
@@ -459,7 +462,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		label->setText(trUtf8("Радио"));
 		play = gst_element_factory_make ("playbin2", "play");
 
-		g_object_set (G_OBJECT (play), "uri", filename.toUtf8().data(), NULL);
+		g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode(filename).data(), NULL);
 
 		settings.setValue("player/recentfile", filename);
 
@@ -677,7 +680,7 @@ void CuePlayer::stopTrack()
 		if(multiCueFlag)
 		{
 			gst_element_set_state (play, GST_STATE_NULL);
-			g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(numTrack)).toUtf8().data(), NULL);
+			g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode("file://" + refparser->getTrackFile(numTrack)).data(), NULL);
 			gst_element_set_state (play, GST_STATE_READY);
 		}
 	}
@@ -780,10 +783,10 @@ void CuePlayer::seekAndLCD(int num)
 			{
 #ifdef LIBNOTIFY
 				QString str1 = refparser->getTrackTitle(num);
-				QByteArray ba = str1.toUtf8();
+				QByteArray ba = localFileNamesEncoder->fromUnicode(str1);
 				const char *c_str2 = ba.data();
 				QString str2 = refparser->getPerformer() + " - " + refparser->getAlbum();
-				QByteArray ba2 = str2.toUtf8();
+				QByteArray ba2 = localFileNamesEncoder->fromUnicode(str2);
 				const char *c_str3 = ba2.data();
 
 				/* Create notification */
@@ -1084,9 +1087,9 @@ void CuePlayer::stopAll()
 		gst_element_set_state (play, GST_STATE_NULL);
 		g_object_set(play, "mute", true, NULL);
 		if (rxFilename.indexIn(filetu.filePath()) != -1)
-			g_object_set (G_OBJECT (play), "uri", filetu.filePath().toUtf8().data(), NULL);
+			g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode(filetu.filePath()).data(), NULL);
 		else
-			g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
+			g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode("file://" + filetu.absoluteFilePath()).data(), NULL);
 		gst_element_set_state (play, GST_STATE_PLAYING);
 		if (gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT) != GST_STATE_CHANGE_SUCCESS)
 		{
@@ -1181,7 +1184,7 @@ void CuePlayer::checkState()
 	if (multiCueFlag)
 	{
 		gst_element_set_state (play, GST_STATE_NULL);
-		g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(numTrack)).toUtf8().data(), NULL);
+		g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode("file://" + refparser->getTrackFile(numTrack)).data(), NULL);
 		gst_element_set_state (play, GST_STATE_READY);
 	}
 	else if (multiFileFlag)
@@ -1201,9 +1204,9 @@ void CuePlayer::checkState()
 			finame = "file://" + filetu.absoluteFilePath();
 
 		if (!videoFlag && settings.value("preferences/equalizer").toBool())
-			g_object_set (aufile, "location", filetu.absoluteFilePath().toUtf8().data(), NULL);
+			g_object_set (aufile, "location", localFileNamesEncoder->fromUnicode(filetu.absoluteFilePath()).data(), NULL);
 		else
-			g_object_set (G_OBJECT (play), "uri", finame.toUtf8().data(), NULL);
+			g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode(finame).data(), NULL);
 		gst_element_set_state (play, GST_STATE_READY);
 	}
 	trd->setPlayBin(play);
@@ -1232,10 +1235,10 @@ void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
 			{
 #ifdef LIBNOTIFY
 				QString str1 = trUtf8(g_value_get_string(vtitle));
-				QByteArray ba = str1.toUtf8();
+				QByteArray ba = localFileNamesEncoder->fromUnicode(str1);
 				const char *c_str2 = ba.data();
 				QString str2 = trUtf8(g_value_get_string(vartist)) + " - " + trUtf8(g_value_get_string(valbum));
-				QByteArray ba2 = str2.toUtf8();
+				QByteArray ba2 = localFileNamesEncoder->fromUnicode(str2);
 				const char *c_str3 = ba2.data();
 
 				/* Create notification */
@@ -1275,7 +1278,7 @@ void CuePlayer::preInit(QString filename)
 	pipeline = gst_pipeline_new ("pipe");
 
 	filesrc = gst_element_factory_make ("filesrc", "source");
-	g_object_set (G_OBJECT (filesrc), "location", filename.toUtf8().data(), NULL);
+	g_object_set (G_OBJECT (filesrc), "location", localFileNamesEncoder->fromUnicode(filename).data(), NULL);
 	typefind = gst_element_factory_make ("typefind", "typefinder");
 	g_signal_connect (typefind, "have-type", G_CALLBACK (cb_typefound), NULL);
 	fakesink = gst_element_factory_make ("fakesink", "sink");
@@ -1315,7 +1318,7 @@ void CuePlayer::multiCueInit()
 	{
 		play = gst_element_factory_make ("playbin2", "play");
 		fakesink = gst_element_factory_make ("fakesink", "fake");
-		g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(i)).toUtf8().data(), NULL);
+		g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode("file://" + refparser->getTrackFile(i)).data(), NULL);
 		g_object_set(play, "audio-sink", fakesink, NULL);
 		gst_element_set_state (play, GST_STATE_PLAYING);
 		gst_element_get_state( GST_ELEMENT(play), &st, NULL, GST_SECOND * TIMEOUT);
@@ -1345,7 +1348,7 @@ void CuePlayer::multiCueInit()
 	treeWidget->setCurrentItem(treeWidget->topLevelItem(0));
 	numTrack = 1;
 	play = gst_element_factory_make ("playbin2", "play");
-	g_object_set (G_OBJECT (play), "uri", ("file://" + refparser->getTrackFile(numTrack)).toUtf8().data(), NULL);
+	g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode("file://" + refparser->getTrackFile(numTrack)).data(), NULL);
 	bus = gst_pipeline_get_bus (GST_PIPELINE (play));
 	gst_bus_add_watch (bus, bus_callback, play);
 	gst_object_unref (bus);
@@ -1384,10 +1387,10 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 		if (rxFilename.indexIn(filetu.filePath()) != -1)
 		{
 			qDebug() << trUtf8("Инициализация канала: ") + filetu.filePath();
-			g_object_set (G_OBJECT (play), "uri", filetu.filePath().toUtf8().data(), NULL);
+			g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode(filetu.filePath()).data(), NULL);
 		}
 		else
-			g_object_set (G_OBJECT (play), "uri", ("file://" + filetu.absoluteFilePath()).toUtf8().data(), NULL);
+			g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode("file://" + filetu.absoluteFilePath()).data(), NULL);
 		g_object_set(play, "audio-sink", fakesink, NULL);
 		gst_element_set_state (play, GST_STATE_PLAYING);
 		gst_element_get_state( GST_ELEMENT(play), &st, NULL, GST_SECOND * TIMEOUT);
@@ -1435,7 +1438,7 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 	else
 	{
 		play = gst_element_factory_make ("playbin2", "play");
-		g_object_set (G_OBJECT (play), "uri", finame.toUtf8().data(), NULL);
+		g_object_set (G_OBJECT (play), "uri", localFileNamesEncoder->fromUnicode(finame).data(), NULL);
 		g_object_set(play, "volume", (double)volumeDial->value() / 100, NULL);
 	}
 
@@ -1628,7 +1631,7 @@ void CuePlayer::createDvdPipe()
 	play = gst_pipeline_new ("pipe");
 	dvdsrc = gst_element_factory_make ("dvdreadsrc", "dvdsrc");
 	if(!discFlag)
-		g_object_set (G_OBJECT (dvdsrc), "device", filename.toUtf8().data(), NULL);
+		g_object_set (G_OBJECT (dvdsrc), "device", localFileNamesEncoder->fromUnicode(filename).data(), NULL);
 	typefind = gst_element_factory_make ("typefind", "typefinder");
 	g_signal_connect (typefind, "have-type", G_CALLBACK (cb_typefound), NULL);
 	demuxer = gst_element_factory_make ("dvddemux", "demux");
@@ -1677,7 +1680,7 @@ void CuePlayer::createFtpPipe()
 
 	play = gst_pipeline_new ("pipe");
 	gnomevfs = gst_element_factory_make ("gnomevfssrc", "gvfs");
-	g_object_set (gnomevfs, "location", filename.toUtf8().data(), NULL);
+	g_object_set (gnomevfs, "location", localFileNamesEncoder->fromUnicode(filename).data(), NULL);
 
 	fqueue = make_queue ();
 	fdecoder = gst_element_factory_make ("decodebin", "fdecode");
@@ -2094,7 +2097,7 @@ void CuePlayer::progressiveMode(QString fname)
 	aqueue = gst_element_factory_make ("queue", NULL);
 	multiqueue = gst_element_factory_make ("multiqueue", NULL);
 	aufile = gst_element_factory_make ("filesrc", "file-source");
-	g_object_set (aufile, "location", fname.toUtf8().data(), NULL);
+	g_object_set (aufile, "location", localFileNamesEncoder->fromUnicode(fname).data(), NULL);
 	typefind = gst_element_factory_make ("typefind", "typefinder");
 	g_signal_connect (typefind, "have-type", G_CALLBACK (cb_typefound), NULL);
 	decoder = gst_element_factory_make ("decodebin2", "bindecoder");

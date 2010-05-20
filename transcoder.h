@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
+#include <QTextCodec>
 #include <gst/gst.h>
 #include "ui_transcoder.h"
 #include "cueparser.h"
@@ -35,6 +36,7 @@ private:
 	QSettings settings;
 	QFile tmpfile;
 	QList<int> bitrateList;
+	QTextEncoder *localFileNamesEncoder;
 	void setTrack();
 	void setTrackTime(qint64,qint64);
 	void pipeRun(int);

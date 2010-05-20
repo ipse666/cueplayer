@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QTimer>
 #include <QTextStream>
+#include <QTextCodec>
 #include <QFile>
 #include <gst/gst.h>
 #include "ui_apetoflacdialog.h"
@@ -23,6 +24,7 @@ private:
 	QString outFile;
 	QString outCue;
 	QTimer *timer;
+	QTextEncoder *localFileNamesEncoder;
 	void initDecoder();
 	int getDuration();
 	int saveTotalTime;
