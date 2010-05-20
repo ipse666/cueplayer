@@ -1136,7 +1136,7 @@ void CuePlayer::seekGst(int time)
 		GstClockTime nach   = (GstClockTime)(time * GST_MSECOND);
 		if (!gst_element_seek(play, 1.0,
 				GST_FORMAT_TIME,
-				(GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE),
+				(GstSeekFlags) (GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT),
 				GST_SEEK_TYPE_SET, nach,
 				GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE))
 			qDebug() << QString(trUtf8("Ошибка поиска"));
