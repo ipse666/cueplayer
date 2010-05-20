@@ -89,6 +89,9 @@ ApeToFlac::ApeToFlac(QWidget *parent) : QDialog(parent)
 
 	timer = new QTimer(this);
 
+	// Костыль для неюникодовых локалей
+	localFileNamesEncoder = QTextCodec::codecForLocale()->makeEncoder();
+
 	connect(okButton, SIGNAL(clicked()), this, SLOT(startDecoder()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(progressUpd()));
 }
@@ -150,7 +153,7 @@ void ApeToFlac::initDecoder()
 
 	// Входной файл
 	source   = gst_element_factory_make ("filesrc", "file-source");
-	g_object_set (source, "location", atfApefile.toUtf8().data(), NULL);
+	g_object_set (source, "location", localFileNamesEncoder->fromUnicode(atfApefile).data(), NULL);
 
 	dec = gst_element_factory_make ("decodebin", "decoder");
 	g_signal_connect (dec, "new-decoded-pad", G_CALLBACK (cb_newpad), NULL);
@@ -169,7 +172,7 @@ void ApeToFlac::initDecoder()
 	gst_bin_add (GST_BIN (atfpipe), audiobin);
 
 	// Выходной файл
-	g_object_set (fileout, "location", outFile.toUtf8().data(), NULL);
+	g_object_set (fileout, "location", localFileNamesEncoder->fromUnicode(outFile).data(), NULL);
 
 	bus = gst_pipeline_get_bus (GST_PIPELINE (atfpipe));
 	gst_bus_add_watch (bus, bus_call, NULL);

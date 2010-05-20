@@ -13,6 +13,7 @@
 #include <QDate>
 #include <QDesktopWidget>
 #include <QLocalServer>
+#include <QTextCodec>
 #include <gst/interfaces/xoverlay.h>
 #include "ui_cueplayer.h"
 #include "cueparser.h"
@@ -103,6 +104,7 @@ private:
 	QTimer *paramtimer;
 	QString savetitle;
 	QLabel *imglabel;
+	QTextEncoder *localFileNamesEncoder;
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;

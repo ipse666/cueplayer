@@ -120,6 +120,9 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 
 	timer = new QTimer(this);
 
+	// Костыль для неюникодовых локалей
+	localFileNamesEncoder = QTextCodec::codecForLocale()->makeEncoder();
+
 	restoreSettings();
 
 	connect(selectDirButton, SIGNAL(clicked()), dirdialog, SLOT(exec()));
@@ -308,7 +311,7 @@ void TransCoder::pipeRun(int ind)
 
 	// Входной файл
 	source   = gst_element_factory_make ("filesrc", "file-source");
-	g_object_set (source, "location", refparser->getSoundFile().toUtf8().data(), NULL);
+	g_object_set (source, "location", localFileNamesEncoder->fromUnicode(refparser->getSoundFile()).data(), NULL);
 
 	dec = gst_element_factory_make ("decodebin", "decoder");
 	g_signal_connect (dec, "new-decoded-pad", G_CALLBACK (cb_newpad), NULL);
@@ -341,7 +344,7 @@ void TransCoder::pipeRun(int ind)
 		filename = dirname + "/" + "0" + QString::number(ind,10) + " - " + trackName + "." + containerBox->currentText();
 	else
 		filename = dirname + "/" + QString::number(ind,10) + " - " + trackName + "." + containerBox->currentText();
-	g_object_set (fileout, "location", filename.toUtf8().data(), NULL);
+	g_object_set (fileout, "location", localFileNamesEncoder->fromUnicode(filename).data(), NULL);
 
 	tmpfile.setFileName(dirname + "/" + QString::number(ind,10) + " - " + trackName + ".tmp");
 
@@ -350,7 +353,7 @@ void TransCoder::pipeRun(int ind)
 		case CODEC_VORBIS:
 			if (tmpfile.exists())
 			{
-				g_object_set (source, "location", tmpfile.fileName().toUtf8().data(), NULL);
+				g_object_set (source, "location", localFileNamesEncoder->fromUnicode(tmpfile.fileName()).data(), NULL);
 				encoder = gst_element_factory_make ("vorbisenc", "audio-encoder");
 				tagger = gst_element_factory_make ("vorbistag", "tagger");
 				muxer = gst_element_factory_make ("oggmux", "audio-muxer");
@@ -388,7 +391,7 @@ void TransCoder::pipeRun(int ind)
 				gst_bin_add_many (GST_BIN (audio), conv, volume, encoder, fileout, NULL);
 				gst_element_link_many (conv, volume, encoder, fileout, NULL);
 				g_object_set (volume, "mute", true, NULL);
-				g_object_set (fileout, "location", tmpfile.fileName().toUtf8().data(), NULL);
+				g_object_set (fileout, "location", localFileNamesEncoder->fromUnicode(tmpfile.fileName()).data(), NULL);
 			}
 			break;
 		case CODEC_LAME:
@@ -501,7 +504,7 @@ void TransCoder::pipeRun(int ind)
 	gst_object_unref (bus);
 
 	//g_signal_connect (pipeline, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг!
-	g_print ("Кодируется: %s\n", refparser->getSoundFile().toUtf8().data());
+	g_print ("Кодируется: %s\n", localFileNamesEncoder->fromUnicode(refparser->getSoundFile()).data());
 
 	gst_element_set_state (pipeline, GST_STATE_PLAYING);
 
