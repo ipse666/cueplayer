@@ -524,7 +524,7 @@ void TransCoder::pipeRun(int ind)
 	}
 	else
 	{
-		g_print ("Ошибка перехода в PLAYING\n");
+		out << trUtf8("Ошибка перехода в PLAYING\n");
 		transcode = false;
 		stopAll();
 	}
