@@ -328,6 +328,7 @@ void TransCoder::pipeRun(int ind)
 	QRegExp rxFileSlash("/");
 	QRegExp rxTilda("^~(.*)");
 	QString filename;
+	QTextStream out(stdout);
 	QString comment = trUtf8("CuePlayer ") + qApp->applicationVersion();
 	QString trackName = refparser->getTrackTitle(ind);
 	trackName.replace(rxFileSlash, trUtf8("⁄"));
@@ -504,7 +505,7 @@ void TransCoder::pipeRun(int ind)
 	gst_object_unref (bus);
 
 	//g_signal_connect (pipeline, "deep-notify", G_CALLBACK (gst_object_default_deep_notify), NULL); // Дебаг!
-	g_print ("Кодируется: %s\n", localFileNamesEncoder->fromUnicode(refparser->getSoundFile()).data());
+	out << trUtf8("Кодируется: ") << refparser->getSoundFile() << endl;
 
 	gst_element_set_state (pipeline, GST_STATE_PLAYING);
 
