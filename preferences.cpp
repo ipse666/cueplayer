@@ -12,7 +12,8 @@ Preferences::Preferences(QWidget *parent) :
 	cugstbinds = new CuGstBinds(this);
 
 	QStringList codeclist;
-	codeclist << "mad" << "vorbisdec" << "flacdec" << "ffdec_ape" << "faad";
+	codeclist << "mad" << "vorbisdec" << "flacdec" << "ffdec_ape"
+			<< "faad" << "ffdec_mpeg4" << "ffdec_h264";
 	int counter = 0;
 
 	foreach (QString str, codeclist)

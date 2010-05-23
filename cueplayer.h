@@ -105,6 +105,7 @@ private:
 	QString savetitle;
 	QLabel *imglabel;
 	QTextEncoder *localFileNamesEncoder;
+	QStringList fsuffixes;
 	TransCoder *transcoder;
 	ApeToFlac *apetoflac;
 	VideoWindow *videowindow;
@@ -184,6 +185,7 @@ private slots:
 	void settingsApply(bool);
 	void equalizerChang(double*);
 	void prefTrShow();
+	void createPlHeader();
 
 signals:
 	void gstError();	
