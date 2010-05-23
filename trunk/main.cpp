@@ -39,11 +39,6 @@ int main(int argc, char *argv[])
 	}
 
 	if (!QSystemTrayIcon::isSystemTrayAvailable()) {
-		/*QMessageBox::critical(0, QObject::trUtf8("Лоток"),
-		QObject::trUtf8("Не найден системный лоток в вашей системе."
-						"<p>Вероятна некорректная работа приложения."
-						"<p>Работа приложения будет продолжена."));
-		return 1;*/
 		tray = false;
 	}
 	else

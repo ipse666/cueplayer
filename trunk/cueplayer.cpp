@@ -66,13 +66,24 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	videoProcess = new QProcess(this);
 	primaryDPMS = checkDPMS();
 
+	// Поддерживаемые файлы
+	fsuffixes = QStringList()	<< "aac" << "mp3" << "flac" << "ape" << "ogg"
+								<< "ogm" << "ogv" << "mp4"  << "avi" << "ts"
+								<< "wv"  << "3gp" << "m2ts" << "vob" << "wmv"
+								<< "wav" << "mpg" << "mov"  << "m4a" << "m4v"
+								<< "mka" << "mkv";
+
 	// Фильтр диалога
-	filters << trUtf8("Все поддерживаемые файлы (*.cue *.ogg *.ogv *.avi *.mkv *.mp4 *.mp3 *.flac *.ogm)")
+	filters << trUtf8("Все поддерживаемые файлы (*.aac *.mp3 *.flac *.ape \
+												 *.ogg *.ogm *.ogv *.mp4 \
+												 *.avi *.ts *.wv *.3gp *.m2ts \
+												 *.vob *.wmv *.wav *.mpg \
+												 *.mov *.m4a *.m4v *.mka *.mkv)")
 			<< trUtf8("CUE образы (*.cue)")
 			<< trUtf8("Видеофайлы (*.ogg *.ogv *.avi *.mkv *.mp4)")
 			<< trUtf8("Аудиофайлы (*.mp3 *.flac *.ogg *.ogm)")
 			<< trUtf8("Все файлы (*.*)")
-			<< trUtf8("Каталог с файлами или DVD каталог");
+			<< trUtf8("Каталог с файлами или DVD каталог (.)");
 
 	//расположение главного окна по центру экрана
 	desktop = QApplication::desktop();
@@ -97,6 +108,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	refparser = NULL;
 	filedialog = new QFileDialog(this, trUtf8("Открыть файл"));
 	filedialog->setOption(QFileDialog::DontUseNativeDialog, true);
+	filedialog->setOption(QFileDialog::HideNameFilterDetails, true);
 	filedialog->setNameFilters(filters);
 	videowindow = new VideoWindow(this);
 	winman = new WidgetManager(this);
@@ -226,11 +238,6 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	QRegExp rxFilename6("^http://youtube.com/get_video\\?video_id=.*");
 	QString nextTool = nextButton->toolTip();
 	QString prewTool = prewButton->toolTip();
-	static QStringList fsuffixes = QStringList()	<< "aac" << "mp3" << "flac" << "ape" << "ogg"
-													<< "ogm" << "ogv" << "mp4"  << "avi" << "ts"
-													<< "wv"  << "3gp" << "m2ts" << "vob" << "wmv"
-													<< "wav" << "mpg" << "mov"  << "m4a" << "m4v"
-													<< "mka" << "mkv";
 
 	initPlayer();
 
@@ -861,9 +868,7 @@ void CuePlayer::listItemClicked(QTreeWidgetItem *item, int column)
 // инициализация после загрузки аудиофайла (CUE)
 void CuePlayer::initAlbum(int totalTimeAlbum)
 {
-	treeWidget->setHeaderLabels(QStringList() << trUtf8("Композиция") << trUtf8("Время"));
-	treeWidget->setColumnWidth(0, 380);
-	treeWidget->setColumnWidth(1, 30);
+	createPlHeader();
 	qint64 startTime = refparser->getTrackIndex(1);
 	qint64 currentTime;
 	QString strSec;
@@ -1310,9 +1315,7 @@ void CuePlayer::multiCueInit()
 	int duration = 0;
 	QString strSec;
 
-	treeWidget->setHeaderLabels(QStringList() << trUtf8("Композиция") << trUtf8("Время"));
-	treeWidget->setColumnWidth(0, 380);
-	treeWidget->setColumnWidth(1, 30);
+	createPlHeader();
 
 	for (int i = 1; i <= refparser->getTrackNumber(); i++)
 	{
@@ -1373,9 +1376,7 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 	saveFileList = fileInfoList;
 	treeWidget->clear();
 
-	treeWidget->setHeaderLabels(QStringList() << trUtf8("Композиция") << trUtf8("Время"));
-	treeWidget->setColumnWidth(0, 380);
-	treeWidget->setColumnWidth(1, 30);
+	createPlHeader();
 
 	for (int i = 1; i <= fileInfoList.size(); i++)
 	{
@@ -1563,11 +1564,11 @@ void CuePlayer::setTid(int n)
 
 void CuePlayer::fileDialogFilter(QString filter)
 {
-	if (filter == trUtf8("Каталог с файлами или DVD каталог"))
+	if (filter.compare(filters.at(5)) == -4)
 	{
 		filedialog->setFileMode(QFileDialog::Directory);
 		filedialog->setNameFilters(filters);
-		filedialog->selectFilter(trUtf8("Каталог с файлами или DVD каталог"));
+		filedialog->selectFilter(filters.at(5));
 	}
 	else
 		filedialog->setFileMode(QFileDialog::AnyFile);
@@ -2160,6 +2161,15 @@ void CuePlayer::prefTrShow()
 	preferences->show();
 }
 
+// Создает заголовок списка воспроизведения
+void CuePlayer::createPlHeader()
+{
+	treeWidget->setHeaderLabels(QStringList() << trUtf8("Композиция") << trUtf8("Время"));
+	treeWidget->setColumnWidth(0, 380);
+	treeWidget->setColumnWidth(1, 30);
+}
+
+// Класс треда
 GstThread::GstThread(QObject *parent) : QThread(parent)
 {
 	thplay = NULL;

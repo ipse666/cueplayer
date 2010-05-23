@@ -4,10 +4,10 @@
  <widget class="QWidget" name="Preferences">
   <property name="geometry">
    <rect>
-	<x>0</x>
-	<y>0</y>
-	<width>590</width>
-	<height>391</height>
+    <x>0</x>
+    <y>0</y>
+    <width>590</width>
+    <height>391</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,103 +15,103 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../ressources.qrc">
-	<normaloff>:/images/preferences.png</normaloff>:/images/preferences.png</iconset>
+    <normaloff>:/images/preferences.png</normaloff>:/images/preferences.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_12">
    <item row="0" column="0" rowspan="2">
-	<widget class="QTreeWidget" name="treeWidget">
-	 <property name="sizePolicy">
-	  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-	   <horstretch>5</horstretch>
-	   <verstretch>0</verstretch>
-	  </sizepolicy>
-	 </property>
-	 <property name="minimumSize">
-	  <size>
-	   <width>126</width>
-	   <height>0</height>
-	  </size>
-	 </property>
-	 <property name="horizontalScrollBarPolicy">
-	  <enum>Qt::ScrollBarAlwaysOff</enum>
-	 </property>
-	 <property name="autoScroll">
-	  <bool>true</bool>
-	 </property>
-	 <property name="editTriggers">
-	  <set>QAbstractItemView::NoEditTriggers</set>
-	 </property>
-	 <property name="textElideMode">
-	  <enum>Qt::ElideNone</enum>
-	 </property>
-	 <attribute name="headerVisible">
-	  <bool>false</bool>
-	 </attribute>
-	 <column>
-	  <property name="text">
-	   <string>1</string>
-	  </property>
-	 </column>
-	 <item>
-	  <property name="text">
-	   <string>Проигрыватель</string>
-	  </property>
-	  <item>
-	   <property name="text">
-		<string>кодеки</string>
-	   </property>
-	  </item>
-	 </item>
-	 <item>
-	  <property name="text">
-	   <string>Транскодер</string>
-	  </property>
-	  <item>
-	   <property name="text">
-		<string>ogg</string>
-	   </property>
-	  </item>
-	  <item>
-	   <property name="text">
-		<string>mp3</string>
-	   </property>
-	  </item>
-	  <item>
-	   <property name="text">
-		<string>flac</string>
-	   </property>
-	  </item>
-	  <item>
-	   <property name="text">
-		<string>aac</string>
-	   </property>
-	  </item>
-	 </item>
-	</widget>
+    <widget class="QTreeWidget" name="treeWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>5</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>126</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="autoScroll">
+      <bool>true</bool>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="textElideMode">
+      <enum>Qt::ElideNone</enum>
+     </property>
+     <attribute name="headerVisible">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>1</string>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>Проигрыватель</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>кодеки</string>
+       </property>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string>Транскодер</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>ogg</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>mp3</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>flac</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>aac</string>
+       </property>
+      </item>
+     </item>
+    </widget>
    </item>
    <item row="0" column="1">
-	<widget class="QStackedWidget" name="stackedWidget">
-	 <property name="sizePolicy">
-	  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-	   <horstretch>3</horstretch>
-	   <verstretch>3</verstretch>
-	  </sizepolicy>
-	 </property>
-	 <property name="currentIndex">
-	  <number>0</number>
-	 </property>
-	 <widget class="QWidget" name="page">
-	  <layout class="QGridLayout" name="gridLayout_5">
-	   <item row="0" column="0">
-		<widget class="QGroupBox" name="groupBox">
-		 <property name="title">
-		  <string>Видео</string>
-		 </property>
-		 <layout class="QGridLayout" name="gridLayout">
-		  <item row="0" column="0">
-		   <widget class="QCheckBox" name="integrationBox">
-			<property name="toolTip">
-			 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>3</horstretch>
+       <verstretch>3</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="page">
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Видео</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="integrationBox">
+            <property name="toolTip">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -121,25 +121,25 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Встраивает видеоокно в основное окно программы.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Если возникнут проблемы с полноэкранным режимом,&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;отключите эту опцию и перезапустите проигрыватель.&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</string>
-			</property>
-			<property name="text">
-			 <string>Интеграция видеоокна в основное. (Нестабильно)</string>
-			</property>
-		   </widget>
-		  </item>
-		 </layout>
-		</widget>
-	   </item>
-	   <item row="1" column="0">
-		<widget class="QGroupBox" name="groupBox_2">
-		 <property name="title">
-		  <string>Аудио</string>
-		 </property>
-		 <layout class="QGridLayout" name="gridLayout_2">
-		  <item row="0" column="0" colspan="2">
-		   <widget class="QCheckBox" name="equalizerBox">
-			<property name="toolTip">
-			 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+            </property>
+            <property name="text">
+             <string>Интеграция видеоокна в основное. (Нестабильно)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Аудио</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0" colspan="2">
+           <widget class="QCheckBox" name="equalizerBox">
+            <property name="toolTip">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -149,498 +149,568 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Включает эквалайзер для некоторых аудиофайлов.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Если возникнут проблемы с воспроизведением,&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;отключите эту опцию и перезапустите проигрыватель.&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</string>
-			</property>
-			<property name="text">
-			 <string>Эквалайзер (Нестабильно)</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="1" column="0" colspan="2">
-		   <widget class="QCheckBox" name="trayTextBox">
-			<property name="text">
-			 <string>Показывать трей уведомления (Только для cue)</string>
-			</property>
-			<property name="checked">
-			 <bool>true</bool>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="2" column="0">
-		   <widget class="QDoubleSpinBox" name="doubleSpinBox">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-			  <horstretch>0</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="singleStep">
-			 <double>0.100000000000000</double>
-			</property>
-			<property name="value">
-			 <double>2.000000000000000</double>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="2" column="1">
-		   <widget class="QLabel" name="label_31">
-			<property name="text">
-			 <string>Время показа трей уведомления (сек.)</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="3" column="0" colspan="2">
-		   <widget class="QCheckBox" name="coverBox">
-			<property name="text">
-			 <string>Показывать обложку альбома (Только для каталогов)</string>
-			</property>
-		   </widget>
-		  </item>
-		 </layout>
-		</widget>
-	   </item>
-	   <item row="2" column="0">
-		<widget class="QGroupBox" name="groupBox_9">
-		 <property name="title">
-		  <string>Кодировка CUE файла</string>
-		 </property>
-		 <layout class="QGridLayout" name="gridLayout_3">
-		  <item row="0" column="0">
-		   <widget class="QRadioButton" name="autoRadioButton">
-			<property name="text">
-			 <string>Авто (Windows-1251 / UTF-8)</string>
-			</property>
-			<property name="checked">
-			 <bool>true</bool>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="1" column="0">
-		   <widget class="QRadioButton" name="cp1250RadioButton">
-			<property name="text">
-			 <string>Windows-1250</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="2" column="0">
-		   <widget class="QRadioButton" name="cp1251RadioButton">
-			<property name="text">
-			 <string>Windows-1251</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="3" column="0">
-		   <widget class="QRadioButton" name="utfRadioButton">
-			<property name="text">
-			 <string>UTF-8</string>
-			</property>
-		   </widget>
-		  </item>
-		 </layout>
-		</widget>
-	   </item>
-	   <item row="3" column="0">
-		<spacer name="verticalSpacer">
-		 <property name="orientation">
-		  <enum>Qt::Vertical</enum>
-		 </property>
-		 <property name="sizeHint" stdset="0">
-		  <size>
-		   <width>20</width>
-		   <height>44</height>
-		  </size>
-		 </property>
-		</spacer>
-	   </item>
-	  </layout>
-	 </widget>
-	 <widget class="QWidget" name="page_7">
-	  <layout class="QGridLayout" name="gridLayout_17">
-	   <item row="0" column="0">
-		<widget class="QGroupBox" name="groupBox_4">
-		 <property name="title">
-		  <string>Кодеки для воспроизведения</string>
-		 </property>
-		 <layout class="QGridLayout" name="gridLayout_18">
-		  <item row="0" column="0">
-		   <widget class="QTableWidget" name="tableWidget">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-			  <horstretch>0</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="focusPolicy">
-			 <enum>Qt::NoFocus</enum>
-			</property>
-			<property name="verticalScrollBarPolicy">
-			 <enum>Qt::ScrollBarAlwaysOff</enum>
-			</property>
-			<property name="horizontalScrollBarPolicy">
-			 <enum>Qt::ScrollBarAlwaysOff</enum>
-			</property>
-			<property name="autoScroll">
-			 <bool>false</bool>
-			</property>
-			<property name="editTriggers">
-			 <set>QAbstractItemView::NoEditTriggers</set>
-			</property>
-			<property name="tabKeyNavigation">
-			 <bool>false</bool>
-			</property>
-			<property name="showDropIndicator" stdset="0">
-			 <bool>false</bool>
-			</property>
-			<property name="dragDropOverwriteMode">
-			 <bool>false</bool>
-			</property>
-			<property name="selectionMode">
-			 <enum>QAbstractItemView::NoSelection</enum>
-			</property>
-			<property name="gridStyle">
-			 <enum>Qt::SolidLine</enum>
-			</property>
-			<property name="cornerButtonEnabled">
-			 <bool>true</bool>
-			</property>
-			<attribute name="horizontalHeaderCascadingSectionResizes">
-			 <bool>false</bool>
-			</attribute>
-			<attribute name="horizontalHeaderHighlightSections">
-			 <bool>true</bool>
-			</attribute>
-			<attribute name="horizontalHeaderStretchLastSection">
-			 <bool>true</bool>
-			</attribute>
-			<attribute name="verticalHeaderVisible">
-			 <bool>false</bool>
-			</attribute>
-			<attribute name="verticalHeaderCascadingSectionResizes">
-			 <bool>false</bool>
-			</attribute>
-			<attribute name="verticalHeaderHighlightSections">
-			 <bool>true</bool>
-			</attribute>
-			<attribute name="verticalHeaderMinimumSectionSize">
-			 <number>30</number>
-			</attribute>
-			<attribute name="verticalHeaderShowSortIndicator" stdset="0">
-			 <bool>false</bool>
-			</attribute>
-			<attribute name="verticalHeaderStretchLastSection">
-			 <bool>true</bool>
-			</attribute>
-			<row>
-			 <property name="text">
-			  <string>mp3</string>
-			 </property>
-			</row>
-			<row>
-			 <property name="text">
-			  <string>ogg</string>
-			 </property>
-			</row>
-			<row>
-			 <property name="text">
-			  <string>flac</string>
-			 </property>
-			</row>
-			<row>
-			 <property name="text">
-			  <string>ape</string>
-			 </property>
-			</row>
-			<row>
-			 <property name="text">
-			  <string>aac</string>
-			 </property>
-			</row>
-			<column>
-			 <property name="text">
-			  <string>Найден</string>
-			 </property>
-			</column>
-			<column>
-			 <property name="text">
-			  <string>Не найден</string>
-			 </property>
-			</column>
-			<column>
-			 <property name="text">
-			  <string>Название элемента</string>
-			 </property>
-			</column>
-			<item row="0" column="0">
-			 <property name="text">
-			  <string/>
-			 </property>
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			 <property name="foreground">
-			  <brush brushstyle="NoBrush">
-			   <color alpha="255">
-				<red>0</red>
-				<green>0</green>
-				<blue>0</blue>
-			   </color>
-			  </brush>
-			 </property>
-			</item>
-			<item row="0" column="1">
-			 <property name="text">
-			  <string/>
-			 </property>
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-			<item row="0" column="2">
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-			<item row="1" column="0">
-			 <property name="text">
-			  <string/>
-			 </property>
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-			<item row="1" column="1">
-			 <property name="text">
-			  <string/>
-			 </property>
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-			<item row="1" column="2">
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-			<item row="2" column="0">
-			 <property name="text">
-			  <string/>
-			 </property>
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-			<item row="2" column="1">
-			 <property name="text">
-			  <string/>
-			 </property>
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-			<item row="2" column="2">
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-			<item row="3" column="0">
-			 <property name="text">
-			  <string/>
-			 </property>
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-			<item row="3" column="1">
-			 <property name="text">
-			  <string/>
-			 </property>
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-			<item row="3" column="2">
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-			<item row="4" column="0">
-			 <property name="text">
-			  <string/>
-			 </property>
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-			<item row="4" column="1">
-			 <property name="text">
-			  <string/>
-			 </property>
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-			<item row="4" column="2">
-			 <property name="textAlignment">
-			  <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-			 </property>
-			</item>
-		   </widget>
-		  </item>
-		  <item row="1" column="0">
-		   <spacer name="verticalSpacer_4">
-			<property name="orientation">
-			 <enum>Qt::Vertical</enum>
-			</property>
-			<property name="sizeHint" stdset="0">
-			 <size>
-			  <width>397</width>
-			  <height>83</height>
-			 </size>
-			</property>
-		   </spacer>
-		  </item>
-		 </layout>
-		</widget>
-	   </item>
-	  </layout>
-	 </widget>
-	 <widget class="QWidget" name="page_2">
-	  <layout class="QGridLayout" name="gridLayout_15">
-	   <item row="0" column="0">
-		<widget class="QGroupBox" name="groupBox_3">
-		 <property name="title">
-		  <string>Транскодер</string>
-		 </property>
-		 <layout class="QGridLayout" name="gridLayout_14">
-		  <item row="0" column="0">
-		   <widget class="QLabel" name="label_6">
-			<property name="text">
-			 <string>Дополнительные опции для кодирования аудио файлов.
+            </property>
+            <property name="text">
+             <string>Эквалайзер (Нестабильно)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="trayTextBox">
+            <property name="text">
+             <string>Показывать трей уведомления (Только для cue)</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
+            <property name="value">
+             <double>2.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_31">
+            <property name="text">
+             <string>Время показа трей уведомления (сек.)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="coverBox">
+            <property name="text">
+             <string>Показывать обложку альбома (Только для каталогов)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox_9">
+         <property name="title">
+          <string>Кодировка CUE файла</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="autoRadioButton">
+            <property name="text">
+             <string>Авто (Windows-1251 / UTF-8)</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="cp1250RadioButton">
+            <property name="text">
+             <string>Windows-1250</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="cp1251RadioButton">
+            <property name="text">
+             <string>Windows-1251</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="utfRadioButton">
+            <property name="text">
+             <string>UTF-8</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>44</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_7">
+      <layout class="QGridLayout" name="gridLayout_17">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox_4">
+         <property name="title">
+          <string>Кодеки для воспроизведения</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_18">
+          <item row="0" column="0">
+           <widget class="QTableWidget" name="tableWidget">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>1</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="autoScroll">
+             <bool>false</bool>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="tabKeyNavigation">
+             <bool>false</bool>
+            </property>
+            <property name="showDropIndicator" stdset="0">
+             <bool>false</bool>
+            </property>
+            <property name="dragDropOverwriteMode">
+             <bool>false</bool>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::NoSelection</enum>
+            </property>
+            <property name="gridStyle">
+             <enum>Qt::SolidLine</enum>
+            </property>
+            <property name="cornerButtonEnabled">
+             <bool>true</bool>
+            </property>
+            <attribute name="horizontalHeaderCascadingSectionResizes">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="horizontalHeaderHighlightSections">
+             <bool>true</bool>
+            </attribute>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>true</bool>
+            </attribute>
+            <attribute name="verticalHeaderVisible">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="verticalHeaderCascadingSectionResizes">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="verticalHeaderHighlightSections">
+             <bool>true</bool>
+            </attribute>
+            <attribute name="verticalHeaderMinimumSectionSize">
+             <number>30</number>
+            </attribute>
+            <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="verticalHeaderStretchLastSection">
+             <bool>true</bool>
+            </attribute>
+            <row>
+             <property name="text">
+              <string>mp3</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>ogg</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>flac</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>ape</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>aac</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>avi</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>mkv</string>
+             </property>
+            </row>
+            <column>
+             <property name="text">
+              <string>Найден</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Не найден</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Название элемента</string>
+             </property>
+            </column>
+            <item row="0" column="0">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+             <property name="foreground">
+              <brush brushstyle="NoBrush">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </property>
+            </item>
+            <item row="0" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="0" column="2">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="1" column="0">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="1" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="1" column="2">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="2" column="0">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="2" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="2" column="2">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="3" column="0">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="3" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="3" column="2">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="4" column="0">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="4" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="4" column="2">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="5" column="0">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="5" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="5" column="2">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="6" column="0">
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="6" column="1">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="6" column="2">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>397</width>
+              <height>50</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <layout class="QGridLayout" name="gridLayout_15">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>Транскодер</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_14">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Дополнительные опции для кодирования аудио файлов.
 Наименования согласно опциям gst-плагинов</string>
-			</property>
-		   </widget>
-		  </item>
-		 </layout>
-		</widget>
-	   </item>
-	   <item row="1" column="0">
-		<spacer name="verticalSpacer_6">
-		 <property name="orientation">
-		  <enum>Qt::Vertical</enum>
-		 </property>
-		 <property name="sizeHint" stdset="0">
-		  <size>
-		   <width>20</width>
-		   <height>199</height>
-		  </size>
-		 </property>
-		</spacer>
-	   </item>
-	  </layout>
-	 </widget>
-	 <widget class="QWidget" name="page_3">
-	  <layout class="QGridLayout" name="gridLayout_11">
-	   <item row="0" column="0">
-		<widget class="QGroupBox" name="groupBox_10">
-		 <property name="title">
-		  <string>Vorbis audio encoder</string>
-		 </property>
-		 <layout class="QGridLayout" name="gridLayout_9">
-		  <item row="0" column="0" colspan="2">
-		   <widget class="QLabel" name="label_7">
-			<property name="toolTip">
-			 <string>Specify a maximum bitrate (in bps).
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <spacer name="verticalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>199</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_3">
+      <layout class="QGridLayout" name="gridLayout_11">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox_10">
+         <property name="title">
+          <string>Vorbis audio encoder</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="label_7">
+            <property name="toolTip">
+             <string>Specify a maximum bitrate (in bps).
 Useful for streaming applications.
 (-1 == disabled)</string>
-			</property>
-			<property name="text">
-			 <string>max-bitrate (bps)</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="0" column="2">
-		   <widget class="QSlider" name="vorbisMaxBitrateSlider">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-			  <horstretch>11</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="toolTip">
-			 <string>Specify a maximum bitrate (in bps).
+            </property>
+            <property name="text">
+             <string>max-bitrate (bps)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QSlider" name="vorbisMaxBitrateSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>11</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Specify a maximum bitrate (in bps).
 Useful for streaming applications.
 (-1 == disabled)</string>
-			</property>
-			<property name="minimum">
-			 <number>-1</number>
-			</property>
-			<property name="maximum">
-			 <number>250001</number>
-			</property>
-			<property name="singleStep">
-			 <number>640</number>
-			</property>
-			<property name="pageStep">
-			 <number>6400</number>
-			</property>
-			<property name="value">
-			 <number>-1</number>
-			</property>
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="tickPosition">
-			 <enum>QSlider::TicksAbove</enum>
-			</property>
-			<property name="tickInterval">
-			 <number>6400</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="0" column="3">
-		   <widget class="QSpinBox" name="spinBox">
-			<property name="toolTip">
-			 <string>Specify a maximum bitrate (in bps).
+            </property>
+            <property name="minimum">
+             <number>-1</number>
+            </property>
+            <property name="maximum">
+             <number>250001</number>
+            </property>
+            <property name="singleStep">
+             <number>640</number>
+            </property>
+            <property name="pageStep">
+             <number>6400</number>
+            </property>
+            <property name="value">
+             <number>-1</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>6400</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QSpinBox" name="spinBox">
+            <property name="toolTip">
+             <string>Specify a maximum bitrate (in bps).
 Useful for streaming applications.
 (-1 == disabled)</string>
-			</property>
-			<property name="alignment">
-			 <set>Qt::AlignCenter</set>
-			</property>
-			<property name="minimum">
-			 <number>-1</number>
-			</property>
-			<property name="maximum">
-			 <number>250001</number>
-			</property>
-			<property name="value">
-			 <number>-1</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="1" column="0">
-		   <widget class="QLabel" name="label_8">
-			<property name="toolTip">
-			 <string>Attempt to encode at a bitrate averaging this (in bps).
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <number>-1</number>
+            </property>
+            <property name="maximum">
+             <number>250001</number>
+            </property>
+            <property name="value">
+             <number>-1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="toolTip">
+             <string>Attempt to encode at a bitrate averaging this (in bps).
 This uses the bitrate management engine,
 and is not recommended for most users.
 Quality is a better alternative.
 (-1 == disabled)</string>
-			</property>
-			<property name="text">
-			 <string>bitrate (bps)</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="1" column="2">
-		   <widget class="QSlider" name="vorbisBitrateSlider">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-			  <horstretch>0</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="toolTip">
-			 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+            </property>
+            <property name="text">
+             <string>bitrate (bps)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QSlider" name="vorbisBitrateSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -652,37 +722,37 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;and is not recommended for most users. &lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Quality is a better alternative. &lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(-1 == disabled)&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</string>
-			</property>
-			<property name="minimum">
-			 <number>-1</number>
-			</property>
-			<property name="maximum">
-			 <number>250001</number>
-			</property>
-			<property name="singleStep">
-			 <number>640</number>
-			</property>
-			<property name="pageStep">
-			 <number>6400</number>
-			</property>
-			<property name="value">
-			 <number>-1</number>
-			</property>
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="tickPosition">
-			 <enum>QSlider::TicksAbove</enum>
-			</property>
-			<property name="tickInterval">
-			 <number>6400</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="1" column="3">
-		   <widget class="QSpinBox" name="spinBox_2">
-			<property name="toolTip">
-			 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+            </property>
+            <property name="minimum">
+             <number>-1</number>
+            </property>
+            <property name="maximum">
+             <number>250001</number>
+            </property>
+            <property name="singleStep">
+             <number>640</number>
+            </property>
+            <property name="pageStep">
+             <number>6400</number>
+            </property>
+            <property name="value">
+             <number>-1</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>6400</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QSpinBox" name="spinBox_2">
+            <property name="toolTip">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -694,25 +764,25 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;and is not recommended for most users. &lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Quality is a better alternative. &lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(-1 == disabled)&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</string>
-			</property>
-			<property name="alignment">
-			 <set>Qt::AlignCenter</set>
-			</property>
-			<property name="minimum">
-			 <number>-1</number>
-			</property>
-			<property name="maximum">
-			 <number>250001</number>
-			</property>
-			<property name="value">
-			 <number>-1</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="2" column="0" colspan="2">
-		   <widget class="QLabel" name="label_9">
-			<property name="toolTip">
-			 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <number>-1</number>
+            </property>
+            <property name="maximum">
+             <number>250001</number>
+            </property>
+            <property name="value">
+             <number>-1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QLabel" name="label_9">
+            <property name="toolTip">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -722,55 +792,55 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify a minimum bitrate (in bps). &lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Useful for encoding for a fixed-size channel. &lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(-1 == disabled)&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</string>
-			</property>
-			<property name="text">
-			 <string>min-bitrate (bps)</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="2" column="2">
-		   <widget class="QSlider" name="vorbisMinBitrateSlider">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-			  <horstretch>0</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="toolTip">
-			 <string>Specify a minimum bitrate (in bps).
+            </property>
+            <property name="text">
+             <string>min-bitrate (bps)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QSlider" name="vorbisMinBitrateSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Specify a minimum bitrate (in bps).
 Useful for encoding for a fixed-size channel.
 (-1 == disabled)</string>
-			</property>
-			<property name="minimum">
-			 <number>-1</number>
-			</property>
-			<property name="maximum">
-			 <number>250001</number>
-			</property>
-			<property name="singleStep">
-			 <number>640</number>
-			</property>
-			<property name="pageStep">
-			 <number>6400</number>
-			</property>
-			<property name="value">
-			 <number>-1</number>
-			</property>
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="tickPosition">
-			 <enum>QSlider::TicksAbove</enum>
-			</property>
-			<property name="tickInterval">
-			 <number>6400</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="2" column="3">
-		   <widget class="QSpinBox" name="spinBox_3">
-			<property name="toolTip">
-			 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+            </property>
+            <property name="minimum">
+             <number>-1</number>
+            </property>
+            <property name="maximum">
+             <number>250001</number>
+            </property>
+            <property name="singleStep">
+             <number>640</number>
+            </property>
+            <property name="pageStep">
+             <number>6400</number>
+            </property>
+            <property name="value">
+             <number>-1</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>6400</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QSpinBox" name="spinBox_3">
+            <property name="toolTip">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -780,1690 +850,1690 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify a minimum bitrate (in bps). &lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Useful for encoding for a fixed-size channel. &lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(-1 == disabled)&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</string>
-			</property>
-			<property name="alignment">
-			 <set>Qt::AlignCenter</set>
-			</property>
-			<property name="minimum">
-			 <number>-1</number>
-			</property>
-			<property name="maximum">
-			 <number>250001</number>
-			</property>
-			<property name="value">
-			 <number>-1</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="3" column="0">
-		   <widget class="QLabel" name="label">
-			<property name="toolTip">
-			 <string>Specify quality instead of specifying a particular bitrate.</string>
-			</property>
-			<property name="text">
-			 <string>quality</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="3" column="2">
-		   <widget class="QSlider" name="vorbisQuaSlider">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-			  <horstretch>0</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="toolTip">
-			 <string>Specify quality instead of specifying a particular bitrate.</string>
-			</property>
-			<property name="minimum">
-			 <number>0</number>
-			</property>
-			<property name="maximum">
-			 <number>10</number>
-			</property>
-			<property name="singleStep">
-			 <number>1</number>
-			</property>
-			<property name="pageStep">
-			 <number>1</number>
-			</property>
-			<property name="value">
-			 <number>3</number>
-			</property>
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="tickPosition">
-			 <enum>QSlider::TicksAbove</enum>
-			</property>
-			<property name="tickInterval">
-			 <number>1</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="4" column="0">
-		   <widget class="QCheckBox" name="vorbisManagedBox">
-			<property name="toolTip">
-			 <string>Enable bitrate management engine</string>
-			</property>
-			<property name="text">
-			 <string>managed</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="4" column="1">
-		   <widget class="QLabel" name="label_10">
-			<property name="text">
-			 <string/>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="4" column="2">
-		   <spacer name="horizontalSpacer_2">
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="sizeHint" stdset="0">
-			 <size>
-			  <width>155</width>
-			  <height>20</height>
-			 </size>
-			</property>
-		   </spacer>
-		  </item>
-		  <item row="3" column="3">
-		   <widget class="QDoubleSpinBox" name="vorbisQuaValue">
-			<property name="toolTip">
-			 <string>Specify quality instead of specifying a particular bitrate.</string>
-			</property>
-			<property name="alignment">
-			 <set>Qt::AlignCenter</set>
-			</property>
-			<property name="decimals">
-			 <number>1</number>
-			</property>
-			<property name="maximum">
-			 <double>1.000000000000000</double>
-			</property>
-			<property name="singleStep">
-			 <double>0.100000000000000</double>
-			</property>
-			<property name="value">
-			 <double>0.300000000000000</double>
-			</property>
-		   </widget>
-		  </item>
-		 </layout>
-		</widget>
-	   </item>
-	   <item row="1" column="0">
-		<spacer name="verticalSpacer_3">
-		 <property name="orientation">
-		  <enum>Qt::Vertical</enum>
-		 </property>
-		 <property name="sizeHint" stdset="0">
-		  <size>
-		   <width>20</width>
-		   <height>73</height>
-		  </size>
-		 </property>
-		</spacer>
-	   </item>
-	  </layout>
-	 </widget>
-	 <widget class="QWidget" name="page_4">
-	  <layout class="QGridLayout" name="gridLayout_4">
-	   <item row="0" column="0">
-		<widget class="QScrollArea" name="scrollArea">
-		 <property name="frameShape">
-		  <enum>QFrame::NoFrame</enum>
-		 </property>
-		 <property name="horizontalScrollBarPolicy">
-		  <enum>Qt::ScrollBarAlwaysOff</enum>
-		 </property>
-		 <property name="widgetResizable">
-		  <bool>true</bool>
-		 </property>
-		 <widget class="QWidget" name="scrollAreaWidgetContents">
-		  <property name="geometry">
-		   <rect>
-			<x>0</x>
-			<y>0</y>
-			<width>319</width>
-			<height>408</height>
-		   </rect>
-		  </property>
-		  <layout class="QGridLayout" name="gridLayout_16">
-		   <item row="0" column="0">
-			<widget class="QGroupBox" name="groupBox_11">
-			 <property name="enabled">
-			  <bool>true</bool>
-			 </property>
-			 <property name="title">
-			  <string>Encode MP3s with LAME</string>
-			 </property>
-			 <layout class="QGridLayout" name="gridLayout_8">
-			  <item row="0" column="0">
-			   <widget class="QLabel" name="label_11">
-				<property name="text">
-				 <string>bitrate </string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="0" column="1">
-			   <widget class="QComboBox" name="lameBitrateBox">
-				<property name="sizePolicy">
-				 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-				  <horstretch>1</horstretch>
-				  <verstretch>0</verstretch>
-				 </sizepolicy>
-				</property>
-				<property name="currentIndex">
-				 <number>11</number>
-				</property>
-				<item>
-				 <property name="text">
-				  <string>8</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>16</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>24</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>32</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>40</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>48</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>56</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>64</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>80</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>96</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>112</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>128</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>160</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>192</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>224</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>256</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>320</string>
-				 </property>
-				</item>
-			   </widget>
-			  </item>
-			  <item row="0" column="2" colspan="2">
-			   <widget class="QLabel" name="label_12">
-				<property name="sizePolicy">
-				 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-				  <horstretch>1</horstretch>
-				  <verstretch>0</verstretch>
-				 </sizepolicy>
-				</property>
-				<property name="text">
-				 <string>kbit/sec</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="1" column="0">
-			   <widget class="QLabel" name="label_13">
-				<property name="enabled">
-				 <bool>false</bool>
-				</property>
-				<property name="text">
-				 <string>compression-ratio</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="1" column="1" colspan="5">
-			   <widget class="QSlider" name="lameCRSlider">
-				<property name="enabled">
-				 <bool>false</bool>
-				</property>
-				<property name="sizePolicy">
-				 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-				  <horstretch>9</horstretch>
-				  <verstretch>0</verstretch>
-				 </sizepolicy>
-				</property>
-				<property name="minimum">
-				 <number>0</number>
-				</property>
-				<property name="maximum">
-				 <number>200</number>
-				</property>
-				<property name="singleStep">
-				 <number>1</number>
-				</property>
-				<property name="pageStep">
-				 <number>10</number>
-				</property>
-				<property name="value">
-				 <number>0</number>
-				</property>
-				<property name="orientation">
-				 <enum>Qt::Horizontal</enum>
-				</property>
-				<property name="tickPosition">
-				 <enum>QSlider::TicksAbove</enum>
-				</property>
-				<property name="tickInterval">
-				 <number>10</number>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="1" column="6">
-			   <widget class="QSpinBox" name="lameCRspinBox">
-				<property name="enabled">
-				 <bool>false</bool>
-				</property>
-				<property name="alignment">
-				 <set>Qt::AlignCenter</set>
-				</property>
-				<property name="maximum">
-				 <number>200</number>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="2" column="0">
-			   <widget class="QLabel" name="label_2">
-				<property name="text">
-				 <string>quality</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="2" column="1" colspan="5">
-			   <widget class="QSlider" name="lameQuaSlider">
-				<property name="sizePolicy">
-				 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-				  <horstretch>9</horstretch>
-				  <verstretch>0</verstretch>
-				 </sizepolicy>
-				</property>
-				<property name="minimum">
-				 <number>0</number>
-				</property>
-				<property name="maximum">
-				 <number>9</number>
-				</property>
-				<property name="singleStep">
-				 <number>1</number>
-				</property>
-				<property name="pageStep">
-				 <number>1</number>
-				</property>
-				<property name="value">
-				 <number>3</number>
-				</property>
-				<property name="orientation">
-				 <enum>Qt::Horizontal</enum>
-				</property>
-				<property name="tickPosition">
-				 <enum>QSlider::TicksAbove</enum>
-				</property>
-				<property name="tickInterval">
-				 <number>1</number>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="2" column="6">
-			   <widget class="QLabel" name="lameQuaValue">
-				<property name="sizePolicy">
-				 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-				  <horstretch>0</horstretch>
-				  <verstretch>0</verstretch>
-				 </sizepolicy>
-				</property>
-				<property name="frameShape">
-				 <enum>QFrame::StyledPanel</enum>
-				</property>
-				<property name="text">
-				 <string>3</string>
-				</property>
-				<property name="alignment">
-				 <set>Qt::AlignCenter</set>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="3" column="0">
-			   <widget class="QLabel" name="label_14">
-				<property name="text">
-				 <string>mode</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="3" column="1" colspan="4">
-			   <widget class="QComboBox" name="lameModeComboBox">
-				<property name="currentIndex">
-				 <number>1</number>
-				</property>
-				<item>
-				 <property name="text">
-				  <string>(0): Stereo</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>(1): Joint Stereo</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>(2): Dual Channel</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>(3): Mono</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>(4): Auto</string>
-				 </property>
-				</item>
-			   </widget>
-			  </item>
-			  <item row="4" column="0">
-			   <widget class="QCheckBox" name="lameForseMs">
-				<property name="text">
-				 <string>force-ms</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="4" column="1" colspan="3">
-			   <widget class="QCheckBox" name="lameFreeFormat">
-				<property name="text">
-				 <string>free-format </string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="4" column="4" colspan="3">
-			   <widget class="QCheckBox" name="lameCopyight">
-				<property name="text">
-				 <string>copyright</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="5" column="0">
-			   <widget class="QCheckBox" name="lameOriginal">
-				<property name="text">
-				 <string>original</string>
-				</property>
-				<property name="checked">
-				 <bool>true</bool>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="5" column="1" colspan="4">
-			   <widget class="QCheckBox" name="lameErrProt">
-				<property name="text">
-				 <string>error-protection</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="6" column="0">
-			   <widget class="QLabel" name="label_15">
-				<property name="text">
-				 <string>padding-type</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="6" column="1" colspan="4">
-			   <widget class="QComboBox" name="lamePaddingType">
-				<item>
-				 <property name="text">
-				  <string>(0): No Padding</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>(1): Always Pad</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>(2): Adjust Padding</string>
-				 </property>
-				</item>
-			   </widget>
-			  </item>
-			  <item row="7" column="0">
-			   <widget class="QCheckBox" name="lameExtention">
-				<property name="text">
-				 <string>extension</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="7" column="1" colspan="2">
-			   <widget class="QCheckBox" name="lameStrictIso">
-				<property name="text">
-				 <string>strict-iso</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="7" column="3" colspan="4">
-			   <widget class="QCheckBox" name="lameDisRese">
-				<property name="text">
-				 <string>disable-reservoir</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="8" column="0">
-			   <widget class="QLabel" name="label_16">
-				<property name="text">
-				 <string>vbr</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="8" column="1" colspan="6">
-			   <widget class="QComboBox" name="lameVbrComboBox">
-				<property name="enabled">
-				 <bool>true</bool>
-				</property>
-				<item>
-				 <property name="text">
-				  <string>(0): No VBR (Constant Bitrate)</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>(2): Lame's old VBR algorithm</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>(3): VBR Average Bitrate</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>(4): Lame's new VBR algorithm</string>
-				 </property>
-				</item>
-			   </widget>
-			  </item>
-			  <item row="9" column="0">
-			   <widget class="QLabel" name="label_17">
-				<property name="text">
-				 <string>vbr-mean-bitrate</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="9" column="1" colspan="5">
-			   <widget class="QSlider" name="lameCRSlider_2">
-				<property name="enabled">
-				 <bool>false</bool>
-				</property>
-				<property name="sizePolicy">
-				 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-				  <horstretch>9</horstretch>
-				  <verstretch>0</verstretch>
-				 </sizepolicy>
-				</property>
-				<property name="minimum">
-				 <number>0</number>
-				</property>
-				<property name="maximum">
-				 <number>320</number>
-				</property>
-				<property name="singleStep">
-				 <number>1</number>
-				</property>
-				<property name="pageStep">
-				 <number>10</number>
-				</property>
-				<property name="value">
-				 <number>128</number>
-				</property>
-				<property name="orientation">
-				 <enum>Qt::Horizontal</enum>
-				</property>
-				<property name="tickPosition">
-				 <enum>QSlider::TicksAbove</enum>
-				</property>
-				<property name="tickInterval">
-				 <number>10</number>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="9" column="6">
-			   <widget class="QSpinBox" name="lameCRspinBox_2">
-				<property name="enabled">
-				 <bool>false</bool>
-				</property>
-				<property name="alignment">
-				 <set>Qt::AlignCenter</set>
-				</property>
-				<property name="maximum">
-				 <number>320</number>
-				</property>
-				<property name="value">
-				 <number>128</number>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="10" column="0">
-			   <widget class="QLabel" name="label_18">
-				<property name="text">
-				 <string>vbr-min-bitrate</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="10" column="1">
-			   <widget class="QComboBox" name="lameBitrateBox_2">
-				<property name="enabled">
-				 <bool>false</bool>
-				</property>
-				<property name="sizePolicy">
-				 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-				  <horstretch>1</horstretch>
-				  <verstretch>0</verstretch>
-				 </sizepolicy>
-				</property>
-				<property name="currentIndex">
-				 <number>0</number>
-				</property>
-				<item>
-				 <property name="text">
-				  <string>0</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>8</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>16</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>24</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>32</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>40</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>48</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>56</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>64</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>80</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>96</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>112</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>128</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>160</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>192</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>224</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>256</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>320</string>
-				 </property>
-				</item>
-			   </widget>
-			  </item>
-			  <item row="10" column="2" colspan="2">
-			   <widget class="QLabel" name="label_19">
-				<property name="sizePolicy">
-				 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-				  <horstretch>1</horstretch>
-				  <verstretch>0</verstretch>
-				 </sizepolicy>
-				</property>
-				<property name="text">
-				 <string>kbit/sec</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="11" column="0">
-			   <widget class="QLabel" name="label_21">
-				<property name="text">
-				 <string>vbr-max-bitrate</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="11" column="1">
-			   <widget class="QComboBox" name="lameBitrateBox_3">
-				<property name="enabled">
-				 <bool>false</bool>
-				</property>
-				<property name="sizePolicy">
-				 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-				  <horstretch>1</horstretch>
-				  <verstretch>0</verstretch>
-				 </sizepolicy>
-				</property>
-				<property name="currentIndex">
-				 <number>0</number>
-				</property>
-				<item>
-				 <property name="text">
-				  <string>0</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>8</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>16</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>24</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>32</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>40</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>48</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>56</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>64</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>80</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>96</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>112</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>128</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>160</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>192</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>224</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>256</string>
-				 </property>
-				</item>
-				<item>
-				 <property name="text">
-				  <string>320</string>
-				 </property>
-				</item>
-			   </widget>
-			  </item>
-			  <item row="11" column="2" colspan="2">
-			   <widget class="QLabel" name="label_20">
-				<property name="sizePolicy">
-				 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-				  <horstretch>1</horstretch>
-				  <verstretch>0</verstretch>
-				 </sizepolicy>
-				</property>
-				<property name="text">
-				 <string>kbit/sec</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="12" column="0">
-			   <widget class="QLabel" name="label_3">
-				<property name="text">
-				 <string>vbr-quality</string>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="12" column="1" colspan="5">
-			   <widget class="QSlider" name="lameVbrQuaSlider">
-				<property name="sizePolicy">
-				 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-				  <horstretch>9</horstretch>
-				  <verstretch>0</verstretch>
-				 </sizepolicy>
-				</property>
-				<property name="minimum">
-				 <number>0</number>
-				</property>
-				<property name="maximum">
-				 <number>9</number>
-				</property>
-				<property name="singleStep">
-				 <number>1</number>
-				</property>
-				<property name="pageStep">
-				 <number>1</number>
-				</property>
-				<property name="value">
-				 <number>4</number>
-				</property>
-				<property name="orientation">
-				 <enum>Qt::Horizontal</enum>
-				</property>
-				<property name="tickPosition">
-				 <enum>QSlider::TicksAbove</enum>
-				</property>
-				<property name="tickInterval">
-				 <number>1</number>
-				</property>
-			   </widget>
-			  </item>
-			  <item row="12" column="6">
-			   <widget class="QLabel" name="lameVbrQuaValue">
-				<property name="sizePolicy">
-				 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-				  <horstretch>0</horstretch>
-				  <verstretch>0</verstretch>
-				 </sizepolicy>
-				</property>
-				<property name="frameShape">
-				 <enum>QFrame::StyledPanel</enum>
-				</property>
-				<property name="frameShadow">
-				 <enum>QFrame::Plain</enum>
-				</property>
-				<property name="text">
-				 <string>4</string>
-				</property>
-				<property name="textFormat">
-				 <enum>Qt::PlainText</enum>
-				</property>
-				<property name="alignment">
-				 <set>Qt::AlignCenter</set>
-				</property>
-			   </widget>
-			  </item>
-			 </layout>
-			</widget>
-		   </item>
-		  </layout>
-		 </widget>
-		</widget>
-	   </item>
-	  </layout>
-	 </widget>
-	 <widget class="QWidget" name="page_5">
-	  <layout class="QGridLayout" name="gridLayout_13">
-	   <item row="0" column="0">
-		<widget class="QGroupBox" name="groupBox_12">
-		 <property name="title">
-		  <string>The FLAC Lossless compressor Codec</string>
-		 </property>
-		 <layout class="QGridLayout" name="gridLayout_7">
-		  <item row="0" column="0">
-		   <widget class="QLabel" name="label_4">
-			<property name="text">
-			 <string>quality</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="0" column="1" colspan="5">
-		   <widget class="QSlider" name="flacQuaSlider">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-			  <horstretch>9</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="minimum">
-			 <number>0</number>
-			</property>
-			<property name="maximum">
-			 <number>9</number>
-			</property>
-			<property name="singleStep">
-			 <number>1</number>
-			</property>
-			<property name="pageStep">
-			 <number>1</number>
-			</property>
-			<property name="value">
-			 <number>5</number>
-			</property>
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="tickPosition">
-			 <enum>QSlider::TicksAbove</enum>
-			</property>
-			<property name="tickInterval">
-			 <number>1</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="2" column="0" colspan="3">
-		   <widget class="QCheckBox" name="flacStreamableSubsetBox">
-			<property name="text">
-			 <string>streamable-subset</string>
-			</property>
-			<property name="checked">
-			 <bool>true</bool>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="2" column="3" colspan="2">
-		   <widget class="QCheckBox" name="flacMidSideStereoBox">
-			<property name="text">
-			 <string>mid-side-stereo</string>
-			</property>
-			<property name="checked">
-			 <bool>true</bool>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="2" column="5" colspan="2">
-		   <widget class="QCheckBox" name="flacLooseMidSideStereoBox">
-			<property name="text">
-			 <string>loose-mid-side-stereo</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="3" column="0">
-		   <widget class="QLabel" name="label_22">
-			<property name="text">
-			 <string>blocksize</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="3" column="2" colspan="4">
-		   <widget class="QSlider" name="flacBlocksizeSlider">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-			  <horstretch>9</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="minimum">
-			 <number>16</number>
-			</property>
-			<property name="maximum">
-			 <number>65535</number>
-			</property>
-			<property name="singleStep">
-			 <number>512</number>
-			</property>
-			<property name="pageStep">
-			 <number>5120</number>
-			</property>
-			<property name="value">
-			 <number>4608</number>
-			</property>
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="tickPosition">
-			 <enum>QSlider::TicksAbove</enum>
-			</property>
-			<property name="tickInterval">
-			 <number>512</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="3" column="6">
-		   <widget class="QSpinBox" name="flacBlocksizeSpinBox">
-			<property name="alignment">
-			 <set>Qt::AlignCenter</set>
-			</property>
-			<property name="minimum">
-			 <number>16</number>
-			</property>
-			<property name="maximum">
-			 <number>65535</number>
-			</property>
-			<property name="value">
-			 <number>4608</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="4" column="0" colspan="2">
-		   <widget class="QLabel" name="label_23">
-			<property name="text">
-			 <string>max-lpc-order</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="4" column="2" colspan="4">
-		   <widget class="QSlider" name="flacMaxLpcOrderSlider">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-			  <horstretch>9</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="minimum">
-			 <number>0</number>
-			</property>
-			<property name="maximum">
-			 <number>32</number>
-			</property>
-			<property name="singleStep">
-			 <number>1</number>
-			</property>
-			<property name="pageStep">
-			 <number>5</number>
-			</property>
-			<property name="value">
-			 <number>8</number>
-			</property>
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="tickPosition">
-			 <enum>QSlider::TicksAbove</enum>
-			</property>
-			<property name="tickInterval">
-			 <number>1</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="4" column="6">
-		   <widget class="QSpinBox" name="flacMaxLpcOrderSpinBox">
-			<property name="alignment">
-			 <set>Qt::AlignCenter</set>
-			</property>
-			<property name="minimum">
-			 <number>0</number>
-			</property>
-			<property name="maximum">
-			 <number>32</number>
-			</property>
-			<property name="value">
-			 <number>8</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="5" column="0" colspan="2">
-		   <widget class="QLabel" name="label_24">
-			<property name="text">
-			 <string>qlp-coeff-precision</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="5" column="2" colspan="4">
-		   <widget class="QSlider" name="flacQlpCoeffPrecisionSlider">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-			  <horstretch>9</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="minimum">
-			 <number>0</number>
-			</property>
-			<property name="maximum">
-			 <number>32</number>
-			</property>
-			<property name="singleStep">
-			 <number>1</number>
-			</property>
-			<property name="pageStep">
-			 <number>5</number>
-			</property>
-			<property name="value">
-			 <number>0</number>
-			</property>
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="tickPosition">
-			 <enum>QSlider::TicksAbove</enum>
-			</property>
-			<property name="tickInterval">
-			 <number>1</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="5" column="6">
-		   <widget class="QSpinBox" name="flacQlpCoeffPrecisionSpinBox">
-			<property name="alignment">
-			 <set>Qt::AlignCenter</set>
-			</property>
-			<property name="minimum">
-			 <number>0</number>
-			</property>
-			<property name="maximum">
-			 <number>32</number>
-			</property>
-			<property name="value">
-			 <number>0</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="6" column="0" colspan="3">
-		   <widget class="QCheckBox" name="flacQlpCoeffPrecSearchCheckBox">
-			<property name="text">
-			 <string>qlp-coeff-prec-search</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="6" column="3" colspan="2">
-		   <widget class="QCheckBox" name="flacEscapeCodingCheckBox">
-			<property name="text">
-			 <string>escape-coding</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="6" column="5" colspan="2">
-		   <widget class="QCheckBox" name="flacExhaustiveModelSearchCheckBox">
-			<property name="text">
-			 <string>exhaustive-model-search</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="7" column="0" colspan="3">
-		   <widget class="QLabel" name="label_26">
-			<property name="text">
-			 <string>min-residual-partition-order</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="7" column="3" colspan="3">
-		   <widget class="QSlider" name="flacMinResidualPartitionOrderSlider">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-			  <horstretch>9</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="minimum">
-			 <number>0</number>
-			</property>
-			<property name="maximum">
-			 <number>16</number>
-			</property>
-			<property name="singleStep">
-			 <number>1</number>
-			</property>
-			<property name="pageStep">
-			 <number>5</number>
-			</property>
-			<property name="value">
-			 <number>3</number>
-			</property>
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="tickPosition">
-			 <enum>QSlider::TicksAbove</enum>
-			</property>
-			<property name="tickInterval">
-			 <number>1</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="7" column="6">
-		   <widget class="QSpinBox" name="flacMinResidualPartitionOrderSpinBox">
-			<property name="alignment">
-			 <set>Qt::AlignCenter</set>
-			</property>
-			<property name="minimum">
-			 <number>0</number>
-			</property>
-			<property name="maximum">
-			 <number>16</number>
-			</property>
-			<property name="value">
-			 <number>3</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="8" column="0" colspan="3">
-		   <widget class="QLabel" name="label_27">
-			<property name="text">
-			 <string>max-residual-partition-order</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="8" column="3" colspan="3">
-		   <widget class="QSlider" name="flacMaxResidualPartitionOrderSlider">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-			  <horstretch>9</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="minimum">
-			 <number>0</number>
-			</property>
-			<property name="maximum">
-			 <number>16</number>
-			</property>
-			<property name="singleStep">
-			 <number>1</number>
-			</property>
-			<property name="pageStep">
-			 <number>5</number>
-			</property>
-			<property name="value">
-			 <number>3</number>
-			</property>
-			<property name="sliderPosition">
-			 <number>3</number>
-			</property>
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="tickPosition">
-			 <enum>QSlider::TicksAbove</enum>
-			</property>
-			<property name="tickInterval">
-			 <number>1</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="8" column="6">
-		   <widget class="QSpinBox" name="flacMaxResidualPartitionOrderSpinBox">
-			<property name="alignment">
-			 <set>Qt::AlignCenter</set>
-			</property>
-			<property name="minimum">
-			 <number>0</number>
-			</property>
-			<property name="maximum">
-			 <number>16</number>
-			</property>
-			<property name="value">
-			 <number>3</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="9" column="0" colspan="3">
-		   <widget class="QLabel" name="label_25">
-			<property name="text">
-			 <string>rice-parameter-search-dist</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="9" column="3" colspan="3">
-		   <widget class="QSlider" name="flacRiceParameterSearchDistSlider">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-			  <horstretch>9</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="minimum">
-			 <number>0</number>
-			</property>
-			<property name="maximum">
-			 <number>15</number>
-			</property>
-			<property name="singleStep">
-			 <number>1</number>
-			</property>
-			<property name="pageStep">
-			 <number>5</number>
-			</property>
-			<property name="value">
-			 <number>0</number>
-			</property>
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="tickPosition">
-			 <enum>QSlider::TicksAbove</enum>
-			</property>
-			<property name="tickInterval">
-			 <number>1</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="9" column="6">
-		   <widget class="QSpinBox" name="flacRiceParameterSearchDistSpinBox">
-			<property name="alignment">
-			 <set>Qt::AlignCenter</set>
-			</property>
-			<property name="minimum">
-			 <number>0</number>
-			</property>
-			<property name="maximum">
-			 <number>15</number>
-			</property>
-			<property name="value">
-			 <number>0</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="0" column="6">
-		   <widget class="QLabel" name="flacQuaValue">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-			  <horstretch>1</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="frameShape">
-			 <enum>QFrame::StyledPanel</enum>
-			</property>
-			<property name="text">
-			 <string> 5</string>
-			</property>
-			<property name="alignment">
-			 <set>Qt::AlignCenter</set>
-			</property>
-		   </widget>
-		  </item>
-		 </layout>
-		</widget>
-	   </item>
-	  </layout>
-	 </widget>
-	 <widget class="QWidget" name="page_6">
-	  <layout class="QGridLayout" name="gridLayout_10">
-	   <item row="0" column="0">
-		<widget class="QGroupBox" name="groupBox_13">
-		 <property name="title">
-		  <string>Free AAC Encoder (FAAC)</string>
-		 </property>
-		 <layout class="QGridLayout" name="gridLayout_6">
-		  <item row="0" column="0" colspan="2">
-		   <widget class="QLabel" name="label_28">
-			<property name="text">
-			 <string>outputformat</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="0" column="2">
-		   <widget class="QComboBox" name="faacOutputformatComboBox">
-			<item>
-			 <property name="text">
-			  <string>(0): Raw AAC</string>
-			 </property>
-			</item>
-			<item>
-			 <property name="text">
-			  <string>(1): ADTS headers</string>
-			 </property>
-			</item>
-		   </widget>
-		  </item>
-		  <item row="0" column="3">
-		   <spacer name="horizontalSpacer_3">
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="sizeHint" stdset="0">
-			 <size>
-			  <width>68</width>
-			  <height>20</height>
-			 </size>
-			</property>
-		   </spacer>
-		  </item>
-		  <item row="1" column="0">
-		   <widget class="QLabel" name="label_29">
-			<property name="text">
-			 <string>bitrate</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="1" column="1" colspan="2">
-		   <widget class="QSlider" name="faacBitrateSlider">
-			<property name="sizePolicy">
-			 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-			  <horstretch>9</horstretch>
-			  <verstretch>0</verstretch>
-			 </sizepolicy>
-			</property>
-			<property name="minimum">
-			 <number>8000</number>
-			</property>
-			<property name="maximum">
-			 <number>320000</number>
-			</property>
-			<property name="singleStep">
-			 <number>8000</number>
-			</property>
-			<property name="pageStep">
-			 <number>40000</number>
-			</property>
-			<property name="value">
-			 <number>128000</number>
-			</property>
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="tickPosition">
-			 <enum>QSlider::TicksAbove</enum>
-			</property>
-			<property name="tickInterval">
-			 <number>8000</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="1" column="3">
-		   <widget class="QSpinBox" name="faacBitrateSpinBox">
-			<property name="alignment">
-			 <set>Qt::AlignCenter</set>
-			</property>
-			<property name="minimum">
-			 <number>8000</number>
-			</property>
-			<property name="maximum">
-			 <number>320000</number>
-			</property>
-			<property name="value">
-			 <number>128000</number>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="2" column="0">
-		   <widget class="QLabel" name="label_5">
-			<property name="text">
-			 <string>profile</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="2" column="1" colspan="2">
-		   <widget class="QComboBox" name="faacProfileComboBox">
-			<property name="currentIndex">
-			 <number>1</number>
-			</property>
-			<item>
-			 <property name="text">
-			  <string>1: Main profile     - MAIN</string>
-			 </property>
-			</item>
-			<item>
-			 <property name="text">
-			  <string>2: Low complexity profile - LC</string>
-			 </property>
-			</item>
-			<item>
-			 <property name="text">
-			  <string>3: Scalable sampling rate profile - SSR</string>
-			 </property>
-			</item>
-			<item>
-			 <property name="text">
-			  <string>4: Long term prediction profile - LTP</string>
-			 </property>
-			</item>
-		   </widget>
-		  </item>
-		  <item row="2" column="3" rowspan="2">
-		   <spacer name="horizontalSpacer_4">
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="sizeHint" stdset="0">
-			 <size>
-			  <width>68</width>
-			  <height>20</height>
-			 </size>
-			</property>
-		   </spacer>
-		  </item>
-		  <item row="3" column="0">
-		   <widget class="QCheckBox" name="faacTnsCheckBox">
-			<property name="text">
-			 <string>tns</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="3" column="2">
-		   <widget class="QCheckBox" name="faacMidsideCheckBox">
-			<property name="text">
-			 <string>midside</string>
-			</property>
-			<property name="checked">
-			 <bool>true</bool>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="4" column="0">
-		   <widget class="QLabel" name="label_30">
-			<property name="text">
-			 <string>shortctl</string>
-			</property>
-		   </widget>
-		  </item>
-		  <item row="4" column="2">
-		   <widget class="QComboBox" name="faacShortctlComboBox">
-			<item>
-			 <property name="text">
-			  <string>(0): Normal block type</string>
-			 </property>
-			</item>
-			<item>
-			 <property name="text">
-			  <string>(1): No short blocks</string>
-			 </property>
-			</item>
-			<item>
-			 <property name="text">
-			  <string>(2): No long blocks</string>
-			 </property>
-			</item>
-		   </widget>
-		  </item>
-		  <item row="4" column="3">
-		   <spacer name="horizontalSpacer_5">
-			<property name="orientation">
-			 <enum>Qt::Horizontal</enum>
-			</property>
-			<property name="sizeHint" stdset="0">
-			 <size>
-			  <width>68</width>
-			  <height>20</height>
-			 </size>
-			</property>
-		   </spacer>
-		  </item>
-		 </layout>
-		</widget>
-	   </item>
-	   <item row="1" column="0">
-		<spacer name="verticalSpacer_2">
-		 <property name="orientation">
-		  <enum>Qt::Vertical</enum>
-		 </property>
-		 <property name="sizeHint" stdset="0">
-		  <size>
-		   <width>128</width>
-		   <height>204</height>
-		  </size>
-		 </property>
-		</spacer>
-	   </item>
-	  </layout>
-	 </widget>
-	</widget>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <number>-1</number>
+            </property>
+            <property name="maximum">
+             <number>250001</number>
+            </property>
+            <property name="value">
+             <number>-1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label">
+            <property name="toolTip">
+             <string>Specify quality instead of specifying a particular bitrate.</string>
+            </property>
+            <property name="text">
+             <string>quality</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QSlider" name="vorbisQuaSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Specify quality instead of specifying a particular bitrate.</string>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>10</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
+            </property>
+            <property name="pageStep">
+             <number>1</number>
+            </property>
+            <property name="value">
+             <number>3</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="vorbisManagedBox">
+            <property name="toolTip">
+             <string>Enable bitrate management engine</string>
+            </property>
+            <property name="text">
+             <string>managed</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>155</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="3">
+           <widget class="QDoubleSpinBox" name="vorbisQuaValue">
+            <property name="toolTip">
+             <string>Specify quality instead of specifying a particular bitrate.</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="decimals">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <double>1.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
+            <property name="value">
+             <double>0.300000000000000</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>73</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_4">
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0">
+        <widget class="QScrollArea" name="scrollArea">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>319</width>
+            <height>408</height>
+           </rect>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_16">
+           <item row="0" column="0">
+            <widget class="QGroupBox" name="groupBox_11">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="title">
+              <string>Encode MP3s with LAME</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_8">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_11">
+                <property name="text">
+                 <string>bitrate </string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QComboBox" name="lameBitrateBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>1</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="currentIndex">
+                 <number>11</number>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>16</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>24</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>32</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>40</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>48</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>56</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>64</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>80</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>96</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>112</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>128</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>160</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>192</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>224</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>256</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>320</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="0" column="2" colspan="2">
+               <widget class="QLabel" name="label_12">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>1</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>kbit/sec</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_13">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>compression-ratio</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1" colspan="5">
+               <widget class="QSlider" name="lameCRSlider">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>9</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimum">
+                 <number>0</number>
+                </property>
+                <property name="maximum">
+                 <number>200</number>
+                </property>
+                <property name="singleStep">
+                 <number>1</number>
+                </property>
+                <property name="pageStep">
+                 <number>10</number>
+                </property>
+                <property name="value">
+                 <number>0</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="tickPosition">
+                 <enum>QSlider::TicksAbove</enum>
+                </property>
+                <property name="tickInterval">
+                 <number>10</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="6">
+               <widget class="QSpinBox" name="lameCRspinBox">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="maximum">
+                 <number>200</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>quality</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1" colspan="5">
+               <widget class="QSlider" name="lameQuaSlider">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>9</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimum">
+                 <number>0</number>
+                </property>
+                <property name="maximum">
+                 <number>9</number>
+                </property>
+                <property name="singleStep">
+                 <number>1</number>
+                </property>
+                <property name="pageStep">
+                 <number>1</number>
+                </property>
+                <property name="value">
+                 <number>3</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="tickPosition">
+                 <enum>QSlider::TicksAbove</enum>
+                </property>
+                <property name="tickInterval">
+                 <number>1</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="6">
+               <widget class="QLabel" name="lameQuaValue">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="text">
+                 <string>3</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_14">
+                <property name="text">
+                 <string>mode</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1" colspan="4">
+               <widget class="QComboBox" name="lameModeComboBox">
+                <property name="currentIndex">
+                 <number>1</number>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>(0): Stereo</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>(1): Joint Stereo</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>(2): Dual Channel</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>(3): Mono</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>(4): Auto</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QCheckBox" name="lameForseMs">
+                <property name="text">
+                 <string>force-ms</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1" colspan="3">
+               <widget class="QCheckBox" name="lameFreeFormat">
+                <property name="text">
+                 <string>free-format </string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="4" colspan="3">
+               <widget class="QCheckBox" name="lameCopyight">
+                <property name="text">
+                 <string>copyright</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QCheckBox" name="lameOriginal">
+                <property name="text">
+                 <string>original</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1" colspan="4">
+               <widget class="QCheckBox" name="lameErrProt">
+                <property name="text">
+                 <string>error-protection</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_15">
+                <property name="text">
+                 <string>padding-type</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1" colspan="4">
+               <widget class="QComboBox" name="lamePaddingType">
+                <item>
+                 <property name="text">
+                  <string>(0): No Padding</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>(1): Always Pad</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>(2): Adjust Padding</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QCheckBox" name="lameExtention">
+                <property name="text">
+                 <string>extension</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1" colspan="2">
+               <widget class="QCheckBox" name="lameStrictIso">
+                <property name="text">
+                 <string>strict-iso</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="3" colspan="4">
+               <widget class="QCheckBox" name="lameDisRese">
+                <property name="text">
+                 <string>disable-reservoir</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="label_16">
+                <property name="text">
+                 <string>vbr</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1" colspan="6">
+               <widget class="QComboBox" name="lameVbrComboBox">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>(0): No VBR (Constant Bitrate)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>(2): Lame's old VBR algorithm</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>(3): VBR Average Bitrate</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>(4): Lame's new VBR algorithm</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="9" column="0">
+               <widget class="QLabel" name="label_17">
+                <property name="text">
+                 <string>vbr-mean-bitrate</string>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="1" colspan="5">
+               <widget class="QSlider" name="lameCRSlider_2">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>9</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimum">
+                 <number>0</number>
+                </property>
+                <property name="maximum">
+                 <number>320</number>
+                </property>
+                <property name="singleStep">
+                 <number>1</number>
+                </property>
+                <property name="pageStep">
+                 <number>10</number>
+                </property>
+                <property name="value">
+                 <number>128</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="tickPosition">
+                 <enum>QSlider::TicksAbove</enum>
+                </property>
+                <property name="tickInterval">
+                 <number>10</number>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="6">
+               <widget class="QSpinBox" name="lameCRspinBox_2">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="maximum">
+                 <number>320</number>
+                </property>
+                <property name="value">
+                 <number>128</number>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="0">
+               <widget class="QLabel" name="label_18">
+                <property name="text">
+                 <string>vbr-min-bitrate</string>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="1">
+               <widget class="QComboBox" name="lameBitrateBox_2">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>1</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="currentIndex">
+                 <number>0</number>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>16</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>24</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>32</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>40</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>48</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>56</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>64</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>80</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>96</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>112</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>128</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>160</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>192</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>224</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>256</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>320</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="10" column="2" colspan="2">
+               <widget class="QLabel" name="label_19">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>1</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>kbit/sec</string>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="0">
+               <widget class="QLabel" name="label_21">
+                <property name="text">
+                 <string>vbr-max-bitrate</string>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="1">
+               <widget class="QComboBox" name="lameBitrateBox_3">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>1</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="currentIndex">
+                 <number>0</number>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>16</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>24</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>32</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>40</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>48</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>56</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>64</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>80</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>96</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>112</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>128</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>160</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>192</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>224</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>256</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>320</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="11" column="2" colspan="2">
+               <widget class="QLabel" name="label_20">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>1</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>kbit/sec</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>vbr-quality</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="1" colspan="5">
+               <widget class="QSlider" name="lameVbrQuaSlider">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>9</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimum">
+                 <number>0</number>
+                </property>
+                <property name="maximum">
+                 <number>9</number>
+                </property>
+                <property name="singleStep">
+                 <number>1</number>
+                </property>
+                <property name="pageStep">
+                 <number>1</number>
+                </property>
+                <property name="value">
+                 <number>4</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="tickPosition">
+                 <enum>QSlider::TicksAbove</enum>
+                </property>
+                <property name="tickInterval">
+                 <number>1</number>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="6">
+               <widget class="QLabel" name="lameVbrQuaValue">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
+                <property name="text">
+                 <string>4</string>
+                </property>
+                <property name="textFormat">
+                 <enum>Qt::PlainText</enum>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_5">
+      <layout class="QGridLayout" name="gridLayout_13">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox_12">
+         <property name="title">
+          <string>The FLAC Lossless compressor Codec</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>quality</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="5">
+           <widget class="QSlider" name="flacQuaSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>9</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>9</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
+            </property>
+            <property name="pageStep">
+             <number>1</number>
+            </property>
+            <property name="value">
+             <number>5</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="3">
+           <widget class="QCheckBox" name="flacStreamableSubsetBox">
+            <property name="text">
+             <string>streamable-subset</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3" colspan="2">
+           <widget class="QCheckBox" name="flacMidSideStereoBox">
+            <property name="text">
+             <string>mid-side-stereo</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="5" colspan="2">
+           <widget class="QCheckBox" name="flacLooseMidSideStereoBox">
+            <property name="text">
+             <string>loose-mid-side-stereo</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_22">
+            <property name="text">
+             <string>blocksize</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2" colspan="4">
+           <widget class="QSlider" name="flacBlocksizeSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>9</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimum">
+             <number>16</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+            <property name="singleStep">
+             <number>512</number>
+            </property>
+            <property name="pageStep">
+             <number>5120</number>
+            </property>
+            <property name="value">
+             <number>4608</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>512</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="6">
+           <widget class="QSpinBox" name="flacBlocksizeSpinBox">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <number>16</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+            <property name="value">
+             <number>4608</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QLabel" name="label_23">
+            <property name="text">
+             <string>max-lpc-order</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2" colspan="4">
+           <widget class="QSlider" name="flacMaxLpcOrderSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>9</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>32</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
+            </property>
+            <property name="pageStep">
+             <number>5</number>
+            </property>
+            <property name="value">
+             <number>8</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="6">
+           <widget class="QSpinBox" name="flacMaxLpcOrderSpinBox">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>32</number>
+            </property>
+            <property name="value">
+             <number>8</number>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QLabel" name="label_24">
+            <property name="text">
+             <string>qlp-coeff-precision</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2" colspan="4">
+           <widget class="QSlider" name="flacQlpCoeffPrecisionSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>9</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>32</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
+            </property>
+            <property name="pageStep">
+             <number>5</number>
+            </property>
+            <property name="value">
+             <number>0</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="6">
+           <widget class="QSpinBox" name="flacQlpCoeffPrecisionSpinBox">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>32</number>
+            </property>
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="3">
+           <widget class="QCheckBox" name="flacQlpCoeffPrecSearchCheckBox">
+            <property name="text">
+             <string>qlp-coeff-prec-search</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="3" colspan="2">
+           <widget class="QCheckBox" name="flacEscapeCodingCheckBox">
+            <property name="text">
+             <string>escape-coding</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="5" colspan="2">
+           <widget class="QCheckBox" name="flacExhaustiveModelSearchCheckBox">
+            <property name="text">
+             <string>exhaustive-model-search</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="3">
+           <widget class="QLabel" name="label_26">
+            <property name="text">
+             <string>min-residual-partition-order</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="3" colspan="3">
+           <widget class="QSlider" name="flacMinResidualPartitionOrderSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>9</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>16</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
+            </property>
+            <property name="pageStep">
+             <number>5</number>
+            </property>
+            <property name="value">
+             <number>3</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="6">
+           <widget class="QSpinBox" name="flacMinResidualPartitionOrderSpinBox">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>16</number>
+            </property>
+            <property name="value">
+             <number>3</number>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="3">
+           <widget class="QLabel" name="label_27">
+            <property name="text">
+             <string>max-residual-partition-order</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="3" colspan="3">
+           <widget class="QSlider" name="flacMaxResidualPartitionOrderSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>9</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>16</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
+            </property>
+            <property name="pageStep">
+             <number>5</number>
+            </property>
+            <property name="value">
+             <number>3</number>
+            </property>
+            <property name="sliderPosition">
+             <number>3</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="6">
+           <widget class="QSpinBox" name="flacMaxResidualPartitionOrderSpinBox">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>16</number>
+            </property>
+            <property name="value">
+             <number>3</number>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0" colspan="3">
+           <widget class="QLabel" name="label_25">
+            <property name="text">
+             <string>rice-parameter-search-dist</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="3" colspan="3">
+           <widget class="QSlider" name="flacRiceParameterSearchDistSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>9</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>15</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
+            </property>
+            <property name="pageStep">
+             <number>5</number>
+            </property>
+            <property name="value">
+             <number>0</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="6">
+           <widget class="QSpinBox" name="flacRiceParameterSearchDistSpinBox">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>15</number>
+            </property>
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="6">
+           <widget class="QLabel" name="flacQuaValue">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string> 5</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_6">
+      <layout class="QGridLayout" name="gridLayout_10">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox_13">
+         <property name="title">
+          <string>Free AAC Encoder (FAAC)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="label_28">
+            <property name="text">
+             <string>outputformat</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QComboBox" name="faacOutputformatComboBox">
+            <item>
+             <property name="text">
+              <string>(0): Raw AAC</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>(1): ADTS headers</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>68</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_29">
+            <property name="text">
+             <string>bitrate</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" colspan="2">
+           <widget class="QSlider" name="faacBitrateSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>9</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimum">
+             <number>8000</number>
+            </property>
+            <property name="maximum">
+             <number>320000</number>
+            </property>
+            <property name="singleStep">
+             <number>8000</number>
+            </property>
+            <property name="pageStep">
+             <number>40000</number>
+            </property>
+            <property name="value">
+             <number>128000</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>8000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QSpinBox" name="faacBitrateSpinBox">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="minimum">
+             <number>8000</number>
+            </property>
+            <property name="maximum">
+             <number>320000</number>
+            </property>
+            <property name="value">
+             <number>128000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>profile</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" colspan="2">
+           <widget class="QComboBox" name="faacProfileComboBox">
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
+            <item>
+             <property name="text">
+              <string>1: Main profile     - MAIN</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>2: Low complexity profile - LC</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>3: Scalable sampling rate profile - SSR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>4: Long term prediction profile - LTP</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="3" rowspan="2">
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>68</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="faacTnsCheckBox">
+            <property name="text">
+             <string>tns</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QCheckBox" name="faacMidsideCheckBox">
+            <property name="text">
+             <string>midside</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>shortctl</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QComboBox" name="faacShortctlComboBox">
+            <item>
+             <property name="text">
+              <string>(0): Normal block type</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>(1): No short blocks</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>(2): No long blocks</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>68</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>128</width>
+           <height>204</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
    </item>
    <item row="1" column="1">
-	<layout class="QHBoxLayout" name="horizontalLayout">
-	 <item>
-	  <spacer name="horizontalSpacer">
-	   <property name="orientation">
-		<enum>Qt::Horizontal</enum>
-	   </property>
-	   <property name="sizeHint" stdset="0">
-		<size>
-		 <width>203</width>
-		 <height>20</height>
-		</size>
-	   </property>
-	  </spacer>
-	 </item>
-	 <item>
-	  <widget class="QPushButton" name="okButton">
-	   <property name="text">
-		<string>Ок</string>
-	   </property>
-	   <property name="autoDefault">
-		<bool>true</bool>
-	   </property>
-	   <property name="default">
-		<bool>true</bool>
-	   </property>
-	  </widget>
-	 </item>
-	 <item>
-	  <widget class="QPushButton" name="defaultButton">
-	   <property name="text">
-		<string>По умолчанию</string>
-	   </property>
-	   <property name="autoDefault">
-		<bool>false</bool>
-	   </property>
-	   <property name="default">
-		<bool>false</bool>
-	   </property>
-	  </widget>
-	 </item>
-	 <item>
-	  <widget class="QPushButton" name="closeButton">
-	   <property name="text">
-		<string>Закрыть</string>
-	   </property>
-	  </widget>
-	 </item>
-	</layout>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>203</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="okButton">
+       <property name="text">
+        <string>Ок</string>
+       </property>
+       <property name="autoDefault">
+        <bool>true</bool>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="defaultButton">
+       <property name="text">
+        <string>По умолчанию</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="closeButton">
+       <property name="text">
+        <string>Закрыть</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
@@ -2548,14 +2618,14 @@ p, li { white-space: pre-wrap; }
    <receiver>Preferences</receiver>
    <slot>close()</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>579</x>
-	 <y>380</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>0</x>
-	 <y>224</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>579</x>
+     <y>380</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>224</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2564,14 +2634,14 @@ p, li { white-space: pre-wrap; }
    <receiver>spinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>203</x>
-	 <y>41</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>221</x>
-	 <y>41</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>203</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>221</x>
+     <y>41</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2580,14 +2650,14 @@ p, li { white-space: pre-wrap; }
    <receiver>vorbisMaxBitrateSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>221</x>
-	 <y>41</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>203</x>
-	 <y>41</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>221</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>203</x>
+     <y>41</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2596,14 +2666,14 @@ p, li { white-space: pre-wrap; }
    <receiver>spinBox_2</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>203</x>
-	 <y>38</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>221</x>
-	 <y>38</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>203</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>221</x>
+     <y>38</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2612,14 +2682,14 @@ p, li { white-space: pre-wrap; }
    <receiver>vorbisBitrateSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>221</x>
-	 <y>38</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>203</x>
-	 <y>38</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>221</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>203</x>
+     <y>38</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2628,14 +2698,14 @@ p, li { white-space: pre-wrap; }
    <receiver>spinBox_3</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>203</x>
-	 <y>35</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>221</x>
-	 <y>35</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>203</x>
+     <y>35</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>221</x>
+     <y>35</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2644,14 +2714,14 @@ p, li { white-space: pre-wrap; }
    <receiver>vorbisMinBitrateSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>221</x>
-	 <y>35</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>203</x>
-	 <y>35</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>221</x>
+     <y>35</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>203</x>
+     <y>35</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2660,14 +2730,14 @@ p, li { white-space: pre-wrap; }
    <receiver>lameCRspinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>395</x>
-	 <y>102</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>448</x>
-	 <y>99</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>395</x>
+     <y>102</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>448</x>
+     <y>99</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2676,14 +2746,14 @@ p, li { white-space: pre-wrap; }
    <receiver>lameCRSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>448</x>
-	 <y>99</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>395</x>
-	 <y>102</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>448</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>395</x>
+     <y>102</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2692,14 +2762,14 @@ p, li { white-space: pre-wrap; }
    <receiver>lameQuaValue</receiver>
    <slot>setNum(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>395</x>
-	 <y>134</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>448</x>
-	 <y>134</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>395</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>448</x>
+     <y>134</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2708,14 +2778,14 @@ p, li { white-space: pre-wrap; }
    <receiver>lameCRspinBox_2</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>395</x>
-	 <y>321</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>448</x>
-	 <y>318</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>395</x>
+     <y>321</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>448</x>
+     <y>318</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2724,14 +2794,14 @@ p, li { white-space: pre-wrap; }
    <receiver>lameCRSlider_2</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>448</x>
-	 <y>318</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>395</x>
-	 <y>321</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>448</x>
+     <y>318</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>395</x>
+     <y>321</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2740,14 +2810,14 @@ p, li { white-space: pre-wrap; }
    <receiver>lameVbrQuaValue</receiver>
    <slot>setNum(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>395</x>
-	 <y>405</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>448</x>
-	 <y>405</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>395</x>
+     <y>405</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>448</x>
+     <y>405</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2756,14 +2826,14 @@ p, li { white-space: pre-wrap; }
    <receiver>flacQuaValue</receiver>
    <slot>setNum(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>211</x>
-	 <y>41</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>220</x>
-	 <y>41</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>220</x>
+     <y>41</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2772,14 +2842,14 @@ p, li { white-space: pre-wrap; }
    <receiver>flacBlocksizeSpinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>211</x>
-	 <y>33</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>220</x>
-	 <y>33</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>220</x>
+     <y>33</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2788,14 +2858,14 @@ p, li { white-space: pre-wrap; }
    <receiver>flacBlocksizeSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>220</x>
-	 <y>33</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>211</x>
-	 <y>33</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>33</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2804,14 +2874,14 @@ p, li { white-space: pre-wrap; }
    <receiver>flacMaxLpcOrderSpinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>211</x>
-	 <y>33</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>220</x>
-	 <y>33</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>220</x>
+     <y>33</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2820,14 +2890,14 @@ p, li { white-space: pre-wrap; }
    <receiver>flacMaxLpcOrderSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>220</x>
-	 <y>33</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>211</x>
-	 <y>33</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>33</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2836,14 +2906,14 @@ p, li { white-space: pre-wrap; }
    <receiver>flacQlpCoeffPrecisionSpinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>211</x>
-	 <y>33</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>220</x>
-	 <y>33</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>220</x>
+     <y>33</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2852,14 +2922,14 @@ p, li { white-space: pre-wrap; }
    <receiver>flacQlpCoeffPrecisionSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>220</x>
-	 <y>33</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>211</x>
-	 <y>33</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>33</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2868,14 +2938,14 @@ p, li { white-space: pre-wrap; }
    <receiver>flacMinResidualPartitionOrderSpinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>211</x>
-	 <y>33</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>220</x>
-	 <y>33</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>220</x>
+     <y>33</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2884,14 +2954,14 @@ p, li { white-space: pre-wrap; }
    <receiver>flacMinResidualPartitionOrderSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>220</x>
-	 <y>33</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>211</x>
-	 <y>33</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>33</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2900,14 +2970,14 @@ p, li { white-space: pre-wrap; }
    <receiver>flacMaxResidualPartitionOrderSpinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>211</x>
-	 <y>33</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>220</x>
-	 <y>33</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>220</x>
+     <y>33</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2916,14 +2986,14 @@ p, li { white-space: pre-wrap; }
    <receiver>flacMaxResidualPartitionOrderSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>220</x>
-	 <y>33</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>211</x>
-	 <y>33</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>33</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2932,14 +3002,14 @@ p, li { white-space: pre-wrap; }
    <receiver>flacRiceParameterSearchDistSpinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>211</x>
-	 <y>33</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>220</x>
-	 <y>33</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>220</x>
+     <y>33</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2948,14 +3018,14 @@ p, li { white-space: pre-wrap; }
    <receiver>flacRiceParameterSearchDistSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>220</x>
-	 <y>33</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>211</x>
-	 <y>33</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>33</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2964,14 +3034,14 @@ p, li { white-space: pre-wrap; }
    <receiver>faacBitrateSpinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>204</x>
-	 <y>38</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>220</x>
-	 <y>38</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>204</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>220</x>
+     <y>38</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2980,14 +3050,14 @@ p, li { white-space: pre-wrap; }
    <receiver>faacBitrateSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>220</x>
-	 <y>38</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>204</x>
-	 <y>38</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>204</x>
+     <y>38</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -2996,14 +3066,14 @@ p, li { white-space: pre-wrap; }
    <receiver>doubleSpinBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>187</x>
-	 <y>135</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>188</x>
-	 <y>151</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>187</x>
+     <y>135</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>188</x>
+     <y>151</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -3012,14 +3082,14 @@ p, li { white-space: pre-wrap; }
    <receiver>label_31</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-	<hint type="sourcelabel">
-	 <x>300</x>
-	 <y>143</y>
-	</hint>
-	<hint type="destinationlabel">
-	 <x>386</x>
-	 <y>151</y>
-	</hint>
+    <hint type="sourcelabel">
+     <x>300</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>386</x>
+     <y>151</y>
+    </hint>
    </hints>
   </connection>
  </connections>
