@@ -78,10 +78,15 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 												 *.ogg *.ogm *.ogv *.mp4 \
 												 *.avi *.ts *.wv *.3gp *.m2ts \
 												 *.vob *.wmv *.wav *.mpg \
-												 *.mov *.m4a *.m4v *.mka *.mkv)")
-			<< trUtf8("CUE образы (*.cue)")
-			<< trUtf8("Видеофайлы (*.ogg *.ogv *.avi *.mkv *.mp4)")
-			<< trUtf8("Аудиофайлы (*.mp3 *.flac *.ogg *.ogm)")
+												 *.mov *.m4a *.m4v *.mka \
+												 *.cue *.mkv *.flv *.pls \
+												 *.wvx *.m3u)")
+			<< trUtf8("Списки воспроизведения (*.cue *.pls *.wvx *.m3u)")
+			<< trUtf8("Видеофайлы (*.ogg *.ogv *.avi *.mkv *.mp4 *.ts \
+								   *.wv *.3gp *.m2ts *.vob *.wmv *.mpg \
+								   *.mov *.m4v *.flv)")
+			<< trUtf8("Аудиофайлы (*.mp3 *.flac *.ogg *.ogm *.aac \
+								   *.ape *.ogm *.wav *.m4a *.mka)")
 			<< trUtf8("Все файлы (*.*)")
 			<< trUtf8("Каталог с файлами или DVD каталог (.)");
 
