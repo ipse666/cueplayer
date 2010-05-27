@@ -46,6 +46,14 @@ enum Codec {
 	UTF8
 };
 
+enum AudioOutput {
+	AO_AUTO,
+	AO_GCONF,
+	AO_OSS,
+	AO_ALSA,
+	AO_ESOUND
+};
+
 #ifdef LIBNOTIFY
 NotifyNotification *notification;
 #endif
@@ -662,6 +670,11 @@ void CuePlayer::playTrack()
 		dpmsTrigger(false);
 		winman->raiseWidget(this);
 	}
+#ifdef CUEDEBUG
+	GstElement *asink;
+	g_object_get (play, "audio-sink", &asink, NULL);
+	g_print("Имя элемента %s\n", gst_element_factory_get_longname(gst_element_get_factory (asink)));
+#endif
 	trd->setPlayBin(play);
 	trd->setFunc(POST_PLAY);
 	trd->start();
@@ -1360,6 +1373,7 @@ void CuePlayer::multiCueInit()
 	bus = gst_pipeline_get_bus (GST_PIPELINE (play));
 	gst_bus_add_watch (bus, bus_callback, play);
 	gst_object_unref (bus);
+	audioOutSet();
 	gst_element_set_state (play, GST_STATE_PAUSED);
 	seekAndLCD(numTrack);
 	playButton->setEnabled(true);
@@ -1451,6 +1465,7 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 	bus = gst_pipeline_get_bus (GST_PIPELINE (play));
 	gst_bus_add_watch (bus, bus_callback, play);
 	gst_object_unref (bus);
+	audioOutSet();
 	gst_element_set_state (play, GST_STATE_PAUSED);
 	seekAndLCD(numTrack);
 	playButton->setEnabled(true);
@@ -1586,6 +1601,9 @@ bool CuePlayer::playProbe()
 	preInitFlag = true;
 	dvdAudioPads = 0;
 	dvdAudioCurrentPad = 0;
+
+	audioOutSet();
+
 	gst_element_set_state (play, GST_STATE_PLAYING);
 	if (gst_element_get_state( GST_ELEMENT(play), &state, NULL, GST_SECOND * TIMEOUT) != GST_STATE_CHANGE_SUCCESS)
 	{
@@ -2172,6 +2190,36 @@ void CuePlayer::createPlHeader()
 	treeWidget->setHeaderLabels(QStringList() << trUtf8("Композиция") << trUtf8("Время"));
 	treeWidget->setColumnWidth(0, 380);
 	treeWidget->setColumnWidth(1, 30);
+}
+
+void CuePlayer::audioOutSet()
+{
+	GstElement *asink;
+	switch (settings.value("preferences/audiooutput").toInt())
+	{
+	case AO_AUTO:
+		asink = gst_element_factory_make ("autoaudiosink", "asink");
+		break;
+	case AO_GCONF:
+		asink = gst_element_factory_make ("gconfaudiosink", "asink");
+		break;
+	case AO_OSS:
+		asink = gst_element_factory_make ("osssink", "asink");
+		break;
+	case AO_ALSA:
+		asink = gst_element_factory_make ("alsasink", "asink");
+		break;
+	case AO_ESOUND:
+		asink = gst_element_factory_make ("esdsink", "asink");
+		break;
+	default:
+		asink = gst_element_factory_make ("autoaudiosink", "asink");
+		break;
+	}
+#ifdef CUEDEBUG
+	g_print("Выбран элемент %s\n", gst_element_factory_get_longname(gst_element_get_factory (asink)));
+#endif
+	g_object_set(play, "audio-sink", asink, NULL);
 }
 
 // Класс треда

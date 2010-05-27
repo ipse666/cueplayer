@@ -11,7 +11,7 @@ Preferences::Preferences(QWidget *parent) :
 	readSettings();
 	cugstbinds = new CuGstBinds(this);
 
-	QStringList codeclist;
+	static QStringList codeclist;
 	codeclist << "mad" << "vorbisdec" << "flacdec" << "ffdec_ape"
 			<< "faad" << "ffdec_mpeg4" << "ffdec_h264";
 	int counter = 0;
@@ -69,6 +69,7 @@ void Preferences::saveSettings()
 	settings.setValue("preferences/traytext", ui->trayTextBox->isChecked());
 	settings.setValue("preferences/traytimeout", ui->doubleSpinBox->value());
 	settings.setValue("preferences/cover",ui->coverBox->isChecked());
+	settings.setValue("preferences/audiooutput",ui->audioOutputBox->currentIndex());
 
 	// Основное. Кодировка CUE файла
 	settings.setValue("preferences/autocuec", ui->autoRadioButton->isChecked());
@@ -144,6 +145,7 @@ void Preferences::readSettings()
 	if (!settings.value("preferences/traytimeout").isNull())
 		ui->doubleSpinBox->setValue(settings.value("preferences/traytimeout").toDouble());
 	ui->coverBox->setChecked(settings.value("preferences/cover").toBool());
+	ui->audioOutputBox->setCurrentIndex(settings.value("preferences/audiooutput").toInt());
 
 	// Основное. Кодировка CUE файла
 	ui->autoRadioButton->setChecked(settings.value("preferences/autocuec").toBool());
@@ -239,18 +241,20 @@ void Preferences::setDefault()
 {
 	switch (ui->stackedWidget->currentIndex())
 	{
-	case 0:
-		// Основное. Видео
-		ui->integrationBox->setChecked(false);
-		// Основное. Аудио
+	case 2:
+		// Аудио
 		ui->equalizerBox->setChecked(false);
 		ui->trayTextBox->setChecked(true);
 		ui->doubleSpinBox->setValue(2.0);
 		ui->coverBox->setChecked(false);
-		// Основное. Кодировка CUE файла
+		ui->audioOutputBox->setCurrentIndex(0);
+		// Аудио. Кодировка CUE файла
 		ui->autoRadioButton->setChecked(true);
 		break;
 	case 3:
+		// Видео
+		ui->integrationBox->setChecked(false);
+	case 5:
 		// Транскодер. vorbisenc
 		ui->vorbisMaxBitrateSlider->setValue(-1);
 		ui->vorbisBitrateSlider->setValue(-1);
@@ -259,7 +263,7 @@ void Preferences::setDefault()
 		prefDeci(3);
 		ui->vorbisManagedBox->setChecked(false);
 		break;
-	case 4:
+	case 6:
 		// Транскодер. lame
 		ui->lameBitrateBox->setCurrentIndex(11);
 		ui->lameCRSlider->setValue(0);
@@ -277,7 +281,7 @@ void Preferences::setDefault()
 		ui->lameVbrComboBox->setCurrentIndex(0);
 		ui->lameVbrQuaSlider->setValue(4);
 		break;
-	case 5:
+	case 7:
 		// Транскодер. flacenc
 		ui->flacQuaSlider->setValue(5);
 		ui->flacStreamableSubsetBox->setChecked(true);
@@ -293,7 +297,7 @@ void Preferences::setDefault()
 		ui->flacMaxResidualPartitionOrderSlider->setValue(3);
 		ui->flacRiceParameterSearchDistSlider->setValue(0);
 		break;
-	case 6:
+	case 8:
 		// Транскодер. faac
 		ui->faacOutputformatComboBox->setCurrentIndex(0);
 		ui->faacBitrateSlider->setValue(128000);
