@@ -70,6 +70,7 @@ private:
 	void integVideo(bool);
 	void progressiveMode(QString);
 	int checkCodec();
+	void audioOutSet();
 	QSize getLayoutSize();
 	QSize minwin;
 	QRect vidwingeom;
