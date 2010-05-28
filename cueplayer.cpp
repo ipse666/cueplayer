@@ -51,7 +51,12 @@ enum AudioOutput {
 	AO_GCONF,
 	AO_OSS,
 	AO_ALSA,
-	AO_ESOUND
+	AO_ESOUND,
+	AO_PULSE,
+	AO_JACK,
+	AO_HAL,
+	AO_OSS4,
+	AO_NAS
 };
 
 #ifdef LIBNOTIFY
@@ -1155,7 +1160,7 @@ int CuePlayer::getPosition()
 	return p / 1000000;
 }
 
-void CuePlayer::seekGst(int time)
+void CuePlayer::seekGst(register int time)
 {
 	if (!tsFlag)
 	{
@@ -2211,6 +2216,21 @@ void CuePlayer::audioOutSet()
 		break;
 	case AO_ESOUND:
 		asink = gst_element_factory_make ("esdsink", "asink");
+		break;
+	case AO_PULSE:
+		asink = gst_element_factory_make ("pulsesink", "asink");
+		break;
+	case AO_JACK:
+		asink = gst_element_factory_make ("jackaudiosink", "asink");
+		break;
+	case AO_HAL:
+		asink = gst_element_factory_make ("halaudiosink", "asink");
+		break;
+	case AO_OSS4:
+		asink = gst_element_factory_make ("oss4sink", "asink");
+		break;
+	case AO_NAS:
+		asink = gst_element_factory_make ("nassink", "asink");
 		break;
 	default:
 		asink = gst_element_factory_make ("autoaudiosink", "asink");

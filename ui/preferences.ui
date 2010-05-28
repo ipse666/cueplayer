@@ -493,14 +493,21 @@ p, li { white-space: pre-wrap; }
           <item row="1" column="0" colspan="3">
            <widget class="QCheckBox" name="trayTextBox">
             <property name="text">
-             <string>Показывать трей уведомления (Только для cue)</string>
+             <string>Показывать трей уведомления</string>
             </property>
             <property name="checked">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="2" column="0" colspan="3">
+           <widget class="QCheckBox" name="coverBox">
+            <property name="text">
+             <string>Показывать обложку альбома (Только для каталогов)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
            <widget class="QDoubleSpinBox" name="doubleSpinBox">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -516,17 +523,10 @@ p, li { white-space: pre-wrap; }
             </property>
            </widget>
           </item>
-          <item row="2" column="1" colspan="2">
+          <item row="3" column="1" colspan="2">
            <widget class="QLabel" name="label_31">
             <property name="text">
              <string>Время показа трей уведомления (сек.)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="3">
-           <widget class="QCheckBox" name="coverBox">
-            <property name="text">
-             <string>Показывать обложку альбома (Только для каталогов)</string>
             </property>
            </widget>
           </item>
@@ -561,6 +561,31 @@ p, li { white-space: pre-wrap; }
             <item>
              <property name="text">
               <string>Esound</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>PulseAudio</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Jack</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>HAL</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>OSS v4</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>NAS</string>
              </property>
             </item>
            </widget>
@@ -629,7 +654,7 @@ p, li { white-space: pre-wrap; }
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>36</height>
+           <height>40</height>
           </size>
          </property>
         </spacer>
@@ -2734,12 +2759,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>203</x>
-     <y>41</y>
+     <x>456</x>
+     <y>66</y>
     </hint>
     <hint type="destinationlabel">
-     <x>221</x>
-     <y>41</y>
+     <x>560</x>
+     <y>63</y>
     </hint>
    </hints>
   </connection>
@@ -2750,12 +2775,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>221</x>
-     <y>41</y>
+     <x>560</x>
+     <y>63</y>
     </hint>
     <hint type="destinationlabel">
-     <x>203</x>
-     <y>41</y>
+     <x>456</x>
+     <y>66</y>
     </hint>
    </hints>
   </connection>
@@ -2766,12 +2791,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>203</x>
-     <y>38</y>
+     <x>456</x>
+     <y>98</y>
     </hint>
     <hint type="destinationlabel">
-     <x>221</x>
-     <y>38</y>
+     <x>560</x>
+     <y>95</y>
     </hint>
    </hints>
   </connection>
@@ -2782,12 +2807,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>221</x>
-     <y>38</y>
+     <x>560</x>
+     <y>95</y>
     </hint>
     <hint type="destinationlabel">
-     <x>203</x>
-     <y>38</y>
+     <x>456</x>
+     <y>98</y>
     </hint>
    </hints>
   </connection>
@@ -2798,12 +2823,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>203</x>
-     <y>35</y>
+     <x>456</x>
+     <y>130</y>
     </hint>
     <hint type="destinationlabel">
-     <x>221</x>
-     <y>35</y>
+     <x>560</x>
+     <y>127</y>
     </hint>
    </hints>
   </connection>
@@ -2814,12 +2839,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>221</x>
-     <y>35</y>
+     <x>560</x>
+     <y>127</y>
     </hint>
     <hint type="destinationlabel">
-     <x>203</x>
-     <y>35</y>
+     <x>456</x>
+     <y>130</y>
     </hint>
    </hints>
   </connection>
