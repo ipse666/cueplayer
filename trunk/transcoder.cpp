@@ -330,14 +330,16 @@ void TransCoder::pipeRun(int ind)
 	QString filename;
 	QTextStream out(stdout);
 	QString comment = trUtf8("CuePlayer ") + qApp->applicationVersion();
-	QString trackName = refparser->getTrackTitle(ind);
-	trackName.replace(rxFileSlash, trUtf8("⁄"));
+        QString trackName = refparser->getTrackTitle(ind);
+        QString title = refparser->getTitle();
+        trackName.replace(rxFileSlash, trUtf8("⁄"));
+        title.replace(rxFileSlash, trUtf8("⁄"));
 	if (rxTilda.indexIn(lineEdit->text()) != -1)
 		lineEdit->setText(QDir::homePath() + rxTilda.cap(1));
 	QDir updir(lineEdit->text());
 	if (!updir.exists())
 		updir.mkdir(lineEdit->text());
-	QString dirname = lineEdit->text() + "/" + refparser->getTitle();
+        QString dirname = lineEdit->text() + "/" + title;
 	QDir dir(dirname);
 	if (!dir.exists())
 		dir.mkdir(dirname);
@@ -373,10 +375,10 @@ void TransCoder::pipeRun(int ind)
 				gst_tag_setter_add_tags (GST_TAG_SETTER (tagger),
 									GST_TAG_MERGE_REPLACE_ALL,
 									GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
-									GST_TAG_ARTIST, refparser->getPerformer().toUtf8().data(),
+                                                                        GST_TAG_ARTIST, refparser->getPerformer().toUtf8().data(),
 									GST_TAG_TRACK_NUMBER, ind,
 									GST_TAG_TRACK_COUNT, refparser->getTrackNumber(),
-									GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
+                                                                        GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
 									GST_TAG_ENCODER, APPNAME,
 									GST_TAG_ENCODER_VERSION, qApp->applicationVersion().toUtf8().data(),
 									GST_TAG_COMMENT, comment.toUtf8().data(),
@@ -426,10 +428,10 @@ void TransCoder::pipeRun(int ind)
 			gst_tag_setter_add_tags (GST_TAG_SETTER (muxer),
 								GST_TAG_MERGE_REPLACE_ALL,
 								GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
-								GST_TAG_ARTIST, refparser->getPerformer().toUtf8().data(),
+                                                                GST_TAG_ARTIST, refparser->getPerformer().toUtf8().data(),
 								GST_TAG_TRACK_NUMBER, ind,
 								GST_TAG_TRACK_COUNT, refparser->getTrackNumber(),
-								GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
+                                                                GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
 								GST_TAG_ENCODER, APPNAME,
 								GST_TAG_ENCODER_VERSION, qApp->applicationVersion().toUtf8().data(),
 								GST_TAG_COMMENT, comment.toUtf8().data(),
@@ -463,10 +465,10 @@ void TransCoder::pipeRun(int ind)
 			gst_tag_setter_add_tags (GST_TAG_SETTER (tagger),
 								GST_TAG_MERGE_REPLACE_ALL,
 								GST_TAG_TITLE, refparser->getTrackTitle(ind).toUtf8().data(),
-								GST_TAG_ARTIST, refparser->getPerformer().toUtf8().data(),
+                                                                GST_TAG_ARTIST, refparser->getPerformer().toUtf8().data(),
 								GST_TAG_TRACK_NUMBER, ind,
 								GST_TAG_TRACK_COUNT, refparser->getTrackNumber(),
-								GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
+                                                                GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
 								GST_TAG_ENCODER, APPNAME,
 								GST_TAG_ENCODER_VERSION, qApp->applicationVersion().toUtf8().data(),
 								GST_TAG_COMMENT, comment.toUtf8().data(),
