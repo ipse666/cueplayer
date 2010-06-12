@@ -59,6 +59,15 @@ bus_callback (GstBus     *bus,
 		valartist = (GValue*)gst_tag_list_get_value_index (taglist, GST_TAG_ARTIST, 0);
 		valalbum = (GValue*)gst_tag_list_get_value_index (taglist, GST_TAG_ALBUM, 0);
 		valtitle = (GValue*)gst_tag_list_get_value_index(taglist, GST_TAG_TITLE, 0);
+                gchar *string;
+                gst_tag_list_get_string (taglist, GST_TAG_EXTENDED_COMMENT, &string);
+
+                if(!strncmp(string,"cuesheet=", 9) && !cueFlag)
+                {
+                    string += 9;
+                    cueplayer->parseFlacCue(string);
+                    cueFlag = true;
+                }
 		if (!cueFlag)
 			cueplayer->setMp3Title(valtitle, valalbum, valartist);
 		break;

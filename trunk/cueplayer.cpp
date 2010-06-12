@@ -1622,6 +1622,7 @@ bool CuePlayer::playProbe()
 	if (state == GST_STATE_PLAYING)
 	{
 		int duration = getDuration();
+                saveduration = duration;
 		if (cueFlag)
 			initAlbum(duration);
 		else
@@ -2241,6 +2242,18 @@ void CuePlayer::audioOutSet()
 #endif
 	g_object_set(play, "audio-sink", asink, NULL);
 }
+
+void CuePlayer::parseFlacCue(gchar *str)
+{
+    QString param = QString(trUtf8(str));
+    refparser = new CueParser(param, 0);
+    setWindowsTitles(refparser->getTitle());
+    label->setText("1. " + refparser->getTrackTitle(numTrack));
+    initAlbum(saveduration);
+}
+
+
+
 
 // Класс треда
 GstThread::GstThread(QObject *parent) : QThread(parent)
