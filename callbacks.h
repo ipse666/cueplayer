@@ -34,6 +34,7 @@ bus_callback (GstBus     *bus,
 		  gpointer    data)
 {
 	bus = NULL;
+        gchar *cuestr;
 	GstElement *playbin = (GstElement *) data;
 	GValue *valartist, *valalbum, *valtitle;
 
@@ -60,14 +61,14 @@ bus_callback (GstBus     *bus,
 		valalbum = (GValue*)gst_tag_list_get_value_index (taglist, GST_TAG_ALBUM, 0);
 		valtitle = (GValue*)gst_tag_list_get_value_index(taglist, GST_TAG_TITLE, 0);
 
-                gchar *cuestr;
-                gst_tag_list_get_string (taglist, GST_TAG_EXTENDED_COMMENT, &cuestr);
-
-                if(!strncmp(cuestr,"cuesheet=", 9) && !cueFlag)
+                if (gst_tag_list_get_string (taglist, GST_TAG_EXTENDED_COMMENT, &cuestr))
                 {
-                    cuestr += 9;
-                    cueplayer->parseFlacCue(cuestr);
-                    cueFlag = true;
+                    if(!strncmp(cuestr,"cuesheet=", 9) && !cueFlag)
+                    {
+                        cueplayer->parseFlacCue(cuestr + 9);
+                        cueFlag = true;
+                    }
+                    g_free(cuestr);
                 }
 		if (!cueFlag)
 			cueplayer->setMp3Title(valtitle, valalbum, valartist);
