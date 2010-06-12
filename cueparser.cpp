@@ -22,11 +22,21 @@ CueParser::CueParser(QString s, int codec)
 	rxFileWav.setCaseSensitivity(Qt::CaseInsensitive);
 	rxAudioPath.indexIn(s);
 	audioPath = rxAudioPath.cap(1);
-	
-	QFile cuefile(s);
-	if (!cuefile.open(QIODevice::ReadOnly | QIODevice::Text))
-                return;
-	QTextStream cuetext(&cuefile);
+
+        QTextStream cuetext;
+        QFile cuefile;
+        if (rxSoundfile.indexIn(s) != -1)
+        {
+            cuetext.setString(&s);
+        }
+        else
+        {
+            cuefile.setFileName(s);
+            if (!cuefile.open(QIODevice::ReadOnly | QIODevice::Text))
+                    return;
+            cuetext.setDevice(&cuefile);
+        }
+
 	switch (codec) {
 	case AUTO:
 		cuetext.setCodec("Windows-1251");

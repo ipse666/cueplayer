@@ -51,6 +51,7 @@ public:
 	QTimer *trdtimer;
 	void stopAll();
 	void setMp3Title(GValue *, GValue *, GValue *);
+        void parseFlacCue(gchar*);
 	void apeFound(bool);
 	void setDvdAudio(gchar*, int);
 	gchar* getDvdAudio(int);
@@ -70,6 +71,7 @@ private:
 	void integVideo(bool);
 	void progressiveMode(QString);
 	int checkCodec();
+        int saveduration;
 	void audioOutSet();
 	QSize getLayoutSize();
 	QSize minwin;
