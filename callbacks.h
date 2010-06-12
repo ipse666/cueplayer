@@ -59,13 +59,14 @@ bus_callback (GstBus     *bus,
 		valartist = (GValue*)gst_tag_list_get_value_index (taglist, GST_TAG_ARTIST, 0);
 		valalbum = (GValue*)gst_tag_list_get_value_index (taglist, GST_TAG_ALBUM, 0);
 		valtitle = (GValue*)gst_tag_list_get_value_index(taglist, GST_TAG_TITLE, 0);
-                gchar *string;
-                gst_tag_list_get_string (taglist, GST_TAG_EXTENDED_COMMENT, &string);
 
-                if(!strncmp(string,"cuesheet=", 9) && !cueFlag)
+                gchar *cuestr;
+                gst_tag_list_get_string (taglist, GST_TAG_EXTENDED_COMMENT, &cuestr);
+
+                if(!strncmp(cuestr,"cuesheet=", 9) && !cueFlag)
                 {
-                    string += 9;
-                    cueplayer->parseFlacCue(string);
+                    cuestr += 9;
+                    cueplayer->parseFlacCue(cuestr);
                     cueFlag = true;
                 }
 		if (!cueFlag)
