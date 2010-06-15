@@ -65,7 +65,7 @@ bus_callback (GstBus     *bus,
                 {
                     if(!strncmp(cuestr,"cuesheet=", 9) && !cueFlag)
                     {
-                        cueplayer->parseFlacCue(cuestr + 9);
+                        cueplayer->parseFlacCue(cuestr);
                         cueFlag = true;
                     }
                     g_free(cuestr);

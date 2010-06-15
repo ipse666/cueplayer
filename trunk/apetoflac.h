@@ -6,7 +6,9 @@
 #include <QTextStream>
 #include <QTextCodec>
 #include <QFile>
+#include <QDebug>
 #include <gst/gst.h>
+#include "cueparser.h"
 #include "ui_apetoflacdialog.h"
 
 class ApeToFlac : public QDialog, public Ui::ApeToFlac
@@ -15,7 +17,7 @@ class ApeToFlac : public QDialog, public Ui::ApeToFlac
 
 public:
 	ApeToFlac(QWidget *parent = 0);
-	void setFileNames(QString, QString);
+        void setFileNames(QString, CueParser*);
 	void stopCode();
 	void decoding();
 private:
@@ -23,9 +25,10 @@ private:
 	QString atfApefile;
 	QString outFile;
 	QString outCue;
+        QString internalcue;
 	QTimer *timer;
 	QTextEncoder *localFileNamesEncoder;
-	void initDecoder();
+        void initDecoder(CueParser*);
 	int getDuration();
 	int saveTotalTime;
 	GstElement *atfpipe;
