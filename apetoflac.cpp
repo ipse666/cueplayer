@@ -1,6 +1,7 @@
 #include "apetoflac.h"
 
 #define TIME 200
+#define APPNAME "CuePlayer"
 
 GstElement *audiobin;
 ApeToFlac *apetoflac = 0;
@@ -97,7 +98,7 @@ ApeToFlac::ApeToFlac(QWidget *parent) : QDialog(parent)
 }
 
 // Получение имен файлов
-void ApeToFlac::setFileNames(QString cuefile, QString apefile)
+void ApeToFlac::setFileNames(QString cuefile, CueParser* refparser)
 {
 	QString line;
 	QRegExp rxFilename("(.*)\\.(.{3})");
@@ -105,8 +106,9 @@ void ApeToFlac::setFileNames(QString cuefile, QString apefile)
 	QRegExp rxSoundfile("^FILE \"(.*)\"");
 	QFile inCuefile(cuefile);
 
+        internalcue = trUtf8("cuesheet=");
 	atfCuefile = cuefile;
-	atfApefile = apefile;
+        atfApefile = refparser->getSoundFile();
 
 	rxFilename.indexIn(atfApefile);
 	outFile = rxFilename.cap(1) + ".flac";
@@ -118,7 +120,7 @@ void ApeToFlac::setFileNames(QString cuefile, QString apefile)
 	else
 		outCue += ".flac.cue";
 	QFile outCueFile(outCue);
-	outCueFile.open(QFile::WriteOnly | QFile::Truncate);
+        outCueFile.open(QFile::WriteOnly | QFile::Truncate);
 	inCuefile.open(QFile::ReadOnly);
 	QTextStream cueInText(&inCuefile);
 	QTextStream cueOutText(&outCueFile);
@@ -130,23 +132,30 @@ void ApeToFlac::setFileNames(QString cuefile, QString apefile)
 		{
 			if (rxFilename2.indexIn(atfApefile) != -1)
 				if(rxFilename.indexIn(rxFilename2.cap(1)) != -1)
-					cueOutText << "FILE \"" << rxFilename.cap(1) << ".flac\" WAVE" << endl;
+                                {
+                                    cueOutText << "FILE \"" << rxFilename.cap(1) << ".flac\" WAVE" << endl;
+                                    internalcue.append("FILE \"" + rxFilename.cap(1) + ".flac\" WAVE" + '\n');
+                                }
 		}
 		else if (!line.isNull())
-			cueOutText << line << endl;
+                {
+                    cueOutText << line << endl;
+                    internalcue.append(line + '\n');
+                }
 	} while (!line.isNull());
 	outCueFile.close();
 	inCuefile.close();
-	initDecoder();
+        initDecoder(refparser);
 }
 
 // Инициализация конвеера
-void ApeToFlac::initDecoder()
+void ApeToFlac::initDecoder(CueParser* refparser)
 {
-	GstElement *source, *dec, *conv, *encoder, *fileout;
+        GstElement *source, *dec, *conv, *encoder, *tagger, *fileout;
 	GstBus *bus;
 	GstPad *audiopad;
 	saveTotalTime = 0;
+        QString comment = trUtf8("CuePlayer ") + qApp->applicationVersion();
 	progressBar->setValue(0);
 
 	atfpipe = gst_pipeline_new ("atf-transcoder");
@@ -163,13 +172,26 @@ void ApeToFlac::initDecoder()
 	audiobin = gst_bin_new ("audiobin");
 	conv = gst_element_factory_make ("audioconvert", "aconv");
 	encoder = gst_element_factory_make ("flacenc", "audio-encoder");
+        tagger = gst_element_factory_make ("flactag", "tagger");
 	fileout = gst_element_factory_make ("filesink", "file-out");
-	gst_bin_add_many (GST_BIN (audiobin), conv, encoder, fileout, NULL);
-	gst_element_link_many (conv, encoder, fileout, NULL);
+        gst_bin_add_many (GST_BIN (audiobin), conv, encoder, tagger, fileout, NULL);
+        gst_element_link_many (conv, encoder, tagger, fileout, NULL);
 	audiopad = gst_element_get_static_pad (conv, "sink");
 	gst_element_add_pad (audiobin, gst_ghost_pad_new ("sink", audiopad));
 	gst_object_unref (audiopad);
 	gst_bin_add (GST_BIN (atfpipe), audiobin);
+
+        gst_tag_setter_add_tags (GST_TAG_SETTER (tagger),
+                                                GST_TAG_MERGE_REPLACE_ALL,
+                                                GST_TAG_ARTIST, refparser->getPerformer().toUtf8().data(),
+                                                GST_TAG_TRACK_COUNT, refparser->getTrackNumber(),
+                                                GST_TAG_ALBUM, refparser->getAlbum().toUtf8().data(),
+                                                GST_TAG_ENCODER, APPNAME,
+                                                GST_TAG_ENCODER_VERSION, qApp->applicationVersion().toUtf8().data(),
+                                                GST_TAG_COMMENT, comment.toUtf8().data(),
+                                                GST_TAG_EXTENDED_COMMENT, internalcue.toUtf8().data(),
+                                                GST_TAG_CODEC, "flac",
+                                                NULL);
 
 	// Выходной файл
 	g_object_set (fileout, "location", localFileNamesEncoder->fromUnicode(outFile).data(), NULL);

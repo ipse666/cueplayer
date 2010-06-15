@@ -1327,7 +1327,7 @@ void CuePlayer::apeFound(bool ape)
 
 void CuePlayer::ape2flacShow()
 {
-	apetoflac->setFileNames(filename, refparser->getSoundFile());
+        apetoflac->setFileNames(filename, refparser);
 	apetoflac->show();
 }
 

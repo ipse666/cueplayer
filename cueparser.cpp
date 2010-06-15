@@ -18,6 +18,7 @@ CueParser::CueParser(QString s, int codec)
 	QRegExp rxTrackNumber("TRACK (\\d\\d) .*");
 	QRegExp rxAudioPath("(.*/).*");
 	QRegExp rxFileWav("(.*)(\\.wav)");
+        QRegExp rxTagCue("^cuesheet=.*");
 
 	rxFileWav.setCaseSensitivity(Qt::CaseInsensitive);
 	rxAudioPath.indexIn(s);
@@ -25,8 +26,9 @@ CueParser::CueParser(QString s, int codec)
 
         QTextStream cuetext;
         QFile cuefile;
-        if (rxSoundfile.indexIn(s) != -1)
+        if (rxTagCue.indexIn(s) != -1)
         {
+            s.remove(0,9);
             cuetext.setString(&s);
         }
         else
