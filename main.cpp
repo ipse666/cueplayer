@@ -7,7 +7,7 @@
 #include "cueplayer.h"
 #include "singleclient.h"
 
-#define APPVERSION "0.25"
+#define APPVERSION "0.26"
 
 int main(int argc, char *argv[])
 {
