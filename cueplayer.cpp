@@ -1080,20 +1080,23 @@ void CuePlayer::about()
 	QDate curdate = QDate::currentDate();
 #endif
 #endif
-	QMessageBox::information(this, trUtf8("О программе"),
-							 trUtf8("<h2>CuePlayer ")
-									+ qApp->applicationVersion()
-									+ trUtf8("</h2>")
+        QMessageBox aboutbox;
+        aboutbox.setIconPixmap(QPixmap(":/images/cueplayer.png"));
+        aboutbox.setWindowTitle(trUtf8("О программе"));
+        aboutbox.setText(trUtf8("<h2>CuePlayer ")
+                         + qApp->applicationVersion()
+                         + trUtf8("</h2>")
 #ifdef DATAVER
 #ifdef BUILDER
-									+ trUtf8("<p>Дата ревизии: ")
-									+ rxData.cap(1) +  " "
-									+ QString(curdate.longMonthName(rxData.cap(2).toInt())) +  " "
-									+ rxData.cap(3)
+                         + trUtf8("<p>Дата ревизии: ")
+                         + rxData.cap(1) +  " "
+                         + QString(curdate.longMonthName(rxData.cap(2).toInt())) +  " "
+                         + rxData.cap(3)
 #endif
 #endif
-									+ trUtf8("<p>Мультимедиа проигрыватель."
-									"<p><p>Разработчик: <a href=xmpp:ipse@ipse.zapto.org name=jid type=application/xmpp+xml>ipse</a>"));
+                         + trUtf8("<p>Мультимедиа проигрыватель."
+                         "<p><p>Разработчик: <a href=xmpp:ipse@ipse.zapto.org name=jid type=application/xmpp+xml>ipse</a>"));
+        aboutbox.exec();
 }
 
 void CuePlayer::stopAll()

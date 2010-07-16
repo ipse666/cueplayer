@@ -155,7 +155,7 @@ void ApeToFlac::initDecoder(CueParser* refparser)
 	GstBus *bus;
 	GstPad *audiopad;
 	saveTotalTime = 0;
-        QString comment = trUtf8("CuePlayer ") + qApp->applicationVersion();
+        QString comment = trUtf8("Конвертировано в CuePlayer ") + qApp->applicationVersion();
 	progressBar->setValue(0);
 
 	atfpipe = gst_pipeline_new ("atf-transcoder");
