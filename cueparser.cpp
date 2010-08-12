@@ -174,7 +174,7 @@ qint64 CueParser::getTrackIndex(int ind)
 	rxIndexMil.indexIn(tracks[ind].index);
 	indexMil = rxIndexMil.cap(1).toInt(0,10) * 60000 +
 	rxIndexMil.cap(2).toInt(0,10) * 1000 +
-	rxIndexMil.cap(3).toInt(0,10) * 10;
+        rxIndexMil.cap(3).toInt(0,10) * 13;
 	return indexMil;
 }
 
