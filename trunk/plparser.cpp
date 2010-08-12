@@ -39,7 +39,7 @@ void PlParser::setPlUri(QString uri)
 		do {
 			line = textstream.readLine();
 			linelist << line;
-		} while (!line.isNull());
+                } while (!line.isNull());
 		plfile.close();
 
 		if (fi.suffix() == "pls")
@@ -47,7 +47,7 @@ void PlParser::setPlUri(QString uri)
 		else if(fi.suffix() == "wvx")
 			parseWvx(linelist);
 		else if(fi.suffix() == "m3u")
-			parseM3u(linelist);
+                        parseM3u(linelist, fi.absolutePath());
 		else
 			emit plperror(trUtf8("Неизвестный формат файла:\n") + uri);
 	}
@@ -89,7 +89,7 @@ void PlParser::readNmReply(QNetworkReply *reply)
 	else if(fi.suffix() == "wvx")
 		parseWvx(stringlist);
 	else if(fi.suffix() == "m3u")
-		parseM3u(stringlist);
+                parseM3u(stringlist, NULL);
 	else
 		emit plperror(trUtf8("Неизвестный формат файла:\n") + url.toString());
 }
@@ -168,16 +168,26 @@ void PlParser::parseWvx(QStringList list)
 		emit plperror(trUtf8("Ноль записей"));
 }
 
-void PlParser::parseM3u(QStringList list)
+void PlParser::parseM3u(QStringList list, QString path)
 {
 	QRegExp rxComment("^#.*");
+        QRegExp rxSlash(".*/.*");
 	int ind = 0;
 
 	foreach (QString line, list)
 	{
 		if (rxComment.indexIn(line) != -1)
-			continue;
-		playlist[ind].uri = line;
+                    continue;
+                if (line.isEmpty())
+                    continue;
+                if (rxSlash.indexIn(line) == -1 && rxSlash.indexIn(path) != -1)
+                {
+                    path.append("/");
+                    path.append(line);
+                }
+                else
+                    path = line;
+                playlist[ind].uri = path;
 		playlist[ind].title = line;
 		ind++;
 	}
