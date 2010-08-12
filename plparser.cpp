@@ -172,6 +172,7 @@ void PlParser::parseM3u(QStringList list, QString path)
 {
 	QRegExp rxComment("^#.*");
         QRegExp rxSlash(".*/.*");
+        QString fullpath;
 	int ind = 0;
 
 	foreach (QString line, list)
@@ -182,12 +183,11 @@ void PlParser::parseM3u(QStringList list, QString path)
                     continue;
                 if (rxSlash.indexIn(line) == -1 && rxSlash.indexIn(path) != -1)
                 {
-                    path.append("/");
-                    path.append(line);
+                    fullpath = path + trUtf8("/") + line;
                 }
                 else
-                    path = line;
-                playlist[ind].uri = path;
+                    fullpath = line;
+                playlist[ind].uri = fullpath;
 		playlist[ind].title = line;
 		ind++;
 	}
