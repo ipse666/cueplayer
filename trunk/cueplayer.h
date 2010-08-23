@@ -190,6 +190,7 @@ private slots:
 	void equalizerChang(double*);
 	void prefTrShow();
 	void createPlHeader();
+        void fileSelected(QStringList);
 
 signals:
 	void gstError();	
