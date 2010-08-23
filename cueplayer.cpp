@@ -595,11 +595,16 @@ void CuePlayer::initPlayer()
 void CuePlayer::playNextTrack()
 {
 	if (refparser)
+        {
 		if (numTrack < refparser->getTrackNumber())
-		{
-			++numTrack;
-			checkState();
-		}
+                    ++numTrack;
+                else if (settings.value("preferences/autoreplay").toBool())
+                    numTrack = 1;
+                else
+                    return;
+                checkState();
+        }
+
 	if (dvdFlag && d_title < 99)
 		{
 			g_object_set (G_OBJECT (dvdsrc), "title", ++d_title, NULL);
@@ -620,9 +625,14 @@ void CuePlayer::playNextTrack()
 	{
 		if (numTrack < saveFileList.size())
 		{
-			++numTrack;
-			checkState();
+                    ++numTrack;
+                    checkState();
 		}
+                else if (settings.value("preferences/autoreplay").toBool())
+                {
+                    numTrack = 1;
+                    checkState();
+                }
 		else
 			stopAll();
 	}
