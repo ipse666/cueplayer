@@ -160,11 +160,11 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(openButton, SIGNAL(clicked()),
 	 filedialog, SLOT(exec()));
 	connect(filedialog, SIGNAL(filesSelected(QStringList)),
-	 this, SLOT(cueFileSelected(QStringList)));
+         this, SLOT(fileSelected(QStringList)));
 	connect(apetoflac, SIGNAL(endHint(QStringList)),
-	 this, SLOT(cueFileSelected(QStringList)));
+         this, SLOT(fileSelected(QStringList)));
 	connect(streamform, SIGNAL(streamOk(QStringList)),
-	 this, SLOT(cueFileSelected(QStringList)));
+         this, SLOT(fileSelected(QStringList)));
 	connect(nextButton, SIGNAL(clicked()), 
 	 this, SLOT(playNextTrack()));
 	connect(prewButton, SIGNAL(clicked()), 
@@ -211,7 +211,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(videowindow, SIGNAL(volumeChan(int)), volumeDial, SLOT(setValue(int)));
 	connect(videowindow, SIGNAL(videoExit()), this, SLOT(endBlock()));
 	connect(videowindow, SIGNAL(draganddrop(QStringList)),
-	 this, SLOT(cueFileSelected(QStringList)));
+         this, SLOT(fileSelected(QStringList)));
 	connect(videowindow, SIGNAL(newTime(int)), this, SLOT(seekGst(int)));
 	connect(videowindow, SIGNAL(showWin(bool)), this, SLOT(mover(bool)));
 	connect(videowindow, SIGNAL(doubleClick(bool)), this, SLOT(dclIntVw(bool)));
@@ -471,7 +471,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		setWindowsTitles(trUtf8("Ютуб"));
 		label->setText(trUtf8("Ютуб"));
 		youtuber = new YouTubeDL(filename);
-		connect(youtuber, SIGNAL(putUrl(QStringList)), this, SLOT(cueFileSelected(QStringList)));
+                connect(youtuber, SIGNAL(putUrl(QStringList)), this, SLOT(fileSelected(QStringList)));
 		return;
 	}
 	else if (rxFilename6.indexIn(filename) != -1)
@@ -1985,9 +1985,9 @@ void CuePlayer::dropEvent(QDropEvent *event)
 	if (urls.isEmpty())
 		return;
 	if (rxFilename.indexIn(urls.first().toString()) != -1)
-		cueFileSelected(QStringList() << urls.first().toLocalFile());
+                fileSelected(QStringList() << urls.first().toLocalFile());
 	else
-		cueFileSelected(QStringList() << urls.first().toString());
+                fileSelected(QStringList() << urls.first().toString());
 }
 
 void CuePlayer::keyPressEvent (QKeyEvent  *event)
@@ -2271,6 +2271,12 @@ void CuePlayer::singleFileSetReplay()
         playButton->click();
 }
 
+void CuePlayer::fileSelected(QStringList list)
+{
+    cueFileSelected(list);
+    if (settings.value("preferences/autoplay").toBool())
+            playButton->click();
+}
 
 // Класс треда
 GstThread::GstThread(QObject *parent) : QThread(parent)
