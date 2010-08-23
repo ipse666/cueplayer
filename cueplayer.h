@@ -53,6 +53,7 @@ public:
 	void setMp3Title(GValue *, GValue *, GValue *);
         void parseFlacCue(gchar*);
 	void apeFound(bool);
+        void singleFileSetReplay();
 	void setDvdAudio(gchar*, int);
 	gchar* getDvdAudio(int);
 	void postPlay();

@@ -2265,7 +2265,11 @@ void CuePlayer::parseFlacCue(gchar *str)
     initAlbum(saveduration);
 }
 
-
+void CuePlayer::singleFileSetReplay()
+{
+    if (settings.value("preferences/autoreplay").toBool())
+        playButton->click();
+}
 
 
 // Класс треда
