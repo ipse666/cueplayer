@@ -69,6 +69,9 @@ void Preferences::saveSettings()
 	settings.setValue("preferences/traytext", ui->trayTextBox->isChecked());
 	settings.setValue("preferences/traytimeout", ui->doubleSpinBox->value());
 	settings.setValue("preferences/cover",ui->coverBox->isChecked());
+        settings.setValue("preferences/showplaylist",ui->showPLBox->isChecked());
+        settings.setValue("preferences/autoreplay",ui->autoReplayBox->isChecked());
+        settings.setValue("preferences/autoplay",ui->autoPlayBox->isChecked());
 	settings.setValue("preferences/audiooutput",ui->audioOutputBox->currentIndex());
 
 	// Основное. Кодировка CUE файла
@@ -145,6 +148,9 @@ void Preferences::readSettings()
 	if (!settings.value("preferences/traytimeout").isNull())
 		ui->doubleSpinBox->setValue(settings.value("preferences/traytimeout").toDouble());
 	ui->coverBox->setChecked(settings.value("preferences/cover").toBool());
+        ui->showPLBox->setChecked(settings.value("preferences/showplaylist").toBool());
+        ui->autoReplayBox->setChecked(settings.value("preferences/autoreplay").toBool());
+        ui->autoPlayBox->setChecked(settings.value("preferences/autoplay").toBool());
 	ui->audioOutputBox->setCurrentIndex(settings.value("preferences/audiooutput").toInt());
 
 	// Основное. Кодировка CUE файла
@@ -247,6 +253,9 @@ void Preferences::setDefault()
 		ui->trayTextBox->setChecked(true);
 		ui->doubleSpinBox->setValue(2.0);
 		ui->coverBox->setChecked(false);
+                ui->showPLBox->setChecked(false);
+                ui->autoReplayBox->setChecked(false);
+                ui->autoPlayBox->setChecked(false);
 		ui->audioOutputBox->setCurrentIndex(0);
 		// Аудио. Кодировка CUE файла
 		ui->autoRadioButton->setChecked(true);

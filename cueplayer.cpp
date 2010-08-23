@@ -139,6 +139,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	plparser = new PlParser(this);
 	secNumLCD->display("00");
 	enableButtons(false);
+        transcodeAction->setEnabled(false);
 	restoreSettings();
 	apetoflacAction->setEnabled(false);
 	streamButton->setShortcut(trUtf8("Ctrl+u"));
@@ -549,6 +550,7 @@ void CuePlayer::initPlayer()
 	treeWidget->clear();
 	treeWidget->hide();
 	enableButtons(false);
+        transcodeAction->setEnabled(false);
 	apetoflacAction->setEnabled(false);
 	fileList->setChecked(false);
 	cueFlag = false;
@@ -919,6 +921,7 @@ void CuePlayer::initAlbum(int totalTimeAlbum)
 	}
 	treeWidget->setCurrentItem(treeWidget->topLevelItem(0));
 	enableButtons(true);
+        transcodeAction->setEnabled(true);
 	transcoder->setFileName(filename, totalTimeAlbum, checkCodec());
 	connect(this, SIGNAL(gstError()), transcoder, SLOT(close()));
 	if (progFlag)
@@ -1207,7 +1210,9 @@ void CuePlayer::enableButtons(bool a)
 	prewButton->setEnabled(a);
 	nextButton->setEnabled(a);
 	fileList->setEnabled(a);
-	transcodeAction->setEnabled(a);
+
+        if (settings.value("preferences/showplaylist").toBool())
+            fileList->setChecked(true);
 }
 
 void CuePlayer::checkState()
@@ -1476,12 +1481,7 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 	audioOutSet();
 	gst_element_set_state (play, GST_STATE_PAUSED);
 	seekAndLCD(numTrack);
-	playButton->setEnabled(true);
-	pauseButton->setEnabled(true);
-	stopButton->setEnabled(true);
-	prewButton->setEnabled(true);
-	nextButton->setEnabled(true);
-	fileList->setEnabled(true);
+        enableButtons(true);
 }
 
 void CuePlayer::paramFile(QStringList list)
