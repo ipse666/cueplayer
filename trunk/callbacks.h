@@ -45,8 +45,12 @@ bus_callback (GstBus     *bus,
 		if (!multiCueFlag && !multiFileFlag) cueplayer->stopAll();
 		if (multiFileFlag)
 		{
-			cueplayer->playNextTrack();
+                    cueplayer->playNextTrack();
 		}
+                else if (!cueplayer->fileList->isEnabled())
+                {
+                    cueplayer->singleFileSetReplay();
+                }
 		break;
 	}
 	case GST_MESSAGE_STATE_CHANGED: {
