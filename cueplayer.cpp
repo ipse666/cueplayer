@@ -84,7 +84,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 								<< "ogm" << "ogv" << "mp4"  << "avi" << "ts"
 								<< "wv"  << "3gp" << "m2ts" << "vob" << "wmv"
 								<< "wav" << "mpg" << "mov"  << "m4a" << "m4v"
-								<< "mka" << "mkv";
+                                                                << "mka" << "mkv" << "mpc";
 
 	// Фильтр диалога
 	filters << trUtf8("Все поддерживаемые файлы (*.aac *.mp3 *.flac *.ape \
@@ -93,7 +93,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 												 *.vob *.wmv *.wav *.mpg \
 												 *.mov *.m4a *.m4v *.mka \
 												 *.cue *.mkv *.flv *.pls \
-												 *.wvx *.m3u)")
+                                                                                                 *.wvx *.m3u *.mpc)")
 			<< trUtf8("Списки воспроизведения (*.cue *.pls *.wvx *.m3u)")
 			<< trUtf8("Видеофайлы (*.ogg *.ogv *.avi *.mkv *.mp4 *.ts \
 								   *.wv *.3gp *.m2ts *.vob *.wmv *.mpg \
