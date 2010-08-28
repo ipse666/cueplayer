@@ -43,6 +43,7 @@ protected:
 	void dragEnterEvent(QDragEnterEvent *event);
 	void dropEvent(QDropEvent *event);
 	void keyPressEvent (QKeyEvent  *event);
+        void mousePressEvent(QMouseEvent * event);
 
 public:
 	CuePlayer(QWidget *parent = 0);
@@ -130,6 +131,7 @@ private:
 	GstBus *bus;
 	int multiFiles[100];
 	int loadpoints;
+        bool reverseTime;
 
 public slots:
 	void playNextTrack();
