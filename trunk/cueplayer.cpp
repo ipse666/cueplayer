@@ -231,6 +231,8 @@ void CuePlayer::setServer(SingleServer *ss)
 
 void CuePlayer::setNumLCDs(int sec)
 {
+        if (reverseTime && sec)
+            sec = timeLineSlider->maximum() - sec;
 	int min = sec / 60;
 	if (sec >= 60)
 		sec %= 60;
@@ -565,6 +567,7 @@ void CuePlayer::initPlayer()
 	tsFlag = false;
 	progFlag = false;
 	playButtonFlag = false;
+        reverseTime = false;
 	videowindow->hide();
 	memset(multiFiles,0,100);
 	mp3trackName = trUtf8("неизвестно");
@@ -2276,6 +2279,21 @@ void CuePlayer::fileSelected(QStringList list)
     cueFileSelected(list);
     if (settings.value("preferences/autoplay").toBool())
             playButton->click();
+}
+
+void CuePlayer::mousePressEvent(QMouseEvent *event)
+{
+    int a = 0;
+    if (extbutAction->isChecked())
+        a = 102;
+    if (event->button() == Qt::LeftButton)
+    {
+        if (event->x() > 280 + a && event->x() < 350 + a)
+        {
+            if (event->y() > 24 && event->y() < 50)
+                reverseTime = !reverseTime;
+        }
+    }
 }
 
 // Класс треда
