@@ -137,6 +137,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	win = videowindow->winId();
 	streamform = new StreamForm(this);
 	plparser = new PlParser(this);
+        appendquestion = new AppendQuestion(this);
 	secNumLCD->display("00");
 	enableButtons(false);
         transcodeAction->setEnabled(false);
@@ -222,6 +223,9 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 
 	// Эквалайзер
 	connect(equalizer, SIGNAL(bandsValue(double*)), this, SLOT(equalizerChang(double*)));
+
+        // Диалог выбора вариата загрузки списка
+        connect(appendquestion, SIGNAL(submit(QFileInfoList)), this, SLOT(multiFileInit(QFileInfoList)));
 }
 
 void CuePlayer::setServer(SingleServer *ss)
@@ -446,8 +450,27 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		else if (counterFiles)
 		{
 			multiFileFlag = true;
-			settings.setValue("player/recentfile", filename);
-			multiFileInit(filesList);
+                        settings.setValue("player/recentfile", filename);
+                        if (saveFileList.size())
+                        {
+                            if (settings.value("appendquestion/remember").toBool())
+                            {
+                                if (settings.value("appendquestion/append").toBool())
+                                {
+                                    saveFileList.append(filesList);
+                                    multiFileInit(saveFileList);
+                                }
+                                else
+                                    multiFileInit(filesList);
+                            }
+                            else
+                            {
+                                appendquestion->show();
+                                appendquestion->setFileInfoLists(saveFileList, filesList);
+                            }
+                        }
+                        else
+                            multiFileInit(filesList);
 			if (settings.value("preferences/cover").toBool())
 			{
 				QImage img(imagename);
@@ -996,6 +1019,7 @@ void CuePlayer::createTrayIconMenu()
 	int prHeight = preferences->height();
 	int prWidthPos = desktop->width()/2 - prWidth/2;
 	preferences->move(prWidthPos, appHeightPos - prHeight);
+        connect(preferences, SIGNAL(defaultAudio()), this, SLOT(setDefaultQuestion()));
 
 	preferencesAction = new QAction(trUtf8("Настройки"), this);
 	preferencesAction->setIcon(QIcon(":/images/preferences.png"));
@@ -1418,7 +1442,8 @@ void CuePlayer::multiFileInit(QFileInfoList fileInfoList)
 	int duration = 0;
 	QString strSec;
 	QString finame;
-	saveFileList = fileInfoList;
+        saveFileList = fileInfoList;
+        qDebug() << saveFileList.size();
 	treeWidget->clear();
 
 	createPlHeader();
@@ -1961,7 +1986,7 @@ void CuePlayer::plInit()
 
 	for (int i = 0; i < plparser->getPlEntries(); i++)
 		filelist << plparser->getPlStruct(i).at(0);
-	multiFileInit(filelist);
+        multiFileInit(filelist);
 	if(!playlistItem)
 		return;
 	for (int i = 0; i < plparser->getPlEntries(); i++)
@@ -2294,6 +2319,12 @@ void CuePlayer::mousePressEvent(QMouseEvent *event)
                 reverseTime = !reverseTime;
         }
     }
+}
+
+void CuePlayer::setDefaultQuestion()
+{
+    QSettings settings;
+    settings.remove("appendquestion");
 }
 
 // Класс треда

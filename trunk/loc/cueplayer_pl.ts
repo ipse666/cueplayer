@@ -33,6 +33,16 @@
         <source>Enter</source>
         <translation>Potwierdź</translation>
     </message>
+    <message>
+        <location filename="../apetoflac.cpp" line="109"/>
+        <source>cuesheet=</source>
+        <translation></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../apetoflac.cpp" line="158"/>
+        <source>Конвертировано в CuePlayer </source>
+        <translation>Przekonwertowany do CuePlayer </translation>
+    </message>
 </context>
 <context>
     <name>CuePlayer</name>
@@ -53,7 +63,7 @@
         <translation type="obsolete">Pliki audio (*.mp3 *.flac *.ogg *.ogm)</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="98"/>
+        <location filename="../cueplayer.cpp" line="103"/>
         <source>Все файлы (*.*)</source>
         <translation>Wszystkie pliki (*.*)</translation>
     </message>
@@ -62,66 +72,66 @@
         <translation type="obsolete">Katalog z plikami video lub DVD</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="115"/>
-        <location filename="../cueplayer.cpp" line="458"/>
-        <location filename="../cueplayer.cpp" line="500"/>
+        <location filename="../cueplayer.cpp" line="120"/>
+        <location filename="../cueplayer.cpp" line="464"/>
+        <location filename="../cueplayer.cpp" line="506"/>
         <source>откройте файл</source>
         <translation>Otwórz plik</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/cueplayer.ui" line="255"/>
-        <location filename="../cueplayer.cpp" line="122"/>
+        <location filename="../cueplayer.cpp" line="127"/>
         <source>Открыть файл</source>
         <translation>Otwórz plik</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="139"/>
+        <location filename="../cueplayer.cpp" line="145"/>
         <source>Ctrl+u</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="140"/>
+        <location filename="../cueplayer.cpp" line="146"/>
         <source>Ctrl+d</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="141"/>
+        <location filename="../cueplayer.cpp" line="147"/>
         <source>Ctrl+o</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="142"/>
-        <location filename="../cueplayer.cpp" line="1001"/>
+        <location filename="../cueplayer.cpp" line="148"/>
+        <location filename="../cueplayer.cpp" line="1019"/>
         <source>Ctrl+p</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="143"/>
-        <location filename="../cueplayer.cpp" line="1006"/>
+        <location filename="../cueplayer.cpp" line="149"/>
+        <location filename="../cueplayer.cpp" line="1024"/>
         <source> </source>
         <translatorcomment>spacja</translatorcomment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="144"/>
-        <location filename="../cueplayer.cpp" line="1011"/>
+        <location filename="../cueplayer.cpp" line="150"/>
+        <location filename="../cueplayer.cpp" line="1029"/>
         <source>Ctrl+s</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="145"/>
-        <location filename="../cueplayer.cpp" line="1016"/>
+        <location filename="../cueplayer.cpp" line="151"/>
+        <location filename="../cueplayer.cpp" line="1034"/>
         <source>Ctrl+r</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="146"/>
-        <location filename="../cueplayer.cpp" line="1021"/>
+        <location filename="../cueplayer.cpp" line="152"/>
+        <location filename="../cueplayer.cpp" line="1039"/>
         <source>Ctrl+n</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="147"/>
+        <location filename="../cueplayer.cpp" line="153"/>
         <source>Ctrl+l</source>
         <translation></translation>
     </message>
@@ -130,126 +140,126 @@
         <translation type="obsolete">Włączony tryb progresywny.</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="384"/>
+        <location filename="../cueplayer.cpp" line="390"/>
         <source>FLV-видео</source>
         <translation>FLV Video</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/cueplayer.ui" line="423"/>
-        <location filename="../cueplayer.cpp" line="396"/>
+        <location filename="../cueplayer.cpp" line="402"/>
         <source>Список воспроизведения</source>
         <translation>Lista utworów</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="397"/>
+        <location filename="../cueplayer.cpp" line="403"/>
         <source>Подождите. Инициализация списка.</source>
         <translation>Czekaj. Przygotowywanie listy.</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="434"/>
-        <location filename="../cueplayer.cpp" line="532"/>
+        <location filename="../cueplayer.cpp" line="440"/>
+        <location filename="../cueplayer.cpp" line="538"/>
         <source>Следующая дорожка</source>
         <translation>Następny utwór</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="436"/>
-        <location filename="../cueplayer.cpp" line="534"/>
+        <location filename="../cueplayer.cpp" line="442"/>
+        <location filename="../cueplayer.cpp" line="540"/>
         <source>Предыдущая дорожка</source>
         <translation>Poprzedni utwór</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="457"/>
+        <location filename="../cueplayer.cpp" line="463"/>
         <source>Медиафайлы не обнаружены</source>
         <translation>Nie znaleziono pliku</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="465"/>
-        <location filename="../cueplayer.cpp" line="466"/>
-        <location filename="../cueplayer.cpp" line="474"/>
-        <location filename="../cueplayer.cpp" line="475"/>
+        <location filename="../cueplayer.cpp" line="471"/>
+        <location filename="../cueplayer.cpp" line="472"/>
+        <location filename="../cueplayer.cpp" line="480"/>
+        <location filename="../cueplayer.cpp" line="481"/>
         <source>Ютуб</source>
         <translation>Youtube</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="481"/>
-        <location filename="../cueplayer.cpp" line="482"/>
+        <location filename="../cueplayer.cpp" line="487"/>
+        <location filename="../cueplayer.cpp" line="488"/>
         <source>Радио</source>
         <translation>Radio</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="499"/>
+        <location filename="../cueplayer.cpp" line="505"/>
         <source>Формат не поддерживается</source>
         <translation>Format nie obsługiwany</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="563"/>
+        <location filename="../cueplayer.cpp" line="570"/>
         <source>неизвестно</source>
         <translation>nieznany</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="599"/>
-        <location filename="../cueplayer.cpp" line="636"/>
+        <location filename="../cueplayer.cpp" line="611"/>
+        <location filename="../cueplayer.cpp" line="653"/>
         <source>DVD видео : </source>
         <translation>DVD Video : </translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="831"/>
-        <location filename="../cueplayer.cpp" line="1281"/>
+        <location filename="../cueplayer.cpp" line="848"/>
+        <location filename="../cueplayer.cpp" line="1304"/>
         <source>Играет</source>
         <translation>Odtwarza</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="2190"/>
+        <location filename="../cueplayer.cpp" line="2209"/>
         <source>Композиция</source>
         <translation>Utwór</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="2190"/>
+        <location filename="../cueplayer.cpp" line="2209"/>
         <source>Время</source>
         <translation>Czas</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="944"/>
+        <location filename="../cueplayer.cpp" line="962"/>
         <source>&amp;Выход</source>
         <translation>&amp;Wyjdź</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="85"/>
+        <location filename="../cueplayer.cpp" line="90"/>
         <source>Все поддерживаемые файлы (*.aac *.mp3 *.flac *.ape 												 *.ogg *.ogm *.ogv *.mp4 												 *.avi *.ts *.wv *.3gp *.m2ts 												 *.vob *.wmv *.wav *.mpg 												 *.mov *.m4a *.m4v *.mka 												 *.cue *.mkv *.flv *.pls 												 *.wvx *.m3u)</source>
         <translation>Wszystkie obsługiwane pliki (*.aac *.mp3 *.flac *.ape 												 *.ogg *.ogm *.ogv *.mp4 												 *.avi *.ts *.wv *.3gp *.m2ts 												 *.vob *.wmv *.wav *.mpg 												 *.mov *.m4a *.m4v *.mka 												 *.cue *.mkv *.flv *.pls 												 *.wvx *.m3u)</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="92"/>
+        <location filename="../cueplayer.cpp" line="97"/>
         <source>Списки воспроизведения (*.cue *.pls *.wvx *.m3u)</source>
         <translation>Listy odtwarzania (*.cue *.pls *.wvx *.m3u)</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="93"/>
+        <location filename="../cueplayer.cpp" line="98"/>
         <source>Видеофайлы (*.ogg *.ogv *.avi *.mkv *.mp4 *.ts 								   *.wv *.3gp *.m2ts *.vob *.wmv *.mpg 								   *.mov *.m4v *.flv)</source>
         <translation>Pliki wideo (*.ogg *.ogv *.avi *.mkv *.mp4 *.ts 								   *.wv *.3gp *.m2ts *.vob *.wmv *.mpg 								   *.mov *.m4v *.flv)</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="96"/>
+        <location filename="../cueplayer.cpp" line="101"/>
         <source>Аудиофайлы (*.mp3 *.flac *.ogg *.ogm *.aac 								   *.ape *.ogm *.wav *.m4a *.mka)</source>
         <translation>Pliki audio (*.mp3 *.flac *.ogg *.ogm *.aac 								   *.ape *.ogm *.wav *.m4a *.mka)</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="99"/>
+        <location filename="../cueplayer.cpp" line="104"/>
         <source>Каталог с файлами или DVD каталог (.)</source>
         <translation>Katalog z plikami lub DVD (.)</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="946"/>
+        <location filename="../cueplayer.cpp" line="964"/>
         <source>Ctrl+q</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="949"/>
+        <location filename="../cueplayer.cpp" line="967"/>
         <source>&amp;О программе</source>
         <translation>&amp;O programie</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="951"/>
+        <location filename="../cueplayer.cpp" line="969"/>
         <source>Ctrl+a</source>
         <translation></translation>
     </message>
@@ -258,12 +268,12 @@
         <translation type="obsolete">&lt;h2&gt;CuePlayer 0.23-svn&lt;/h2&gt;&lt;p&gt;Data wydania:</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1187"/>
+        <location filename="../cueplayer.cpp" line="1208"/>
         <source>Ошибка поиска ts</source>
         <translation>Błąd wyszukiwania ts</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="2110"/>
+        <location filename="../cueplayer.cpp" line="2129"/>
         <source>Внимание! Включен прогрессивный режим.</source>
         <translation>Uwaga! Dołączony tryb progresywny.</translation>
     </message>
@@ -272,102 +282,102 @@
         <translation type="obsolete">&amp;Integracja</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="954"/>
+        <location filename="../cueplayer.cpp" line="972"/>
         <source>&amp;Расширенный</source>
         <translation>&amp;Zaawansowane</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="956"/>
+        <location filename="../cueplayer.cpp" line="974"/>
         <source>Ctrl+e</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="960"/>
+        <location filename="../cueplayer.cpp" line="978"/>
         <source>Конвертор</source>
         <translation>Konwerter</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="962"/>
+        <location filename="../cueplayer.cpp" line="980"/>
         <source>Ctrl+c</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="968"/>
+        <location filename="../cueplayer.cpp" line="986"/>
         <source>Ape-&gt;Flac</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="970"/>
+        <location filename="../cueplayer.cpp" line="988"/>
         <source>Ctrl+h</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="979"/>
+        <location filename="../cueplayer.cpp" line="997"/>
         <source>Настройки</source>
         <translation>Ustawienia</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="981"/>
+        <location filename="../cueplayer.cpp" line="999"/>
         <source>Ctrl+t</source>
         <translation>Ctrl+t</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="990"/>
+        <location filename="../cueplayer.cpp" line="1008"/>
         <source>&amp;Эквалайзер</source>
         <translation>&amp;Equalizer</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="992"/>
+        <location filename="../cueplayer.cpp" line="1010"/>
         <source>Ctrl+j</source>
         <translation>Ctrl+j</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="999"/>
+        <location filename="../cueplayer.cpp" line="1017"/>
         <source>&amp;Играть</source>
         <translation>O&amp;dtwarzaj</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1004"/>
+        <location filename="../cueplayer.cpp" line="1022"/>
         <source>&amp;Пауза</source>
         <translation>&amp;Pauza</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1009"/>
+        <location filename="../cueplayer.cpp" line="1027"/>
         <source>&amp;Стоп</source>
         <translation>&amp;Zatrzymaj</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1014"/>
+        <location filename="../cueplayer.cpp" line="1032"/>
         <source>П&amp;редыдущий</source>
         <translation>Pop&amp;rzedni</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1019"/>
+        <location filename="../cueplayer.cpp" line="1037"/>
         <source>С&amp;ледующий</source>
         <translation>&amp;Następny</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="1037"/>
+        <location filename="../cueplayer.cpp" line="1055"/>
         <source>CuePlayer</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1078"/>
+        <location filename="../cueplayer.cpp" line="1098"/>
         <source>О программе</source>
         <translation>O programie</translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="1079"/>
+        <location filename="../cueplayer.cpp" line="1099"/>
         <source>&lt;h2&gt;CuePlayer </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cueplayer.cpp" line="1081"/>
+        <location filename="../cueplayer.cpp" line="1101"/>
         <source>&lt;/h2&gt;</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1084"/>
+        <location filename="../cueplayer.cpp" line="1104"/>
         <source>&lt;p&gt;Дата ревизии: </source>
         <translation>&lt;p&gt;Data wydania: </translation>
     </message>
@@ -376,19 +386,19 @@
         <translation type="obsolete">&lt;h2&gt;CuePlayer&lt;/h2&gt;&lt;p&gt;Data kompiacji: </translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1090"/>
+        <location filename="../cueplayer.cpp" line="1110"/>
         <source>&lt;p&gt;Мультимедиа проигрыватель.&lt;p&gt;&lt;p&gt;Разработчик: &lt;a href=xmpp:ipse@ipse.zapto.org name=jid type=application/xmpp+xml&gt;ipse&lt;/a&gt;</source>
         <translation>&lt;p&gt;Odtwarzacz multimedialny.&lt;p&gt;&lt;p&gt;Autor: &lt;a href=xmpp:ipse@ipse.zapto.org name=jid type=application/xmpp+xml&gt;ipse&lt;/a&gt;</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1168"/>
+        <location filename="../cueplayer.cpp" line="1189"/>
         <source>Ошибка поиска</source>
         <translation>Błąd wyszukiwania</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="803"/>
-        <location filename="../cueplayer.cpp" line="1250"/>
-        <location filename="../cueplayer.cpp" line="1253"/>
+        <location filename="../cueplayer.cpp" line="820"/>
+        <location filename="../cueplayer.cpp" line="1273"/>
+        <location filename="../cueplayer.cpp" line="1276"/>
         <source>Играет: </source>
         <translation>Odtwarza: </translation>
     </message>
@@ -397,52 +407,52 @@
         <translation type="obsolete">&lt;h2&gt;CuePlayer 0.22-svn&lt;/h2&gt;&lt;p&gt;Data kompiacji: </translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1409"/>
+        <location filename="../cueplayer.cpp" line="1432"/>
         <source>Инициализация канала: </source>
         <translation>Przygotowywanie kanału: </translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1632"/>
+        <location filename="../cueplayer.cpp" line="1651"/>
         <source>ошибка инициализации файла</source>
         <translation>Błąd przetwarzania pliku</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1648"/>
+        <location filename="../cueplayer.cpp" line="1667"/>
         <source>DVD видео</source>
         <translation>DVD Video</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1649"/>
+        <location filename="../cueplayer.cpp" line="1668"/>
         <source>DVD видео : 1</source>
         <translation>DVD Video : 1</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1703"/>
+        <location filename="../cueplayer.cpp" line="1722"/>
         <source>Открыт ftp файл</source>
         <translation>Otwórz plik przez FTP</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1780"/>
+        <location filename="../cueplayer.cpp" line="1799"/>
         <source>Внимание! Энергосбережение выключено.</source>
         <translation>Uwaga! Oszczędzanie energii wyłączone.</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1838"/>
+        <location filename="../cueplayer.cpp" line="1857"/>
         <source> Подождите.</source>
         <translation> Czekaj.</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1841"/>
+        <location filename="../cueplayer.cpp" line="1860"/>
         <source>  Подождите..</source>
         <translation>  Czekaj..</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1844"/>
+        <location filename="../cueplayer.cpp" line="1863"/>
         <source>   Подождите...</source>
         <translation>   Czekaj...</translation>
     </message>
     <message utf8="true">
-        <location filename="../cueplayer.cpp" line="1953"/>
+        <location filename="../cueplayer.cpp" line="1972"/>
         <source>Ошибка чтения списка воспроизведения
 </source>
         <translation>Błąd czytania listy utworów
@@ -646,9 +656,14 @@
     <message utf8="true">
         <location filename="../plparser.cpp" line="119"/>
         <location filename="../plparser.cpp" line="168"/>
-        <location filename="../plparser.cpp" line="189"/>
+        <location filename="../plparser.cpp" line="199"/>
         <source>Ноль записей</source>
         <translation>Brak zawartości</translation>
+    </message>
+    <message>
+        <location filename="../plparser.cpp" line="186"/>
+        <source>/</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -676,7 +691,7 @@
     </message>
     <message utf8="true">
         <location filename="../ui/preferences.ui" line="77"/>
-        <location filename="../ui/preferences.ui" line="689"/>
+        <location filename="../ui/preferences.ui" line="734"/>
         <source>Транскодер</source>
         <translation>Transcoder</translation>
     </message>
@@ -705,12 +720,12 @@
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="644"/>
+        <location filename="../ui/preferences.ui" line="689"/>
         <source>Видео</source>
         <translation>Wideo</translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="650"/>
+        <location filename="../ui/preferences.ui" line="695"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -724,7 +739,7 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt; &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt; p, li { white-space: pre-wrap; } &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt; &lt;table style=&quot;-qt-table-type: root; margin-top:4px; margin-bottom:4px; margin-left:4px; margin-right:4px;&quot;&gt; &lt;tr&gt; &lt;td style=&quot;border: none;&quot;&gt; &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Osadza okno wideo w głównym oknie programu.&lt;/p&gt; &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Jeśli masz problemy z trybem pełnoekranowym,&lt;/span&gt;&lt;/p&gt; &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;wyłączyć tę opcję i uruchom ponownie odtwarzacz.&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="662"/>
+        <location filename="../ui/preferences.ui" line="707"/>
         <source>Интеграция видеоокна в основное. (Нестабильно)</source>
         <translation>Integracja okna wideo z programem. (Niestabilne)</translation>
     </message>
@@ -752,42 +767,41 @@ p, li { white-space: pre-wrap; }
         <translation>Equalizer (Niestabilne)</translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="496"/>
         <source>Показывать трей уведомления (Только для cue)</source>
-        <translation>Wyświetlaj dymki powiadomień (Tylko dla arkuszy cue)</translation>
+        <translation type="obsolete">Wyświetlaj dymki powiadomień (Tylko dla arkuszy cue)</translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="522"/>
+        <location filename="../ui/preferences.ui" line="562"/>
         <source>Время показа трей уведомления (сек.)</source>
         <translation>Czas wyświetlenia powiadomienia (sek.)</translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="529"/>
+        <location filename="../ui/preferences.ui" line="506"/>
         <source>Показывать обложку альбома (Только для каталогов)</source>
         <translation>Pokaż informacje o płycie (Tylko dla katalogów)</translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="587"/>
+        <location filename="../ui/preferences.ui" line="645"/>
         <source>Кодировка CUE файла</source>
         <translation>Kodowanie plików cue</translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="593"/>
+        <location filename="../ui/preferences.ui" line="651"/>
         <source>Авто (Windows-1251 / UTF-8)</source>
         <translation>Auto (Windows-1251 / utf-8)</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="603"/>
+        <location filename="../ui/preferences.ui" line="661"/>
         <source>Windows-1250</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="610"/>
+        <location filename="../ui/preferences.ui" line="668"/>
         <source>Windows-1251</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="617"/>
+        <location filename="../ui/preferences.ui" line="675"/>
         <source>UTF-8</source>
         <translation></translation>
     </message>
@@ -847,52 +861,106 @@ p, li { white-space: pre-wrap; }
         <translation>Ustawienia główne</translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="543"/>
+        <location filename="../ui/preferences.ui" line="496"/>
+        <source>Показывать трей уведомления</source>
+        <translation>Wyświetlaj powiadomienia</translation>
+    </message>
+    <message utf8="true">
+        <location filename="../ui/preferences.ui" line="513"/>
+        <location filename="../ui/preferences.ui" line="524"/>
+        <location filename="../ui/preferences.ui" line="535"/>
+        <source>Автоматически разворачивать список воспроизведения
+при открытии файлов-списков или каталогов с файлами.</source>
+        <translation>Automatycznie rozwija listę odtwarzania
+po otwarciu lisyt plików lub katalogu z plikami.</translation>
+    </message>
+    <message utf8="true">
+        <location filename="../ui/preferences.ui" line="517"/>
+        <source>Автоматически разворачивать список</source>
+        <translation>Automatycznie rozwijaj listę</translation>
+    </message>
+    <message utf8="true">
+        <location filename="../ui/preferences.ui" line="528"/>
+        <source>Воспроизводить в цикле</source>
+        <translation>Odtwarzaj w pętli</translation>
+    </message>
+    <message utf8="true">
+        <location filename="../ui/preferences.ui" line="539"/>
+        <source>Воспроизводить автоматически</source>
+        <translation>Automatyczne odtwarzanie</translation>
+    </message>
+    <message utf8="true">
+        <location filename="../ui/preferences.ui" line="576"/>
         <source>Авто</source>
         <translation>Auto</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="548"/>
+        <location filename="../ui/preferences.ui" line="581"/>
         <source>GConf</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="553"/>
+        <location filename="../ui/preferences.ui" line="586"/>
         <source>OSS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="558"/>
+        <location filename="../ui/preferences.ui" line="591"/>
         <source>ALSA</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="563"/>
+        <location filename="../ui/preferences.ui" line="596"/>
         <source>Esound</source>
         <translation></translation>
     </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="601"/>
+        <source>PulseAudio</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="606"/>
+        <source>Jack</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="611"/>
+        <source>HAL</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="616"/>
+        <source>OSS v4</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="621"/>
+        <source>NAS</source>
+        <translation></translation>
+    </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="577"/>
+        <location filename="../ui/preferences.ui" line="635"/>
         <source>Аудио выход</source>
         <translation>Wyjście audio</translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="695"/>
+        <location filename="../ui/preferences.ui" line="740"/>
         <source>Дополнительные опции для кодирования аудио файлов.
 Наименования согласно опциям gst-плагинов</source>
         <translation>Zaawansowane ustawienia kodeków. Opisy funkcji pobrane z pluginów gst</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="729"/>
-        <location filename="../ui/preferences.ui" line="747"/>
-        <location filename="../ui/preferences.ui" line="780"/>
+        <location filename="../ui/preferences.ui" line="774"/>
+        <location filename="../ui/preferences.ui" line="792"/>
+        <location filename="../ui/preferences.ui" line="825"/>
         <source>Specify a maximum bitrate (in bps).
 Useful for streaming applications.
 (-1 == disabled)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="801"/>
+        <location filename="../ui/preferences.ui" line="846"/>
         <source>Attempt to encode at a bitrate averaging this (in bps).
 This uses the bitrate management engine,
 and is not recommended for most users.
@@ -901,286 +969,286 @@ Quality is a better alternative.
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="918"/>
+        <location filename="../ui/preferences.ui" line="963"/>
         <source>Specify a minimum bitrate (in bps).
 Useful for encoding for a fixed-size channel.
 (-1 == disabled)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1128"/>
+        <location filename="../ui/preferences.ui" line="1173"/>
         <source>bitrate </source>
         <translation></translation>
-    </message>
-    <message>
-        <location filename="../ui/preferences.ui" line="1145"/>
-        <location filename="../ui/preferences.ui" line="1609"/>
-        <location filename="../ui/preferences.ui" line="1735"/>
-        <source>8</source>
-        <translation>+12 {8?}</translation>
-    </message>
-    <message>
-        <location filename="../ui/preferences.ui" line="1150"/>
-        <location filename="../ui/preferences.ui" line="1614"/>
-        <location filename="../ui/preferences.ui" line="1740"/>
-        <source>16</source>
-        <translation>+12 {16?}</translation>
-    </message>
-    <message>
-        <location filename="../ui/preferences.ui" line="1155"/>
-        <location filename="../ui/preferences.ui" line="1619"/>
-        <location filename="../ui/preferences.ui" line="1745"/>
-        <source>24</source>
-        <translation>+12 {24?}</translation>
-    </message>
-    <message>
-        <location filename="../ui/preferences.ui" line="1160"/>
-        <location filename="../ui/preferences.ui" line="1624"/>
-        <location filename="../ui/preferences.ui" line="1750"/>
-        <source>32</source>
-        <translation>+12 {32?}</translation>
-    </message>
-    <message>
-        <location filename="../ui/preferences.ui" line="1165"/>
-        <location filename="../ui/preferences.ui" line="1629"/>
-        <location filename="../ui/preferences.ui" line="1755"/>
-        <source>40</source>
-        <translation>+12 {40?}</translation>
-    </message>
-    <message>
-        <location filename="../ui/preferences.ui" line="1170"/>
-        <location filename="../ui/preferences.ui" line="1634"/>
-        <location filename="../ui/preferences.ui" line="1760"/>
-        <source>48</source>
-        <translation>+12 {48?}</translation>
-    </message>
-    <message>
-        <location filename="../ui/preferences.ui" line="1175"/>
-        <location filename="../ui/preferences.ui" line="1639"/>
-        <location filename="../ui/preferences.ui" line="1765"/>
-        <source>56</source>
-        <translation>+12 {56?}</translation>
-    </message>
-    <message>
-        <location filename="../ui/preferences.ui" line="1180"/>
-        <location filename="../ui/preferences.ui" line="1644"/>
-        <location filename="../ui/preferences.ui" line="1770"/>
-        <source>64</source>
-        <translation>+12 {64?}</translation>
-    </message>
-    <message>
-        <location filename="../ui/preferences.ui" line="1185"/>
-        <location filename="../ui/preferences.ui" line="1649"/>
-        <location filename="../ui/preferences.ui" line="1775"/>
-        <source>80</source>
-        <translation>+12 {80?}</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="1190"/>
         <location filename="../ui/preferences.ui" line="1654"/>
         <location filename="../ui/preferences.ui" line="1780"/>
-        <source>96</source>
-        <translation>+12 {96?}</translation>
+        <source>8</source>
+        <translation>+12 {8?}</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="1195"/>
         <location filename="../ui/preferences.ui" line="1659"/>
         <location filename="../ui/preferences.ui" line="1785"/>
-        <source>112</source>
-        <translation>+12 {112?}</translation>
+        <source>16</source>
+        <translation>+12 {16?}</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="1200"/>
         <location filename="../ui/preferences.ui" line="1664"/>
         <location filename="../ui/preferences.ui" line="1790"/>
-        <source>128</source>
-        <translation>+12 {128?}</translation>
+        <source>24</source>
+        <translation>+12 {24?}</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="1205"/>
         <location filename="../ui/preferences.ui" line="1669"/>
         <location filename="../ui/preferences.ui" line="1795"/>
-        <source>160</source>
-        <translation>+12 {160?}</translation>
+        <source>32</source>
+        <translation>+12 {32?}</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="1210"/>
         <location filename="../ui/preferences.ui" line="1674"/>
         <location filename="../ui/preferences.ui" line="1800"/>
-        <source>192</source>
-        <translation>+12 {192?}</translation>
+        <source>40</source>
+        <translation>+12 {40?}</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="1215"/>
         <location filename="../ui/preferences.ui" line="1679"/>
         <location filename="../ui/preferences.ui" line="1805"/>
-        <source>224</source>
-        <translation>+12 {224?}</translation>
+        <source>48</source>
+        <translation>+12 {48?}</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="1220"/>
         <location filename="../ui/preferences.ui" line="1684"/>
         <location filename="../ui/preferences.ui" line="1810"/>
-        <source>256</source>
-        <translation>+12 {256?}</translation>
+        <source>56</source>
+        <translation>+12 {56?}</translation>
     </message>
     <message>
         <location filename="../ui/preferences.ui" line="1225"/>
         <location filename="../ui/preferences.ui" line="1689"/>
         <location filename="../ui/preferences.ui" line="1815"/>
+        <source>64</source>
+        <translation>+12 {64?}</translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="1230"/>
+        <location filename="../ui/preferences.ui" line="1694"/>
+        <location filename="../ui/preferences.ui" line="1820"/>
+        <source>80</source>
+        <translation>+12 {80?}</translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="1235"/>
+        <location filename="../ui/preferences.ui" line="1699"/>
+        <location filename="../ui/preferences.ui" line="1825"/>
+        <source>96</source>
+        <translation>+12 {96?}</translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="1240"/>
+        <location filename="../ui/preferences.ui" line="1704"/>
+        <location filename="../ui/preferences.ui" line="1830"/>
+        <source>112</source>
+        <translation>+12 {112?}</translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="1245"/>
+        <location filename="../ui/preferences.ui" line="1709"/>
+        <location filename="../ui/preferences.ui" line="1835"/>
+        <source>128</source>
+        <translation>+12 {128?}</translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="1250"/>
+        <location filename="../ui/preferences.ui" line="1714"/>
+        <location filename="../ui/preferences.ui" line="1840"/>
+        <source>160</source>
+        <translation>+12 {160?}</translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="1255"/>
+        <location filename="../ui/preferences.ui" line="1719"/>
+        <location filename="../ui/preferences.ui" line="1845"/>
+        <source>192</source>
+        <translation>+12 {192?}</translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="1260"/>
+        <location filename="../ui/preferences.ui" line="1724"/>
+        <location filename="../ui/preferences.ui" line="1850"/>
+        <source>224</source>
+        <translation>+12 {224?}</translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="1265"/>
+        <location filename="../ui/preferences.ui" line="1729"/>
+        <location filename="../ui/preferences.ui" line="1855"/>
+        <source>256</source>
+        <translation>+12 {256?}</translation>
+    </message>
+    <message>
+        <location filename="../ui/preferences.ui" line="1270"/>
+        <location filename="../ui/preferences.ui" line="1734"/>
+        <location filename="../ui/preferences.ui" line="1860"/>
         <source>320</source>
         <translation>+12 {320?}</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1239"/>
-        <location filename="../ui/preferences.ui" line="1703"/>
-        <location filename="../ui/preferences.ui" line="1829"/>
+        <location filename="../ui/preferences.ui" line="1284"/>
+        <location filename="../ui/preferences.ui" line="1748"/>
+        <location filename="../ui/preferences.ui" line="1874"/>
         <source>kbit/sec</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1249"/>
+        <location filename="../ui/preferences.ui" line="1294"/>
         <source>compression-ratio</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1356"/>
+        <location filename="../ui/preferences.ui" line="1401"/>
         <source>3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1366"/>
+        <location filename="../ui/preferences.ui" line="1411"/>
         <source>mode</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1377"/>
+        <location filename="../ui/preferences.ui" line="1422"/>
         <source>(0): Stereo</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1382"/>
+        <location filename="../ui/preferences.ui" line="1427"/>
         <source>(1): Joint Stereo</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1387"/>
+        <location filename="../ui/preferences.ui" line="1432"/>
         <source>(2): Dual Channel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1392"/>
+        <location filename="../ui/preferences.ui" line="1437"/>
         <source>(3): Mono</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1397"/>
+        <location filename="../ui/preferences.ui" line="1442"/>
         <source>(4): Auto</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1405"/>
+        <location filename="../ui/preferences.ui" line="1450"/>
         <source>force-ms</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1412"/>
+        <location filename="../ui/preferences.ui" line="1457"/>
         <source>free-format </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1419"/>
+        <location filename="../ui/preferences.ui" line="1464"/>
         <source>copyright</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1426"/>
+        <location filename="../ui/preferences.ui" line="1471"/>
         <source>original</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1436"/>
+        <location filename="../ui/preferences.ui" line="1481"/>
         <source>error-protection</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1443"/>
+        <location filename="../ui/preferences.ui" line="1488"/>
         <source>padding-type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1451"/>
+        <location filename="../ui/preferences.ui" line="1496"/>
         <source>(0): No Padding</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1456"/>
+        <location filename="../ui/preferences.ui" line="1501"/>
         <source>(1): Always Pad</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1461"/>
+        <location filename="../ui/preferences.ui" line="1506"/>
         <source>(2): Adjust Padding</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1469"/>
+        <location filename="../ui/preferences.ui" line="1514"/>
         <source>extension</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1476"/>
+        <location filename="../ui/preferences.ui" line="1521"/>
         <source>strict-iso</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1483"/>
+        <location filename="../ui/preferences.ui" line="1528"/>
         <source>disable-reservoir</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1490"/>
+        <location filename="../ui/preferences.ui" line="1535"/>
         <source>vbr</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1501"/>
+        <location filename="../ui/preferences.ui" line="1546"/>
         <source>(0): No VBR (Constant Bitrate)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1506"/>
+        <location filename="../ui/preferences.ui" line="1551"/>
         <source>(2): Lame&apos;s old VBR algorithm</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1511"/>
+        <location filename="../ui/preferences.ui" line="1556"/>
         <source>(3): VBR Average Bitrate</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1516"/>
+        <location filename="../ui/preferences.ui" line="1561"/>
         <source>(4): Lame&apos;s new VBR algorithm</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1524"/>
+        <location filename="../ui/preferences.ui" line="1569"/>
         <source>vbr-mean-bitrate</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1584"/>
+        <location filename="../ui/preferences.ui" line="1629"/>
         <source>vbr-min-bitrate</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1604"/>
-        <location filename="../ui/preferences.ui" line="1730"/>
+        <location filename="../ui/preferences.ui" line="1649"/>
+        <location filename="../ui/preferences.ui" line="1775"/>
         <source>0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1710"/>
+        <location filename="../ui/preferences.ui" line="1755"/>
         <source>vbr-max-bitrate</source>
         <translation></translation>
     </message>
@@ -1191,23 +1259,23 @@ Useful for encoding for a fixed-size channel.
 Nazewnictwo zgodnie z opcjami pluginu-gst</translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="723"/>
+        <location filename="../ui/preferences.ui" line="768"/>
         <source>Vorbis audio encoder</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="734"/>
+        <location filename="../ui/preferences.ui" line="779"/>
         <source>max-bitrate (bps)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="808"/>
+        <location filename="../ui/preferences.ui" line="853"/>
         <source>bitrate (bps)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="821"/>
-        <location filename="../ui/preferences.ui" line="863"/>
+        <location filename="../ui/preferences.ui" line="866"/>
+        <location filename="../ui/preferences.ui" line="908"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1223,8 +1291,8 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="893"/>
-        <location filename="../ui/preferences.ui" line="951"/>
+        <location filename="../ui/preferences.ui" line="938"/>
+        <location filename="../ui/preferences.ui" line="996"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1238,212 +1306,212 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="905"/>
+        <location filename="../ui/preferences.ui" line="950"/>
         <source>min-bitrate (bps)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="979"/>
-        <location filename="../ui/preferences.ui" line="995"/>
-        <location filename="../ui/preferences.ui" line="1056"/>
+        <location filename="../ui/preferences.ui" line="1024"/>
+        <location filename="../ui/preferences.ui" line="1040"/>
+        <location filename="../ui/preferences.ui" line="1101"/>
         <source>Specify quality instead of specifying a particular bitrate.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="982"/>
-        <location filename="../ui/preferences.ui" line="1306"/>
-        <location filename="../ui/preferences.ui" line="1919"/>
+        <location filename="../ui/preferences.ui" line="1027"/>
+        <location filename="../ui/preferences.ui" line="1351"/>
+        <location filename="../ui/preferences.ui" line="1964"/>
         <source>quality</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1026"/>
+        <location filename="../ui/preferences.ui" line="1071"/>
         <source>Enable bitrate management engine</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1029"/>
+        <location filename="../ui/preferences.ui" line="1074"/>
         <source>managed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1122"/>
+        <location filename="../ui/preferences.ui" line="1167"/>
         <source>Encode MP3s with LAME</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1836"/>
+        <location filename="../ui/preferences.ui" line="1881"/>
         <source>vbr-quality</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1889"/>
+        <location filename="../ui/preferences.ui" line="1934"/>
         <source>4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1913"/>
+        <location filename="../ui/preferences.ui" line="1958"/>
         <source>The FLAC Lossless compressor Codec</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1960"/>
+        <location filename="../ui/preferences.ui" line="2005"/>
         <source>streamable-subset</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1970"/>
+        <location filename="../ui/preferences.ui" line="2015"/>
         <source>mid-side-stereo</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1980"/>
+        <location filename="../ui/preferences.ui" line="2025"/>
         <source>loose-mid-side-stereo</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="1987"/>
+        <location filename="../ui/preferences.ui" line="2032"/>
         <source>blocksize</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2044"/>
+        <location filename="../ui/preferences.ui" line="2089"/>
         <source>max-lpc-order</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2101"/>
+        <location filename="../ui/preferences.ui" line="2146"/>
         <source>qlp-coeff-precision</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2158"/>
+        <location filename="../ui/preferences.ui" line="2203"/>
         <source>qlp-coeff-prec-search</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2165"/>
+        <location filename="../ui/preferences.ui" line="2210"/>
         <source>escape-coding</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2172"/>
+        <location filename="../ui/preferences.ui" line="2217"/>
         <source>exhaustive-model-search</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2179"/>
+        <location filename="../ui/preferences.ui" line="2224"/>
         <source>min-residual-partition-order</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2236"/>
+        <location filename="../ui/preferences.ui" line="2281"/>
         <source>max-residual-partition-order</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2296"/>
+        <location filename="../ui/preferences.ui" line="2341"/>
         <source>rice-parameter-search-dist</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2362"/>
+        <location filename="../ui/preferences.ui" line="2407"/>
         <source> 5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2379"/>
+        <location filename="../ui/preferences.ui" line="2424"/>
         <source>Free AAC Encoder (FAAC)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2385"/>
+        <location filename="../ui/preferences.ui" line="2430"/>
         <source>outputformat</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2393"/>
+        <location filename="../ui/preferences.ui" line="2438"/>
         <source>(0): Raw AAC</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2398"/>
+        <location filename="../ui/preferences.ui" line="2443"/>
         <source>(1): ADTS headers</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2419"/>
+        <location filename="../ui/preferences.ui" line="2464"/>
         <source>bitrate</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2476"/>
+        <location filename="../ui/preferences.ui" line="2521"/>
         <source>profile</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2487"/>
+        <location filename="../ui/preferences.ui" line="2532"/>
         <source>1: Main profile     - MAIN</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2492"/>
+        <location filename="../ui/preferences.ui" line="2537"/>
         <source>2: Low complexity profile - LC</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2497"/>
+        <location filename="../ui/preferences.ui" line="2542"/>
         <source>3: Scalable sampling rate profile - SSR</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2502"/>
+        <location filename="../ui/preferences.ui" line="2547"/>
         <source>4: Long term prediction profile - LTP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2523"/>
+        <location filename="../ui/preferences.ui" line="2568"/>
         <source>tns</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2530"/>
+        <location filename="../ui/preferences.ui" line="2575"/>
         <source>midside</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2540"/>
+        <location filename="../ui/preferences.ui" line="2585"/>
         <source>shortctl</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2548"/>
+        <location filename="../ui/preferences.ui" line="2593"/>
         <source>(0): Normal block type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2553"/>
+        <location filename="../ui/preferences.ui" line="2598"/>
         <source>(1): No short blocks</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/preferences.ui" line="2558"/>
+        <location filename="../ui/preferences.ui" line="2603"/>
         <source>(2): No long blocks</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="2614"/>
+        <location filename="../ui/preferences.ui" line="2659"/>
         <source>Ок</source>
         <translatorcomment>Ok</translatorcomment>
         <translation>Ok</translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="2627"/>
+        <location filename="../ui/preferences.ui" line="2672"/>
         <source>По умолчанию</source>
         <translation>Domyślne</translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/preferences.ui" line="2640"/>
+        <location filename="../ui/preferences.ui" line="2685"/>
         <source>Закрыть</source>
         <translation>Zamknij</translation>
     </message>
@@ -1451,7 +1519,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message utf8="true">
-        <location filename="../callbacks.h" line="81"/>
+        <location filename="../callbacks.h" line="96"/>
         <source>Ошибка</source>
         <translation>Błąd</translation>
     </message>
@@ -1577,17 +1645,18 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="334"/>
+        <location filename="../transcoder.cpp" line="335"/>
+        <location filename="../transcoder.cpp" line="336"/>
         <source>⁄</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="508"/>
+        <location filename="../transcoder.cpp" line="510"/>
         <source>Кодируется: </source>
         <translation>Kodowanie:</translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="527"/>
+        <location filename="../transcoder.cpp" line="529"/>
         <source>Ошибка перехода в PLAYING
 </source>
         <translation>Błąd przetwarzania dla PLAYING
@@ -1602,7 +1671,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">&lt;h2&gt;Format nie obsługiwany.&lt;/h2&gt;&lt;p&gt;Wybrany format czasu jest nie obsługiwany przez transkoder.&lt;p&gt;Zostanie użyty format domyśny.</translation>
     </message>
     <message utf8="true">
-        <location filename="../transcoder.cpp" line="580"/>
+        <location filename="../transcoder.cpp" line="582"/>
         <source>Нажмите &quot;Начать&quot; для кодирования.</source>
         <translation>Kliknij &quot;Sart&quot; aby rozpocząć.</translation>
     </message>

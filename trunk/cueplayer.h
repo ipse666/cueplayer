@@ -27,6 +27,7 @@
 #include "widgetmanager.h"
 #include "equalizer.h"
 #include "preferences.h"
+#include "appendquestion.h"
 
 #ifdef BUILDER
 #include "defines.h"
@@ -119,6 +120,7 @@ private:
 	YouTubeDL *youtuber;
 	Equalizer *equalizer;
 	Preferences *preferences;
+        AppendQuestion *appendquestion;
 	int numTrack;
 	int totalTime;
 	int d_title;
@@ -193,6 +195,7 @@ private slots:
 	void prefTrShow();
 	void createPlHeader();
         void fileSelected(QStringList);
+        void setDefaultQuestion();
 
 signals:
 	void gstError();	
