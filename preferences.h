@@ -35,6 +35,7 @@ private slots:
 
 signals:
 	void settingsApply(bool);
+        void defaultAudio();
 };
 
 #endif // PREFERENCES_H

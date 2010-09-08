@@ -257,6 +257,7 @@ void Preferences::setDefault()
                 ui->autoReplayBox->setChecked(false);
                 ui->autoPlayBox->setChecked(false);
 		ui->audioOutputBox->setCurrentIndex(0);
+                emit defaultAudio();
 		// Аудио. Кодировка CUE файла
 		ui->autoRadioButton->setChecked(true);
 		break;
