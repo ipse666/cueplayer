@@ -2335,7 +2335,6 @@ void CuePlayer::mousePressEvent(QMouseEvent *event)
                 reverseTime = !reverseTime;
         }
     }
-    qDebug() << event->x() << minNumLCD->x();
 }
 
 void CuePlayer::setDefaultQuestion()

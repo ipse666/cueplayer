@@ -26,11 +26,12 @@ QHash<QString, bool> ScreenSaverDeactivator::screenSaverCheck()
 
     if (checksaverProcess->state())
             checksaverProcess->kill();
-    checksaverProcess->start("gnome-screensaver-command", QStringList() << "--version");
+    checksaverProcess->start("gnome-screensaver-command", QStringList() << "--query");
     checksaverProcess->waitForFinished(1000);
-    result = checksaverProcess->readAll();
+    result = checksaverProcess->readAllStandardError();
     checksaverProcess->close();
-    screensavers.insert("gnome-screensaver", (result.indexOf("gnome-screensaver-command") != -1));
+    screensavers.insert("gnome-screensaver", checksaverProcess->error() == 5 &&
+                        !(result.indexOf("Screensaver is not running") != -1));
 
     return screensavers;
 }
