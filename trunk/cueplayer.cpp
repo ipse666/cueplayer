@@ -2327,17 +2327,15 @@ void CuePlayer::fileSelected(QStringList list)
 
 void CuePlayer::mousePressEvent(QMouseEvent *event)
 {
-    int a = 0;
-    if (extbutAction->isChecked())
-        a = 102;
     if (event->button() == Qt::LeftButton)
     {
-        if (event->x() > 280 + a && event->x() < 350 + a)
+        if (event->x() > minNumLCD->x() && event->x() < secNumLCD->x() + secNumLCD->size().width())
         {
-            if (event->y() > 24 && event->y() < 50)
+            if (event->y() > minNumLCD->y() && event->y() < minNumLCD->y() + minNumLCD->size().height())
                 reverseTime = !reverseTime;
         }
     }
+    qDebug() << event->x() << minNumLCD->x();
 }
 
 void CuePlayer::setDefaultQuestion()
