@@ -615,6 +615,11 @@ void CuePlayer::initPlayer()
 	}
 	timeLineSlider->setSliderPosition(0);
 	imglabel->hide();
+        if (settings.value("preferences/ssavdeactivator").toBool())
+        {
+            ssdeact = new ScreenSaverDeactivator(this);
+            ssavers = ssdeact->screenSaverCheck();
+        }
 }
 
 // переключение на следующий трек
@@ -712,6 +717,13 @@ void CuePlayer::playTrack()
 		videowindow->setWindowTitle(savetitle);
 		dpmsTrigger(false);
 		winman->raiseWidget(this);
+                if (settings.value("preferences/ssavdeactivator").toBool() && !timer->isActive())
+                {
+                    if (ssavers["xscreensaver"])
+                        ssdeact->xDeactivate();
+                    if (ssavers["gnome-screensaver"])
+                        ssdeact->gDeactivate();
+                }
 	}
 #ifdef CUEDEBUG
 	GstElement *asink;
@@ -1149,6 +1161,13 @@ void CuePlayer::stopAll()
 		videowindow->hide();
 		videowindow->newTrack();
 		dpmsTrigger(true);
+                if (settings.value("preferences/ssavdeactivator").toBool())
+                {
+                    if (ssavers["xscreensaver"])
+                        ssdeact->xActivate();
+                    if (ssavers["gnome-screensaver"])
+                        ssdeact->gActivate();
+                }
 	}
 	timeLineSlider->setSliderPosition(0);
 	if (multiFileFlag)

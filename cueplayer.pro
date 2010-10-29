@@ -26,7 +26,8 @@ HEADERS += cueplayer.h \
     equalizer.h \
     preferences.h \
     cugstbinds.h \
-    appendquestion.h
+    appendquestion.h \
+    screensaverdeactivator.h
 FORMS += ui/cueplayer.ui \
     ui/transcoder.ui \
     ui/apetoflacdialog.ui \
@@ -52,7 +53,8 @@ SOURCES += cueplayer.cpp \
     equalizer.cpp \
     preferences.cpp \
     cugstbinds.cpp \
-    appendquestion.cpp
+    appendquestion.cpp \
+    screensaverdeactivator.cpp
 RESOURCES += ressources.qrc
 CONFIG += release \
     link_pkgconfig \

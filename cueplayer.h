@@ -28,6 +28,7 @@
 #include "equalizer.h"
 #include "preferences.h"
 #include "appendquestion.h"
+#include "screensaverdeactivator.h"
 
 #ifdef BUILDER
 #include "defines.h"
@@ -121,6 +122,7 @@ private:
 	Equalizer *equalizer;
 	Preferences *preferences;
         AppendQuestion *appendquestion;
+        ScreenSaverDeactivator *ssdeact;
 	int numTrack;
 	int totalTime;
 	int d_title;
@@ -134,6 +136,7 @@ private:
 	int multiFiles[100];
 	int loadpoints;
         bool reverseTime;
+        QHash<QString, bool> ssavers;
 
 public slots:
 	void playNextTrack();

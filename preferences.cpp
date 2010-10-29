@@ -64,6 +64,7 @@ void Preferences::saveSettings()
 
 	// Основное. Видео
 	settings.setValue("preferences/integration", ui->integrationBox->isChecked());
+        settings.setValue("preferences/ssavdeactivator", ui->screensaverDeactivateBox->isChecked());
 	// Основное. Аудио
 	settings.setValue("preferences/equalizer", ui->equalizerBox->isChecked());
 	settings.setValue("preferences/traytext", ui->trayTextBox->isChecked());
@@ -142,6 +143,7 @@ void Preferences::readSettings()
 
 	// Основное. Видео
 	ui->integrationBox->setChecked(settings.value("preferences/integration").toBool());
+        ui->screensaverDeactivateBox->setChecked(settings.value("preferences/ssavdeactivator").toBool());
 	// Основное. Аудио
 	ui->equalizerBox->setChecked(settings.value("preferences/equalizer").toBool());
 	ui->trayTextBox->setChecked(settings.value("preferences/traytext").toBool());
@@ -264,6 +266,7 @@ void Preferences::setDefault()
 	case 3:
 		// Видео
 		ui->integrationBox->setChecked(false);
+                ui->screensaverDeactivateBox->setChecked(false);
 	case 5:
 		// Транскодер. vorbisenc
 		ui->vorbisMaxBitrateSlider->setValue(-1);
