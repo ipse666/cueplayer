@@ -65,7 +65,7 @@ cb_newpad (GstElement *decodebin,
   if (GST_PAD_IS_LINKED (audiopad)) {
 	g_object_unref (audiopad);
 	decodebin = NULL;
-	last = NULL;
+        last = false;
 	data = NULL;
 	return;
   }
