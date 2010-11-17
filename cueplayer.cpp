@@ -1550,13 +1550,14 @@ void CuePlayer::paramFile(QStringList list)
 void CuePlayer::restoreSettings()
 {
 	bool ok;
+        if (settings.value("player/volume").toBool())
+                volumeDial->setValue(settings.value("player/volume").toInt(&ok));
+
 	if (settings.value("player/recentfile").toBool() && qApp->argc() <= 1)
 		cueFileSelected(settings.value("player/recentfile").toStringList());
-	if (settings.value("player/volume").toBool())
-	{
-		volumeDial->setValue(settings.value("player/volume").toInt(&ok));
-		if (videoFlag || dvdFlag) videowindow->setVolumePos(settings.value("player/volume").toInt(&ok));
-	}
+
+        if (settings.value("player/volume").toBool())
+                if (videoFlag || dvdFlag) videowindow->setVolumePos(settings.value("player/volume").toInt(&ok));
 }
 
 void CuePlayer::nminSeek()
