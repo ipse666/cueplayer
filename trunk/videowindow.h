@@ -25,6 +25,8 @@ public:
 	void setSliderPos(int);
 	int getSliderPos();
 	void setVolumePos(int);
+        void initPlayer();
+        void externalTimeRevers(bool);
 private:
 	VideoSlider *slider;
 	QShortcut *shortcutpause;
@@ -77,6 +79,7 @@ signals:
 	void newTime(int);
 	void showWin(bool);
 	void doubleClick(bool);
+        void timeRevers(bool);
 };
 
 #endif // VIDEOWINDOW_H

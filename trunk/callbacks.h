@@ -126,12 +126,12 @@ cb_typefound (GstElement *typefind,
 		cueplayer->apeFound(false);
 	if (!strcmp(type ,"video/x-matroska") ||
 		!strcmp(type ,"video/x-msvideo") ||
-		!strcmp(type ,"application/x-3gp") ||
+                !strncmp(type ,"application/x-3gp", 17) ||
 		!strcmp(type ,"video/x-ms-asf") ||
 		!strncmp(type ,"video/mpegts", 12) ||
 		!strncmp(type ,"video/mpeg", 10) ||
 		!strncmp(type ,"audio/x-m4a", 11) ||
-		!strcmp(type ,"video/quicktime"))
+                !strncmp(type ,"video/quicktime", 15))
 		if (!dvdFlag)
 			videoFlag = true;
 	g_free (type);

@@ -18,15 +18,18 @@ public:
 	void setSliderPos(int);
 	int getSliderPos();
 	void setVolumePos(int);
+        void initPlayer();
+        void externalTimeRevers(bool);
 
 protected:
-    void changeEvent(QEvent *e);
+        void changeEvent(QEvent *e);
 	void mouseDoubleClickEvent(QMouseEvent * event);
 	void mouseMoveEvent(QMouseEvent * event);
 	void leaveEvent(QEvent *event);
+        void mousePressEvent(QMouseEvent * event);
 
 private:
-    Ui::VideoSlider *m_ui;
+        Ui::VideoSlider *m_ui;
 	QShortcut *shortcutpause;
 	QShortcut *shortcutstop;
 	QShortcut *shortcutfs;
@@ -38,6 +41,7 @@ private:
 	QShortcut *shortcutpmin;
 	QShortcut *shortcutpmid;
 	QShortcut *shortcutpmax;
+        bool reverseTime;
 
 private slots:
 	void setNumLCDs(int);
@@ -58,6 +62,7 @@ signals:
 	void sliderRelease();
 	void volumeChan(int);
 	void newTime(int);
+        void timeRevers(bool);
 };
 
 #endif // VIDEOSLIDER_H
