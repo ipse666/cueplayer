@@ -216,6 +216,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	connect(videowindow, SIGNAL(newTime(int)), this, SLOT(seekGst(int)));
 	connect(videowindow, SIGNAL(showWin(bool)), this, SLOT(mover(bool)));
 	connect(videowindow, SIGNAL(doubleClick(bool)), this, SLOT(dclIntVw(bool)));
+        connect(videowindow, SIGNAL(timeRevers(bool)), this, SLOT(externalTimeRevers(bool)));
 
 	// Плейлист парсер
 	connect(plparser, SIGNAL(ready()), this, SLOT(plInit()));
@@ -591,7 +592,8 @@ void CuePlayer::initPlayer()
 	progFlag = false;
 	playButtonFlag = false;
         reverseTime = false;
-	videowindow->hide();
+        videowindow->hide();
+        videowindow->initPlayer();
 	memset(multiFiles,0,100);
 	mp3trackName = trUtf8("неизвестно");
 	numTrack = 1;
@@ -2333,7 +2335,10 @@ void CuePlayer::mousePressEvent(QMouseEvent *event)
         if (event->x() > minNumLCD->x() && event->x() < secNumLCD->x() + secNumLCD->size().width())
         {
             if (event->y() > minNumLCD->y() && event->y() < minNumLCD->y() + minNumLCD->size().height())
+            {
                 reverseTime = !reverseTime;
+                videowindow->externalTimeRevers(reverseTime);
+            }
         }
     }
 }
@@ -2342,6 +2347,11 @@ void CuePlayer::setDefaultQuestion()
 {
     QSettings settings;
     settings.remove("appendquestion");
+}
+
+void CuePlayer::externalTimeRevers(bool reverse)
+{
+    reverseTime = reverse;
 }
 
 // Класс треда

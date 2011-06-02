@@ -199,6 +199,7 @@ private slots:
 	void createPlHeader();
         void fileSelected(QStringList);
         void setDefaultQuestion();
+        void externalTimeRevers(bool);
 
 signals:
 	void gstError();	

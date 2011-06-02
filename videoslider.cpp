@@ -93,6 +93,21 @@ void VideoSlider::leaveEvent(QEvent *event)
 	(void) *event;
 }
 
+void VideoSlider::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        if (event->x() > m_ui->hourNumber->x() && event->x() < m_ui->secNumber->x() + m_ui->secNumber->size().width())
+        {
+            if (event->y() > m_ui->hourNumber->y() && event->y() < m_ui->hourNumber->y() + m_ui->hourNumber->size().height())
+            {
+                reverseTime = !reverseTime;
+                emit timeRevers(reverseTime);
+            }
+        }
+    }
+}
+
 void VideoSlider::setSliderMax(int time)
 {
 	m_ui->timeSlider->setMaximum(time/1000);
@@ -106,6 +121,8 @@ void VideoSlider::setSliderPos(int pos)
 
 void VideoSlider::setNumLCDs(int sec)
 {
+        if (reverseTime && sec)
+            sec = m_ui->timeSlider->maximum() - sec;
 	int min = sec / 60;
 	int hour = min / 60;
 	if (sec >= 60)
@@ -158,4 +175,14 @@ int VideoSlider::getSliderPos()
 void VideoSlider::setVolumePos(int pos)
 {
 	m_ui->volumeSlider->setValue(pos);
+}
+
+void VideoSlider::initPlayer()
+{
+    reverseTime = false;
+}
+
+void VideoSlider::externalTimeRevers(bool b)
+{
+    reverseTime = b;
 }

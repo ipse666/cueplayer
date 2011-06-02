@@ -78,6 +78,7 @@ VideoWindow::VideoWindow(QWidget *parent)
 	connect(slider, SIGNAL(sliderRelease()), this, SIGNAL(sliderRelease()));
 	connect(slider, SIGNAL(volumeChan(int)), this, SIGNAL(volumeChan(int)));
 	connect(slider, SIGNAL(newTime(int)), this, SIGNAL(newTime(int)));
+        connect(slider, SIGNAL(timeRevers(bool)), this, SIGNAL(timeRevers(bool)));
 
 	(void) *parent;
 }
@@ -277,4 +278,14 @@ void VideoWindow::normWind()
 {
 	emit doubleClick(false);
 	this->showNormal();
+}
+
+void VideoWindow::initPlayer()
+{
+    slider->initPlayer();
+}
+
+void VideoWindow::externalTimeRevers(bool b)
+{
+    slider->externalTimeRevers(b);
 }
