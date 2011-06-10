@@ -872,7 +872,7 @@ void CuePlayer::seekAndLCD(int num)
 				const char *c_str3 = ba2.data();
 
 				/* Create notification */
-				if (!notification) notification = notify_notification_new(c_str2, c_str3, NULL, NULL);
+                                if (!notification) notification = notify_notification_new(c_str2, c_str3, NULL);
 
 				if (notification) {
 				notify_notification_update(notification, c_str2, c_str3, "cueplayer");
