@@ -309,6 +309,11 @@
               <string>mpc</string>
              </property>
             </row>
+            <row>
+             <property name="text">
+              <string>mod</string>
+             </property>
+            </row>
             <column>
              <property name="text">
               <string>Найден</string>
@@ -521,6 +526,24 @@
              <property name="text">
               <string/>
              </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="8" column="0">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="8" column="1">
+             <property name="textAlignment">
+              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+             </property>
+            </item>
+            <item row="8" column="2">
              <property name="textAlignment">
               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
              </property>
@@ -1252,8 +1275,8 @@ p, li { white-space: pre-wrap; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>385</width>
-            <height>435</height>
+            <width>318</width>
+            <height>408</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_16">

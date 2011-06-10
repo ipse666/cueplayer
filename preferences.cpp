@@ -13,7 +13,8 @@ Preferences::Preferences(QWidget *parent) :
 
 	static QStringList codeclist;
 	codeclist << "mad" << "vorbisdec" << "flacdec" << "ffdec_ape"
-                        << "faad" << "ffdec_mpeg4" << "ffdec_h264" << "musepackdec";
+                  << "faad" << "ffdec_mpeg4" << "ffdec_h264" << "musepackdec"
+                  << "modplug";
 	int counter = 0;
 
 	foreach (QString str, codeclist)

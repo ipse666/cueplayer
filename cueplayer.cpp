@@ -80,20 +80,20 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	primaryDPMS = checkDPMS();
 
 	// Поддерживаемые файлы
-	fsuffixes = QStringList()	<< "aac" << "mp3" << "flac" << "ape" << "ogg"
-								<< "ogm" << "ogv" << "mp4"  << "avi" << "ts"
-								<< "wv"  << "3gp" << "m2ts" << "vob" << "wmv"
-								<< "wav" << "mpg" << "mov"  << "m4a" << "m4v"
-                                                                << "mka" << "mkv" << "mpc";
+        fsuffixes = QStringList() << "aac" << "mp3" << "flac" << "ape" << "ogg"
+                                  << "ogm" << "ogv" << "mp4"  << "avi" << "ts"
+                                  << "wv"  << "3gp" << "m2ts" << "vob" << "wmv"
+                                  << "wav" << "mpg" << "mov"  << "m4a" << "m4v"
+                                  << "mka" << "mkv" << "mpc"  << "mod" << "xm";
 
 	// Фильтр диалога
 	filters << trUtf8("Все поддерживаемые файлы (*.aac *.mp3 *.flac *.ape \
-												 *.ogg *.ogm *.ogv *.mp4 \
-												 *.avi *.ts *.wv *.3gp *.m2ts \
-												 *.vob *.wmv *.wav *.mpg \
-												 *.mov *.m4a *.m4v *.mka \
-												 *.cue *.mkv *.flv *.pls \
-                                                                                                 *.wvx *.m3u *.mpc)")
+                                                     *.ogg *.ogm *.ogv *.mp4 \
+                                                    *.avi *.ts *.wv *.3gp *.m2ts \
+                                                    *.vob *.wmv *.wav *.mpg \
+                                                    *.mov *.m4a *.m4v *.mka \
+                                                    *.cue *.mkv *.flv *.pls \
+                                                    *.wvx *.m3u *.mpc *.mod *.xm)")
 			<< trUtf8("Списки воспроизведения (*.cue *.pls *.wvx *.m3u)")
 			<< trUtf8("Видеофайлы (*.ogg *.ogv *.avi *.mkv *.mp4 *.ts \
 								   *.wv *.3gp *.m2ts *.vob *.wmv *.mpg \
