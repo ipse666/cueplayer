@@ -261,7 +261,7 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 	QRegExp rxFilename4("^ftp://.*");
 #endif
 	QRegExp rxFilename5("^http://www.youtube.com/watch\\?v=.*");
-	QRegExp rxFilename6("^http://youtube.com/get_video\\?video_id=.*");
+        QRegExp rxFilename6("^http://www.youtube.com/get_video\\?video_id=.*");
 	QString nextTool = nextButton->toolTip();
 	QString prewTool = prewButton->toolTip();
 
@@ -1336,7 +1336,7 @@ void CuePlayer::setMp3Title(GValue *vtitle, GValue *valbum, GValue *vartist)
 				const char *c_str3 = ba2.data();
 
 				/* Create notification */
-				if (!notification) notification = notify_notification_new(c_str2, c_str3, NULL, NULL);
+                                if (!notification) notification = notify_notification_new(c_str2, c_str3, NULL);
 
 				if (notification) {
 				notify_notification_update(notification, c_str2, c_str3, "cueplayer");
