@@ -166,7 +166,7 @@ void YouTubeDL::extractVideoUrl()
 	VideoInfos videoInfos = extract_get_video_info_Infos();
 
 	if (!videoInfos.token.isEmpty()) {
-		QString videoUrl = "http://youtube.com/get_video";
+                QString videoUrl = "http://www.youtube.com/get_video";
 		QString videoUrlArgs = QString("?video_id=%1&t=%2%3")
 						   .arg(extractVideoId())
 						   .arg(videoInfos.token.replace("%3D", "="))
