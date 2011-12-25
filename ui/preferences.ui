@@ -1275,8 +1275,8 @@ p, li { white-space: pre-wrap; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>318</width>
-            <height>408</height>
+            <width>322</width>
+            <height>400</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_16">
@@ -2555,6 +2555,9 @@ p, li { white-space: pre-wrap; }
           </item>
           <item row="0" column="2">
            <widget class="QComboBox" name="faacOutputformatComboBox">
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
             <item>
              <property name="text">
               <string>(0): Raw AAC</string>

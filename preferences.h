@@ -23,14 +23,14 @@ protected:
 
 private:
     Ui::Preferences *ui;
-	CuGstBinds *cugstbinds;
+    CuGstBinds *cugstbinds;
 
 private slots:
 	void saveSettings();
 	void readSettings();
 	void prefDeci(int);
 	void prefDeci(double);
-	void setDefault();
+    void setDefault();
 	void listItemClicked(QTreeWidgetItem *, int);
 
 signals:
