@@ -32,7 +32,7 @@ Preferences::Preferences(QWidget *parent) :
 	connect(ui->okButton, SIGNAL(clicked()), this, SLOT(saveSettings()));
 	connect(ui->vorbisQuaSlider, SIGNAL(valueChanged(int)), this, SLOT(prefDeci(int)));
 	connect(ui->vorbisQuaValue, SIGNAL(valueChanged(double)), this, SLOT(prefDeci(double)));
-	connect(ui->defaultButton, SIGNAL(clicked()), this, SLOT(setDefault()));
+    connect(ui->defaultButton, SIGNAL(clicked()), this, SLOT(setDefault()));
 	connect(ui->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(listItemClicked(QTreeWidgetItem*,int)));
 }
 
@@ -173,6 +173,10 @@ void Preferences::readSettings()
 		prefDeci(settings.value("preferences/vorbisquality").toInt());
 		ui->vorbisManagedBox->setChecked(settings.value("preferences/vorbismanaged").toBool());
 	}
+    else
+    {
+        saveSettings();
+    }
 
 	// Транскодер. lame
 	if (!settings.value("preferences/lamequality").isNull())
@@ -193,6 +197,10 @@ void Preferences::readSettings()
 		ui->lameVbrComboBox->setCurrentIndex(settings.value("preferences/lamevbr").toInt());
 		ui->lameVbrQuaSlider->setValue(settings.value("preferences/lamevbrquality").toInt());
 	}
+    else
+    {
+        saveSettings();
+    }
 
 	// Транскодер. flacenc
 	if (!settings.value("preferences/flacquality").isNull())
@@ -211,6 +219,10 @@ void Preferences::readSettings()
 		ui->flacMaxResidualPartitionOrderSlider->setValue(settings.value("preferences/flacmaxresidualpartitionorder").toInt());
 		ui->flacRiceParameterSearchDistSlider->setValue(settings.value("preferences/flacriceparametersearchdist").toInt());
 	}
+    else
+    {
+        saveSettings();
+    }
 
 	// Транскодер. faac
 	if (!settings.value("preferences/faacprofile").isNull())
@@ -221,7 +233,11 @@ void Preferences::readSettings()
 		ui->faacTnsCheckBox->setChecked(settings.value("preferences/faactns").toBool());
 		ui->faacMidsideCheckBox->setChecked(settings.value("preferences/faacmidside").toBool());
 		ui->faacShortctlComboBox->setCurrentIndex(settings.value("preferences/faacshortctl").toInt());
-	}
+    }
+    else
+    {
+        saveSettings();
+    }
 
 	// Ширина левого поля
 	if (!settings.value("preferences/treewidgetwidth").isNull())
@@ -248,81 +264,81 @@ void Preferences::prefDeci(double i)
 
 void Preferences::setDefault()
 {
-	switch (ui->stackedWidget->currentIndex())
-	{
-	case 2:
-		// Аудио
-		ui->equalizerBox->setChecked(false);
-		ui->trayTextBox->setChecked(true);
-		ui->doubleSpinBox->setValue(2.0);
-		ui->coverBox->setChecked(false);
+    switch (ui->stackedWidget->currentIndex())
+    {
+    case 2:
+        // Аудио
+        ui->equalizerBox->setChecked(false);
+        ui->trayTextBox->setChecked(true);
+        ui->doubleSpinBox->setValue(2.0);
+        ui->coverBox->setChecked(false);
                 ui->showPLBox->setChecked(false);
                 ui->autoReplayBox->setChecked(false);
                 ui->autoPlayBox->setChecked(false);
-		ui->audioOutputBox->setCurrentIndex(0);
+        ui->audioOutputBox->setCurrentIndex(0);
                 emit defaultAudio();
-		// Аудио. Кодировка CUE файла
-		ui->autoRadioButton->setChecked(true);
-		break;
-	case 3:
-		// Видео
-		ui->integrationBox->setChecked(false);
+        // Аудио. Кодировка CUE файла
+        ui->autoRadioButton->setChecked(true);
+        break;
+    case 3:
+        // Видео
+        ui->integrationBox->setChecked(false);
                 ui->screensaverDeactivateBox->setChecked(false);
-	case 5:
-		// Транскодер. vorbisenc
-		ui->vorbisMaxBitrateSlider->setValue(-1);
-		ui->vorbisBitrateSlider->setValue(-1);
-		ui->vorbisMinBitrateSlider->setValue(-1);
-		ui->vorbisQuaSlider->setValue(3);
-		prefDeci(3);
-		ui->vorbisManagedBox->setChecked(false);
-		break;
-	case 6:
-		// Транскодер. lame
-		ui->lameBitrateBox->setCurrentIndex(11);
-		ui->lameCRSlider->setValue(0);
-		ui->lameQuaSlider->setValue(3);
-		ui->lameModeComboBox->setCurrentIndex(1);
-		ui->lameForseMs->setChecked(false);
-		ui->lameFreeFormat->setChecked(false);
-		ui->lameCopyight->setChecked(false);
-		ui->lameOriginal->setChecked(true);
-		ui->lameErrProt->setChecked(false);
-		ui->lamePaddingType->setCurrentIndex(0);
-		ui->lameExtention->setChecked(false);
-		ui->lameStrictIso->setChecked(false);
-		ui->lameDisRese->setChecked(false);
-		ui->lameVbrComboBox->setCurrentIndex(0);
-		ui->lameVbrQuaSlider->setValue(4);
-		break;
-	case 7:
-		// Транскодер. flacenc
-		ui->flacQuaSlider->setValue(5);
-		ui->flacStreamableSubsetBox->setChecked(true);
-		ui->flacMidSideStereoBox->setChecked(true);
-		ui->flacLooseMidSideStereoBox->setChecked(false);
-		ui->flacBlocksizeSlider->setValue(4608);
-		ui->flacMaxLpcOrderSlider->setValue(8);
-		ui->flacQlpCoeffPrecisionSlider->setValue(0);
-		ui->flacQlpCoeffPrecSearchCheckBox->setChecked(false);
-		ui->flacEscapeCodingCheckBox->setChecked(false);
-		ui->flacExhaustiveModelSearchCheckBox->setChecked(false);
-		ui->flacMinResidualPartitionOrderSlider->setValue(3);
-		ui->flacMaxResidualPartitionOrderSlider->setValue(3);
-		ui->flacRiceParameterSearchDistSlider->setValue(0);
-		break;
-	case 8:
-		// Транскодер. faac
-		ui->faacOutputformatComboBox->setCurrentIndex(0);
-		ui->faacBitrateSlider->setValue(128000);
-		ui->faacProfileComboBox->setCurrentIndex(1);
-		ui->faacTnsCheckBox->setChecked(false);
-		ui->faacMidsideCheckBox->setChecked(true);
-		ui->faacShortctlComboBox->setCurrentIndex(0);
-		break;
-	default:
-		break;
-	}
+    case 5:
+        // Транскодер. vorbisenc
+        ui->vorbisMaxBitrateSlider->setValue(-1);
+        ui->vorbisBitrateSlider->setValue(-1);
+        ui->vorbisMinBitrateSlider->setValue(-1);
+        ui->vorbisQuaSlider->setValue(3);
+        prefDeci(3);
+        ui->vorbisManagedBox->setChecked(false);
+        break;
+    case 6:
+        // Транскодер. lame
+        ui->lameBitrateBox->setCurrentIndex(11);
+        ui->lameCRSlider->setValue(0);
+        ui->lameQuaSlider->setValue(3);
+        ui->lameModeComboBox->setCurrentIndex(1);
+        ui->lameForseMs->setChecked(false);
+        ui->lameFreeFormat->setChecked(false);
+        ui->lameCopyight->setChecked(false);
+        ui->lameOriginal->setChecked(true);
+        ui->lameErrProt->setChecked(false);
+        ui->lamePaddingType->setCurrentIndex(0);
+        ui->lameExtention->setChecked(false);
+        ui->lameStrictIso->setChecked(false);
+        ui->lameDisRese->setChecked(false);
+        ui->lameVbrComboBox->setCurrentIndex(0);
+        ui->lameVbrQuaSlider->setValue(4);
+        break;
+    case 7:
+        // Транскодер. flacenc
+        ui->flacQuaSlider->setValue(5);
+        ui->flacStreamableSubsetBox->setChecked(true);
+        ui->flacMidSideStereoBox->setChecked(true);
+        ui->flacLooseMidSideStereoBox->setChecked(false);
+        ui->flacBlocksizeSlider->setValue(4608);
+        ui->flacMaxLpcOrderSlider->setValue(8);
+        ui->flacQlpCoeffPrecisionSlider->setValue(0);
+        ui->flacQlpCoeffPrecSearchCheckBox->setChecked(false);
+        ui->flacEscapeCodingCheckBox->setChecked(false);
+        ui->flacExhaustiveModelSearchCheckBox->setChecked(false);
+        ui->flacMinResidualPartitionOrderSlider->setValue(3);
+        ui->flacMaxResidualPartitionOrderSlider->setValue(3);
+        ui->flacRiceParameterSearchDistSlider->setValue(0);
+        break;
+    case 8:
+        // Транскодер. faac
+        ui->faacOutputformatComboBox->setCurrentIndex(1);
+        ui->faacBitrateSlider->setValue(128000);
+        ui->faacProfileComboBox->setCurrentIndex(1);
+        ui->faacTnsCheckBox->setChecked(false);
+        ui->faacMidsideCheckBox->setChecked(true);
+        ui->faacShortctlComboBox->setCurrentIndex(0);
+        break;
+    default:
+        break;
+    }
 }
 
 void Preferences::listItemClicked(QTreeWidgetItem *item, int column)
