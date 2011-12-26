@@ -2108,6 +2108,11 @@ void CuePlayer::mover(bool b)
 		else
 			this->move(QPoint(this->frameGeometry().x(),this->frameGeometry().y() + getLayoutSize().height() + 7));
 	}
+
+    if (this->y() <= 0)
+    {
+        this->move(QPoint(this->frameGeometry().x(), 0));
+    }
 }
 
 void CuePlayer::setWindowsTitles(QString s)
