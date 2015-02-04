@@ -74,8 +74,7 @@ CuePlayer::CuePlayer(QWidget *parent) : QWidget(parent), play(0)
 	imglabel = new QLabel(this);
 
 	// Иксы
-	xinfo = new QX11Info();
-	display = xinfo->display();
+    display = QX11Info::display();
 	videoProcess = new QProcess(this);
 	primaryDPMS = checkDPMS();
 
@@ -496,8 +495,8 @@ void CuePlayer::cueFileSelected(QStringList filenames)
 		videoFlag = true;
 		setWindowsTitles(trUtf8("Ютуб"));
 		label->setText(trUtf8("Ютуб"));
-		youtuber = new YouTubeDL(filename);
-                connect(youtuber, SIGNAL(putUrl(QStringList)), this, SLOT(fileSelected(QStringList)));
+        //youtuber = new YouTubeDL(filename);
+        //        connect(youtuber, SIGNAL(putUrl(QStringList)), this, SLOT(fileSelected(QStringList)));
 		return;
 	}
 	else if (rxFilename6.indexIn(filename) != -1)
@@ -1555,7 +1554,7 @@ void CuePlayer::restoreSettings()
         if (settings.value("player/volume").toBool())
                 volumeDial->setValue(settings.value("player/volume").toInt(&ok));
 
-	if (settings.value("player/recentfile").toBool() && qApp->argc() <= 1)
+    if (settings.value("player/recentfile").toBool() && qApp->arguments().count() <= 1)
 		cueFileSelected(settings.value("player/recentfile").toStringList());
 
         if (settings.value("player/volume").toBool())
@@ -1656,7 +1655,7 @@ void CuePlayer::fileDialogFilter(QString filter)
 	{
 		filedialog->setFileMode(QFileDialog::Directory);
 		filedialog->setNameFilters(filters);
-		filedialog->selectFilter(filters.at(5));
+        filedialog->setNameFilter(filters.at(5));
 	}
 	else
 		filedialog->setFileMode(QFileDialog::AnyFile);
@@ -1816,7 +1815,7 @@ void CuePlayer::setDvdAudio(gchar* auname, int ind)
 
 gchar* CuePlayer::getDvdAudio(int ind)
 {
-	return strdup(dvdAu[ind].toAscii().data());
+    return strdup(dvdAu[ind].toLocal8Bit().data());
 }
 
 void CuePlayer::extButtons(bool b)

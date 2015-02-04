@@ -14,6 +14,7 @@
 #include <QDesktopWidget>
 #include <QLocalServer>
 #include <QTextCodec>
+#include <QMimeData>
 #include <gst/interfaces/xoverlay.h>
 #include "ui_cueplayer.h"
 #include "cueparser.h"
@@ -22,7 +23,7 @@
 #include "videowindow.h"
 #include "streamform.h"
 #include "plparser.h"
-#include "youtubedl.h"
+//#include "youtubedl.h"
 #include "singleserver.h"
 #include "widgetmanager.h"
 #include "equalizer.h"
@@ -102,7 +103,6 @@ private:
 	QStringList filters;
 	QString mp3trackName;
 	QSettings settings;
-	QX11Info *xinfo;
 	QString dvdAu[20];
 	QFileInfoList saveFileList;
 	QProcess *videoProcess;
@@ -118,7 +118,7 @@ private:
 	VideoWindow *videowindow;
 	StreamForm *streamform;
 	PlParser *plparser;
-	YouTubeDL *youtuber;
+    //YouTubeDL *youtuber;
 	Equalizer *equalizer;
 	Preferences *preferences;
         AppendQuestion *appendquestion;
