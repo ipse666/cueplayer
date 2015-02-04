@@ -5,8 +5,9 @@
 #define TIME 200
 #define APPNAME "CuePlayer"
 
-Q_EXPORT_PLUGIN2(trans_coder, TransCoder)
-		TransCoder *transcoder = 0;
+//Q_EXPORT_PLUGIN2(trans_coder, TransCoder)
+
+TransCoder *transcoder = 0;
 
 GstElement *pipeline, *audio;
 
@@ -98,7 +99,7 @@ TransCoder::TransCoder(QWidget *parent) : QMainWindow(parent)
 	treeWidget->setHeaderLabels(QStringList() << trUtf8("Композиция") << trUtf8("Время"));
 	treeWidget->header()->setStretchLastSection(false);
 	treeWidget->setColumnWidth(1, 75);
-	treeWidget->header()->setResizeMode(0,QHeaderView::Stretch);
+    treeWidget->header()->setSectionResizeMode(0,QHeaderView::Stretch);
 
 	containerBox->addItems(QStringList() << "ogg" << "mp3" << "flac" << "aac");
 	codecBox->addItems(QStringList() << "vorbis" << "lame" << "flac" << "faac");

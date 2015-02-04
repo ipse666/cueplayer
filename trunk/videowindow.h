@@ -2,6 +2,8 @@
 #define VIDEOWINDOW_H
 
 #include <QShortcut>
+#include <QMenu>
+#include <QDesktopWidget>
 #include "ui_videowindow.h"
 #include "videoslider.h"
 
@@ -51,7 +53,7 @@ private:
 	QMenu *audioMenu;
 	QMenu *subtitleMenu;
 	QTimer *timer;
-	QWidget *desktop;
+    QDesktopWidget *desktop;
 private slots:
 	void fullScreen();
 	void normCursor();

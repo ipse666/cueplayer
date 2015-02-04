@@ -1,6 +1,6 @@
 TEMPLATE = app
-QT += network
-TARGET = 
+QT += network widgets x11extras
+TARGET = cueplayer
 isEmpty(PREFIX):PREFIX = /usr/local
 target.path = $$PREFIX/bin
 target.files = $$TARGET
@@ -19,7 +19,7 @@ HEADERS += cueplayer.h \
     callbacks.h \
     streamform.h \
     plparser.h \
-    youtubedl.h \
+    #youtubedl.h \
     singleserver.h \
     singleclient.h \
     widgetmanager.h \
@@ -46,7 +46,7 @@ SOURCES += cueplayer.cpp \
     videoslider.cpp \
     streamform.cpp \
     plparser.cpp \
-    youtubedl.cpp \
+    #youtubedl.cpp \
     singleserver.cpp \
     singleclient.cpp \
     widgetmanager.cpp \
